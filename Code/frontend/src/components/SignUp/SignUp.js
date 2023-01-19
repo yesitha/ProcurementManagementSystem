@@ -20,6 +20,7 @@ import logo from '../../images/logo.png'
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import ThreeDRotation from '@mui/icons-material/ThreeDRotation';
 import Icon from '@mui/material/Icon';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 
 
@@ -334,29 +335,37 @@ export default function SignIn() {
                 </Typography>
               
                 <br/>
-              <div id='uploadSectionHead'>
-                  <Typography variant="h8" sx={{alignSelf:'start'}}>
-                     Business Registration Document
-                  </Typography>
-                  <br/>
-              </div>
-                <div id='uploadSectionElement'>
-                  <Typography variant="h8" sx={{alignSelf:'start'}}>
-                    Tax identification document
-                  </Typography>
-                  <br/>
+            <div id='uploadSectionOuter'>
+                <div id='uploadSectionElement' >
+                    <Typography variant="h8" sx={{alignSelf:'start'}}>
+                       Business Registration Document
+                    </Typography>
+                    <div id='plusIconOuter'><AddCircleOutlineIcon /></div>
+                    
+                    <br/>
                 </div>
+                  <div id='uploadSectionElement'>
+                    <Typography variant="h8" sx={{alignSelf:'start'}}>
+                      Tax identification document
+                    </Typography>
+                    
+                    <div id='plusIconOuter'><AddCircleOutlineIcon /></div>
+                    <br/>
+                  </div>
+                  <div id='uploadSectionElement'>
+                    <Typography variant="h8" sx={{alignSelf:'start'}}>
+                      Insurance certificate
+                    </Typography>
+                    <div id='plusIconOuter'><AddCircleOutlineIcon /></div>
+                    <br/>
+                  </div>
                 <div id='uploadSectionElement'>
-                  <Typography variant="h8" sx={{alignSelf:'start'}}>
-                    Insurance certificate
-                  </Typography>
-                  <br/>
+                    <Typography variant="h8" sx={{alignSelf:'start'}}>
+                      Other  documents
+                    </Typography>
+                    <div id='plusIconOuter'><AddCircleOutlineIcon /></div>
                 </div>
-              <div id='uploadSectionElement'>
-                  <Typography variant="h8" sx={{alignSelf:'start'}}>
-                    Other  documents
-                  </Typography>
-              </div>
+            </div>
            </div>
 
 

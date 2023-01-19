@@ -27,5 +27,19 @@
 }
 
 #uploadSectionElement{
+    display: flex;
     margin-top: 5px;
+    
+}
+#uploadSectionOuter{
+    border: 2px solid #dadada;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: fit-content;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+#plusIconOuter{
+    align-content: flex-end;
+    border: 1px solid red;
 }
