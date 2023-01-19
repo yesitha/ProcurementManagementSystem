@@ -13,10 +13,14 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Card, CardContent } from '@mui/material';
-import { maxWidth } from '@mui/system';
+import { fontSize, maxWidth } from '@mui/system';
 import { Login, NoEncryption } from '@mui/icons-material';
 import './SignUp.css'
 import logo from '../../images/logo.png'
+import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
+import ThreeDRotation from '@mui/icons-material/ThreeDRotation';
+import Icon from '@mui/material/Icon';
+
 
 
 const theme = createTheme({
@@ -28,6 +32,13 @@ const theme = createTheme({
     h6:{
       fontFamily: 'Mulish',
       fontWeight:10
+    },
+    h7:{
+      fontFamily: 'Mulish',
+      fontWeight:1000,
+      fontSize:20,
+    
+      
     }
   }
 });
@@ -68,69 +79,287 @@ export default function SignIn() {
           <Typography variant="h6">
              Vendor Sign Up
           </Typography>
-          <Box 
-          sx={{display:'flex', flexWrap: 'wrap', flexDirection: 'row'}}
+         
+          <Box
           component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-             <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-             <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-             <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-             <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
+            
+            <div id='section'>
+              <Typography variant="h7" sx={{alignSelf:'start'}}>
+               Business Info
+              </Typography>
+              <div id='parentSub'>
+                <div id='child'>
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="email"
+                        label="Company full name"
+                        name="email"
+                        autoComplete="email"
+                        autoFocus
+                    />
+                </div>  
+               <div id='child'>
+               <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="email"
+                        label="Registration Type"
+                        name="email"
+                        autoComplete="email"
+                        autoFocus
+                    />
+               </div>
+              </div>
+              <div id='parentSub'>
+                <div id='child'>
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="email"
+                        label="Business Registration No"
+                        name="email"
+                        autoComplete="email"
+                        autoFocus
+                    />
+                </div>  
+               <div id='child'>
+               <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="email"
+                        label="No of employees"
+                        name="email"
+                        autoComplete="email"
+                        autoFocus
+                    />
+               </div>
+              </div>
+            </div>
+
+
+            <div id='section'>
+              <Typography variant="h7" sx={{alignSelf:'start'}}>
+              User Sign up info
+              </Typography>
+
+              <div id='parentSub'>
+                <div id='childSalutation'>
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="email"
+                        label="Salutation"
+                        name="email"
+                        autoComplete="email"
+                        autoFocus
+                    />
+                </div>  
+              </div>
+
+
+              <div id='parentSub'>
+                <div id='child'>
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="email"
+                        label="First name"
+                        name="email"
+                        autoComplete="email"
+                        autoFocus
+                    />
+                </div>  
+               <div id='child'>
+               <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="email"
+                        label="Last name"
+                        name="email"
+                        autoComplete="email"
+                        autoFocus
+                    />
+               </div>
+              </div>
+              <div id='parentSub'>
+                <div id='child'>
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="email"
+                        label="Contact no"
+                        name="email"
+                        autoComplete="email"
+                        autoFocus
+                    />
+                </div>  
+               <div id='child'>
+               <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="email"
+                        label="User name"
+                        name="email"
+                        autoComplete="email"
+                        autoFocus
+                    />
+               </div>
+              </div>
+              <div id='parentSub'>
+                <div id='child'>
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="email"
+                        label="Email"
+                        name="email"
+                        autoComplete="email"
+                        autoFocus
+                    />
+                </div>  
+               <div id='child'>
+               <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="email"
+                        label="Job title"
+                        name="email"
+                        autoComplete="email"
+                        autoFocus
+                    />
+               </div>
+              </div>
+            </div>
+
+
+            <div id='section'>
+              <Typography variant="h7" sx={{alignSelf:'start'}}>
+              Primary Address
+              </Typography>
+              <div id='parentSub'>
+                <div id='child'>
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="email"
+                        label="Address line 1"
+                        name="email"
+                        autoComplete="email"
+                        autoFocus
+                    />
+                </div>  
+               <div id='child'>
+               <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="email"
+                        label="Address line 2"
+                        name="email"
+                        autoComplete="email"
+                        autoFocus
+                    />
+               </div>
+              </div>
+              <div id='parentSub'>
+                <div id='child'>
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="email"
+                        label="Address line 3"
+                        name="email"
+                        autoComplete="email"
+                        autoFocus
+                    />
+                </div>  
+               <div id='child'>
+               <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="email"
+                        label="City"
+                        name="email"
+                        autoComplete="email"
+                        autoFocus
+                    />
+               </div>
+              </div>
+              <div id='parentSub'>
+                <div id='child'>
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="email"
+                        label="State"
+                        name="email"
+                        autoComplete="email"
+                        autoFocus
+                    />
+                </div>  
+               <div id='child'>
+               <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="email"
+                        label="Postal code"
+                        name="email"
+                        autoComplete="email"
+                        autoFocus
+                    />
+               </div>
+              </div>
+            </div>
+            
+           <div id='section'>
+                <Typography variant="h7" sx={{alignSelf:'start'}}>
+                  Upload Required Documents 
+                </Typography>
+              
+                <br/>
+              <div id='uploadSectionHead'>
+                  <Typography variant="h8" sx={{alignSelf:'start'}}>
+                     Business Registration Document
+                  </Typography>
+                  <br/>
+              </div>
+                <div id='uploadSectionElement'>
+                  <Typography variant="h8" sx={{alignSelf:'start'}}>
+                    Tax identification document
+                  </Typography>
+                  <br/>
+                </div>
+                <div id='uploadSectionElement'>
+                  <Typography variant="h8" sx={{alignSelf:'start'}}>
+                    Insurance certificate
+                  </Typography>
+                  <br/>
+                </div>
+              <div id='uploadSectionElement'>
+                  <Typography variant="h8" sx={{alignSelf:'start'}}>
+                    Other  documents
+                  </Typography>
+              </div>
+           </div>
+
+
             <div id='outerForgetPassword'>
             <Link href='#' style={{textDecoration:'none'}}>  
              <Typography variant="overline" >
