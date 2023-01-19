@@ -1,0 +1,31 @@
+#parentSub {
+    display: flex;
+    flex-direction: row ;
+    flex-wrap:nowrap;
+    justify-content:space-between;
+    column-gap: 20px;
+
+  }
+
+#child{
+    width: 350px; 
+    height: 75px; 
+    margin: auto; 
+}
+
+#childSalutation{
+    width: 350px; 
+    height: 75px; 
+}
+
+#section{
+    margin-top: 10px;
+}
+
+#uploadSectionHead{
+    margin-top: 10px;
+}
+
+#uploadSectionElement{
+    margin-top: 5px;
+}
