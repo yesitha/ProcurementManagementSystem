@@ -1,0 +1,21 @@
+#inner {  
+    
+  }
+  
+  #outer {
+    padding-top: 10%;
+    width:100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  #outerButton {
+    display: flex;
+    justify-content: center;
+  }
+
+#outerForgetPassword{
+    display: flex;
+    justify-content: right;
+   
+}
