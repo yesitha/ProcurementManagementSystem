@@ -1,6 +1,8 @@
+@import '../../fonts.css';
+
 .logo{
     margin-left: 10px;
-    margin-right: 10px;
+    margin-right: 6px;
 }
 .headerFlexWrapper{
     display: flex;
@@ -14,6 +16,9 @@
 
 .HeaderTitle{
 padding-left: 15px;
+ font-family: 'Inter', sans-serif; 
+font-weight: 600;
+font-size: 18px;
 
 }
 .OuterLogoutUser{
