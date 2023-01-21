@@ -14,7 +14,7 @@ function Dashboard() {
     <SideNavBar  list1={list1} list2={list2} user={user}/>
     <div  style={{ flexGrow: 1}}>
         
-    <div style={{backgroundColor: 'red' , height: '100vh' ,width:'100vh'}}>
+    <div style={{backgroundColor: 'red' , height: '100vh' }}>
        
       </div>
     </div>
