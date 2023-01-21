@@ -122,6 +122,7 @@ export default function SideNavBar({ list1, list2,user}) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+  
 
   return (
     
