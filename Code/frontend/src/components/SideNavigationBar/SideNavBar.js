@@ -75,6 +75,7 @@ const Drawer = styled(MuiDrawer, {
   flexShrink: 0,
   whiteSpace: "nowrap",
   boxSizing: "border-box",
+  
   ...(open && {
     ...openedMixin(theme),
     "& .MuiDrawer-paper": openedMixin(theme),
@@ -100,7 +101,7 @@ export default function SideNavBar({ list1, list2, user }) {
 
   return (
   
-    <Drawer variant="permanent" open={open}>
+    <Drawer className="Drawer" variant="permanent" open={open}>
       <DrawerHeader>
         <Toolbar
           sx={{
