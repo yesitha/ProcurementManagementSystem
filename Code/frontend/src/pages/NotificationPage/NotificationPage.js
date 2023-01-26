@@ -59,7 +59,7 @@ function NotificationPage() {
                     <ListItemText className="ListItemText" sx={{fontFamily:'Inter',fontWeight:'500'}}>
                         <Typography className="ListItemText">{notification.number} - {notification.name}</Typography>
                          </ListItemText>
-                    <Button variant="contained" sx={{borderRadius:5,backgroundColor:'#2C74B3',color:'#ffffff',fontSize:'20px',py:1,px:4,'&:hover':{backgroundColor:'#205295'}}}>View</Button>
+                    <Button variant="contained" sx={{borderRadius:5,backgroundColor:'#205295',color:'#ffffff',fontSize:'20px',py:1,px:4,'&:hover':{backgroundColor:'#2C74B3'},textTransform: 'none'}}>View</Button>
                     
                    </ListItem>
               
