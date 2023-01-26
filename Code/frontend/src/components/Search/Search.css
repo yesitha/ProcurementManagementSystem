@@ -1,0 +1,25 @@
+@import '../../fonts.css';
+.search{
+    position: fixed;
+    
+     margin-top: 10px;
+    margin-left: 100px;
+   
+ 
+ }
+ .searchArea{
+     display:flex;
+     flex-direction: row;
+     justify-content: space-between;
+     width: 100%;
+ }
+   .searchInput{
+     align-self: center;
+     padding-top: 9px;
+   }
+   .searchIcons{
+     flex-direction: row;
+     display: flex;
+    padding-top: 2px;
+     
+   }
