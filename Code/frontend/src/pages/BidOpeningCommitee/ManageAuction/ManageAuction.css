@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap');
+ @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+.PageHeader1{
+    font-family: 'Inter', sans-serif; 
+    font-weight: 500;
+    color: #ffffff;
+    font-size: 36px;
+    margin-left: 5%;
+    flex-direction: row;
+}
+.PageHeader2{
+    font-family: 'Inter', sans-serif; 
+    font-weight: 500;
+    color: #ffffff;
+    font-size: 36px;
+    margin-left: 7.5%;
+    flex-direction: row;
+}
+
+.midbody{
+    width: 90%;
+    left: 6%;
+    height: 70%;
+    top: 25%;
+    background-color: #ffffff;
+    position: fixed;
+    border-radius: 2%;
+    scroll-behavior: smooth;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+}
+.th1{
+    font-family: 'Inter', sans-serif;
+    font-weight: 500; 
+    font-size: large;
+}
+td{
+    font-family: 'Inter', sans-serif;
+    font-weight: 500; 
+    width: 300px;
+    height: 45px;
+    text-align: center;
+}
