@@ -48,6 +48,7 @@ function SearchNoFilter() {
                     
                     <div className="searchInput">
                         <StyledInputBase 
+                        color='black'
                           placeholder="Search…"
                           inputProps={{ "aria-label": "search" }}
                         />

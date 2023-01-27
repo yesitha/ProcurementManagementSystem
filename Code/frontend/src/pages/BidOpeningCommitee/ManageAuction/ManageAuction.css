@@ -24,9 +24,9 @@
     left: 6%;
     height: 70%;
     top: 25%;
-    background-color: #ffffff;
+   overflow-x: scroll;
     position: fixed;
-    border-radius: 2%;
+    border-radius: 20px;
     scroll-behavior: smooth;
     overflow-y: scroll;
     scroll-behavior: smooth;
@@ -42,4 +42,18 @@ td{
     width: 300px;
     height: 45px;
     text-align: center;
+}
+.TableHeaders{
+    font-family: 'Inter', sans-serif;
+    position: sticky!important;
+    margin-bottom: 4px;
+    z-index: 3;
+    
+
+}
+
+.stiky{
+position: sticky;
+left: 0;
+
 }
