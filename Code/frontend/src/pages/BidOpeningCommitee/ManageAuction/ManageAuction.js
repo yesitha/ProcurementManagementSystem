@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./ManageAuction.css";
 import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { Button, IconButton, Stack, TextField } from "@mui/material";
+import { Button, IconButton, Paper, Stack, TextField } from "@mui/material";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -116,52 +116,54 @@ function ManageAuction(){
         Items to Auction
         </div>
         <div className="midbody">
-        <TableContainer>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ maxWidth: column.Width }}
-                >
-                {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                    {columns.map((column) => {
-                      const value = row[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === 'number'
-                            ? column.format(value)
-                            : value}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
-          </TableBody>
-        </Table>
-        </TableContainer>
-        <TablePagination
-        rowsPerPageOptions={[10,25,50,100]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-        />
+        <Paper elevation={6} sx={{alignItems:"center"}}>
+          <TableContainer style={{ overflowX: "initial" }}>
+          <Table stickyHeader aria-label="sticky table">
+            <TableHead className="TableHeaders">
+              <TableRow>
+                {columns.map((column) => (
+                  <TableCell
+                    key={column.id}
+                    align={column.align}
+                    style={{ maxWidth: column.Width }}
+                  >
+                  {column.label}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row) => {
+                  return (
+                    <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                      {columns.map((column) => {
+                        const value = row[column.id];
+                        return (
+                          <TableCell key={column.id} align={column.align}>
+                            {column.format && typeof value === 'number'
+                              ? column.format(value)
+                              : value}
+                          </TableCell>
+                        );
+                      })}
+                    </TableRow>
+                  );
+                })}
+            </TableBody>
+          </Table>
+          </TableContainer>
+          <TablePagination
+          rowsPerPageOptions={[10,25,50,100]}
+          component="div"
+          count={rows.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </Paper>
         </div>
         </div>
     )

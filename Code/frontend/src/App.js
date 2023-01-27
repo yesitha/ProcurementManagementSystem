@@ -1,4 +1,5 @@
 import './App.css';
+import ManageAuction from './pages/BidOpeningCommitee/ManageAuction/ManageAuction';
 
 import Dashboard from './pages/Dashboard/Dashboard';
 import NotificationPage from './pages/NotificationPage/NotificationPage';
@@ -9,7 +10,7 @@ function App() {
   return (
     <div>
       
-    <NotificationPage/>
+    <ManageAuction/>
     </div>
   );
 }
