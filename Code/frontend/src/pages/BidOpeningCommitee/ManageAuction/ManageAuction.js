@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./ManageAuction.css";
 import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
@@ -10,19 +10,19 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import SearchNoFilter from "../../../components/Search/Search";
 
 const columns = [
-    { id: 'ItemID', label: 'Item ID', Width: 300, align:'center'},
-    { id: 'ItemName', label: 'Item Name', Width: 300, align:'center'},
-    { id: 'Qty', label: 'Quantity', Width: 300, align:'center'},
-    { id: 'Ven', label: 'Vendors', Width: 300, align:'center'},
+    {id: 'ItemID', label: 'Item ID', Width: 300, align:'center'},
+    {id: 'ItemName', label: 'Item Name', Width: 300, align:'center'},
+    {id: 'Qty', label: 'Quantity', Width: 300, align:'center'},
+    {id: 'Ven', label: 'Vendors', Width: 300, align:'center'},
     {id: 'Odate',label: 'Opening Date',Width: 300,align: 'center'},
     {id: 'Cdate',label: 'Closing Date',Width: 300,align: 'center'},
     {id: 'Rdate',label: 'Remaining Days',Width: 300,align: 'center'},
-    { id: 'act', label: 'Action', Width: 300, align:'center'},
+    {id: 'act', label: 'Action', Width: 300, align:'center'},
   ];
+  
   function Setdate() {
     return (
       <Stack component="form" noValidate spacing={3}>
@@ -31,9 +31,8 @@ const columns = [
           label="Set Date"
           type="date"
           align="center"
-          defaultValue="YYYY-MM-DD"
-          sx={{ width: 200 }}
-          //onChange={handleDateChange}
+          defaultValue={new Date().toISOString().substr(0, 10)}
+          sx={{ width: 200, height: 50 }}
           InputLabelProps={{
             shrink: true,
           }}
@@ -41,7 +40,7 @@ const columns = [
       </Stack>
     );
   }
-  
+
   function createData(ItemID,ItemName,Qty,Ven,Odate,Cdate,act) {
     if (!Cdate) return null;
     const currentDate = new Date();
@@ -60,22 +59,20 @@ const columns = [
     Setdate(),
     <Button variant="contained">Schedule</Button>),
     
-    createData('I0014','A4 Papers','500',<Button variant="contained">View</Button>,Setdate(),Setdate(),<Button variant="contained">Schedule</Button>),
-    createData('I0014','A4 Papers','500',<Button variant="contained">View</Button>,Setdate(),Setdate(),<Button variant="contained">Schedule</Button>),
-    createData('I0014','A4 Papers','500',<Button variant="contained">View</Button>,Setdate(),Setdate(),<Button variant="contained">Schedule</Button>),
-    createData('I0014','A4 Papers','500',<Button variant="contained">View</Button>,Setdate(),Setdate(),<Button variant="contained">Schedule</Button>),
-    createData('I0014','A4 Papers','500',<Button variant="contained">View</Button>,Setdate(),Setdate(),<Button variant="contained">Schedule</Button>),
-    createData('I0014','A4 Papers','500',<Button variant="contained">View</Button>,Setdate(),Setdate(),<Button variant="contained">Schedule</Button>),
-    createData('I0014','A4 Papers','500',<Button variant="contained">View</Button>,Setdate(),Setdate(),<Button variant="contained">Schedule</Button>),
-    createData('I0014','A4 Papers','500',<Button variant="contained">View</Button>,Setdate(),Setdate(),<Button variant="contained">Schedule</Button>),
-    createData('I0014','A4 Papers','500',<Button variant="contained">View</Button>,Setdate(),Setdate(),<Button variant="contained">Schedule</Button>),
-    createData('I0014','A4 Papers','500',<Button variant="contained">View</Button>,Setdate(),Setdate(),<Button variant="contained">Schedule</Button>),
-    createData('I0014','A4 Papers','500',<Button variant="contained">View</Button>,Setdate(),Setdate(),<Button variant="contained">Schedule</Button>),
-    createData('I0014','A4 Papers','500',<Button variant="contained">View</Button>,Setdate(),Setdate(),<Button variant="contained">Schedule</Button>),
-    createData('I0014','A4 Papers','500',<Button variant="contained">View</Button>,Setdate(),Setdate(),<Button variant="contained">Schedule</Button>),
-    createData('I0014','A4 Papers','500',<Button variant="contained">View</Button>,Setdate(),Setdate(),<Button variant="contained">Schedule</Button>),
-    createData('I0014','A4 Papers','500',<Button variant="contained">View</Button>,Setdate(),Setdate(),<Button variant="contained">Schedule</Button>),
-    createData('I0014','A4 Papers','500',<Button variant="contained">View</Button>,Setdate(),Setdate(),<Button variant="contained">Schedule</Button>),
+    createData('I0028', 'Ruler', '10',<Button variant="contained">View</Button>,Setdate(),Setdate(),<Button variant="contained">Schedule</Button>),
+    createData('I0015', 'Stapler', '50',<Button variant="contained">View</Button>,Setdate(),Setdate(),<Button variant="contained">Schedule</Button>),
+    createData('I0016', 'Pens', '100',<Button variant="contained">View</Button>,Setdate(),Setdate(),<Button variant="contained">Schedule</Button>),
+    createData('I0017', 'Notebooks', '25',<Button variant="contained">View</Button>,Setdate(),Setdate(),<Button variant="contained">Schedule</Button>),
+    createData('I0018', 'Printer Ink', '10',<Button variant="contained">View</Button>,Setdate(),Setdate(),<Button variant="contained">Schedule</Button>),
+    createData('I0019', 'Paper Clips', '200',<Button variant="contained">View</Button>,Setdate(),Setdate(),<Button variant="contained">Schedule</Button>),
+    createData('I0020', 'Tape', '15',<Button variant="contained">View</Button>,Setdate(),Setdate(),<Button variant="contained">Schedule</Button>),
+    createData('I0021', 'Envelopes', '75',<Button variant="contained">View</Button>,Setdate(),Setdate(),<Button variant="contained">Schedule</Button>),
+    createData('I0022', 'File Folders', '50',<Button variant="contained">View</Button>,Setdate(),Setdate(),<Button variant="contained">Schedule</Button>),
+    createData('I0023', 'Scissors', '20',<Button variant="contained">View</Button>,Setdate(),Setdate(),<Button variant="contained">Schedule</Button>),
+    createData('I0024', 'Whiteboard Markers', '30',<Button variant="contained">View</Button>,Setdate(),Setdate(),<Button variant="contained">Schedule</Button>),
+    createData('I0025', 'Calculator', '5',<Button variant="contained">View</Button>,Setdate(),Setdate(),<Button variant="contained">Schedule</Button>),
+    createData('I0026', 'Post-it Notes', '100',<Button variant="contained">View</Button>,Setdate(),Setdate(),<Button variant="contained">Schedule</Button>),
+    createData('I0027', 'Highlighters', '20',<Button variant="contained">View</Button>,Setdate(),Setdate(),<Button variant="contained">Schedule</Button>),
   ]
 
 function ManageAuction(){
@@ -107,13 +104,14 @@ function ManageAuction(){
         <div>
         <SideNavBar list1={list1} list2={list2} user={user}/>
         <div className="PageHeader1">
-        <IconButton><ArrowBackIosIcon color="white"/></IconButton>
+        <IconButton sx={{  pl:'15px' ,height:'34px',width:'34px'}}><ArrowBackIosIcon sx={{color:'#ffffff',}}/></IconButton>
         Manage Auction
         <br></br>
         <br></br>
         </div>
         <div className="PageHeader2">
-        Items to Auction
+        <p>Items to Auction</p>
+        <SearchNoFilter/>
         </div>
         <div className="midbody">
         <Paper elevation={6} sx={{alignItems:"center"}}>
