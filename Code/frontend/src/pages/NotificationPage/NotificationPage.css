@@ -75,3 +75,8 @@
     text-overflow: ellipsis;
     white-space: nowrap;
  }
+ .paper{
+    scroll-behavior: smooth;
+    overflow-y: scroll;
+    overflow-x: scroll;
+ }

@@ -48,13 +48,14 @@ function SearchNoFilter() {
                     
                     <div className="searchInput">
                         <StyledInputBase 
+                        color='black'
                           placeholder="Search…"
                           inputProps={{ "aria-label": "search" }}
                         />
                     </div>
                     <div className="searchIcons">
                     
-                    <IconButton sx={{display:"flex",flexDirection:"row",borderRadius:50,backgroundColor:'#2c74b3',height:50,width:'50',mt:1,mr:1,px:2,'&:hover':{backgroundColor:'#205295'}}}>
+                    <IconButton sx={{display:"flex",flexDirection:"row",borderRadius:50,backgroundColor:'#205295',height:50,width:'50',mt:1,mr:1,px:2,'&:hover':{backgroundColor:'#2c74b3'}}}>
                           <SearchIcon sx={{color:'#ffffff'}}/>
                         </IconButton>
                     </div>
