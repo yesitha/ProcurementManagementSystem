@@ -33,6 +33,7 @@ padding-left: 15px;
     color: #ffffff;
     font-size: 36px;
     
+    
 }
 .welcomeContainer{
    
@@ -49,11 +50,8 @@ padding-left: 15px;
     flex-direction: column;
 }
 .upperRightContainer{
-    flex-grow: 1;
-   
-   /* border:  1px solid red; */
-   width: 500px;
-   height: 50px;
+    
+   height: fit-content;
 }
 .upperSection{
     display: flex;
@@ -95,6 +93,7 @@ padding-left: 15px;
   
    padding-left: 10px;
    padding-right: 10px;
+   align-self: flex-end;
    
    
 }
@@ -109,6 +108,7 @@ padding-left: 15px;
     margin-right: 10px;
     padding-right: 10px;
     width: max-content;
+    flex-wrap: wrap;
     
   
     
@@ -146,16 +146,19 @@ padding-left: 15px;
 
 }
 .lowerActionButtons{
-    margin-top: 20px;
+    margin-top: 10px;
     flex-direction: row;
-    overflow: hidden;
+    flex-wrap: wrap;
     padding-bottom: 4px;
+   
     
 }
 
 .actionButtonText{
     display: flex;
     flex-direction: column;
+   padding-bottom: 2px;
+   padding-top: 2px;
     
 }
 
@@ -179,5 +182,5 @@ padding-left: 15px;
     color: #ffffff;
 }
 .actionButton{
-    margin-bottom: 3px!important;
+    margin-bottom: 20px!important;
 }

@@ -1,40 +1,26 @@
- @import "../../../fonts.css";
+  @import "../../../fonts.css";
 
-.PageHeader1{
-    font-family: 'Inter', sans-serif; 
-    font-weight: 500;
-    color: #ffffff;
-    font-size: 36px;
-    margin-left: 5%;
-    position: relative;
+
+
+.th1{
+    font-family: 'Inter', sans-serif;
+    font-weight: 500; 
+    font-size: large;
 }
-.PageHeader2{
-    font-family: 'Inter', sans-serif; 
-    font-weight: 500;
-    color: #ffffff;
-    font-size: 36px;
-    margin-left: 7.5%;
-    position: relative;
-    display: flex;
-}
-.midbody{
-    width: 90%;
-    left: 6%;
-    height: 73%;
-    top: 25%;
-   overflow-x: scroll;
-    position: fixed;
-    border-radius: 20px;
-    scroll-behavior: smooth;
-    overflow-y: scroll;
-    overflow-x: scroll;
-    scroll-behavior: smooth;
+.td{
+    font-family: 'Inter', sans-serif;
+    font-weight: 500; 
+    width: 300px;
+    height: 45px;
+    text-align: center;
 }
 .TableHeaders{
     font-family: 'Inter', sans-serif;
     position: sticky!important;
     margin-bottom: 4px;
     z-index: 3;
+    
+
 }
 
 .stiky{
@@ -42,3 +28,76 @@ position: sticky;
 left: 0;
 
 }
+
+
+
+
+
+.upperSection{
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 100%;
+}
+
+.Header{
+    font-family: 'Inter', sans-serif; 
+    font-weight: 600;
+    color: #ffffff;
+    font-size: 36px;
+    position: relative;
+    margin-right: 12vw;
+    
+}
+.header2{
+    font-family: 'Inter', sans-serif; 
+    font-weight: 500;
+    color: #ffffff;
+    font-size: 34px;
+    position: relative;
+    margin-right:5vw;
+}
+
+.ManageAuctionPageContainer__header{
+    padding-right: 10px;
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+  }
+  .MiddleSection{
+    padding-right: 10px;
+    
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .tableContainer{
+
+border-radius: 20px;
+overflow-x: scroll;
+scroll-behavior: smooth;
+
+
+  }
+  .search{
+    margin-bottom: 10px;
+    
+    
+   
+    margin-left: 20px;
+  }
+  .baseTableContainer{
+    border-radius: 20px;
+   
+
+
+  }
+  .downSection{
+    overflow-x: hidden;
+    
+  }
