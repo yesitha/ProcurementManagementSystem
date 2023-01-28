@@ -18,17 +18,9 @@ function App() {
   return (
     <div>
 
-
-    <FinalizedMasterProcurementPlan/>
-   
-
-
-
-    
-     
+    <CreateSubProcurementPlan/>
 
     </div>
   );
 }
-
 export default App;
