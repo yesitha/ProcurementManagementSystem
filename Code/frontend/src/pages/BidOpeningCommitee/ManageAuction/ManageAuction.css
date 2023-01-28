@@ -27,6 +27,7 @@
     border-radius: 20px;
     scroll-behavior: smooth;
     overflow-y: scroll;
+    overflow-x: scroll;
     scroll-behavior: smooth;
 }
 .th1{
