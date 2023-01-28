@@ -101,7 +101,7 @@ function ManageAuction(){
         setPage(0);
       };
     return(
-        <div>
+      <div>
         <SideNavBar list1={list1} list2={list2} user={user}/>
         <div className="PageHeader1">
         <IconButton sx={{  pl:'15px' ,height:'34px',width:'34px'}}><ArrowBackIosIcon sx={{color:'#ffffff',}}/></IconButton>
@@ -163,7 +163,7 @@ function ManageAuction(){
           />
         </Paper>
         </div>
-        </div>
+      </div>
     )
 }
 

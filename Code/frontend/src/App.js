@@ -8,13 +8,14 @@ import NotificationPage from './pages/NotificationPage/NotificationPage';
 import CreateSubProcurementPlan from './pages/Create SubProcurement Plan Division HOD/CreateSubProcurementPlan'
 
 import SignUp from './pages/SignUp/SignUp';
+import FinalizedMasterProcurementPlan from './pages/ProcurementCommitee/FinalizedMasterProcurementPlan/FinalizedMasterProcurementPlan';
 
 function App() {
   return (
     <div>
 
-      
-    <Dashboard/>
+    <FinalizedMasterProcurementPlan/>
+    {/* <ManageAuction/> */}
 
 
     
