@@ -13,16 +13,8 @@ import MasterProcurementPlanStatus from './pages/MasterProcurementPlanStatus/Mas
 function App() {
   return (
     <div>
-
-      
-    <ManageAuction/>
-
-
-    
-     
-
+    <CreateSubProcurementPlan/>
     </div>
   );
 }
-
 export default App;

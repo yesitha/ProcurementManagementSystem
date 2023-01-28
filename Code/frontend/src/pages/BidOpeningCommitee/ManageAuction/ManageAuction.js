@@ -117,17 +117,15 @@ function ManageAuction(){
           
             <h1 className="Header"> Manage Auctions</h1>
           </div>
-          
-              
-         
         </div>
-        <div className="MiddleSection">
 
+        <div className="MiddleSection">
         <h1 className="header2">Items to Auction</h1>
         <SearchNoFilter className="search"/>
         </div>
+
+
         <div className="downSection">
-        
         <Paper  className="baseTableContainer" elevation={6} sx={{mr: { xs: "60px",sm:"65px", md: "65px",lg:"68px", xl: "70px" },alignItems:"center",borderRadius:"31px"}}>
           <TableContainer className="tableContainer">
           <Table stickyHeader aria-label="sticky table">
