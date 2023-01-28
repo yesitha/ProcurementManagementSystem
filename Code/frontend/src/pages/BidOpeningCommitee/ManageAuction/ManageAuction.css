@@ -1,6 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap');
- @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+ @import "../../../fonts.css";
 
 .PageHeader1{
     font-family: 'Inter', sans-serif; 
@@ -8,7 +6,7 @@
     color: #ffffff;
     font-size: 36px;
     margin-left: 5%;
-    flex-direction: row;
+    position: relative;
 }
 .PageHeader2{
     font-family: 'Inter', sans-serif; 
@@ -16,19 +14,20 @@
     color: #ffffff;
     font-size: 36px;
     margin-left: 7.5%;
-    flex-direction: row;
+    position: relative;
+    display: flex;
 }
-
 .midbody{
     width: 90%;
     left: 6%;
-    height: 70%;
+    height: 73%;
     top: 25%;
    overflow-x: scroll;
     position: fixed;
     border-radius: 20px;
     scroll-behavior: smooth;
     overflow-y: scroll;
+    overflow-x: scroll;
     scroll-behavior: smooth;
 }
 .th1{
@@ -36,7 +35,7 @@
     font-weight: 500; 
     font-size: large;
 }
-td{
+.td{
     font-family: 'Inter', sans-serif;
     font-weight: 500; 
     width: 300px;
