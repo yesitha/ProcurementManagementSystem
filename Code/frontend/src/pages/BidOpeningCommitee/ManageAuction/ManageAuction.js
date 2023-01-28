@@ -11,6 +11,7 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import SearchNoFilter from "../../../components/Search/Search";
+import { Container } from "@mui/system";
 
 const columns = [
     {id: 'ItemID', label: 'Item ID', Width: 300, align:'center'},
@@ -101,21 +102,34 @@ function ManageAuction(){
         setPage(0);
       };
     return(
-        <div>
-        <SideNavBar list1={list1} list2={list2} user={user}/>
-        <div className="PageHeader1">
-        <IconButton sx={{  pl:'15px' ,height:'34px',width:'34px'}}><ArrowBackIosIcon sx={{color:'#ffffff',}}/></IconButton>
-        Manage Auction
-        <br></br>
-        <br></br>
+      <div style={{overflowX:"hidden"}}>
+      <div className="sideNavBar">
+        <SideNavBar list1={list1} list2={list2} user={user} />
+      </div>
+
+      <Container
+        className="main"
+        sx={{ ml: { xs: "60px",sm:"65px", md: "65px",lg:"68px", xl: "70px" } ,display:"flex",flexDirection:"column"}}
+      >
+        <div className="upperSection">
+          <div className="ManageAuctionPageContainer__header">
+            <IconButton sx={{  pl:'15px' ,height:'34px',width:'34px',mt:3.7}}><ArrowBackIosIcon sx={{color:'#ffffff',}}/></IconButton>
+          
+            <h1 className="Header"> Manage Auctions</h1>
+          </div>
+          
+              
+         
         </div>
-        <div className="PageHeader2">
-        <p>Items to Auction</p>
-        <SearchNoFilter/>
+        <div className="MiddleSection">
+
+        <h1 className="header2">Items to Auction</h1>
+        <SearchNoFilter className="search"/>
         </div>
-        <div className="midbody">
-        <Paper elevation={6} sx={{alignItems:"center"}}>
-          <TableContainer style={{ overflowX: "initial" }}>
+        <div className="downSection">
+        
+        <Paper  className="baseTableContainer" elevation={6} sx={{mr: { xs: "60px",sm:"65px", md: "65px",lg:"68px", xl: "70px" },alignItems:"center",borderRadius:"31px"}}>
+          <TableContainer className="tableContainer">
           <Table stickyHeader aria-label="sticky table">
             <TableHead className="TableHeaders">
               <TableRow>
@@ -163,7 +177,15 @@ function ManageAuction(){
           />
         </Paper>
         </div>
-        </div>
+            
+        
+      </Container>
+    </div>
+        
+       
+        
+        
+        
     )
 }
 
