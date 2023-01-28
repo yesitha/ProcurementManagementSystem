@@ -13,6 +13,7 @@ import TableRow from '@mui/material/TableRow';
 import Grid from '@mui/material/Unstable_Grid2';
 import SearchFilter from "../../../src/components/SearchNoFilter/SearchNoFilter";
 import DeleteIcon from '@mui/icons-material/Delete';
+import SearchNoFilter from "../../components/Search/Search";
 
 
 function CreateSubProcurementPlan() {
@@ -100,7 +101,7 @@ function CreateSubProcurementPlan() {
             <h1 className="Header">Sub Procurement Plan</h1>
           </div>
         </div>
-        
+        <div className="OuterMiddle">
         <div className='Ph2'>
             Division: [Production Division]
           </div>
@@ -109,19 +110,20 @@ function CreateSubProcurementPlan() {
         <div className="MiddleSection">
           
         <div className='Ph3'>
-                SUB PROCUREMENT ID*
+                <h4>SUB PROCUREMENT ID*</h4>
                 {/* components import */}
               </div>
 
-          <SearchFilter className="search" />
+              <SearchNoFilter className="search"/>
+        </div>
         </div>
 
         <div className="downSection">
 
 
-          <div className="midbody">
-            <Paper elevation={6} sx={{ alignItems: "center" }}>
-              <TableContainer style={{ overflowX: "initial" }}>
+          
+            <Paper className="baseTableContainer" elevation={6} sx={{ mr: { xs: "60px",sm:"65px", md: "65px",lg:"68px", xl: "70px" },alignItems:"center",borderRadius:"31px"}}>
+              <TableContainer className="tableContainer" >
                 <Table stickyHeader aria-label="sticky table">
                   <TableHead className="TableHeaders">
                     <TableRow>
@@ -168,7 +170,7 @@ function CreateSubProcurementPlan() {
                 onRowsPerPageChange={handleChangeRowsPerPage}
               />
             </Paper>
-          </div>
+          
 
 
         
