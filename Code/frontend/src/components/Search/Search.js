@@ -38,7 +38,7 @@ const Search = styled('div')(({ theme }) => ({
     },
   }));
 
-function SearchNoFilter() {
+function SearchFilter() {
   return (
     <Search className="search" sx={{borderRadius:6,flexDirection:"row",mr:"40px",height:{xs:"60px"}}}>
                <div className="searchArea">
@@ -64,4 +64,4 @@ function SearchNoFilter() {
   )
 }
 
-export default SearchNoFilter
+export default SearchFilter
