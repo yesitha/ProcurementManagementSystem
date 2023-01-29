@@ -1,0 +1,42 @@
+@import "/src/fonts.css";
+
+.Ph1{
+    font-family: 'Inter', sans-serif; 
+    font-weight: 500;
+    color: #ffffff;
+    font-size: 36px;
+    position: relative;
+}
+.Ph2{
+    font-family: 'Inter', sans-serif; 
+    font-weight: 500;
+    color: #ffffff;
+    font-size: 15px;
+    background-color: #205295;
+    width: 250px;
+    text-align: center;
+    
+}
+
+.Ph3{
+    font-family: 'Inter', sans-serif; 
+    font-weight: 500;
+    color: #ffffff; 
+    font-size: 15px;
+    flex-direction: row;
+    display: flex;
+}
+.midbody{
+    overflow-y: scroll;
+}
+.TableHeaders{
+    font-family: 'Inter', sans-serif;
+    position: sticky!important;
+    margin-bottom: 4px;
+    z-index: 3;
+}
+.stiky{
+position: sticky;
+left: 0;
+
+}
