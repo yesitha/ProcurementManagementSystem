@@ -1,4 +1,4 @@
-  @import "../../../fonts.css";
+@import "../../fonts.css";
 
 
 
@@ -57,7 +57,7 @@ left: 0;
     font-family: 'Inter', sans-serif; 
     font-weight: 500;
     color: #ffffff;
-    font-size: 34px;
+    font-size: 16px;
     position: relative;
     margin-right:5vw;
 }
@@ -69,7 +69,7 @@ left: 0;
     flex-direction: row;
   }
   .MiddleSection{
-    padding-right: 10px;
+    padding-right: 15px;
     
     display: flex;
     flex-direction: row;
@@ -87,14 +87,71 @@ scroll-behavior: smooth;
   .search{
     margin-bottom: 10px;
     
-    
+    align-self: flex-end;
    
-    margin-left: 20px;
+    margin-left: 5px;
   }
   .baseTableContainer{
     border-radius: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
   }
   .downSection{
     overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
     
   }
+
+  .header2Section{
+    display:flex;
+    flex-direction: column;
+    
+  }
+  .dropdown{
+    align-self: flex-end;
+  }
+  .rightButton{
+display: flex!important;
+
+  }
+
+  .TecAppointButton{
+    margin-bottom: 10px;
+    width: 200px;
+      
+    border-radius: 10px;
+   
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .ViewButton{
+    background-color:  #205295 !important;
+    
+  }
+
+  .ViewButton:hover{
+    background-color:#2C74B3!important;
+  }
+
+  .TecAppointButton{
+    background-color:  #205295 !important;
+   
+  }
+  .TecAppointButton:hover{
+    background-color:#2C74B3!important;
+  }
+  .fmpp-title-search{
+    margin-top: 40px;
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dropDown{
+   overflow-x: auto;
+}
+
