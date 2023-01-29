@@ -12,13 +12,14 @@ import SignUp from './pages/SignUp/SignUp';
 import FinalizedMasterProcurementPlan from './pages/ProcurementCommitee/FinalizedMasterProcurementPlan/FinalizedMasterProcurementPlan';
 
 import MasterProcurementPlanStatus from './pages/MasterProcurementPlanStatus/MasterProcurementPlanStatus';
+import ViewMasterProcurementPlan from './pages/ViewMasterProcurementPlan/ViewMasterProcurementPlan';
 
 
 function App() {
   return (
     <div>
 
-    <MasterProcurementPlanStatus/>
+    <ViewMasterProcurementPlan/>
 
     </div>
   );

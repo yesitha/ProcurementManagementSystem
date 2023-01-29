@@ -50,12 +50,12 @@ function SearchFilter() {
                         />
                     </div>
                     <div className="searchIcons" >
-                    <IconButton  sx={{display:"flex",flexDirection:"row",borderRadius:50,backgroundColor:'#205295',height:{xs:45,md:50, lg:50},width:{xs:45,md:50, lg:50},mt:{lg:0.5,md:0.5,sm:1,xs:1},mr:1,px:2,'&:hover':{backgroundColor:'#205295#2c74b3'},mb:{xs:2,xl:4}}}  >
+                    <IconButton  sx={{display:"flex",flexDirection:"row",borderRadius:50,backgroundColor:'#205295',height:{xs:45,md:50, lg:50},width:{xs:45,md:50, lg:50},mt:{lg:0.5,md:0.5,sm:1,xs:1},mr:1,px:2,'&:hover':{backgroundColor:'#2C74B3'},mb:{xs:2,xl:4}}}  >
                         
                           <FilterListIcon sx={{color:'#ffffff'}}/>
                        
                     </IconButton>
-                    <IconButton sx={{display:"flex",flexDirection:"row",borderRadius:50,backgroundColor:'#205295',height:{xs:45,md:50, lg:50},width:{xs:45,md:50, lg:50},mt:{lg:0.5,md:0.5,sm:1,xs:1},mr:1,px:2,'&:hover':{backgroundColor:'#2c74b'}}}>
+                    <IconButton sx={{display:"flex",flexDirection:"row",borderRadius:50,backgroundColor:'#205295',height:{xs:45,md:50, lg:50},width:{xs:45,md:50, lg:50},mt:{lg:0.5,md:0.5,sm:1,xs:1},mr:1,px:2,'&:hover':{backgroundColor:'#2C74B3'}}}>
                           <SearchIcon sx={{color:'#ffffff'}}/>
                         </IconButton>
                     </div>
