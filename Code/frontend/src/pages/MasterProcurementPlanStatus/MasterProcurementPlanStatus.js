@@ -1,9 +1,12 @@
-import { Grid, IconButton } from "@mui/material";
+import { Grid, IconButton, Paper } from "@mui/material";
 import { Container, display } from "@mui/system";
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import React from "react";
 import SideNavBar from "../../components/SideNavigationBar/SideNavBar";
 import "./MasterProcurementPlanStatus.css";
+import "react-step-progress-bar/styles.css";
+import ProgressBar from "../../components/ProgressBar/ProgressBar";
+
 
 const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
 const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
@@ -17,10 +20,14 @@ const user = {
   address: "123, ABC Street, XYZ City, 123456",
   gender: "Male",
   profilePic: "https://www.w3schools.com/howto/img_avatar.png",
+
+
 };
+
+const steps = ['Initiating Procurement Process', 'Approval for Specification', 'Approval for Procurement','Audit Verification','DG Approval for PO','Issuing Purchase Order','Initiating Procurement Process','Good Receive Note','Payment Voucher'];
 function MasterProcurementPlanStatus() {
   return (
-    <div>
+    <div style={{overflowX:"hidden"}}>
       <div className="sideNavBar">
         <SideNavBar list1={list1} list2={list2} user={user} />
       </div>
@@ -40,6 +47,9 @@ function MasterProcurementPlanStatus() {
          
         </div>
         <div className="downSection">
+          <Paper className="ProgressBarOuter" elevation={6} sx={{py:4,borderRadius:5,mr:8,px:1}}>
+        <ProgressBar step="2" steps={steps}/>
+        </Paper>
             
         </div>
       </Container>

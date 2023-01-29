@@ -6,6 +6,7 @@
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.11.0",
+    "@mui/joy": "^5.0.0-alpha.64",
     "@mui/lab": "^5.0.0-alpha.117",
     "@mui/material": "^5.11.5",
     "@mui/x-date-pickers": "^5.0.15",
@@ -19,6 +20,7 @@
     "react-loading": "^2.0.3",
     "react-router-dom": "^6.0.2",
     "react-scripts": "5.0.1",
+    
     "web-vitals": "^2.1.4"
   },
   "scripts": {
