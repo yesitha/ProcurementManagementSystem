@@ -4,7 +4,7 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import React from "react";
 import SideNavBar from "../../components/SideNavigationBar/SideNavBar";
 import "./MasterProcurementPlanStatus.css";
-import "react-step-progress-bar/styles.css";
+
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
 
 
