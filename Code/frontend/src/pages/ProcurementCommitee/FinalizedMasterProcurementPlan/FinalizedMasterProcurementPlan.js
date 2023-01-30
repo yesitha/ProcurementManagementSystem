@@ -1,5 +1,5 @@
 import React from 'react';
-import './FinalizedMasterProcurementPlan.css';
+import styles from './FinalizedMasterProcurementPlan.module.css';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import SelectDropDown from '../../../components/SelectDropDown/SelectDropDown';
@@ -14,6 +14,7 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VendorDetails from '../../../components/Popups/VendorDetails/VendorDetails';
+import DonePopup from '../../../components/Popups/DonePopup/DonePopup';
 
 
 //===============Applicable for table data===================================
@@ -89,7 +90,6 @@ function FinalizedMasterProcurementPlan() {
         profilePic: "https://www.w3schools.com/howto/img_avatar.png",
       };
 
-
 //=======values for 'SelectDropDown.js' as an array=======
 
 const list=['MPPI10000', 'MPPI10001', 'MPPI10002', 'MPPI10003'];
@@ -110,28 +110,28 @@ const handleChangeRowsPerPage = (event) => {
   return (
     <div>
         <SideNavBar list1={list1} list2={list2} user={user}/>
-        <div className='fmpp-mainBody'>
-            <div className='fmpp-heading'>
+        <div className={styles.fmpp_mainBody}>
+            <div className={styles.fmpp_heading}>
                 <IconButton sx={{pl:'15px',height:'34px',width:'34px'}}><ArrowBackIosIcon sx={{color:'#ffffff'}}/></IconButton>
                 Finalized Master Procurement Plan
             </div>
-            <div className='fmpp-title-search'>
-                <div className='fmpp-title'>
+            <div className={styles.fmpp_title_search}>
+                <div className={styles.fmpp_title}>
                     <label>MASTER PROCUREMENT PLAN ID*</label>
                     <SelectDropDown list={list}/>
                 </div>
-                <div className='fmpp-search'>
+                <div className={styles.fmpp_search}>
                     <SearchNoFilter/>
                 </div>
             </div>
             
             {/* Add table data */}
 
-            <div className='fmpp-table'>
+            <div className={styles.fmpp_table}>
                 <Paper sx={{ width: '100%', overflow: 'hidden', borderRadius: 5, scrollBehavior: 'smooth'}}>
-                    <TableContainer sx={{ maxHeight: 400 }}>
+                    <TableContainer sx={{ maxHeight: '100%' }}>
                     <Table stickyHeader aria-label="sticky table">
-                        <TableHead className="TableHeaders0">
+                        <TableHead className={styles.TableHeaders0}>
                         <TableRow>
                             {columns.map((column) => (
                             <TableCell
@@ -177,8 +177,8 @@ const handleChangeRowsPerPage = (event) => {
                 />
                 </Paper>
             </div>
-            <div className='fmpp-button'>
-                <Button variant="contained" sx={{position: 'absolute', right:'0', bgcolor: '#205295', borderRadius: 5, height: 60, width: 300}}>Send to Internal Auditor</Button>
+            <div className={styles.fmpp_button}>  
+              <DonePopup name={"Internal Auditor"} title={"Send to Internal Auditor"} styles={{position: 'absolute', right:'0', bgcolor: '#205295', borderRadius: 5, height: 60, width: 300}}/>
             </div>
         </div>
     </div>
