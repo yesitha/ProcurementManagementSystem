@@ -24,8 +24,11 @@ import SearchNoFilter from "../../components/Search/Search";
 import { Container } from "@mui/system";
 import "./ViewMasterProcurementPlan.css";
 import SelectDropDown from "../../components/SelectDropDown/SelectDropDown";
+import ViewRecomandedVendors from "../../components/Popups/ViewRecomandedVendors/ViewRecomandedVendors";
 
 function ViewMasterProcurementPlan() {
+const Recomandedvendors1=["Vendor 1","Vendor 2","Vendor 3","Vendor 4"]
+const Recomandedvendors2=["Vendor 5","Vendor 6","Vendor 7","Vendor 8"]
   const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
   const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
   const user = {
@@ -84,9 +87,7 @@ function ViewMasterProcurementPlan() {
       "500",
       "Finance",
       "240 GSM",
-      <Button variant="contained" className="ViewButton">
-        View
-      </Button>,
+      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
       Setdate("2022.12.12")
     ),
     createData(
@@ -95,9 +96,7 @@ function ViewMasterProcurementPlan() {
       "10",
       "Finance",
       "240 GSM",
-      <Button variant="contained" className="ViewButton">
-        View
-      </Button>,
+      <ViewRecomandedVendors vendors={Recomandedvendors2}/>,
       Setdate("2022.12.12")
     ),
     createData(
