@@ -1,5 +1,5 @@
 import React from "react";
-import "./ManageAuction.css";
+import styles from "./ManageAuction.module.css";
 import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { Button, IconButton, Paper, Stack, TextField } from "@mui/material";
@@ -103,33 +103,33 @@ function ManageAuction(){
       };
     return(
       <div style={{overflowX:"hidden"}}>
-      <div className="sideNavBar">
+      <div className={styles.sideNavBar}>
         <SideNavBar list1={list1} list2={list2} user={user} />
       </div>
 
       <Container
-        className="main"
+        className={styles.main}
         sx={{ ml: { xs: "60px",sm:"65px", md: "65px",lg:"68px", xl: "70px" } ,display:"flex",flexDirection:"column"}}
       >
-        <div className="upperSection">
-          <div className="ManageAuctionPageContainer__header">
+        <div className={styles.upperSection}>
+          <div className={styles.ManageAuctionPageContainer__header}>
             <IconButton sx={{  pl:'15px' ,height:'34px',width:'34px',mt:3.7}}><ArrowBackIosIcon sx={{color:'#ffffff',}}/></IconButton>
           
-            <h1 className="Header"> Manage Auctions</h1>
+            <h1 className={styles.Header}> Manage Auctions</h1>
           </div>
         </div>
 
-        <div className="MiddleSection">
-        <h1 className="header2">Items to Auction</h1>
-        <SearchNoFilter className="search"/>
+        <div className={styles.MiddleSection}>
+        <h1 className={styles.header2}>Items to Auction</h1>
+        <SearchNoFilter className={styles.search}/>
         </div>
 
 
-        <div className="downSection">
-        <Paper  className="baseTableContainer" elevation={6} sx={{mr: { xs: "60px",sm:"65px", md: "65px",lg:"68px", xl: "70px" },alignItems:"center",borderRadius:"31px"}}>
-          <TableContainer className="tableContainer">
+        <div className={styles.downSection}>
+        <Paper  className={styles.baseTableContainer} elevation={6} sx={{mr: { xs: "60px",sm:"65px", md: "65px",lg:"68px", xl: "70px" },alignItems:"center",borderRadius:"31px"}}>
+          <TableContainer className={styles.tableContainer}>
           <Table stickyHeader aria-label="sticky table">
-            <TableHead className="TableHeaders">
+            <TableHead className={styles.TableHeaders}>
               <TableRow>
                 {columns.map((column) => (
                   <TableCell

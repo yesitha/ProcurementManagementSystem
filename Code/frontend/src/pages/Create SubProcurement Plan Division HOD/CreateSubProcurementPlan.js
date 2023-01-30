@@ -1,6 +1,6 @@
 import React from 'react'
 import SideNavBar from "../../components/SideNavigationBar/SideNavBar";
-import "./Create SubProcurementPlan.css";
+import styles from "./CreateSubProcurementPlan.module.css";
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { Container, Button, FormControl, Box, NativeSelect, Card, CardContent, IconButton, Paper, Stack, TextField, Typography, Select, MenuItem, InputLabel, CssBaseline } from "@mui/material";
 import Table from '@mui/material/Table';
@@ -14,6 +14,7 @@ import Grid from '@mui/material/Unstable_Grid2';
 import SearchFilter from "../../../src/components/SearchNoFilter/SearchNoFilter";
 import DeleteIcon from '@mui/icons-material/Delete';
 import SearchNoFilter from "../../components/Search/Search";
+import SelectDropDown from '../../components/SelectDropDown/SelectDropDown';
 
 
 function CreateSubProcurementPlan() {
@@ -70,6 +71,7 @@ function CreateSubProcurementPlan() {
 
   ]
 
+  const list=['MPPI10000', 'MPPI10001', 'MPPI10002', 'MPPI10003'];
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const handleChangePage = (event, newPage) => {
@@ -85,99 +87,98 @@ function CreateSubProcurementPlan() {
     <div style={{ overflowX: "hidden" }}>
 
 
-      <div className="sideNavBar">
+      <div className={styles.sideNavBar}>
         <SideNavBar list1={list1} list2={list2} user={user} />
       </div>
 
       <Container
-        className="main"
+        className={styles.main}
         sx={{ ml: { xs: "60px", sm: "65px", md: "65px", lg: "68px", xl: "70px" }, display: "flex", flexDirection: "column" }}
       >
-        
-        <div className="upperSection">
-          <div className="ManageAuctionPageContainer__header">
+
+        <div className={styles.upperSection}>
+          <div className={styles.ManageAuctionPageContainer__header}>
             <IconButton sx={{ pl: '15px', height: '34px', width: '34px', mt: 3.7 }}><ArrowBackIosIcon sx={{ color: '#ffffff', }} /></IconButton>
 
-            <h1 className="Header">Sub Procurement Plan</h1>
+            <h1 className={styles.Header}>Sub Procurement Plan</h1>
           </div>
         </div>
-        <div className="OuterMiddle">
-        <div className='Ph2'>
-            Division: [Production Division]
+        <div className={styles.OuterMiddle}>
+          <div className={styles.Ph2}>
+            <h4>Division: [Production Division]</h4>
           </div>
-        
 
-        <div className="MiddleSection">
-          
-        <div className='Ph3'>
-                <h4>SUB PROCUREMENT ID*</h4>
-                {/* components import */}
-              </div>
 
-              <SearchNoFilter className="search"/>
+          <div className={styles.MiddleSectionN}>
+            <div className={styles.Ph3}>
+              <h4 className={styles.h4m}>SUB PROCUREMENT ID*</h4>
+              <SelectDropDown list={list} />
+            </div>
+
+            <SearchNoFilter className={styles.search} />
+          </div>
         </div>
+
+        <div className={styles.downSection}>
+
+
+
+          <Paper className={styles.baseTableContainer} elevation={6} sx={{ mr: { xs: "60px", sm: "65px", md: "65px", lg: "68px", xl: "70px" }, alignItems: "center", borderRadius: "31px" }}>
+            <TableContainer className={styles.tableContainer} >
+              <Table stickyHeader aria-label="sticky table">
+                <TableHead className={styles.TableHeaders}>
+                  <TableRow>
+                    {columns.map((column) => (
+                      <TableCell
+                        key={column.id}
+                        align={column.align}
+                        style={{ maxWidth: column.Width }}
+                      >
+                        {column.label}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {rows
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row) => {
+                      return (
+                        <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                          {columns.map((column) => {
+                            const value = row[column.id];
+                            return (
+                              <TableCell key={column.id} align={column.align}>
+                                {column.format && typeof value === 'number'
+                                  ? column.format(value)
+                                  : value}
+                              </TableCell>
+                            );
+                          })}
+                        </TableRow>
+                      );
+                    })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[10, 25, 50, 100]}
+              component="div"
+              count={rows.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </Paper>
+
+
+
+
+
+
+
         </div>
-
-        <div className="downSection">
-
-
-          
-            <Paper className="baseTableContainer" elevation={6} sx={{ mr: { xs: "60px",sm:"65px", md: "65px",lg:"68px", xl: "70px" },alignItems:"center",borderRadius:"31px"}}>
-              <TableContainer className="tableContainer" >
-                <Table stickyHeader aria-label="sticky table">
-                  <TableHead className="TableHeaders">
-                    <TableRow>
-                      {columns.map((column) => (
-                        <TableCell
-                          key={column.id}
-                          align={column.align}
-                          style={{ maxWidth: column.Width }}
-                        >
-                          {column.label}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {rows
-                      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                      .map((row) => {
-                        return (
-                          <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                            {columns.map((column) => {
-                              const value = row[column.id];
-                              return (
-                                <TableCell key={column.id} align={column.align}>
-                                  {column.format && typeof value === 'number'
-                                    ? column.format(value)
-                                    : value}
-                                </TableCell>
-                              );
-                            })}
-                          </TableRow>
-                        );
-                      })}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-              <TablePagination
-                rowsPerPageOptions={[10, 25, 50, 100]}
-                component="div"
-                count={rows.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-              />
-            </Paper>
-          
-
-
-        
-
-
-
-    </div>
 
 
 

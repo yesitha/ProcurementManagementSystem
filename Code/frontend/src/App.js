@@ -19,7 +19,7 @@ function App() {
   return (
     <div>
 
-    <FinalizedMasterProcurementPlan/>
+    <CreateSubProcurementPlan/>
 
     </div>
   );
