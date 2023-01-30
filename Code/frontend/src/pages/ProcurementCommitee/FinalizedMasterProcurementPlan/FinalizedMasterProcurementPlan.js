@@ -52,7 +52,7 @@ const columns = [
   }
   
   const rows = [
-    createData('I0014','A4 Papers','500','loerm','SPPID1000','IT Department',Setdate(),<VendorDetails/>),
+    createData('I0014','A4 Papers','500','loerm','SPPID1000','IT Department',Setdate(),<VendorDetails />),
     createData('I0028', 'Ruler', '10','loerm','SPPID1000','IT Department',Setdate(),<VendorDetails/>),
     createData('I0015', 'Stapler', '50','loerm','SPPID1000','IT Department',Setdate(),<VendorDetails/>),
     createData('I0016', 'Pens', '100','loerm','SPPID1001','Engineering Department',Setdate(),<VendorDetails/>),
