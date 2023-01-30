@@ -1,10 +1,10 @@
 @import "../../../fonts.css";
 
-.fmpp-mainBody{
+.fmpp_mainBody{
     margin-left: 60px;
 }
 
-.fmpp-heading{
+.fmpp_heading{
     font-family: 'Inter', sans-serif; 
     font-weight: 500;
     color: #ffffff;
@@ -14,7 +14,7 @@
 }
 
 
-.fmpp-title-search{
+.fmpp_title_search{
     margin-top: 40px;
     margin-bottom: 40px;
     display: flex;
@@ -23,19 +23,19 @@
     align-items: center;
 }
 
-.fmpp-title label{
+.fmpp_title label{
     font-family: Mulish;
     font-size: 16px;
     margin-left: 10px;
     color: #ffffff;
 }
 
-.fmpp-table{
+.fmpp_table{
     margin-bottom: 30px;
     margin-left: 10px;
 }
 
-.fmpp-button{
+.fmpp_button{
     position: relative;
 }
 
