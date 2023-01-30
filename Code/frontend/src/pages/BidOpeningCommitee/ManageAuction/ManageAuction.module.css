@@ -1,100 +1,84 @@
-  @import "../../../fonts.css";
+@import "../../../fonts.css";
 
-
-
-.th1{
-    font-family: 'Inter', sans-serif;
-    font-weight: 500; 
-    font-size: large;
+.th1 {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: large;
 }
-.td{
-    font-family: 'Inter', sans-serif;
-    font-weight: 500; 
-    width: 300px;
-    height: 45px;
-    text-align: center;
+.td {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  width: 300px;
+  height: 45px;
+  text-align: center;
 }
-.TableHeaders{
-    font-family: 'Inter', sans-serif;
-    position: sticky!important;
-    margin-bottom: 4px;
-    z-index: 3;
-    
-
+.TableHeaders {
+  font-family: "Inter", sans-serif;
+  position: sticky !important;
+  margin-bottom: 4px;
+  z-index: 3;
 }
 
-.stiky{
-position: sticky;
-left: 0;
-
+.stiky {
+  position: sticky;
+  left: 0;
 }
 
-
-
-
-
-.upperSection{
-    display: flex;
-    flex-direction: row;
-    justify-content: start;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
-    width: 100%;
+.upperSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 100%;
 }
 
-.Header{
-    font-family: 'Inter', sans-serif; 
-    font-weight: 600;
-    color: #ffffff;
-    font-size: 36px;
-    position: relative;
-    margin-right: 12vw;
-    
+.Header {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  color: #ffffff;
+  font-size: 36px;
+  position: relative;
+  margin-right: 12vw;
 }
-.header2{
-    font-family: 'Inter', sans-serif; 
-    font-weight: 500;
-    color: #ffffff;
-    font-size: 34px;
-    position: relative;
-    margin-right:5vw;
+.header2 {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  color: #ffffff;
+  font-size: 34px;
+  position: relative;
+  margin-right: 5vw;
 }
 
-.ManageAuctionPageContainer__header{
-    padding-right: 10px;
-    width: fit-content;
-    display: flex;
-    flex-direction: row;
-  }
-  .MiddleSection{
-    padding-right: 10px;
-    
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
+.ManageAuctionPageContainer__header {
+  padding-right: 10px;
+  width: fit-content;
+  display: flex;
+  flex-direction: row;
+}
+.MiddleSection {
+  padding-right: 10px;
 
-  .tableContainer{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
 
-border-radius: 20px;
-overflow-x: scroll;
-scroll-behavior: smooth;
+.tableContainer {
+  border-radius: 20px;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+}
+.search {
+  margin-bottom: 10px;
 
-
-  }
-  .search{
-    margin-bottom: 10px;
-    
-    
-   
-    margin-left: 20px;
-  }
-  .baseTableContainer{
-    border-radius: 20px;
-  }
-  .downSection{
-    overflow-x: hidden;
-    
-  }
+  margin-left: 20px;
+}
+.baseTableContainer {
+  border-radius: 20px;
+}
+.downSection {
+  overflow-x: hidden;
+}

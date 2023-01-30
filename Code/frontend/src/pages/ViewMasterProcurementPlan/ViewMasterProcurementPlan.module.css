@@ -1,47 +1,24 @@
-@import "/src/fonts.css";
+@import "../../fonts.css";
 
-.Ph1 {
+.th1 {
   font-family: "Inter", sans-serif;
   font-weight: 500;
-  color: #ffffff;
-  font-size: 36px;
-  position: relative;
+  font-size: large;
 }
-.Ph2 {
+.td {
   font-family: "Inter", sans-serif;
   font-weight: 500;
-  color: #ffffff;
-  font-size: 15px;
-  background-color: #205295;
-  width: 250px;
+  width: 300px;
+  height: 45px;
   text-align: center;
-  border-radius: 5px;
-  padding-top: 2px;
-  padding-bottom: 2px;
 }
-
-.Ph3 {
-  font-family: "Inter", sans-serif;
-  font-weight: 500;
-  color: #ffffff;
-  font-size: 15px;
-  flex-direction: column;
-  display: flex;
-  margin-right: 20px;
-  align-self: center;
-}
-
-.h4m {
-  margin-bottom: 0px;
-  margin-left: 5px;
-}
-
 .TableHeaders {
   font-family: "Inter", sans-serif;
   position: sticky !important;
   margin-bottom: 4px;
   z-index: 3;
 }
+
 .stiky {
   position: sticky;
   left: 0;
@@ -70,7 +47,7 @@
   font-family: "Inter", sans-serif;
   font-weight: 500;
   color: #ffffff;
-  font-size: 34px;
+  font-size: 16px;
   position: relative;
   margin-right: 5vw;
 }
@@ -81,10 +58,8 @@
   display: flex;
   flex-direction: row;
 }
-.MiddleSectionN {
-  justify-content: space-between;
-  padding-right: 50px;
-  padding-left: 5px;
+.MiddleSection {
+  padding-right: 15px;
 
   display: flex;
   flex-direction: row;
@@ -97,18 +72,67 @@
   scroll-behavior: smooth;
 }
 .search {
-  align-self: flex-end;
-  margin-left: 20px;
-}
+  margin-bottom: 10px;
 
+  align-self: flex-end;
+
+  margin-left: 5px;
+}
 .baseTableContainer {
   border-radius: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 .downSection {
   overflow-x: hidden;
-}
-
-.OuterMiddle {
   display: flex;
   flex-direction: column;
+}
+
+.header2Section {
+  display: flex;
+  flex-direction: column;
+}
+.dropdown {
+  align-self: flex-end;
+}
+.rightButton {
+  display: flex !important;
+}
+
+.TecAppointButton {
+  margin-bottom: 10px;
+  width: 200px;
+
+  border-radius: 10px;
+
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  cursor: pointer;
+}
+.ViewButton {
+  background-color: #205295 !important;
+}
+
+.ViewButton:hover {
+  background-color: #2c74b3 !important;
+}
+
+.TecAppointButton {
+  background-color: #205295 !important;
+}
+.TecAppointButton:hover {
+  background-color: #2c74b3 !important;
+}
+.fmpp_title_search {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dropDown {
+  overflow-x: auto;
 }

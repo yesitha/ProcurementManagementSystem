@@ -22,7 +22,7 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import SearchNoFilter from "../../components/Search/Search";
 import { Container } from "@mui/system";
-import "./ViewMasterProcurementPlan.css";
+import styles from "./ViewMasterProcurementPlan.module.css";
 import SelectDropDown from "../../components/SelectDropDown/SelectDropDown";
 import ViewRecomandedVendors from "../../components/Popups/ViewRecomandedVendors/ViewRecomandedVendors";
 
@@ -105,7 +105,7 @@ const Recomandedvendors2=["Vendor 5","Vendor 6","Vendor 7","Vendor 8"]
       "50",
       "Finance",
       "240 GSM",
-      <Button variant="contained" className="ViewButton">
+      <Button variant="contained" className={styles.ViewButton}>
         View
       </Button>,
       Setdate("2022.12.12")
@@ -116,7 +116,7 @@ const Recomandedvendors2=["Vendor 5","Vendor 6","Vendor 7","Vendor 8"]
       "100",
       "Finance",
       "24 BOX",
-      <Button variant="contained" className="ViewButton">
+      <Button variant="contained" className={styles.ViewButton}>
         View
       </Button>,
       Setdate("2022.12.12")
@@ -127,7 +127,7 @@ const Recomandedvendors2=["Vendor 5","Vendor 6","Vendor 7","Vendor 8"]
       "25",
       "Finance",
       "240 GSM",
-      <Button variant="contained" className="ViewButton">
+      <Button variant="contained" className={styles.ViewButton}>
         View
       </Button>,
       Setdate("2022.12.12")
@@ -138,7 +138,7 @@ const Recomandedvendors2=["Vendor 5","Vendor 6","Vendor 7","Vendor 8"]
       "10",
       "Finance",
       "Black",
-      <Button variant="contained" className="ViewButton">
+      <Button variant="contained" className={styles.ViewButton}>
         View
       </Button>,
       Setdate("2022.12.12")
@@ -149,7 +149,7 @@ const Recomandedvendors2=["Vendor 5","Vendor 6","Vendor 7","Vendor 8"]
       "200",
       "Finance",
       "Aluminium",
-      <Button variant="contained" className="ViewButton">
+      <Button variant="contained" className={styles.ViewButton}>
         View
       </Button>,
       Setdate("2022.12.12")
@@ -160,7 +160,7 @@ const Recomandedvendors2=["Vendor 5","Vendor 6","Vendor 7","Vendor 8"]
       "15",
       "Finance",
       "240 GSM",
-      <Button variant="contained" className="ViewButton">
+      <Button variant="contained" className={styles.ViewButton}>
         View
       </Button>,
       Setdate("2022.12.12")
@@ -171,7 +171,7 @@ const Recomandedvendors2=["Vendor 5","Vendor 6","Vendor 7","Vendor 8"]
       "75",
       "Finance",
       "240 GSM",
-      <Button variant="contained" className="ViewButton">
+      <Button variant="contained" className={styles.ViewButton}>
         View
       </Button>,
       Setdate("2022.12.12")
@@ -182,7 +182,7 @@ const Recomandedvendors2=["Vendor 5","Vendor 6","Vendor 7","Vendor 8"]
       "50",
       "Finance",
       "240 GSM",
-      <Button variant="contained" className="ViewButton">
+      <Button variant="contained" className={styles.ViewButton}>
         View
       </Button>,
       Setdate("2022.12.12")
@@ -209,43 +209,43 @@ const Recomandedvendors2=["Vendor 5","Vendor 6","Vendor 7","Vendor 8"]
 
   return (
     <div style={{ overflowX: "hidden" }}>
-      <div className="sideNavBar">
+      <div className={styles.sideNavBar}>
         <SideNavBar list1={list1} list2={list2} user={user} />
       </div>
 
       <Container
-        className="main"
+        className={styles.main}
         sx={{
           ml: { xs: "60px", sm: "65px", md: "65px", lg: "68px", xl: "70px" },
           display: "flex",
           flexDirection: "column",
         }}
       >
-        <div className="upperSection">
-          <div className="ManageAuctionPageContainer__header">
+        <div className={styles.upperSection}>
+          <div className={styles.ManageAuctionPageContainer__header}>
             <IconButton
               sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
             >
               <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
             </IconButton>
 
-            <h1 className="Header">Master Procurement Plan</h1>
+            <h1 className={styles.Header}>Master Procurement Plan</h1>
           </div>
         </div>
 
-        <div className="MiddleSection">
-          <div className="header2Section">
-            <div className="fmpp-title">
-              <Typography className="fmpp-title label" sx={{fontFamily:'mulish',fontSize:{xs:'14px',sm:'15px',md:'16px'},ml:1.2,color:'#ffffff'}}>MASTER PROCUREMENT PLAN ID*</Typography>
-              <SelectDropDown className="dropDown" list={list} />
+        <div className={styles.MiddleSection}>
+          <div className={styles.header2Section}>
+            <div className={styles.fmpp_title}>
+              <Typography className={styles.fmpp_title.label} sx={{fontFamily:'mulish',fontSize:{xs:'14px',sm:'15px',md:'16px'},ml:1.2,color:'#ffffff'}}>MASTER PROCUREMENT PLAN ID*</Typography>
+              <SelectDropDown className={styles.dropDown} list={list} />
             </div>
           </div>
-          <SearchNoFilter className="search" />
+          <SearchNoFilter className={styles.search} />
         </div>
 
-        <div className="downSection">
+        <div className={styles.downSection}>
           <Paper
-            className="baseTableContainer"
+            className={styles.baseTableContainer}
             elevation={6}
             sx={{
               mr: {
@@ -259,9 +259,9 @@ const Recomandedvendors2=["Vendor 5","Vendor 6","Vendor 7","Vendor 8"]
               borderRadius: "31px",
             }}
           >
-            <TableContainer className="tableContainer">
+            <TableContainer className={styles.tableContainer}>
               <Table stickyHeader aria-label="sticky table">
-                <TableHead className="TableHeaders">
+                <TableHead className={styles.TableHeaders}>
                   <TableRow>
                     {columns.map((column) => (
                       <TableCell
@@ -312,11 +312,11 @@ const Recomandedvendors2=["Vendor 5","Vendor 6","Vendor 7","Vendor 8"]
             />
           </Paper>
           <Container
-            className="rightButton"
+            className={styles.rightButton}
             sx={{ justifyContent: { xs: "center", md: "right" } }}
           >
             <Button
-              className="TecAppointButton"
+              className={styles.TecAppointButton}
               variant="contained"
               sx={{
                 mt: 1.2,

@@ -3,7 +3,7 @@ import { Container, display } from "@mui/system";
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import React from "react";
 import SideNavBar from "../../components/SideNavigationBar/SideNavBar";
-import "./MasterProcurementPlanStatus.css";
+import styles from "./MasterProcurementPlanStatus.module.css";
 
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
 
@@ -28,26 +28,26 @@ const steps = ['Initiating Procurement Process', 'Approval for Specification', '
 function MasterProcurementPlanStatus() {
   return (
     <div style={{overflowX:"hidden"}}>
-      <div className="sideNavBar">
+      <div className={styles.sideNavBar}>
         <SideNavBar list1={list1} list2={list2} user={user} />
       </div>
 
       <Container
-        className="main"
+        className={styles.main}
         sx={{ ml: { xs: "60px",sm:"65px", md: "65px",lg:"68px", xl: "70px" } ,display:"flex",flexDirection:"column"}}
       >
-        <div className="upperSection">
-          <div className="NotificationPageContainer__header">
+        <div className={styles.upperSection}>
+          <div className={styles.NotificationPageContainer__header}>
             <IconButton sx={{  pl:'15px' ,height:'34px',width:'34px',mt:3.7}}><ArrowBackIosIcon sx={{color:'#ffffff',}}/></IconButton>
           
-            <h1 className="NotificationPageHeader"> Master Procurement Plan Status</h1>
+            <h1 className={styles.NotificationPageHeader}> Master Procurement Plan Status</h1>
           </div>
           
               
          
         </div>
-        <div className="downSection">
-          <Paper className="ProgressBarOuter" elevation={6} sx={{py:4,borderRadius:5,mr:8,px:1}}>
+        <div className={styles.downSection}>
+          <Paper className={styles.ProgressBarOuter} elevation={6} sx={{py:4,borderRadius:5,mr:8,px:1}}>
         <ProgressBar step="2" steps={steps}/>
         </Paper>
             
