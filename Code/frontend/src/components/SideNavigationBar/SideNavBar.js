@@ -1,4 +1,4 @@
-import "./SideNavBar.css";
+import styles from "./SideNavBar.module.css";
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
@@ -101,7 +101,7 @@ export default function SideNavBar({ list1, list2, user }) {
 
   return (
   
-    <Drawer className="Drawer" variant="permanent" open={open}>
+    <Drawer className={styles.Drawer} variant="permanent" open={open}>
       <DrawerHeader>
         <Toolbar
           sx={{
@@ -118,9 +118,9 @@ export default function SideNavBar({ list1, list2, user }) {
             <MenuIcon />
           </IconButton>
         </Toolbar>
-        <div className="headerFlexWrapper">
+        <div className={styles.headerFlexWrapper}>
           <Avatar
-            className="logo"
+            className={styles.logo}
             alt="Avatar"
             src={logo}
             sx={{
@@ -131,7 +131,7 @@ export default function SideNavBar({ list1, list2, user }) {
             }}
           />
           <Typography
-            className="HeaderTitle"
+            className={styles.HeaderTitle}
             variant="h8"
             noWrap
             component="div"
@@ -140,7 +140,7 @@ export default function SideNavBar({ list1, list2, user }) {
             Management System
           </Typography>
         </div>
-        <IconButton className="closeIcon" onClick={handleDrawerClose}>
+        <IconButton className={styles.closeIcon} onClick={handleDrawerClose}>
           <ChevronLeftIcon />
         </IconButton>
       </DrawerHeader>
@@ -203,7 +203,7 @@ export default function SideNavBar({ list1, list2, user }) {
         ))}
       </List>
       
-      <div className="OuterLogoutUser">
+      <div className={styles.OuterLogoutUser}>
       
         <div style={{}}>
           <List>
@@ -246,7 +246,7 @@ export default function SideNavBar({ list1, list2, user }) {
                 }}
               >
                 <Avatar
-                  className="logo"
+                  className={styles.logo}
                   alt="UserProfilPic"
                   src={user.profilePic}
                   sx={{ width: 31, height: 31, mr: open ? 3 : "auto" }}

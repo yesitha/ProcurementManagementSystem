@@ -22,7 +22,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import IconButton from '@mui/material/IconButton';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import { Login, NoEncryption } from '@mui/icons-material';
-import './Login.css'
+import './Login.css';
 import logo from '../../images/logo.png'
 
 

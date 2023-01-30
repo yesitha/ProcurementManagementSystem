@@ -10,9 +10,6 @@
     
   
 }
-.closeIcon{
-    
-}
 
 .HeaderTitle{
 padding-left: 15px;
@@ -24,7 +21,4 @@ font-size: 18px;
 .OuterLogoutUser{
     position: absolute;
     bottom: 1px;
-}
-.Drawer{
-   
 }

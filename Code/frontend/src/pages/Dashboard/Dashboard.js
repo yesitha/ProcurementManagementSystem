@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./Dashboard.css";
+import styles from "./Dashboard.module.css";
 import SideNavBar from "../../components/SideNavigationBar/SideNavBar";
 import { Button,  ListItemIcon,  makeStyles,  Paper,  Typography, withStyles, } from "@mui/material";
 
@@ -66,53 +66,53 @@ const date=dayjs();
     <div style={{ display: "flex",overflow:"hidden" }}>
       <SideNavBar list1={list1} list2={list2} user={user} />
       
-        <div className="DashboardContainer" >
-          <div className="upperSection">
-            <div className="upperLeftContainer">
-              <div className="DashboardContainer__header">
-                <h1 className="DashboardHeader">Dashboard</h1>
+        <div className={styles.DashboardContainer}>
+          <div className={styles.upperSection}>
+            <div className={styles.upperLeftContainer}>
+              <div className={styles.DashboardContainer__header}>
+                <h1 className={styles.DashboardHeader}>Dashboard</h1>
               </div>
               <Paper   elevation={6} sx={{pl:5,pr:{lg:15,md:5} ,ml:{lg:2.5,md:1},borderRadius:10}}>
-              <div className="welcomeContainer" sx={{pr:{xs:"40px"}}}>
-                <h1 className="welcomeHeader">
+              <div className={styles.welcomeContainer} sx={{pr:{xs:"40px"}}}>
+                <h1 className={styles.welcomeHeader}>
                   Welcome, {user.firstname}!
-                  <span className="welcomeDesignation"> [{user.designation}]</span>
+                  <span className={styles.welcomeDesignation}> [{user.designation}]</span>
                 </h1>
                 {loading && <ReactLoading type="bubbles" color="black"  />}
                 {error && (
-                <h4  className="welcomeText"> {`There is a problem fetching the quote - ${error}`}</h4>
+                <h4  className={styles.welcomeText}> {`There is a problem fetching the quote - ${error}`}</h4>
                 )}
 
-                {quote && <h4  className="welcomeText">{quote.content}</h4>}
-                {quote && <h5 className="confuciusName">-{quote.author}-</h5>}
+                {quote && <h4  className={styles.welcomeText}>{quote.content}</h4>}
+                {quote && <h5 className={styles.confuciusName}>-{quote.author}-</h5>}
                 
                  <Button variant="contained" sx={{ borderRadius: 10 , width:150 ,mb:2, backgroundColor:'#205295' ,color:'#ffffff'}}>View New <br/>Notifications</Button>
               </div>
               </Paper>
               
             </div>
-            <div className="upperRightContainer">
+            <div className={styles.upperRightContainer}>
               <Paper elevation={6} sx={{mt:{lg:3.5 ,md:10.5,xs:0}, ml:8 , mr:{md:3},width:'384px',alignItems:"center",height:"315px",display:{xs:'none',lg:"block",md:"block"},borderRadius:10}}>
               <LocalizationProvider dateAdapter={AdapterDayjs} >
-                <CalendarPicker className="calender" date={date}  />
+                <CalendarPicker className={styles.calender} date={date}  />
               </LocalizationProvider>
               </Paper>
               
             </div>
           </div>
-          <div className="middleSection">
+          <div className={styles.middleSection}>
             {actions.map((action)=>(
               <Button variant="contained" sx={{ borderRadius: 3 , maxWidth:150 ,p:1.5, backgroundColor:'#205295' ,color:'#ffffff',px:10,mx:4,mt:2,mb:0.5}}>{action}</Button>
             ))}
           
   
           </div>
-          <div className="lowerSection">
-          <div className="lowerSectionHeader">
-            <h1 className="lowerSectionHeaderText">Notifications</h1>
-            <div className="lowerActionButtons">
+          <div className={styles.lowerSection}>
+          <div className={styles.lowerSectionHeader}>
+            <h1 className={styles.lowerSectionHeaderText}>Notifications</h1>
+            <div className={styles.lowerActionButtons}>
             {actionButtons.map((action)=>(
-              <Button className="actionButton" variant="contained" sx={{ borderRadius: 3 , maxWidth:150 , height:130,px:1.5, backgroundColor:'#9C254D' ,color:'#ffffff',px:10,mx:4,'&:hover':{backgroundColor:'#b43b63'}}}><div className="actionButtonText"><Typography className="actionButtonNumber" sx={{fontFamily:'Inter',fontSize:'34px',fontWeight:'400'}}>{action.number!=null? action.number:""}</Typography><Typography className="actionButtonText" sx={{fontFamily:'Inter',fontSize:'14px'}}>{action.name}</Typography></div></Button>
+              <Button className={styles.actionButton} variant="contained" sx={{ borderRadius: 3 , maxWidth:150 , height:130,px:1.5, backgroundColor:'#9C254D' ,color:'#ffffff',px:10,mx:4,'&:hover':{backgroundColor:'#b43b63'}}}><div className={styles.actionButtonText}><Typography className={styles.actionButtonNumber} sx={{fontFamily:'Inter',fontSize:'34px',fontWeight:'400'}}>{action.number!=null? action.number:""}</Typography><Typography className={styles.actionButtonText} sx={{fontFamily:'Inter',fontSize:'14px'}}>{action.name}</Typography></div></Button>
             ))}
             </div>
           </div>

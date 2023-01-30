@@ -1,5 +1,5 @@
 import React from 'react'
-import './Search.css'
+import styles from './Search.module.css'
 import InputBase from '@mui/material/InputBase';
 
 import SearchIcon from '@mui/icons-material/Search';
@@ -40,16 +40,16 @@ const Search = styled('div')(({ theme }) => ({
 
 function SearchFilter() {
   return (
-    <Search className="search" sx={{borderRadius:6,flexDirection:"row",mr:"40px",height:{xs:"60px"}}}>
-               <div className="searchArea">
+    <Search className={styles.search} sx={{borderRadius:6,flexDirection:"row",mr:"40px",height:{xs:"60px"}}}>
+               <div className={styles.searchArea}>
                     
-                    <div className="searchInput">
+                    <div className={styles.searchInput}>
                         <StyledInputBase 
                           placeholder="Search…"
                           inputProps={{ "aria-label": "search" }}
                         />
                     </div>
-                    <div className="searchIcons" >
+                    <div className={styles.searchIcons} >
                     <IconButton  sx={{display:"flex",flexDirection:"row",borderRadius:50,backgroundColor:'#205295',height:{xs:45,md:50, lg:50},width:{xs:45,md:50, lg:50},mt:{lg:0.5,md:0.5,sm:1,xs:1},mr:1,px:2,'&:hover':{backgroundColor:'#2C74B3'},mb:{xs:2,xl:4}}}  >
                         
                           <FilterListIcon sx={{color:'#ffffff'}}/>
