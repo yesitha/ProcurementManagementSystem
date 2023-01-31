@@ -1,0 +1,68 @@
+@import '../../../fonts.css';
+
+.Header {
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    color: #ffffff;
+    font-size: 36px;
+    position: relative;
+    margin-right: 12vw;
+  }
+  .header2 {
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    color: #ffffff;
+    position: relative;
+    margin-right: 5vw;
+  }
+.upperSection {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 100%;
+  }
+  .MiddleSection {
+    padding-right: 10px;
+    display: flex;
+    flex-direction:column;
+  }
+  .downSection {
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+  }  
+.TenderDetailsPageContainer__header {
+    padding-right: 10px;
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+  }
+  .UpperContainer {
+    border-radius: 20px;
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    padding-left: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .DownContainer{
+    border-radius: 20px;
+    width: 75%;
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    padding-bottom: 25px;
+  }
+  .tableNbutton{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
