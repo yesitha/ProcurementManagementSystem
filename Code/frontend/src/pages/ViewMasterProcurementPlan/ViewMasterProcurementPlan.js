@@ -25,10 +25,11 @@ import { Container } from "@mui/system";
 import styles from "./ViewMasterProcurementPlan.module.css";
 import SelectDropDown from "../../components/SelectDropDown/SelectDropDown";
 import ViewRecomandedVendors from "../../components/Popups/ViewRecomandedVendors/ViewRecomandedVendors";
+import {vendors} from "../../users/vendors.js"
 
 function ViewMasterProcurementPlan() {
-const Recomandedvendors1=["Vendor 1","Vendor 2","Vendor 3","Vendor 4"]
-const Recomandedvendors2=["Vendor 5","Vendor 6","Vendor 7","Vendor 8"]
+const Recomandedvendors1=vendors;
+
   const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
   const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
   const user = {
@@ -96,7 +97,7 @@ const Recomandedvendors2=["Vendor 5","Vendor 6","Vendor 7","Vendor 8"]
       "10",
       "Finance",
       "240 GSM",
-      <ViewRecomandedVendors vendors={Recomandedvendors2}/>,
+      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
       Setdate("2022.12.12")
     ),
     createData(
@@ -105,9 +106,7 @@ const Recomandedvendors2=["Vendor 5","Vendor 6","Vendor 7","Vendor 8"]
       "50",
       "Finance",
       "240 GSM",
-      <Button variant="contained" className={styles.ViewButton}>
-        View
-      </Button>,
+      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
       Setdate("2022.12.12")
     ),
     createData(
@@ -116,9 +115,7 @@ const Recomandedvendors2=["Vendor 5","Vendor 6","Vendor 7","Vendor 8"]
       "100",
       "Finance",
       "24 BOX",
-      <Button variant="contained" className={styles.ViewButton}>
-        View
-      </Button>,
+      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
       Setdate("2022.12.12")
     ),
     createData(
@@ -127,9 +124,7 @@ const Recomandedvendors2=["Vendor 5","Vendor 6","Vendor 7","Vendor 8"]
       "25",
       "Finance",
       "240 GSM",
-      <Button variant="contained" className={styles.ViewButton}>
-        View
-      </Button>,
+      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
       Setdate("2022.12.12")
     ),
     createData(
@@ -138,9 +133,7 @@ const Recomandedvendors2=["Vendor 5","Vendor 6","Vendor 7","Vendor 8"]
       "10",
       "Finance",
       "Black",
-      <Button variant="contained" className={styles.ViewButton}>
-        View
-      </Button>,
+      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
       Setdate("2022.12.12")
     ),
     createData(
@@ -149,9 +142,7 @@ const Recomandedvendors2=["Vendor 5","Vendor 6","Vendor 7","Vendor 8"]
       "200",
       "Finance",
       "Aluminium",
-      <Button variant="contained" className={styles.ViewButton}>
-        View
-      </Button>,
+      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
       Setdate("2022.12.12")
     ),
     createData(
@@ -160,9 +151,7 @@ const Recomandedvendors2=["Vendor 5","Vendor 6","Vendor 7","Vendor 8"]
       "15",
       "Finance",
       "240 GSM",
-      <Button variant="contained" className={styles.ViewButton}>
-        View
-      </Button>,
+      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
       Setdate("2022.12.12")
     ),
     createData(
@@ -171,9 +160,7 @@ const Recomandedvendors2=["Vendor 5","Vendor 6","Vendor 7","Vendor 8"]
       "75",
       "Finance",
       "240 GSM",
-      <Button variant="contained" className={styles.ViewButton}>
-        View
-      </Button>,
+      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
       Setdate("2022.12.12")
     ),
     createData(
@@ -182,9 +169,7 @@ const Recomandedvendors2=["Vendor 5","Vendor 6","Vendor 7","Vendor 8"]
       "50",
       "Finance",
       "240 GSM",
-      <Button variant="contained" className={styles.ViewButton}>
-        View
-      </Button>,
+      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
       Setdate("2022.12.12")
     ),
   ];
@@ -208,13 +193,13 @@ const Recomandedvendors2=["Vendor 5","Vendor 6","Vendor 7","Vendor 8"]
   const list = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
 
   return (
-    <div style={{ overflowX: "hidden" }}>
+    <div className={styles.outer} >
       <div className={styles.sideNavBar}>
         <SideNavBar list1={list1} list2={list2} user={user} />
       </div>
 
       <Container
-        className={styles.main}
+        
         sx={{
           ml: { xs: "60px", sm: "65px", md: "65px", lg: "68px", xl: "70px" },
           display: "flex",
@@ -235,8 +220,8 @@ const Recomandedvendors2=["Vendor 5","Vendor 6","Vendor 7","Vendor 8"]
 
         <div className={styles.MiddleSection}>
           <div className={styles.header2Section}>
-            <div className={styles.fmpp_title}>
-              <Typography className={styles.fmpp_title.label} sx={{fontFamily:'mulish',fontSize:{xs:'14px',sm:'15px',md:'16px'},ml:1.2,color:'#ffffff'}}>MASTER PROCUREMENT PLAN ID*</Typography>
+            <div>
+              <Typography  sx={{fontFamily:'mulish',fontSize:{xs:'14px',sm:'15px',md:'16px'},ml:1.2,color:'#ffffff'}}>MASTER PROCUREMENT PLAN ID*</Typography>
               <SelectDropDown className={styles.dropDown} list={list} />
             </div>
           </div>

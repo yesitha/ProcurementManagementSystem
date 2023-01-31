@@ -2,10 +2,11 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { Button, IconButton} from "@mui/material";
+import { Avatar, Button, IconButton, ListItem, ListItemAvatar, ListItemButton, ListItemText} from "@mui/material";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DocumentDownload from '../../../images/DocumentDownload.png';
 import CloseIcon from '@mui/icons-material/Close';
+import styles from './ViewRecomandedVendors.module.css';
 
 const style = {
     position: 'absolute',
@@ -13,7 +14,7 @@ const style = {
     left: '50%',
     align: 'center',
     transform: 'translate(-50%, -50%)',
-    width: 400,
+    width: {xs: 200, sm: 250, md: 400},
     bgcolor: 'background.paper',
     borderRadius: 5,
     boxShadow: 24,
@@ -30,7 +31,7 @@ export default function ViewRecomandedVendors({vendors}) {
 
   return (
     <div>
-      <Button variant="contained" onClick={handleOpen} className="ViewButton">View</Button>
+      <Button variant="contained" onClick={handleOpen} className={styles.ViewButton}>View</Button>
       
       <Modal
         open={open}
@@ -49,20 +50,20 @@ export default function ViewRecomandedVendors({vendors}) {
           <div style={{display : 'flex' ,alignItems: 'center', justifyContent: 'center', textAlign:'center', marginTop:10}}>
             
             <div>
-            {vendors.map((vendor) => (
+            {vendors.map((vendor,index) => (
 
 
          <ListItem
-            key={value}
+         
              >
-            <ListItemButton>
+            <ListItemButton >
               <ListItemAvatar>
                 <Avatar
-                  alt={`Avatar n°${value + 1}`}
-                  src={`/static/images/avatar/${value + 1}.jpg`}
+                  alt={`Avatar`}
+                  src={vendor.profilePic}
                 />
               </ListItemAvatar>
-              <ListItemText id={labelId} primary={`${value}`} />
+              <ListItemText primary={vendor.name} />
             </ListItemButton>
           </ListItem>
         

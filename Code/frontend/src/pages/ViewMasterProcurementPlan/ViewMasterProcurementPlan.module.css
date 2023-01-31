@@ -71,7 +71,7 @@
   overflow-x: scroll;
   scroll-behavior: smooth;
 }
-.search {
+.search{
   margin-bottom: 10px;
 
   align-self: flex-end;
@@ -87,11 +87,13 @@
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
+  margin-top: 10px;
 }
 
 .header2Section {
   display: flex;
   flex-direction: column;
+  padding-bottom: 10px;
 }
 .dropdown {
   align-self: flex-end;
@@ -130,9 +132,13 @@
   margin-bottom: 40px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-self: center;
 }
 
 .dropDown {
   overflow-x: auto;
+}
+
+.outer{
+ overflow-x: "hidden" ;
 }

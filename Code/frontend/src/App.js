@@ -15,13 +15,13 @@ function App() {
 
     {/* <Login/> */}
     {/* <SignUp/> */}
-    <Dashboard/>
+    {/* <Dashboard/> */}
     {/* <ManageAuction/> */}
     {/* <NotificationPage/> */}
     {/* <CreateSubProcurementPlan/> */}
     {/* <FinalizedMasterProcurementPlan/> */}
     {/* <MasterProcurementPlanStatus/> */}
-    {/* <ViewMasterProcurementPlan/> */}
+    <ViewMasterProcurementPlan/>
 
     </div>
   );
