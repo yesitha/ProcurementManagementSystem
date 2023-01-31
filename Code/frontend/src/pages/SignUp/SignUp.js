@@ -5,24 +5,15 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Card, CardContent, Divider } from '@mui/material';
-import { borderRadius, fontSize, maxWidth } from '@mui/system';
-import { Login, NoEncryption } from '@mui/icons-material';
 import './SignUp.css'
 import logo from '../../images/logo.png'
-import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
-import ThreeDRotation from '@mui/icons-material/ThreeDRotation';
-import Icon from '@mui/material/Icon';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import Paper from '@mui/material/Paper';
-import { styled } from '@mui/material/styles';
 
 
 const theme = createTheme({
