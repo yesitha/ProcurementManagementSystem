@@ -9,7 +9,7 @@ import MasterProcurementPlanStatus from './pages/MasterProcurementPlanStatus/Mas
 import ViewMasterProcurementPlan from './pages/ViewMasterProcurementPlan/ViewMasterProcurementPlan';
 import Login from './pages/Login/Login'
 import ViewFinalizedMasterProcurementPlans from './pages/Internal Auditor/ViewFinalizedMasterProcurementPlans/ViewFinalizedMasterProcurementPlans';
-import EvaluateFinalizedMasterProcurementPlan from './pages/Internal Auditor/EvaluateFinalizedMasterProcurementPlan/EvaluateFinalizedMasterProcurementPlan';
+import AuditFinalizedMasterProcurementPlan from './pages/Internal Auditor/AuditFinalizedMasterProcurementPlan/AuditFinalizedMasterProcurementPlan';
 
 function App() {
   return (
@@ -21,11 +21,11 @@ function App() {
     {/* <ManageAuction/> */}
     {/* <NotificationPage/> */}
     {/* <CreateSubProcurementPlan/> */}
-    <FinalizedMasterProcurementPlan/>
+    {/* <FinalizedMasterProcurementPlan/> */}
     {/* <MasterProcurementPlanStatus/> */}
     {/* <ViewMasterProcurementPlan/> */}
     {/* <ViewFinalizedMasterProcurementPlans/> */}
-    {/* <EvaluateFinalizedMasterProcurementPlan/> */}
+    <AuditFinalizedMasterProcurementPlan/>
 
     </div>
   );

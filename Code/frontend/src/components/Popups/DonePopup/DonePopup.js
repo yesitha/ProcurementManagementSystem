@@ -21,7 +21,7 @@ const style = {
     p: 3,
 };
 
-export default function BasicModal({name,title,styles}) {
+export default function BasicModal({text,title,styles}) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -43,7 +43,7 @@ export default function BasicModal({name,title,styles}) {
             DONE!
           </Typography>
           <Typography id="modal-modal-description" fontFamily={'Inter'} sx={{ mt: 1, color: '#A3A3A3' }} align='center'>
-            Successfully sent to {name} 
+            {text} 
           </Typography>
           <div style={{display:'flex', alignItems:'center', justifyContent:'center', marginTop:10}}>
           <Button variant='contained' fontFamily={'Inter'} sx={{bgcolor: '#205295', borderRadius: 5, height: 60, width: 100}}>OK</Button>
