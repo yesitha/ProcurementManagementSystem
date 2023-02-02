@@ -1,4 +1,5 @@
 import './App.css';
+
 import ManageAuction from './pages/BidOpeningCommitee/ManageAuction/ManageAuction';
 import Dashboard from './pages/Dashboard/Dashboard';
 import NotificationPage from './pages/NotificationPage/NotificationPage';
@@ -8,11 +9,12 @@ import FinalizedMasterProcurementPlan from './pages/ProcurementCommitee/Finalize
 import MasterProcurementPlanStatus from './pages/MasterProcurementPlanStatus/MasterProcurementPlanStatus';
 import ViewMasterProcurementPlan from './pages/ViewMasterProcurementPlan/ViewMasterProcurementPlan';
 import Login from './pages/Login/Login'
+import ItemstobeShipped from './pages/Items to be Shipped/ItemstobeShipped';
+
 
 function App() {
   return (
     <div>
-
     {/* <Login/> */}
     {/* <SignUp/> */}
     {/* <Dashboard/> */}
@@ -21,7 +23,12 @@ function App() {
     {/* <CreateSubProcurementPlan/> */}
     {/* <FinalizedMasterProcurementPlan/> */}
     {/* <MasterProcurementPlanStatus/> */}
+<<<<<<< Updated upstream
     <ViewMasterProcurementPlan/>
+=======
+    {/* <ViewMasterProcurementPlan/> */}
+    <ItemstobeShipped/>
+>>>>>>> Stashed changes
 
     </div>
   );
