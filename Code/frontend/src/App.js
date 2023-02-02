@@ -8,6 +8,7 @@ import FinalizedMasterProcurementPlan from './pages/ProcurementCommitee/Finalize
 import MasterProcurementPlanStatus from './pages/MasterProcurementPlanStatus/MasterProcurementPlanStatus';
 import ViewMasterProcurementPlan from './pages/ViewMasterProcurementPlan/ViewMasterProcurementPlan';
 import Login from './pages/Login/Login'
+import CreateModifyTECCommittee from './pages/CreateModifyTECCommittee/CreateModifyTECCommittee';
 
 function App() {
   return (
@@ -21,7 +22,8 @@ function App() {
     {/* <CreateSubProcurementPlan/> */}
     {/* <FinalizedMasterProcurementPlan/> */}
     {/* <MasterProcurementPlanStatus/> */}
-    <ViewMasterProcurementPlan/>
+    {/* <ViewMasterProcurementPlan/> */}
+    <CreateModifyTECCommittee/>
 
     </div>
   );

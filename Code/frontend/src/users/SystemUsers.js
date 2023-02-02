@@ -1,5 +1,6 @@
-const users = [
+export const users = [
     {
+      id:1,
       firstname: "John",
       lastname: "Doe",
       email: "johndoe@gmail.com",
@@ -11,6 +12,7 @@ const users = [
       profilePic: "https://www.w3schools.com/howto/img_avatar.png",
     },
     {
+      id:2,
       firstname: "Jane",
       lastname: "Doe",
       email: "janedoe@gmail.com",
@@ -22,6 +24,7 @@ const users = [
       profilePic: "https://www.w3schools.com/howto/img_avatar.png",
     },
     {
+      id:3,
       firstname: "Tom",
       lastname: "Smith",
       email: "tomsmith@gmail.com",
@@ -33,6 +36,7 @@ const users = [
       profilePic: "https://www.w3schools.com/howto/img_avatar.png",
     },
     {
+      id:4,
       firstname: "Emily",
       lastname: "Johnson",
       email: "emilyjohnson@gmail.com",
@@ -44,6 +48,7 @@ const users = [
       profilePic: "https://www.w3schools.com/howto/img_avatar.png",
     },
     {
+      id:5,
       firstname: "Michael",
       lastname: "Williams",
       email: "michaelwilliams@gmail.com",
@@ -55,6 +60,7 @@ const users = [
       profilePic: "https://www.w3schools.com/howto/img_avatar.png",
     },
     {
+      id:6,
       firstname: "Sophie",
       lastname: "Brown",
       email: "sophiebrown@gmail.com",
