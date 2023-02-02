@@ -9,6 +9,8 @@ import FinalizedMasterProcurementPlan from './pages/ProcurementCommitee/Finalize
 import MasterProcurementPlanStatus from './pages/MasterProcurementPlanStatus/MasterProcurementPlanStatus';
 import ViewMasterProcurementPlan from './pages/ViewMasterProcurementPlan/ViewMasterProcurementPlan';
 import Login from './pages/Login/Login'
+import ViewFinalizedMasterProcurementPlans from './pages/Internal Auditor/ViewFinalizedMasterProcurementPlans/ViewFinalizedMasterProcurementPlans';
+import AuditFinalizedMasterProcurementPlan from './pages/Internal Auditor/AuditFinalizedMasterProcurementPlan/AuditFinalizedMasterProcurementPlan';
 import ItemstobeShipped from './pages/Items to be Shipped/ItemstobeShipped';
 
 
@@ -23,13 +25,10 @@ function App() {
     {/* <CreateSubProcurementPlan/> */}
     {/* <FinalizedMasterProcurementPlan/> */}
     {/* <MasterProcurementPlanStatus/> */}
-<<<<<<< Updated upstream
-    <ViewMasterProcurementPlan/>
-=======
     {/* <ViewMasterProcurementPlan/> */}
-    <ItemstobeShipped/>
->>>>>>> Stashed changes
-
+    {/* <ViewFinalizedMasterProcurementPlans/> */}
+    <AuditFinalizedMasterProcurementPlan/>
+    {/* <ItemstobeShipped/> */}
     </div>
   );
 }

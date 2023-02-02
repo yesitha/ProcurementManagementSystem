@@ -7,6 +7,11 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import DocumentDownload from '../../../images/DocumentDownload.png';
 import CloseIcon from '@mui/icons-material/Close';
 import { Button} from "@mui/material";
+import { CalendarPicker } from '@mui/x-date-pickers/CalendarPicker';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs from "dayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { ListItemIcon,  makeStyles,  Paper, withStyles, } from "@mui/material";
 
 const style = {
     position: 'absolute',
@@ -14,17 +19,19 @@ const style = {
     left: '50%',
     align: 'center',
     transform: 'translate(-50%, -50%)',
-    width: 200,
     bgcolor: 'background.paper',
     borderRadius: 5,
     boxShadow: 24,
-    p: 3,
+    p: 1,
 };
 
-export default function BasicModal({text,title,styles}) {
+export default function BasicModal({title,styles}) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+    
+    const [date, setDate] = React.useState(dayjs());
 
   return (
     <div>
@@ -39,12 +46,13 @@ export default function BasicModal({text,title,styles}) {
             <div style={{display:'flex', alignItems:'right', justifyContent:'right'}}>
             <IconButton onClick={handleClose}><CloseIcon sx={{color:'#000', fontSize:25}}/></IconButton>
             </div>
-          <Typography id="modal-modal-title" variant="h4" component="h2" align='center' fontFamily={'Inter'} sx={{mt:-2}}>
-            DONE!
-          </Typography>
-          <Typography id="modal-modal-description" fontFamily={'Inter'} sx={{ mt: 1, color: '#A3A3A3' }} align='center'>
-            {text} 
-          </Typography>
+          <div>
+              <Paper elevation={6} sx={{mr:2, ml:2, width:'384px',alignItems:"center",height:"315px",borderRadius:10}}>
+              <LocalizationProvider dateAdapter={AdapterDayjs} >
+                <CalendarPicker date={date} onChange={(newDate) => setDate(newDate)} />
+              </LocalizationProvider>
+              </Paper>  
+            </div>
           <div style={{display:'flex', alignItems:'center', justifyContent:'center', marginTop:10}}>
           <Button variant='contained' fontFamily={'Inter'} sx={{bgcolor: '#205295', borderRadius: 5, height: 60, width: 100}}>OK</Button>
           </div>
