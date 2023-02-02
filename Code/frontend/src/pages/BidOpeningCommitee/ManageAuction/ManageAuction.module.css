@@ -1,17 +1,5 @@
 @import "../../../fonts.css";
 
-.th1 {
-  font-family: "Inter", sans-serif;
-  font-weight: 500;
-  font-size: large;
-}
-.td {
-  font-family: "Inter", sans-serif;
-  font-weight: 500;
-  width: 300px;
-  height: 45px;
-  text-align: center;
-}
 .TableHeaders {
   font-family: "Inter", sans-serif;
   position: sticky !important;
@@ -60,7 +48,6 @@
 }
 .MiddleSection {
   padding-right: 10px;
-
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
