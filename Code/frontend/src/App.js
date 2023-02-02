@@ -1,4 +1,5 @@
 import './App.css';
+
 import ManageAuction from './pages/BidOpeningCommitee/ManageAuction/ManageAuction';
 import Dashboard from './pages/Dashboard/Dashboard';
 import NotificationPage from './pages/NotificationPage/NotificationPage';
@@ -9,11 +10,13 @@ import MasterProcurementPlanStatus from './pages/MasterProcurementPlanStatus/Mas
 import ViewMasterProcurementPlan from './pages/ViewMasterProcurementPlan/ViewMasterProcurementPlan';
 import Login from './pages/Login/Login'
 import CreateModifyTECCommittee from './pages/CreateModifyTECCommittee/CreateModifyTECCommittee';
+import ViewFinalizedMasterProcurementPlans from './pages/Internal Auditor/ViewFinalizedMasterProcurementPlans/ViewFinalizedMasterProcurementPlans';
+import AuditFinalizedMasterProcurementPlan from './pages/Internal Auditor/AuditFinalizedMasterProcurementPlan/AuditFinalizedMasterProcurementPlan';
+import ItemstobeShipped from './pages/Items to be Shipped/ItemstobeShipped';
 
 function App() {
   return (
     <div>
-
     {/* <Login/> */}
     {/* <SignUp/> */}
     {/* <Dashboard/> */}
@@ -24,7 +27,9 @@ function App() {
     {/* <MasterProcurementPlanStatus/> */}
     {/* <ViewMasterProcurementPlan/> */}
     <CreateModifyTECCommittee/>
-
+    {/* <ViewFinalizedMasterProcurementPlans/> */}
+    {/* <AuditFinalizedMasterProcurementPlan/> */}
+    {/* <ItemstobeShipped/> */}
     </div>
   );
 }
