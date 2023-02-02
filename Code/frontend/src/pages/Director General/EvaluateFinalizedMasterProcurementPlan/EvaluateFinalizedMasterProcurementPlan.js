@@ -4,7 +4,7 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import SelectDropDown from '../../../components/SelectDropDown/SelectDropDown';
 import SearchNoFilter from '../../../components/Search/Search';
-import { Button, IconButton, Paper, Stack, TextField } from "@mui/material";
+import { Button, IconButton, Paper, Stack, TextField, Typography } from "@mui/material";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -42,23 +42,47 @@ const columns = [
       <IconButton><img src={Reject}/></IconButton>
     </>
   )
+
+  const auditApproved = (
+    <>
+        <Typography sx={{color:'#227C70', '&:hover':{cursor:'pointer'}}}>
+            Approved
+        </Typography>
+    </>
+  )
+
+  const auditRejected = (
+    <>
+        <Typography sx={{color:'#9C254D', '&:hover':{cursor:'pointer'}}}>
+            Rejected
+        </Typography>
+    </>
+  )
+
+  const auditPending = (
+    <>
+        <Typography sx={{color:'#D29D04', '&:hover':{cursor:'pointer'}}}>
+            Pending
+        </Typography>
+    </>
+  )
   
   const rows = [
-    createData('I0014','A4 Papers','500','loerm','IT Department',<VendorDetails/>,'2023/01/01','Approved',ApproveRejctButton),
-    createData('I0028', 'Ruler', '10','loerm','IT Department',<VendorDetails/>,'2023/01/01','Rejected',ApproveRejctButton),
-    createData('I0015', 'Stapler', '50','loerm','IT Department',<VendorDetails/>,'2023/01/01','Pending',ApproveRejctButton),
-    createData('I0016', 'Pens', '100','loerm','Engineering Department',<VendorDetails/>,'2023/01/01','Approved',ApproveRejctButton),
-    createData('I0017', 'Notebooks', '25','loerm','Engineering Department',<VendorDetails/>,'2023/01/01','Pending',ApproveRejctButton),
-    createData('I0018', 'Printer Ink', '10','loerm','Engineering Department',<VendorDetails/>,'2023/01/01','Approved',ApproveRejctButton),
-    createData('I0019', 'Paper Clips', '200','loerm','Engineering Department',<VendorDetails/>,'2023/01/01','Approved',ApproveRejctButton),
-    createData('I0020', 'Tape', '15','loerm','Finance Department',<VendorDetails/>,'2023/01/01','Rejected',ApproveRejctButton),
-    createData('I0021', 'Envelopes', '75','loerm','Finance Department',<VendorDetails/>,'2023/01/01','Rejected',ApproveRejctButton),
-    createData('I0022', 'File Folders', '50','loerm','Finance Department',<VendorDetails/>,'2023/01/01','Pending',ApproveRejctButton),
-    createData('I0023', 'Scissors', '20','loerm','Finance Department',<VendorDetails/>,'2023/01/01','Pending',ApproveRejctButton),
-    createData('I0024', 'Whiteboard Markers', '30','loerm','Finance Department',<VendorDetails/>,'2023/01/01','Approved',ApproveRejctButton),
-    createData('I0025', 'Calculator', '5','loerm','Finance Department',<VendorDetails/>,'2023/01/01','Pending',ApproveRejctButton),
-    createData('I0026', 'Post-it Notes', '100','loerm','Technical Department',<VendorDetails/>,'2023/01/01','Rejected',ApproveRejctButton),
-    createData('I0027', 'Highlighters', '20','loerm','Technical Department',<VendorDetails/>,'2023/01/01','Approved',ApproveRejctButton),
+    createData('I0014','A4 Papers','500','loerm','IT Department',<VendorDetails/>,'2023/01/01',auditApproved,ApproveRejctButton),
+    createData('I0028', 'Ruler', '10','loerm','IT Department',<VendorDetails/>,'2023/01/01',auditRejected,ApproveRejctButton),
+    createData('I0015', 'Stapler', '50','loerm','IT Department',<VendorDetails/>,'2023/01/01',auditPending,ApproveRejctButton),
+    createData('I0016', 'Pens', '100','loerm','Engineering Department',<VendorDetails/>,'2023/01/01',auditApproved,ApproveRejctButton),
+    createData('I0017', 'Notebooks', '25','loerm','Engineering Department',<VendorDetails/>,'2023/01/01',auditPending,ApproveRejctButton),
+    createData('I0018', 'Printer Ink', '10','loerm','Engineering Department',<VendorDetails/>,'2023/01/01',auditApproved,ApproveRejctButton),
+    createData('I0019', 'Paper Clips', '200','loerm','Engineering Department',<VendorDetails/>,'2023/01/01',auditApproved,ApproveRejctButton),
+    createData('I0020', 'Tape', '15','loerm','Finance Department',<VendorDetails/>,'2023/01/01',auditRejected,ApproveRejctButton),
+    createData('I0021', 'Envelopes', '75','loerm','Finance Department',<VendorDetails/>,'2023/01/01',auditRejected,ApproveRejctButton),
+    createData('I0022', 'File Folders', '50','loerm','Finance Department',<VendorDetails/>,'2023/01/01',auditPending,ApproveRejctButton),
+    createData('I0023', 'Scissors', '20','loerm','Finance Department',<VendorDetails/>,'2023/01/01',auditPending,ApproveRejctButton),
+    createData('I0024', 'Whiteboard Markers', '30','loerm','Finance Department',<VendorDetails/>,'2023/01/01',auditApproved,ApproveRejctButton),
+    createData('I0025', 'Calculator', '5','loerm','Finance Department',<VendorDetails/>,'2023/01/01',auditPending,ApproveRejctButton),
+    createData('I0026', 'Post-it Notes', '100','loerm','Technical Department',<VendorDetails/>,'2023/01/01',auditRejected,ApproveRejctButton),
+    createData('I0027', 'Highlighters', '20','loerm','Technical Department',<VendorDetails/>,'2023/01/01',auditApproved,ApproveRejctButton),
   ]
 
 //===========================================================================
