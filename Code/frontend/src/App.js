@@ -14,6 +14,8 @@ import ViewFinalizedMasterProcurementPlans from './pages/Internal Auditor/ViewFi
 import AuditFinalizedMasterProcurementPlan from './pages/Internal Auditor/AuditFinalizedMasterProcurementPlan/AuditFinalizedMasterProcurementPlan';
 import ItemstobeShipped from './pages/Items to be Shipped/ItemstobeShipped';
 import Stock from './pages/Stock/Stock';
+import DGViewFinalizedMasterProcurementPlans from './pages/Director General/DGViewFinalizedMasterProcurementPlans/DGViewFinalizedMasterProcurementPlans';
+import EvaluateFinalizedMasterProcurementPlan from './pages/Director General/EvaluateFinalizedMasterProcurementPlan/EvaluateFinalizedMasterProcurementPlan';
 
 function App() {
   return (
@@ -30,9 +32,10 @@ function App() {
     {/* <CreateModifyTECCommittee/> */}
     {/* <ViewFinalizedMasterProcurementPlans/> */}
     {/* <AuditFinalizedMasterProcurementPlan/> */}
-    {/*AuditFinalizedMasterProcurementPlan*/}
     {/* <ItemstobeShipped/> */}
-    <Stock/>
+    {/* <Stock/> */}
+    {/* <DGViewFinalizedMasterProcurementPlans/> */}
+    <EvaluateFinalizedMasterProcurementPlan/>
     </div>
   );
 }

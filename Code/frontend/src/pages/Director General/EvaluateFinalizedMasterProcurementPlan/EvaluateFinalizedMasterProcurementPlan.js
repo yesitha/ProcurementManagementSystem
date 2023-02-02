@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './AuditFinalizedMasterProcurementPlan.module.css';
+import styles from './EvaluateFinalizedMasterProcurementPlan.module.css';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import SelectDropDown from '../../../components/SelectDropDown/SelectDropDown';
@@ -28,11 +28,12 @@ const columns = [
     {id: 'Division',label: 'Division',Width: 300,align: 'center'},
     {id: 'Vendor', label: 'Vendor', Width: 300, align:'center'},
     {id: 'EDdate',label: 'Expected Delivery date',Width: 300,align: 'center'},
+    {id: 'AuditReview',label: 'Inernal Auditors Review',Width: 300,align: 'center'},
     {id: 'Action', label: 'Action', Width: 300,align: 'center'}
   ];
 
-  function createData(ItemID,ItemName,Qty,Spe,Division,Vendor,EDdate,Action) {
-    return { ItemID,ItemName,Qty,Spe,Division,Vendor,EDdate,Action};
+  function createData(ItemID,ItemName,Qty,Spe,Division,Vendor,EDdate,AuditReview,Action) {
+    return { ItemID,ItemName,Qty,Spe,Division,Vendor,EDdate,AuditReview,Action};
   }
 
   const ApproveRejctButton = (
@@ -43,28 +44,28 @@ const columns = [
   )
   
   const rows = [
-    createData('I0014','A4 Papers','500','loerm','IT Department',<VendorDetails/>,'2023/01/01',ApproveRejctButton),
-    createData('I0028', 'Ruler', '10','loerm','IT Department',<VendorDetails/>,'2023/01/01',ApproveRejctButton),
-    createData('I0015', 'Stapler', '50','loerm','IT Department',<VendorDetails/>,'2023/01/01',ApproveRejctButton),
-    createData('I0016', 'Pens', '100','loerm','Engineering Department',<VendorDetails/>,'2023/01/01',ApproveRejctButton),
-    createData('I0017', 'Notebooks', '25','loerm','Engineering Department',<VendorDetails/>,'2023/01/01',ApproveRejctButton),
-    createData('I0018', 'Printer Ink', '10','loerm','Engineering Department',<VendorDetails/>,'2023/01/01',ApproveRejctButton),
-    createData('I0019', 'Paper Clips', '200','loerm','Engineering Department',<VendorDetails/>,'2023/01/01',ApproveRejctButton),
-    createData('I0020', 'Tape', '15','loerm','Finance Department',<VendorDetails/>,'2023/01/01',ApproveRejctButton),
-    createData('I0021', 'Envelopes', '75','loerm','Finance Department',<VendorDetails/>,'2023/01/01',ApproveRejctButton),
-    createData('I0022', 'File Folders', '50','loerm','Finance Department',<VendorDetails/>,'2023/01/01',ApproveRejctButton),
-    createData('I0023', 'Scissors', '20','loerm','Finance Department',<VendorDetails/>,'2023/01/01',ApproveRejctButton),
-    createData('I0024', 'Whiteboard Markers', '30','loerm','Finance Department',<VendorDetails/>,'2023/01/01',ApproveRejctButton),
-    createData('I0025', 'Calculator', '5','loerm','Finance Department',<VendorDetails/>,'2023/01/01',ApproveRejctButton),
-    createData('I0026', 'Post-it Notes', '100','loerm','Technical Department',<VendorDetails/>,'2023/01/01',ApproveRejctButton),
-    createData('I0027', 'Highlighters', '20','loerm','Technical Department',<VendorDetails/>,'2023/01/01',ApproveRejctButton),
+    createData('I0014','A4 Papers','500','loerm','IT Department',<VendorDetails/>,'2023/01/01','Approved',ApproveRejctButton),
+    createData('I0028', 'Ruler', '10','loerm','IT Department',<VendorDetails/>,'2023/01/01','Rejected',ApproveRejctButton),
+    createData('I0015', 'Stapler', '50','loerm','IT Department',<VendorDetails/>,'2023/01/01','Pending',ApproveRejctButton),
+    createData('I0016', 'Pens', '100','loerm','Engineering Department',<VendorDetails/>,'2023/01/01','Approved',ApproveRejctButton),
+    createData('I0017', 'Notebooks', '25','loerm','Engineering Department',<VendorDetails/>,'2023/01/01','Pending',ApproveRejctButton),
+    createData('I0018', 'Printer Ink', '10','loerm','Engineering Department',<VendorDetails/>,'2023/01/01','Approved',ApproveRejctButton),
+    createData('I0019', 'Paper Clips', '200','loerm','Engineering Department',<VendorDetails/>,'2023/01/01','Approved',ApproveRejctButton),
+    createData('I0020', 'Tape', '15','loerm','Finance Department',<VendorDetails/>,'2023/01/01','Rejected',ApproveRejctButton),
+    createData('I0021', 'Envelopes', '75','loerm','Finance Department',<VendorDetails/>,'2023/01/01','Rejected',ApproveRejctButton),
+    createData('I0022', 'File Folders', '50','loerm','Finance Department',<VendorDetails/>,'2023/01/01','Pending',ApproveRejctButton),
+    createData('I0023', 'Scissors', '20','loerm','Finance Department',<VendorDetails/>,'2023/01/01','Pending',ApproveRejctButton),
+    createData('I0024', 'Whiteboard Markers', '30','loerm','Finance Department',<VendorDetails/>,'2023/01/01','Approved',ApproveRejctButton),
+    createData('I0025', 'Calculator', '5','loerm','Finance Department',<VendorDetails/>,'2023/01/01','Pending',ApproveRejctButton),
+    createData('I0026', 'Post-it Notes', '100','loerm','Technical Department',<VendorDetails/>,'2023/01/01','Rejected',ApproveRejctButton),
+    createData('I0027', 'Highlighters', '20','loerm','Technical Department',<VendorDetails/>,'2023/01/01','Approved',ApproveRejctButton),
   ]
 
 //===========================================================================
 
-// Here in class names, afmmp=AuditFinalizedMasterProcurementPlan
+// Here in class names, efmmp=EvaluateFinalizedMasterProcurementPlan
 
-function AuditFinalizedMasterProcurementPlan() {
+function EvaluateFinalizedMasterProcurementPlan() {
 
     const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
     const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
@@ -100,24 +101,24 @@ const handleChangeRowsPerPage = (event) => {
   return (
     <div>
         <SideNavBar list1={list1} list2={list2} user={user}/>
-        <div className={styles.afmpp_mainBody}>
-            <div className={styles.afmpp_heading}>
+        <div className={styles.efmpp_mainBody}>
+            <div className={styles.efmpp_heading}>
                 <IconButton sx={{pl:'15px',height:'34px',width:'34px'}}><ArrowBackIosIcon sx={{color:'#ffffff'}}/></IconButton>
-                Audit Finalized Master Procurement Plan
+                Evaluate Finalized Master Procurement Plan
             </div>
-            <div className={styles.afmpp_title_search}>
-                <div className={styles.afmpp_title}>
+            <div className={styles.efmpp_title_search}>
+                <div className={styles.efmpp_title}>
                     <label>MASTER PROCUREMENT PLAN ID*</label>
                     <SelectDropDown list={list}/>
                 </div>
-                <div className={styles.afmpp_search}>
+                <div className={styles.efmpp_search}>
                     <SearchNoFilter/>
                 </div>
             </div>
             
             {/* Add table data */}
 
-            <div className={styles.afmpp_table}>
+            <div className={styles.efmpp_table}>
                 <Paper sx={{ width: '100%', overflow: 'hidden', borderRadius: 5, scrollBehavior: 'smooth'}}>
                     <TableContainer sx={{ maxHeight: '100%' }}>
                     <Table stickyHeader aria-label="sticky table">
@@ -167,12 +168,12 @@ const handleChangeRowsPerPage = (event) => {
                 />
                 </Paper>
             </div>
-            <div className={styles.afmpp_button}>  
-              <DonePopup text={"Successfully submitted your status"} title={"Submit"} styles={{position: 'absolute', right:'0', bgcolor: '#205295', borderRadius: 5, height: 60, width: 200}}/>
+            <div className={styles.efmpp_button}>  
+              <DonePopup text={"Successfully informed Procurement Officer"} title={"Permission For Raising PO"} styles={{position: 'absolute', right:'0', bgcolor: '#205295', borderRadius: 5, height: 60, width: 350}}/>
             </div>
         </div>
     </div>
   )
 }
 
-export default AuditFinalizedMasterProcurementPlan
+export default EvaluateFinalizedMasterProcurementPlan
