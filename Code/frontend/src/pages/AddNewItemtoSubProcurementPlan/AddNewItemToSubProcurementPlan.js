@@ -2,7 +2,7 @@ import { InputAdornment,IconButton,Button, Paper, Box, Container, paperClasses }
 import React from 'react'
 import SideNavBar from '../../components/SideNavigationBar/SideNavBar'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import Styles from "./AddItemtoSubProcurementPlan.module.css"
+import Styles from "./AddNewItemtoSubProcurementPlan.module.css"
 import TextField from '@mui/material/TextField';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
@@ -28,7 +28,7 @@ const user = {
 
 
 
-function AddItemtoSubProcurementPlan() {
+function AddNewItemtoSubProcurementPlan() {
     return (
         <div>
             <div className={Styles.sideNavBar}>
@@ -38,7 +38,7 @@ function AddItemtoSubProcurementPlan() {
                 <div className='upperSection'>
                     <div className={Styles.headTitle}>
                         <IconButton sx={{ pl: '15px', height: '34px', width: '34px', mt: 3.7 }}><ArrowBackIosIcon sx={{ color: '#ffffff', }} /></IconButton>
-                        <h1 className={Styles.headTitleName}> [ Add / Modify / Modify Rejected ] Item to Sub Procurement Plan  </h1>
+                        <h1 className={Styles.headTitleName}> Add New Item</h1>
                     </div>
                 </div>
                 <div className='bottomSection'>
@@ -47,8 +47,8 @@ function AddItemtoSubProcurementPlan() {
                        <div>
                             <div className={Styles.bodyBlueContainerMain}>
                                 <div className={Styles.bodyBlueContainer}>
-                                    <h3>Sub Procurement ID : Sp003</h3>
-                                    <h3>Division: [Production Division]</h3>
+                                    <h3>Item id : I0056</h3>
+                                    
                                 </div>
                             </div>
     
@@ -76,57 +76,13 @@ function AddItemtoSubProcurementPlan() {
                                         autoFocus
                                     />
     
-                                    <TextField
-                                        margin="normal"
-                                        required
-                                        fullWidth
-                                        id="email"
-                                        label="Quantity"
-                                        name="email"
-                                        autoComplete="email"
-                                        autoFocus
-                                    />
-    
-                                    <TextField
-                                        margin="normal"
-                                        required
-                                        fullWidth
-                                        id="email"
-                                        label="Estimated Budget"
-                                        name="email"
-                                        autoComplete="email"
-                                        autoFocus
-                                    />
-    
-                                    <TextField
-                                        margin="normal"
-                                        required
-                                        fullWidth
-                                        id="email"
-                                        label="Recommended Vendor"
-                                        name="email"
-                                        autoComplete="email"
-                                        autoFocus
-                                    />
-    
-    
-                                    <TextField
-                                        margin="normal"
-                                        required
-                                        fullWidth
-                                        id="email"
-                                        label="Expected date"
-                                        name="email"
-                                        autoComplete="email"
-                                        autoFocus
-                                    />
                                 </div>
                                 <div className={Styles.bodyRight}>
                                     <TextField
                                         margin="normal"
                                         required
                                         fullWidth
-                                        rows={8}
+                                        rows={4.5}
                                         multiline
                                         id="email"
                                         label="Specification"
@@ -134,11 +90,6 @@ function AddItemtoSubProcurementPlan() {
                                         autoComplete="email"
                                         autoFocus
                                     />
-    
-                                    <div className={Styles.evidenceContainer}>
-                                        <p>Evidence of Authorization*</p>
-                                        <AddCircleOutlineIcon/>
-                                    </div>
            
                                 </div>
                                 
@@ -163,4 +114,4 @@ function AddItemtoSubProcurementPlan() {
     )
 }
 
-export default AddItemtoSubProcurementPlan
+export default AddNewItemtoSubProcurementPlan
