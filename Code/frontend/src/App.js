@@ -8,6 +8,8 @@ import SignUp from './pages/SignUp/SignUp';
 import FinalizedMasterProcurementPlan from './pages/ProcurementCommitee/FinalizedMasterProcurementPlan/FinalizedMasterProcurementPlan';
 import MasterProcurementPlanStatus from './pages/MasterProcurementPlanStatus/MasterProcurementPlanStatus';
 import ViewMasterProcurementPlan from './pages/ViewMasterProcurementPlan/ViewMasterProcurementPlan';
+import AddItemtoSubProcurementPlan from './pages/AddItemtoSubProcurementPlan/AddItemtoSubProcurementPlan';
+import AddNewItemtoSubProcurementPlan from './pages/AddNewItemtoSubProcurementPlan/AddNewItemToSubProcurementPlan'
 import Login from './pages/Login/Login'
 import CreateModifyTECCommittee from './pages/CreateModifyTECCommittee/CreateModifyTECCommittee';
 import ViewFinalizedMasterProcurementPlans from './pages/Internal Auditor/ViewFinalizedMasterProcurementPlans/ViewFinalizedMasterProcurementPlans';
@@ -33,7 +35,8 @@ function App() {
     {/* <ViewMasterProcurementPlan/> */}
     {/* <CreateModifyTECCommittee/> */}
 
-    <MasterProcurementPlanEvalate/>
+    <AddItemtoSubProcurementPlan/>
+
 
     {/* <ViewFinalizedMasterProcurementPlans/> */}
     {/* <AuditFinalizedMasterProcurementPlan/> */}
