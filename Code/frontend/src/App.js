@@ -19,7 +19,7 @@ import MasterProcurementPlanEvalate from './pages/TEC Committee/MasterProcuremen
 import Stock from './pages/Stock/Stock';
 import DGViewFinalizedMasterProcurementPlans from './pages/Director General/DGViewFinalizedMasterProcurementPlans/DGViewFinalizedMasterProcurementPlans';
 import EvaluateFinalizedMasterProcurementPlan from './pages/Director General/EvaluateFinalizedMasterProcurementPlan/EvaluateFinalizedMasterProcurementPlan';
-
+import ApprovalForMasterProcurementPlan from './pages/TEC Committee/ApprovalForMasterProcurementPlan/ApprovalForMasterProcurementPlan';
 
 function App() {
   return (
@@ -34,17 +34,16 @@ function App() {
     {/* <MasterProcurementPlanStatus/> */}
     {/* <ViewMasterProcurementPlan/> */}
     {/* <CreateModifyTECCommittee/> */}
-
-    <AddNewItemtoSubProcurementPlan/>
-
-
+    {/* <MasterProcurementPlanEvalate/> */}
+    {/* <AddItemtoSubProcurementPlan/>  */}
+    <ApprovalForMasterProcurementPlan/>
     {/* <ViewFinalizedMasterProcurementPlans/> */}
     {/* <AuditFinalizedMasterProcurementPlan/> */}
     {/* <ItemstobeShipped/> */}
     {/* <Stock/> */}
     {/* <DGViewFinalizedMasterProcurementPlans/> */}
     {/*<EvaluateFinalizedMasterProcurementPlan/>*/}
-    </div>
+     </div>
   );
 }
 export default App;
