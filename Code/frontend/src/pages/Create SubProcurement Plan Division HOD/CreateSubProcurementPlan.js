@@ -71,7 +71,7 @@ function CreateSubProcurementPlan() {
 
   ]
 
-  const list=['MPPI10000', 'MPPI10001', 'MPPI10002', 'MPPI10003'];
+  const list = ['MPPI10000', 'MPPI10001', 'MPPI10002', 'MPPI10003'];
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const handleChangePage = (event, newPage) => {
@@ -172,6 +172,10 @@ function CreateSubProcurementPlan() {
             />
           </Paper>
 
+          <div classname='footerButton' style={{display:'flex', alignContent:'flex-end',marginTop:15}}>
+            <Button variant="contained">Add Item</Button>
+            <Button variant="contained" style={{marginLeft:40}}>Modify item</Button>
+          </div>
 
 
 

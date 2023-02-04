@@ -124,3 +124,9 @@ scroll-behavior: smooth;
     display:flex;
     flex-direction: column;
   }
+
+  .footerButton{
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
+  }

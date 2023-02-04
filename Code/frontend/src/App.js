@@ -13,13 +13,14 @@ import FinalizedMasterProcurementPlan from './pages/ProcurementCommitee/Finalize
 
 import MasterProcurementPlanStatus from './pages/MasterProcurementPlanStatus/MasterProcurementPlanStatus';
 import ViewMasterProcurementPlan from './pages/ViewMasterProcurementPlan/ViewMasterProcurementPlan';
+import AddItemtoSubProcurementPlan from './pages/AddItemtoSubProcurementPlan/AddItemtoSubProcurementPlan';
 
 
 function App() {
   return (
     <div>
 
-    <CreateSubProcurementPlan/>
+    <AddItemtoSubProcurementPlan/>
 
     </div>
   );
