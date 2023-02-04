@@ -18,8 +18,6 @@
 
 }
 
-
-
 .bodyBlueContainer{
     font-family: 'Inter', sans-serif; 
     font-weight: 500;
@@ -55,4 +53,10 @@
 .addButton{
     margin-top: 13px;
     margin-bottom: 13px;
+}
+
+.entireBody{
+    display: flex;
+    flex-direction: column;
+
 }

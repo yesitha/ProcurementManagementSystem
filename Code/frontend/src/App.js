@@ -35,7 +35,7 @@ function App() {
     {/* <ViewMasterProcurementPlan/> */}
     {/* <CreateModifyTECCommittee/> */}
 
-    <AddNewItemtoSubProcurementPlan/>
+    <AddItemtoSubProcurementPlan/>
 
 
     {/* <ViewFinalizedMasterProcurementPlans/> */}

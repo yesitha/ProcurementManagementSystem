@@ -44,7 +44,7 @@ function AddNewItemtoSubProcurementPlan() {
                 <div className='bottomSection'>
                     <Paper elevation={6} sx={{ pl: 5, pr: { lg: 15, md: 5 }, ml: { lg: 2.5, md: 1 }, borderRadius: 10 ,position:'absolute'}}>
 
-                       <div>
+                       <div className={Styles.entireBody}>
                             <div className={Styles.bodyBlueContainerMain}>
                                 <div className={Styles.bodyBlueContainer}>
                                     <h3>Item id : I0056</h3>
