@@ -180,7 +180,7 @@ const handleChangeRowsPerPage = (event) => {
             </div>
             <div className={styles.fmpp_button}>  
               {/* <SetPreBidMeetingDate title={"Send to Internal Auditor"} styles={{position: 'absolute', right:'0', bgcolor: '#205295', borderRadius: 5, height: 60, width: 300}}/> */}
-              <DonePopup text={"Successfully sent to Internal Auditor"} title={"Send to Internal Auditor"} styles={{position: 'absolute', right:'0', bgcolor: '#205295', borderRadius: 5, height: 60, width: 300}}/>
+              <DonePopup text={"Successfully Created TEC Commitee"} title={"Send to Internal Auditor"} styles={{position: 'absolute', right:'0', bgcolor: '#205295', borderRadius: 5, height: 60, width: 300}}/>
             </div>
         </div>
     </div>

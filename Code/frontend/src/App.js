@@ -13,6 +13,7 @@ import CreateModifyTECCommittee from './pages/CreateModifyTECCommittee/CreateMod
 import ViewFinalizedMasterProcurementPlans from './pages/Internal Auditor/ViewFinalizedMasterProcurementPlans/ViewFinalizedMasterProcurementPlans';
 import AuditFinalizedMasterProcurementPlan from './pages/Internal Auditor/AuditFinalizedMasterProcurementPlan/AuditFinalizedMasterProcurementPlan';
 import ItemstobeShipped from './pages/Items to be Shipped/ItemstobeShipped';
+import MasterProcurementPlanEvalate from './pages/TEC Committee/MasterProcurementPlanEvalate/MasterProcurementPlanEvalate';
 
 function App() {
   return (
@@ -26,7 +27,8 @@ function App() {
     {/* <FinalizedMasterProcurementPlan/> */}
     {/* <MasterProcurementPlanStatus/> */}
     {/* <ViewMasterProcurementPlan/> */}
-    <CreateModifyTECCommittee/>
+    {/* <CreateModifyTECCommittee/> */}
+    <MasterProcurementPlanEvalate/>
     {/* <ViewFinalizedMasterProcurementPlans/> */}
     {/* <AuditFinalizedMasterProcurementPlan/> */}
     {/* <ItemstobeShipped/> */}

@@ -5,6 +5,7 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { Container } from "@mui/system";
 import {users} from "../../users/SystemUsers";
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
+import DonePopup from '../../components/Popups/DonePopup/DonePopup';
 import {
   IconButton,
   TableRow,
@@ -154,8 +155,10 @@ const handleClickRightToLeft = (row) => {
             className={styles.rightButton}
             sx={{ justifyContent: { xs: "left" ,sm:"center", lg: "center" } }}
           >
+            
             <Button
               className={styles.TecAppointButton}
+              
               variant="contained"
               sx={{
                 mt: 2,
