@@ -33,9 +33,10 @@
 
 
 .bodyContainer{
-    justify-content: space-around;
+    justify-content: flex-start;
     display: flex;
-    
+    flex-wrap: wrap;
+    align-content: flex-start;
 
 }
 .bodyLeft{
@@ -46,6 +47,8 @@
 
 .bodyRight{
     max-width: 400px;
+    margin-right:20px ;
+
 
     
 }
