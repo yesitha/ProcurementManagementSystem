@@ -21,8 +21,6 @@ const user = {
     address: "123, ABC Street, XYZ City, 123456",
     gender: "Male",
     profilePic: "https://www.w3schools.com/howto/img_avatar.png",
-
-
 };
 
 
