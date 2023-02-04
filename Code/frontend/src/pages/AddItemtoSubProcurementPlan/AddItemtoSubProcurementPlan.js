@@ -1,4 +1,4 @@
-import { InputAdornment,IconButton, Paper, Box, Container, paperClasses } from '@mui/material'
+import { InputAdornment,IconButton,Button, Paper, Box, Container, paperClasses } from '@mui/material'
 import React from 'react'
 import SideNavBar from '../../components/SideNavigationBar/SideNavBar'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
@@ -139,9 +139,14 @@ function AddItemtoSubProcurementPlan() {
                                         <p>Evidence of Authorization*</p>
                                         <AddCircleOutlineIcon/>
                                     </div>
+           
                                 </div>
+                                
     
                             </div>
+                            <div className={Styles.addButton}>
+                                    <Button variant="contained">Add Item</Button>
+                                    </div>
                        </div>
 
 
