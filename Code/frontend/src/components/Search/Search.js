@@ -40,7 +40,7 @@ const Search = styled('div')(({ theme }) => ({
 
 function SearchFilter() {
   return (
-    <Search className={styles.search} sx={{borderRadius:6,flexDirection:"row",mr:"40px",height:{xs:"60px"}}}>
+    <Search className={styles.search} sx={{borderRadius:6,flexDirection:"row",mr:"40px",height:{xs:"60px"},alignSelf:'flex-end'}}>
                <div className={styles.searchArea}>
                     
                     <div className={styles.searchInput}>
