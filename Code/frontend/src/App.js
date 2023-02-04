@@ -13,9 +13,11 @@ import CreateModifyTECCommittee from './pages/CreateModifyTECCommittee/CreateMod
 import ViewFinalizedMasterProcurementPlans from './pages/Internal Auditor/ViewFinalizedMasterProcurementPlans/ViewFinalizedMasterProcurementPlans';
 import AuditFinalizedMasterProcurementPlan from './pages/Internal Auditor/AuditFinalizedMasterProcurementPlan/AuditFinalizedMasterProcurementPlan';
 import ItemstobeShipped from './pages/Items to be Shipped/ItemstobeShipped';
+import MasterProcurementPlanEvalate from './pages/TEC Committee/MasterProcurementPlanEvalate/MasterProcurementPlanEvalate';
 import Stock from './pages/Stock/Stock';
 import DGViewFinalizedMasterProcurementPlans from './pages/Director General/DGViewFinalizedMasterProcurementPlans/DGViewFinalizedMasterProcurementPlans';
 import EvaluateFinalizedMasterProcurementPlan from './pages/Director General/EvaluateFinalizedMasterProcurementPlan/EvaluateFinalizedMasterProcurementPlan';
+
 
 function App() {
   return (
@@ -30,12 +32,15 @@ function App() {
     {/* <MasterProcurementPlanStatus/> */}
     {/* <ViewMasterProcurementPlan/> */}
     {/* <CreateModifyTECCommittee/> */}
+
+    <MasterProcurementPlanEvalate/>
+
     {/* <ViewFinalizedMasterProcurementPlans/> */}
     {/* <AuditFinalizedMasterProcurementPlan/> */}
     {/* <ItemstobeShipped/> */}
     {/* <Stock/> */}
     {/* <DGViewFinalizedMasterProcurementPlans/> */}
-    <EvaluateFinalizedMasterProcurementPlan/>
+    {/*<EvaluateFinalizedMasterProcurementPlan/>*/}
     </div>
   );
 }
