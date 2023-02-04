@@ -22,10 +22,14 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import SearchNoFilter from "../../components/Search/Search";
 import { Container } from "@mui/system";
-import "./ViewMasterProcurementPlan.css";
+import styles from "./ViewMasterProcurementPlan.module.css";
 import SelectDropDown from "../../components/SelectDropDown/SelectDropDown";
+import ViewRecomandedVendors from "../../components/Popups/ViewRecomandedVendors/ViewRecomandedVendors";
+import {vendors} from "../../users/vendors.js"
 
 function ViewMasterProcurementPlan() {
+const Recomandedvendors1=vendors;
+
   const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
   const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
   const user = {
@@ -84,9 +88,7 @@ function ViewMasterProcurementPlan() {
       "500",
       "Finance",
       "240 GSM",
-      <Button variant="contained" className="ViewButton">
-        View
-      </Button>,
+      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
       Setdate("2022.12.12")
     ),
     createData(
@@ -95,9 +97,7 @@ function ViewMasterProcurementPlan() {
       "10",
       "Finance",
       "240 GSM",
-      <Button variant="contained" className="ViewButton">
-        View
-      </Button>,
+      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
       Setdate("2022.12.12")
     ),
     createData(
@@ -106,9 +106,7 @@ function ViewMasterProcurementPlan() {
       "50",
       "Finance",
       "240 GSM",
-      <Button variant="contained" className="ViewButton">
-        View
-      </Button>,
+      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
       Setdate("2022.12.12")
     ),
     createData(
@@ -117,9 +115,7 @@ function ViewMasterProcurementPlan() {
       "100",
       "Finance",
       "24 BOX",
-      <Button variant="contained" className="ViewButton">
-        View
-      </Button>,
+      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
       Setdate("2022.12.12")
     ),
     createData(
@@ -128,9 +124,7 @@ function ViewMasterProcurementPlan() {
       "25",
       "Finance",
       "240 GSM",
-      <Button variant="contained" className="ViewButton">
-        View
-      </Button>,
+      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
       Setdate("2022.12.12")
     ),
     createData(
@@ -139,9 +133,7 @@ function ViewMasterProcurementPlan() {
       "10",
       "Finance",
       "Black",
-      <Button variant="contained" className="ViewButton">
-        View
-      </Button>,
+      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
       Setdate("2022.12.12")
     ),
     createData(
@@ -150,9 +142,7 @@ function ViewMasterProcurementPlan() {
       "200",
       "Finance",
       "Aluminium",
-      <Button variant="contained" className="ViewButton">
-        View
-      </Button>,
+      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
       Setdate("2022.12.12")
     ),
     createData(
@@ -161,9 +151,7 @@ function ViewMasterProcurementPlan() {
       "15",
       "Finance",
       "240 GSM",
-      <Button variant="contained" className="ViewButton">
-        View
-      </Button>,
+      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
       Setdate("2022.12.12")
     ),
     createData(
@@ -172,9 +160,7 @@ function ViewMasterProcurementPlan() {
       "75",
       "Finance",
       "240 GSM",
-      <Button variant="contained" className="ViewButton">
-        View
-      </Button>,
+      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
       Setdate("2022.12.12")
     ),
     createData(
@@ -183,9 +169,7 @@ function ViewMasterProcurementPlan() {
       "50",
       "Finance",
       "240 GSM",
-      <Button variant="contained" className="ViewButton">
-        View
-      </Button>,
+      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
       Setdate("2022.12.12")
     ),
   ];
@@ -209,44 +193,44 @@ function ViewMasterProcurementPlan() {
   const list = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
 
   return (
-    <div style={{ overflowX: "hidden" }}>
-      <div className="sideNavBar">
+    <div className={styles.outer} >
+      <div className={styles.sideNavBar}>
         <SideNavBar list1={list1} list2={list2} user={user} />
       </div>
 
       <Container
-        className="main"
+        
         sx={{
           ml: { xs: "60px", sm: "65px", md: "65px", lg: "68px", xl: "70px" },
           display: "flex",
           flexDirection: "column",
         }}
       >
-        <div className="upperSection">
-          <div className="ManageAuctionPageContainer__header">
+        <div className={styles.upperSection}>
+          <div className={styles.ManageAuctionPageContainer__header}>
             <IconButton
               sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
             >
               <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
             </IconButton>
 
-            <h1 className="Header">Master Procurement Plan</h1>
+            <h1 className={styles.Header}>Master Procurement Plan</h1>
           </div>
         </div>
 
-        <div className="MiddleSection">
-          <div className="header2Section">
-            <div className="fmpp-title">
-              <Typography className="fmpp-title label" sx={{fontFamily:'mulish',fontSize:{xs:'14px',sm:'15px',md:'16px'},ml:1.2,color:'#ffffff'}}>MASTER PROCUREMENT PLAN ID*</Typography>
-              <SelectDropDown className="dropDown" list={list} />
+        <div className={styles.MiddleSection}>
+          <div className={styles.header2Section}>
+            <div>
+              <Typography  sx={{fontFamily:'mulish',fontSize:{xs:'14px',sm:'15px',md:'16px'},ml:1.2,color:'#ffffff'}}>MASTER PROCUREMENT PLAN ID*</Typography>
+              <SelectDropDown className={styles.dropDown} list={list} />
             </div>
           </div>
-          <SearchNoFilter className="search" />
+          <SearchNoFilter className={styles.search} />
         </div>
 
-        <div className="downSection">
+        <div className={styles.downSection}>
           <Paper
-            className="baseTableContainer"
+            className={styles.baseTableContainer}
             elevation={6}
             sx={{
               mr: {
@@ -260,9 +244,9 @@ function ViewMasterProcurementPlan() {
               borderRadius: "31px",
             }}
           >
-            <TableContainer className="tableContainer">
+            <TableContainer className={styles.tableContainer}>
               <Table stickyHeader aria-label="sticky table">
-                <TableHead className="TableHeaders">
+                <TableHead className={styles.TableHeaders}>
                   <TableRow>
                     {columns.map((column) => (
                       <TableCell
@@ -313,11 +297,11 @@ function ViewMasterProcurementPlan() {
             />
           </Paper>
           <Container
-            className="rightButton"
+            className={styles.rightButton}
             sx={{ justifyContent: { xs: "center", md: "right" } }}
           >
             <Button
-              className="TecAppointButton"
+              className={styles.TecAppointButton}
               variant="contained"
               sx={{
                 mt: 1.2,

@@ -1,0 +1,26 @@
+@import "../../../fonts.css";
+
+.dgvfmpp_mainBody{
+    margin-left: 60px;
+}
+
+.dgvfmpp_heading{
+    font-family: 'Inter', sans-serif; 
+    font-weight: 500;
+    color: #ffffff;
+    font-size: 36px;
+    position: relative;
+    margin-top: 30px;
+}
+
+
+.dgvfmpp_search{
+    margin-top: 40px;
+    margin-bottom: 40px;
+    margin-left: 10px;
+}
+
+.dgvfmpp_table{
+    margin-bottom: 30px;
+    margin-left: 10px;
+}

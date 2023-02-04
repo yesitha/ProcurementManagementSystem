@@ -1,6 +1,6 @@
 import React from 'react'
 import SideNavBar from "../../components/SideNavigationBar/SideNavBar";
-import "./Create SubProcurementPlan.css";
+import styles from "./CreateSubProcurementPlan.module.css";
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { Container, Button, FormControl, Box, NativeSelect, Card, CardContent, IconButton, Paper, Stack, TextField, Typography, Select, MenuItem, InputLabel, CssBaseline } from "@mui/material";
 import Table from '@mui/material/Table';
@@ -87,46 +87,46 @@ function CreateSubProcurementPlan() {
     <div style={{ overflowX: "hidden" }}>
 
 
-      <div className="sideNavBar">
+      <div className={styles.sideNavBar}>
         <SideNavBar list1={list1} list2={list2} user={user} />
       </div>
 
       <Container
-        className="main"
+        className={styles.main}
         sx={{ ml: { xs: "60px", sm: "65px", md: "65px", lg: "68px", xl: "70px" }, display: "flex", flexDirection: "column" }}
       >
 
-        <div className="upperSection">
-          <div className="ManageAuctionPageContainer__header">
+        <div className={styles.upperSection}>
+          <div className={styles.ManageAuctionPageContainer__header}>
             <IconButton sx={{ pl: '15px', height: '34px', width: '34px', mt: 3.7 }}><ArrowBackIosIcon sx={{ color: '#ffffff', }} /></IconButton>
 
-            <h1 className="Header">Sub Procurement Plan</h1>
+            <h1 className={styles.Header}>Sub Procurement Plan</h1>
           </div>
         </div>
-        <div className="OuterMiddle">
-          <div className='Ph2'>
+        <div className={styles.OuterMiddle}>
+          <div className={styles.Ph2}>
             <h4>Division: [Production Division]</h4>
           </div>
 
 
-          <div className="MiddleSectionN">
-            <div className='Ph3'>
-              <h4 className="h4m">SUB PROCUREMENT ID*</h4>
+          <div className={styles.MiddleSectionN}>
+            <div className={styles.Ph3}>
+              <h4 className={styles.h4m}>SUB PROCUREMENT ID*</h4>
               <SelectDropDown list={list} />
             </div>
 
-            <SearchNoFilter className="search" />
+            <SearchNoFilter className={styles.search} />
           </div>
         </div>
 
-        <div className="downSection">
+        <div className={styles.downSection}>
 
 
 
-          <Paper className="baseTableContainer" elevation={6} sx={{ mr: { xs: "60px", sm: "65px", md: "65px", lg: "68px", xl: "70px" }, alignItems: "center", borderRadius: "31px" }}>
-            <TableContainer className="tableContainer" >
+          <Paper className={styles.baseTableContainer} elevation={6} sx={{ mr: { xs: "60px", sm: "65px", md: "65px", lg: "68px", xl: "70px" }, alignItems: "center", borderRadius: "31px" }}>
+            <TableContainer className={styles.tableContainer} >
               <Table stickyHeader aria-label="sticky table">
-                <TableHead className="TableHeaders">
+                <TableHead className={styles.TableHeaders}>
                   <TableRow>
                     {columns.map((column) => (
                       <TableCell

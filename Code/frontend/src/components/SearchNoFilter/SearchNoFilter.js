@@ -1,6 +1,6 @@
 import { IconButton } from '@mui/material'
 import React from 'react'
-import './Search.css'
+import styles from './SearchNoFilter.module.css'
 import InputBase from '@mui/material/InputBase';
 
 import SearchIcon from '@mui/icons-material/Search';
@@ -43,17 +43,17 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 function SearchNoFilter() {
   return (
-    <Search className="search" sx={{borderRadius:6,flexDirection:"row",}}>
-               <div className="searchArea">
+    <Search className={styles.search} sx={{borderRadius:6,flexDirection:"row",}}>
+               <div className={styles.searchArea}>
                     
-                    <div className="searchInput">
+                    <div className={styles.searchInput}>
                         <StyledInputBase 
                         color='black'
                           placeholder="Search…"
                           inputProps={{ "aria-label": "search" }}
                         />
                     </div>
-                    <div className="searchIcons">
+                    <div className={styles.searchIcons}>
                     
                     <IconButton sx={{display:"flex",flexDirection:"row",borderRadius:50,backgroundColor:'#205295',height:{xs:25,md:30, lg:50},width:{xs:25,md:30, lg:50},mt:1,mr:1,px:2,'&:hover':{backgroundColor:'#2c74b3'}}}>
                           <SearchIcon sx={{color:'#ffffff'}}/>
