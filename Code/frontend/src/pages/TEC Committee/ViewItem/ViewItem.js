@@ -17,6 +17,10 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import EvidenceOfAthorization from '../../../components/Popups/EvidenceOfAuthorization/EvidenceOfAuthorization';
+import ApprovePopup from '../../../components/Popups/DonePopup/ApprovePopup';
+import RejectPopup from '../../../components/Popups/DonePopup/RejectPopup';
+import ViewRecomandedVendors from '../../../components/Popups/ViewRecomandedVendors/ViewRecomandedVendors';
+import {vendors} from "../../../users/vendors.js"
 const item = {
     "Sub Procurement ID": 'SP-001',
     "Master Procurement ID": 'MP-001',
@@ -28,7 +32,7 @@ const item = {
     "Recommended Vendors": ["Vendor A", "Vendor B"],
     "Expected Delivery Date": "2023-03-15"
 }
-
+const Recomandedvendors1=vendors;
 const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
 const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
 
@@ -61,11 +65,11 @@ function createData(SubProID,Department,quentity,Specs,RecVendors,ExpDelDate,Evi
   }
 
 const rows = [
-    createData('SP-001','IT','20',"Comfortable, Adjustable, Ergonomic",<Button className={styles.ViewButton} variant="contained" sx={{ borderRadius: 8,px:{xs:2,md:5}}}> View </Button>,'2023-05-07',<EvidenceOfAthorization/>,<div className={styles.ActionButonsContainer}><IconButton sx={{width:'40px',height:'40px',px:0.5}} className={styles.approveButton}><DoneIcon/></IconButton><IconButton sx={{width:'40px',height:'40px',px:0.5}} className={styles.rejectButton}><CloseIcon/></IconButton></div>),
-    createData('SP-001','Finace','20',"Comfortable, Adjustable, Ergonomic",<Button className={styles.ViewButton} variant="contained" sx={{ borderRadius: 8,px:{xs:2,md:5}}}> View </Button>,'2023-05-07',<IconButton sx={{width:'40px',height:'40px'}} className={styles.viewEvidenceButton}><VisibilityIcon/></IconButton>,<div className={styles.ActionButonsContainer}><IconButton sx={{width:'40px',height:'40px',px:0.5}} className={styles.approveButton}><DoneIcon/></IconButton><IconButton sx={{width:'40px',height:'40px',px:0.5}} className={styles.rejectButton}><CloseIcon/></IconButton></div>),
-    createData('SP-002','HR','20',"Comfortable, Adjustable, Ergonomic",<Button className={styles.ViewButton} variant="contained" sx={{ borderRadius: 8,px:{xs:2,md:5}}}> View </Button>,'2023-05-07',<IconButton sx={{width:'40px',height:'40px'}} className={styles.viewEvidenceButton}><VisibilityIcon/></IconButton>,<div className={styles.ActionButonsContainer}><IconButton sx={{width:'40px',height:'40px',px:0.5}} className={styles.approveButton}><DoneIcon/></IconButton><IconButton sx={{width:'40px',height:'40px',px:0.5}} className={styles.rejectButton}><CloseIcon/></IconButton></div>),
-    createData('SP-004','IT','20',"Comfortable, Adjustable, Ergonomic",<Button className={styles.ViewButton} variant="contained" sx={{ borderRadius: 8,px:{xs:2,md:5}}}> View </Button>,'2023-05-07',<IconButton sx={{width:'40px',height:'40px'}} className={styles.viewEvidenceButton}><VisibilityIcon/></IconButton>,<div className={styles.ActionButonsContainer}><IconButton sx={{width:'40px',height:'40px',px:0.5}} className={styles.approveButton}><DoneIcon/></IconButton><IconButton sx={{width:'40px',height:'40px',px:0.5}} className={styles.rejectButton}><CloseIcon/></IconButton></div>),
-    createData('SP-003','HR','20',"Comfortable, Adjustable, Ergonomic",<Button className={styles.ViewButton} variant="contained" sx={{ borderRadius: 8,px:{xs:2,md:5}}}> View </Button>,'2023-05-07',<IconButton sx={{width:'40px',height:'40px'}} className={styles.viewEvidenceButton}><VisibilityIcon/></IconButton>,<div className={styles.ActionButonsContainer}><IconButton sx={{width:'40px',height:'40px',px:0.5}} className={styles.approveButton}><DoneIcon/></IconButton><IconButton sx={{width:'40px',height:'40px',px:0.5}} className={styles.rejectButton}><CloseIcon/></IconButton></div>),
+    createData('SP-001','IT','20',"Comfortable, Adjustable, Ergonomic",<ViewRecomandedVendors vendors={Recomandedvendors1}/>,'2023-05-07',<EvidenceOfAthorization/>,<div className={styles.ActionButonsContainer}><ApprovePopup/><RejectPopup/></div>),
+    createData('SP-001','Finace','20',"Comfortable, Adjustable, Ergonomic",<ViewRecomandedVendors vendors={Recomandedvendors1}/>,'2023-05-07',<EvidenceOfAthorization/>,<div className={styles.ActionButonsContainer}><ApprovePopup/><RejectPopup/></div>),
+    createData('SP-002','HR','20',"Comfortable, Adjustable, Ergonomic",<ViewRecomandedVendors vendors={Recomandedvendors1}/>,'2023-05-07',<EvidenceOfAthorization/>,<div className={styles.ActionButonsContainer}><ApprovePopup/><RejectPopup/></div>),
+    createData('SP-004','IT','20',"Comfortable, Adjustable, Ergonomic",<ViewRecomandedVendors vendors={Recomandedvendors1}/>,'2023-05-07',<EvidenceOfAthorization/>,<div className={styles.ActionButonsContainer}><ApprovePopup/><RejectPopup/></div>),
+    createData('SP-003','HR','20',"Comfortable, Adjustable, Ergonomic",<ViewRecomandedVendors vendors={Recomandedvendors1}/>,'2023-05-07',<EvidenceOfAthorization/>,<div className={styles.ActionButonsContainer}><ApprovePopup/><RejectPopup/></div>),
 ]
 
 
