@@ -22,6 +22,7 @@ import EvaluateFinalizedMasterProcurementPlan from './pages/Director General/Eva
 import ApprovalForMasterProcurementPlan from './pages/TEC Committee/ApprovalForMasterProcurementPlan/ApprovalForMasterProcurementPlan';
 import ViewItem from './pages/TEC Committee/ViewItem/ViewItem';
 import CreateModifyBidOpeningCommittee from './pages/Procurement Officer/CreateModifyBidOpeningCommittee/CreateModifyBidOpeningCommittee';
+import MasterProcurementPlan from './pages/ProcurementCommitee/MasterProcurementPlan/MasterProcurementPlan';
 import BidTender from './pages/Vendor/BidTender/BidTender';
 
 function App() {
@@ -44,7 +45,8 @@ function App() {
     {/* <CreateModifyBidOpeningCommittee/> */}
     {/* <ViewFinalizedMasterProcurementPlans/> */}
     {/* <AuditFinalizedMasterProcurementPlan/> */}
-    <BidTender/>
+    {/* <BidTender/> */}
+    <MasterProcurementPlan/>
     {/* <ItemstobeShipped/> */}
     {/* <Stock/> */}
     {/* <DGViewFinalizedMasterProcurementPlans/> */}
