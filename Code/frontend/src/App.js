@@ -34,10 +34,9 @@ function App() {
     {/* <MasterProcurementPlanStatus/> */}
     {/* <ViewMasterProcurementPlan/> */}
     {/* <CreateModifyTECCommittee/> */}
-     {/* <MasterProcurementPlanEvalate/> */}
-   {/* <AddItemtoSubProcurementPlan/>  */}
+    {/* <MasterProcurementPlanEvalate/> */}
+    {/* <AddItemtoSubProcurementPlan/>  */}
     <ApprovalForMasterProcurementPlan/>
-
     {/* <ViewFinalizedMasterProcurementPlans/> */}
     {/* <AuditFinalizedMasterProcurementPlan/> */}
     {/* <ItemstobeShipped/> */}
