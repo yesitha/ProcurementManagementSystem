@@ -21,6 +21,9 @@ import DGViewFinalizedMasterProcurementPlans from './pages/Director General/DGVi
 import EvaluateFinalizedMasterProcurementPlan from './pages/Director General/EvaluateFinalizedMasterProcurementPlan/EvaluateFinalizedMasterProcurementPlan';
 import ApprovalForMasterProcurementPlan from './pages/TEC Committee/ApprovalForMasterProcurementPlan/ApprovalForMasterProcurementPlan';
 import ViewItem from './pages/TEC Committee/ViewItem/ViewItem';
+import CreateModifyBidOpeningCommittee from './pages/Procurement Officer/CreateModifyBidOpeningCommittee/CreateModifyBidOpeningCommittee';
+import BidTender from './pages/Vendor/BidTender/BidTender';
+
 function App() {
   return (
     <div>
@@ -37,9 +40,11 @@ function App() {
     {/* <MasterProcurementPlanEvalate/> */}
     {/* <AddItemtoSubProcurementPlan/>  */}
     {/* <ApprovalForMasterProcurementPlan/> */}
-    <ViewItem/>
+    {/* <ViewItem/> */}
+    {/* <CreateModifyBidOpeningCommittee/> */}
     {/* <ViewFinalizedMasterProcurementPlans/> */}
     {/* <AuditFinalizedMasterProcurementPlan/> */}
+    <BidTender/>
     {/* <ItemstobeShipped/> */}
     {/* <Stock/> */}
     {/* <DGViewFinalizedMasterProcurementPlans/> */}
