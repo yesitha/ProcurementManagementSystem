@@ -28,7 +28,7 @@ const user = {
 
 function AddItemtoSubProcurementPlan() {
     return (
-        <div>
+        <div style={{overflowX:'hidden'}}>
             <div className={Styles.sideNavBar}>
                 <SideNavBar list1={list1} list2={list2} user={user} />
             </div>
