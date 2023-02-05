@@ -15,9 +15,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VendorDetails from '../../../components/Popups/VendorDetails/VendorDetails';
-import DonePopup from '../../../components/Popups/DonePopup/DonePopup';
+
 
 const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
 const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
@@ -108,7 +106,7 @@ const handleChangeRowsPerPage = (event) => {
               <Typography  sx={{fontFamily:'mulish',fontSize:{xs:'12px',sm:'15px',md:'16px'},color:'#ffffff'}}>GRAND TOTAL : {grandTotal}</Typography>
             </Container>
           </div>
-          <SearchNoFilter/>
+          
           
         
         </div>
