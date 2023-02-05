@@ -20,7 +20,7 @@ import Stock from './pages/Stock/Stock';
 import DGViewFinalizedMasterProcurementPlans from './pages/Director General/DGViewFinalizedMasterProcurementPlans/DGViewFinalizedMasterProcurementPlans';
 import EvaluateFinalizedMasterProcurementPlan from './pages/Director General/EvaluateFinalizedMasterProcurementPlan/EvaluateFinalizedMasterProcurementPlan';
 import ApprovalForMasterProcurementPlan from './pages/TEC Committee/ApprovalForMasterProcurementPlan/ApprovalForMasterProcurementPlan';
-import ViewItem from './pages/TEC Committee/ViewItem/ViewItem';
+import ViewItem from './pages/ProcurementCommitee/ViewItem/ViewItem';
 import CreateModifyBidOpeningCommittee from './pages/Procurement Officer/CreateModifyBidOpeningCommittee/CreateModifyBidOpeningCommittee';
 import MasterProcurementPlan from './pages/ProcurementCommitee/MasterProcurementPlan/MasterProcurementPlan';
 import BidTender from './pages/Vendor/BidTender/BidTender';
@@ -41,12 +41,12 @@ function App() {
     {/* <MasterProcurementPlanEvalate/> */}
     {/* <AddItemtoSubProcurementPlan/>  */}
     {/* <ApprovalForMasterProcurementPlan/> */}
-    {/* <ViewItem/> */}
+    <ViewItem/>
     {/* <CreateModifyBidOpeningCommittee/> */}
     {/* <ViewFinalizedMasterProcurementPlans/> */}
     {/* <AuditFinalizedMasterProcurementPlan/> */}
     {/* <BidTender/> */}
-    <MasterProcurementPlan/>
+    {/* <MasterProcurementPlan/> */}
     {/* <ItemstobeShipped/> */}
     {/* <Stock/> */}
     {/* <DGViewFinalizedMasterProcurementPlans/> */}
