@@ -1,0 +1,15 @@
+@import "../../fonts.css";
+.StatusBulb{
+    width: 100px;
+    height: 25px;
+    border-radius: 15px;
+    
+    
+    
+    font-size: 15px;
+    text-align: center;
+    color: #ffffff;
+    display: inline-block;
+    padding-bottom: 3px;
+    padding-top: 3px;
+}
