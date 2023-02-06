@@ -66,7 +66,7 @@ export default function EvidenceOfAthorization() {
             <div style={{display:'flex',flexDirection:'column' ,alignItems:'center', justifyContent:'center', marginTop:10}}></div>
           </div>
           <div style={{display:'flex', alignItems:'center', justifyContent:'center', marginTop:10}}>
-          <Button variant='contained' fontFamily={'Inter'} sx={{bgcolor: '#205295', borderRadius: 5, height: 40, width: 100,my:2}}>OK</Button>
+          <Button onClick={handleClose} variant='contained' fontFamily={'Inter'} sx={{bgcolor: '#205295', borderRadius: 5, height: 40, width: 100,my:2}}>OK</Button>
           </div>
         </Box>
       </Modal>

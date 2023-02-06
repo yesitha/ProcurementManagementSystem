@@ -21,6 +21,7 @@ import ApprovePopup from '../../../components/Popups/DonePopup/ApprovePopup';
 import RejectPopup from '../../../components/Popups/DonePopup/RejectPopup';
 import ViewRecomandedVendors from '../../../components/Popups/ViewRecomandedVendors/ViewRecomandedVendors';
 import {vendors} from "../../../users/vendors.js"
+import StatusBulb from '../../../components/StatusBulb/StatusBulb';
 const item = {
     "Sub Procurement ID": 'SP-001',
     "Master Procurement ID": 'MP-001',
@@ -43,6 +44,7 @@ const columns = [
     {id: 'Specs', label: 'Specifications', Width: 300, align:'center'},
     {id: 'RecVendors', label: 'Recommended Vendors', Width: 200, align:'center'},
     {id: 'ExpDelDate', label: 'Expected Delivery Date', Width: 350, align:'center'},
+    {id: 'TecStatus', label: 'TEC Status', Width: 200, align:'center'},
     {id: 'Evidence', label: 'Evidence', Width: 200, align:'center'},
     {id: 'Action', label: 'Action', Width: 300, align:'center'},
    
@@ -60,16 +62,16 @@ const user = {
   profilePic: "https://www.w3schools.com/howto/img_avatar.png",
 };
 
-function createData(SubProID,Department,quentity,Specs,RecVendors,ExpDelDate,Evidence,Action) {
-    return {SubProID,Department,quentity,Specs,RecVendors,ExpDelDate,Evidence,Action};
+function createData(SubProID,Department,quentity,Specs,RecVendors,ExpDelDate,TecStatus,Evidence,Action) {
+    return {SubProID,Department,quentity,Specs,RecVendors,ExpDelDate,TecStatus,Evidence,Action};
   }
 
 const rows = [
-    createData('SP-001','IT','20',"Comfortable, Adjustable, Ergonomic",<ViewRecomandedVendors vendors={Recomandedvendors1}/>,'2023-05-07',<EvidenceOfAthorization/>,<div className={styles.ActionButonsContainer}><ApprovePopup/><RejectPopup/></div>),
-    createData('SP-001','Finace','20',"Comfortable, Adjustable, Ergonomic",<ViewRecomandedVendors vendors={Recomandedvendors1}/>,'2023-05-07',<EvidenceOfAthorization/>,<div className={styles.ActionButonsContainer}><ApprovePopup/><RejectPopup/></div>),
-    createData('SP-002','HR','20',"Comfortable, Adjustable, Ergonomic",<ViewRecomandedVendors vendors={Recomandedvendors1}/>,'2023-05-07',<EvidenceOfAthorization/>,<div className={styles.ActionButonsContainer}><ApprovePopup/><RejectPopup/></div>),
-    createData('SP-004','IT','20',"Comfortable, Adjustable, Ergonomic",<ViewRecomandedVendors vendors={Recomandedvendors1}/>,'2023-05-07',<EvidenceOfAthorization/>,<div className={styles.ActionButonsContainer}><ApprovePopup/><RejectPopup/></div>),
-    createData('SP-003','HR','20',"Comfortable, Adjustable, Ergonomic",<ViewRecomandedVendors vendors={Recomandedvendors1}/>,'2023-05-07',<EvidenceOfAthorization/>,<div className={styles.ActionButonsContainer}><ApprovePopup/><RejectPopup/></div>),
+    createData('SP-001','IT','20',"Comfortable, Adjustable, Ergonomic",<ViewRecomandedVendors vendors={Recomandedvendors1}/>,'2023-05-07',<StatusBulb status="Pending"/>,<EvidenceOfAthorization/>,<div className={styles.ActionButonsContainer}><ApprovePopup/><RejectPopup/></div>),
+    createData('SP-001','Finace','20',"Comfortable, Adjustable, Ergonomic",<ViewRecomandedVendors vendors={Recomandedvendors1}/>,'2023-05-07',<StatusBulb status="Approved"/>,<EvidenceOfAthorization/>,<div className={styles.ActionButonsContainer}><ApprovePopup/><RejectPopup/></div>),
+    createData('SP-002','HR','20',"Comfortable, Adjustable, Ergonomic",<ViewRecomandedVendors vendors={Recomandedvendors1}/>,'2023-05-07',<StatusBulb status="Rejected"/>,<EvidenceOfAthorization/>,<div className={styles.ActionButonsContainer}><ApprovePopup/><RejectPopup/></div>),
+    createData('SP-004','IT','20',"Comfortable, Adjustable, Ergonomic",<ViewRecomandedVendors vendors={Recomandedvendors1}/>,'2023-05-07',<StatusBulb status="Pending"/>,<EvidenceOfAthorization/>,<div className={styles.ActionButonsContainer}><ApprovePopup/><RejectPopup/></div>),
+    createData('SP-003','HR','20',"Comfortable, Adjustable, Ergonomic",<ViewRecomandedVendors vendors={Recomandedvendors1}/>,'2023-05-07',<StatusBulb status="Rejected"/>,<EvidenceOfAthorization/>,<div className={styles.ActionButonsContainer}><ApprovePopup/><RejectPopup/></div>),
 ]
 
 
@@ -193,7 +195,24 @@ const handleChangeRowsPerPage = (event) => {
                     onRowsPerPageChange={handleChangeRowsPerPage}
                     />
                     </Paper>
-                    
+                    <Container
+            className={styles.rightButton}
+            sx={{ justifyContent: { xs: "center", md: "right" } }}
+          >
+            <Button
+              className={styles.TecAppointButton}
+              variant="contained"
+              sx={{
+                mt: 1.2,
+                mr: { xs: 6, sm: 4, md: 6 },
+                borderRadius: 8,
+                mb: 0.3,
+                width:170
+              }}
+            >
+              View All Approved Items
+            </Button>
+          </Container>
                 </div>
                 
             

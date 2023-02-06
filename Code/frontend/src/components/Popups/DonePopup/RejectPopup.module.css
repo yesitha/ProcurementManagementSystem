@@ -1,0 +1,12 @@
+.rejectButton{
+    background-color: #a62c55 !important;
+   
+    margin-left: 2.5px!important;
+    margin-right: 2.5px!important;
+    color: #ffffff!important;
+    ;
+  }
+  .rejectButton:hover{
+    background-color: #b23e65 !important;
+    color: #ffffff!important;
+  }
