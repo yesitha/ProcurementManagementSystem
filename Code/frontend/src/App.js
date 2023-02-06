@@ -24,8 +24,13 @@ import ViewItem from './pages/ProcurementCommitee/ViewItem/ViewItem';
 import CreateModifyBidOpeningCommittee from './pages/Procurement Officer/CreateModifyBidOpeningCommittee/CreateModifyBidOpeningCommittee';
 import MasterProcurementPlan from './pages/ProcurementCommitee/MasterProcurementPlan/MasterProcurementPlan';
 import BidTender from './pages/Vendor/BidTender/BidTender';
+
 import ApprovedItemList from './pages/ProcurementCommitee/ApprovedItemList/ApprovedItemList';
 import PublishPaperAd from './pages/CoparateCommunicationDivision/PublishPaperAd/PublishPaperAd';
+
+import BidDetails from './pages/Procurement Officer/BidDetails/BidDetails';
+
+
 function App() {
   return (
     <div>
@@ -49,6 +54,7 @@ function App() {
     {/* <ViewFinalizedMasterProcurementPlans/> */}
     {/* <AuditFinalizedMasterProcurementPlan/> */}
     {/* <BidTender/> */}
+    {/*<BidDetails/>}
     {/* <MasterProcurementPlan/> */}
     {/* <ItemstobeShipped/> */}
     {/* <Stock/> */}
