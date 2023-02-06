@@ -24,6 +24,7 @@ import ViewItem from './pages/ProcurementCommitee/ViewItem/ViewItem';
 import CreateModifyBidOpeningCommittee from './pages/Procurement Officer/CreateModifyBidOpeningCommittee/CreateModifyBidOpeningCommittee';
 import MasterProcurementPlan from './pages/ProcurementCommitee/MasterProcurementPlan/MasterProcurementPlan';
 import BidTender from './pages/Vendor/BidTender/BidTender';
+import ApprovedItemList from './pages/ProcurementCommitee/ApprovedItemList/ApprovedItemList';
 
 function App() {
   return (
@@ -37,11 +38,12 @@ function App() {
     {/* <FinalizedMasterProcurementPlan/> */}
     {/* <MasterProcurementPlanStatus/> */}
     {/* <ViewMasterProcurementPlan/> */}
+    <ApprovedItemList/>
     {/* <CreateModifyTECCommittee/> */}
     {/* <MasterProcurementPlanEvalate/> */}
     {/* <AddItemtoSubProcurementPlan/>  */}
     {/* <ApprovalForMasterProcurementPlan/> */}
-    <ViewItem/>
+    {/* <ViewItem/> */}
     {/* <CreateModifyBidOpeningCommittee/> */}
     {/* <ViewFinalizedMasterProcurementPlans/> */}
     {/* <AuditFinalizedMasterProcurementPlan/> */}
