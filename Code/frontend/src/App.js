@@ -29,6 +29,8 @@ import ApprovedItemList from './pages/ProcurementCommitee/ApprovedItemList/Appro
 import PublishPaperAd from './pages/CoparateCommunicationDivision/PublishPaperAd/PublishPaperAd';
 
 import BidDetails from './pages/Procurement Officer/BidDetails/BidDetails';
+import BidDetailsView from './pages/Procurement Officer/BidDetails/BidDetails';
+import VendorSelection from './pages/TEC Committee/Vendor Selection/VendorSelection';
 
 
 function App() {
@@ -54,7 +56,9 @@ function App() {
     {/* <ViewFinalizedMasterProcurementPlans/> */}
     {/* <AuditFinalizedMasterProcurementPlan/> */}
     {/* <BidTender/> */}
-    {/*<BidDetails/>}
+    {/* <BidDetails/> */}
+    {/* <BidDetailsView/> */}
+    <VendorSelection/>
     {/* <MasterProcurementPlan/> */}
     {/* <ItemstobeShipped/> */}
     {/* <Stock/> */}
