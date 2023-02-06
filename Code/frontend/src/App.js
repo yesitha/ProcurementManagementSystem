@@ -25,7 +25,7 @@ import CreateModifyBidOpeningCommittee from './pages/Procurement Officer/CreateM
 import MasterProcurementPlan from './pages/ProcurementCommitee/MasterProcurementPlan/MasterProcurementPlan';
 import BidTender from './pages/Vendor/BidTender/BidTender';
 import ApprovedItemList from './pages/ProcurementCommitee/ApprovedItemList/ApprovedItemList';
-
+import PublishPaperAd from './pages/CoparateCommunicationDivision/PublishPaperAd/PublishPaperAd';
 function App() {
   return (
     <div>
@@ -35,10 +35,11 @@ function App() {
     {/* <ManageAuction/> */}
     {/* <NotificationPage/> */}
     {/* <CreateSubProcurementPlan/> */}
+    <PublishPaperAd/>
     {/* <FinalizedMasterProcurementPlan/> */}
     {/* <MasterProcurementPlanStatus/> */}
     {/* <ViewMasterProcurementPlan/> */}
-    <ApprovedItemList/>
+    {/* <ApprovedItemList/> */}
     {/* <CreateModifyTECCommittee/> */}
     {/* <MasterProcurementPlanEvalate/> */}
     {/* <AddItemtoSubProcurementPlan/>  */}
