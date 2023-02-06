@@ -25,6 +25,8 @@ import CreateModifyBidOpeningCommittee from './pages/Procurement Officer/CreateM
 import MasterProcurementPlan from './pages/ProcurementCommitee/MasterProcurementPlan/MasterProcurementPlan';
 import BidTender from './pages/Vendor/BidTender/BidTender';
 import BidDetails from './pages/Procurement Officer/BidDetails/BidDetails';
+import BidDetailsView from './pages/Procurement Officer/BidDetails/BidDetails';
+import VendorSelection from './pages/TEC Committee/Vendor Selection/VendorSelection';
 
 function App() {
   return (
@@ -42,12 +44,14 @@ function App() {
     {/* <MasterProcurementPlanEvalate/> */}
     {/* <AddItemtoSubProcurementPlan/>  */}
     {/* <ApprovalForMasterProcurementPlan/> */}
-    <ViewItem/>
+    {/* <ViewItem/> */}
     {/* <CreateModifyBidOpeningCommittee/> */}
     {/* <ViewFinalizedMasterProcurementPlans/> */}
     {/* <AuditFinalizedMasterProcurementPlan/> */}
     {/* <BidTender/> */}
-    {/*<BidDetails/>}
+    {/* <BidDetails/> */}
+    {/* <BidDetailsView/> */}
+    <VendorSelection/>
     {/* <MasterProcurementPlan/> */}
     {/* <ItemstobeShipped/> */}
     {/* <Stock/> */}
