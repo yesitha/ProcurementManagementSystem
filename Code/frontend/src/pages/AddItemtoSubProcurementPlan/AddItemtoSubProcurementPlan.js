@@ -28,7 +28,7 @@ const user = {
 
 function AddItemtoSubProcurementPlan() {
     return (
-        <div>
+        <div style={{ display: "flex",overflow:"hidden" }}>
             <div className={Styles.sideNavBar}>
                 <SideNavBar list1={list1} list2={list2} user={user} />
             </div>
@@ -40,7 +40,7 @@ function AddItemtoSubProcurementPlan() {
                     </div>
                 </div>
                 <div className='bottomSection'>
-                    <Paper elevation={6} sx={{ pl: 5, pr: { lg: 15, md: 5 }, ml: { lg: 2.5, md: 1 }, borderRadius: 10 ,position:'absolute'}}>
+                    <Paper elevation={6} sx={{ pl: 5, pr: { lg: 5, md: 5 }, ml: { lg: 2.5, md: 1 },mr:2, borderRadius: 10  }}>
 
                        <div>
                             <div className={Styles.bodyBlueContainerMain}>

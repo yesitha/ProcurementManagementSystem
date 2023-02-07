@@ -175,6 +175,8 @@ function CreateSubProcurementPlan() {
           <div classname='footerButton' style={{display:'flex', alignContent:'flex-end',marginTop:15}}>
             <Button variant="contained">Add Item</Button>
             <Button variant="contained" style={{marginLeft:40}}>Modify item</Button>
+            <Button variant="contained" style={{marginLeft:40}}>Submit</Button>
+
           </div>
 
 

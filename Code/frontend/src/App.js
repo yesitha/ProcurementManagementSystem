@@ -19,31 +19,34 @@ import MasterProcurementPlanEvalate from './pages/TEC Committee/MasterProcuremen
 import Stock from './pages/Stock/Stock';
 import DGViewFinalizedMasterProcurementPlans from './pages/Director General/DGViewFinalizedMasterProcurementPlans/DGViewFinalizedMasterProcurementPlans';
 import EvaluateFinalizedMasterProcurementPlan from './pages/Director General/EvaluateFinalizedMasterProcurementPlan/EvaluateFinalizedMasterProcurementPlan';
-
+import RequesttoInitiateSubProcurementPlan from './pages/RequesttoInitiateSubProcurementPlan/RequesttoInitiateSubProcurementPlan'
+import ViewSubProcurementPlan from './pages/ViewSubProcurementPlan/ViewSubProcurementPlan';
 
 function App() {
   return (
     <div>
-    {/* <Login/> */}
-    {/* <SignUp/> */}
-    {/* <Dashboard/> */}
-    {/* <ManageAuction/> */}
-    {/* <NotificationPage/> */}
-    {/* <CreateSubProcurementPlan/> */}
-    {/* <FinalizedMasterProcurementPlan/> */}
-    {/* <MasterProcurementPlanStatus/> */}
-    {/* <ViewMasterProcurementPlan/> */}
-    {/* <CreateModifyTECCommittee/> */}
+     
+      <ViewSubProcurementPlan/>    
+        {/* <ViewSubProcurementPlan/> */}
+        {/* <Login/> */}
+        {/* <SignUp/> */}
+        {/* <Dashboard/> */}
+        {/* <ManageAuction/> */}
+        {/* <NotificationPage/> */}
+        {/* <CreateSubProcurementPlan/> */}
+        {/* <FinalizedMasterProcurementPlan/> */}
+        {/* <MasterProcurementPlanStatus/> */}
+        {/* <ViewMasterProcurementPlan/> */}
+        {/* <CreateModifyTECCommittee/> */}
+        {/*<AddItemtoSubProcurementPlan/>*/}
+        {/* <ViewFinalizedMasterProcurementPlans/> */}
+        {/* <AuditFinalizedMasterProcurementPlan/> */}
+        {/* <ItemstobeShipped/> */}
+        {/* <Stock/> */}
+        {/* <DGViewFinalizedMasterProcurementPlans/> */}
+        {/*<EvaluateFinalizedMasterProcurementPlan/>*/}
+        {/*<RequesttoInitiateSubProcurementPlan/>*/}
 
-    <AddNewItemtoSubProcurementPlan/>
-
-
-    {/* <ViewFinalizedMasterProcurementPlans/> */}
-    {/* <AuditFinalizedMasterProcurementPlan/> */}
-    {/* <ItemstobeShipped/> */}
-    {/* <Stock/> */}
-    {/* <DGViewFinalizedMasterProcurementPlans/> */}
-    {/*<EvaluateFinalizedMasterProcurementPlan/>*/}
     </div>
   );
 }
