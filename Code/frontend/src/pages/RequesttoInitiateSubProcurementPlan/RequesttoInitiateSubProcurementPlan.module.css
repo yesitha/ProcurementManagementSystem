@@ -1,0 +1,46 @@
+.upperSection {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 100%;
+  }
+
+  .Header {
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    color: #ffffff;
+    font-size: 36px;
+    position: relative;
+    margin-right: 12vw;
+  }
+
+  .Page__Header {
+    padding-right: 10px;
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .baseTableContainer {
+    border-radius: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .tableContainer {
+    border-radius: 20px;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+  }
+
+  .TableHeaders {
+    font-family: "Inter", sans-serif;
+    position: sticky !important;
+    margin-bottom: 4px;
+    z-index: 3;
+  }
+  

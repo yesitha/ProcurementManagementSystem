@@ -24,13 +24,14 @@ import ViewItem from './pages/ProcurementCommitee/ViewItem/ViewItem';
 import CreateModifyBidOpeningCommittee from './pages/Procurement Officer/CreateModifyBidOpeningCommittee/CreateModifyBidOpeningCommittee';
 import MasterProcurementPlan from './pages/ProcurementCommitee/MasterProcurementPlan/MasterProcurementPlan';
 import BidTender from './pages/Vendor/BidTender/BidTender';
-
+import RequesttoInitiateSubProcurementPlan from './pages/RequesttoInitiateSubProcurementPlan/RequesttoInitiateSubProcurementPlan'
+import ViewSubProcurementPlan from './pages/ViewSubProcurementPlan/ViewSubProcurementPlan';
 import ApprovedItemList from './pages/ProcurementCommitee/ApprovedItemList/ApprovedItemList';
 import PublishPaperAd from './pages/CoparateCommunicationDivision/PublishPaperAd/PublishPaperAd';
-
 import BidDetails from './pages/Procurement Officer/BidDetails/BidDetails';
 import BidDetailsView from './pages/Procurement Officer/BidDetails/BidDetails';
 import VendorSelection from './pages/TEC Committee/Vendor Selection/VendorSelection';
+
 
 
 function App() {
@@ -65,6 +66,7 @@ function App() {
     {/* <DGViewFinalizedMasterProcurementPlans/> */}
     {/*<EvaluateFinalizedMasterProcurementPlan/>*/}
      </div>
+
   );
 }
 export default App;
