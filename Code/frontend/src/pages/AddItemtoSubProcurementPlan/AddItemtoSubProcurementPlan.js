@@ -29,6 +29,7 @@ const user = {
 function AddItemtoSubProcurementPlan() {
     return (
         <div style={{ display: "flex",overflow:"hidden" }}>
+
             <div className={Styles.sideNavBar}>
                 <SideNavBar list1={list1} list2={list2} user={user} />
             </div>

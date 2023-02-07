@@ -19,35 +19,54 @@ import MasterProcurementPlanEvalate from './pages/TEC Committee/MasterProcuremen
 import Stock from './pages/Stock/Stock';
 import DGViewFinalizedMasterProcurementPlans from './pages/Director General/DGViewFinalizedMasterProcurementPlans/DGViewFinalizedMasterProcurementPlans';
 import EvaluateFinalizedMasterProcurementPlan from './pages/Director General/EvaluateFinalizedMasterProcurementPlan/EvaluateFinalizedMasterProcurementPlan';
+import ApprovalForMasterProcurementPlan from './pages/TEC Committee/ApprovalForMasterProcurementPlan/ApprovalForMasterProcurementPlan';
+import ViewItem from './pages/ProcurementCommitee/ViewItem/ViewItem';
+import CreateModifyBidOpeningCommittee from './pages/Procurement Officer/CreateModifyBidOpeningCommittee/CreateModifyBidOpeningCommittee';
+import MasterProcurementPlan from './pages/ProcurementCommitee/MasterProcurementPlan/MasterProcurementPlan';
+import BidTender from './pages/Vendor/BidTender/BidTender';
 import RequesttoInitiateSubProcurementPlan from './pages/RequesttoInitiateSubProcurementPlan/RequesttoInitiateSubProcurementPlan'
 import ViewSubProcurementPlan from './pages/ViewSubProcurementPlan/ViewSubProcurementPlan';
+import ApprovedItemList from './pages/ProcurementCommitee/ApprovedItemList/ApprovedItemList';
+import PublishPaperAd from './pages/CoparateCommunicationDivision/PublishPaperAd/PublishPaperAd';
+import BidDetails from './pages/Procurement Officer/BidDetails/BidDetails';
+import BidDetailsView from './pages/Procurement Officer/BidDetails/BidDetails';
+import VendorSelection from './pages/TEC Committee/Vendor Selection/VendorSelection';
+
+
 
 function App() {
   return (
     <div>
-     
-      <ViewSubProcurementPlan/>    
-        {/* <ViewSubProcurementPlan/> */}
-        {/* <Login/> */}
-        {/* <SignUp/> */}
-        {/* <Dashboard/> */}
-        {/* <ManageAuction/> */}
-        {/* <NotificationPage/> */}
-        {/* <CreateSubProcurementPlan/> */}
-        {/* <FinalizedMasterProcurementPlan/> */}
-        {/* <MasterProcurementPlanStatus/> */}
-        {/* <ViewMasterProcurementPlan/> */}
-        {/* <CreateModifyTECCommittee/> */}
-        {/*<AddItemtoSubProcurementPlan/>*/}
-        {/* <ViewFinalizedMasterProcurementPlans/> */}
-        {/* <AuditFinalizedMasterProcurementPlan/> */}
-        {/* <ItemstobeShipped/> */}
-        {/* <Stock/> */}
-        {/* <DGViewFinalizedMasterProcurementPlans/> */}
-        {/*<EvaluateFinalizedMasterProcurementPlan/>*/}
-        {/*<RequesttoInitiateSubProcurementPlan/>*/}
+    {/* <Login/> */}
+    {/* <SignUp/> */}
+    {/* <Dashboard/> */}
+    {/* <ManageAuction/> */}
+    {/* <NotificationPage/> */}
+    {/* <CreateSubProcurementPlan/> */}
+    <PublishPaperAd/>
+    {/* <FinalizedMasterProcurementPlan/> */}
+    {/* <MasterProcurementPlanStatus/> */}
+    {/* <ViewMasterProcurementPlan/> */}
+    {/* <ApprovedItemList/> */}
+    {/* <CreateModifyTECCommittee/> */}
+    {/* <MasterProcurementPlanEvalate/> */}
+    {/* <AddItemtoSubProcurementPlan/>  */}
+    {/* <ApprovalForMasterProcurementPlan/> */}
+    {/* <ViewItem/> */}
+    {/* <CreateModifyBidOpeningCommittee/> */}
+    {/* <ViewFinalizedMasterProcurementPlans/> */}
+    {/* <AuditFinalizedMasterProcurementPlan/> */}
+    {/* <BidTender/> */}
+    {/* <BidDetails/> */}
+    {/* <BidDetailsView/> */}
+    <VendorSelection/>
+    {/* <MasterProcurementPlan/> */}
+    {/* <ItemstobeShipped/> */}
+    {/* <Stock/> */}
+    {/* <DGViewFinalizedMasterProcurementPlans/> */}
+    {/*<EvaluateFinalizedMasterProcurementPlan/>*/}
+     </div>
 
-    </div>
   );
 }
 export default App;
