@@ -28,6 +28,7 @@ import BidDetails from './pages/Procurement Officer/BidDetails/BidDetails';
 import BidDetailsView from './pages/Procurement Officer/BidDetails/BidDetails';
 import VendorSelection from './pages/TEC Committee/Vendor Selection/VendorSelection';
 import TecReport from './pages/ProcurementCommitee/TecReport/TecReport';
+import TecReportView from './pages/ProcurementCommitee/TecReportView/TecReportView';
 
 function App() {
   return (
@@ -53,7 +54,8 @@ function App() {
     {/* <BidDetails/> */}
     {/* <BidDetailsView/> */}
     {/* <VendorSelection/> */}
-    <TecReport/>
+    {/* <TecReport/> */}
+    <TecReportView/>
     {/* <MasterProcurementPlan/> */}
     {/* <ItemstobeShipped/> */}
     {/* <Stock/> */}
