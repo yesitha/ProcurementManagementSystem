@@ -27,6 +27,7 @@ import BidTender from './pages/Vendor/BidTender/BidTender';
 import BidDetails from './pages/Procurement Officer/BidDetails/BidDetails';
 import BidDetailsView from './pages/Procurement Officer/BidDetails/BidDetails';
 import VendorSelection from './pages/TEC Committee/Vendor Selection/VendorSelection';
+import TecReport from './pages/ProcurementCommitee/TecReport/TecReport';
 
 function App() {
   return (
@@ -51,7 +52,8 @@ function App() {
     {/* <BidTender/> */}
     {/* <BidDetails/> */}
     {/* <BidDetailsView/> */}
-    <VendorSelection/>
+    {/* <VendorSelection/> */}
+    <TecReport/>
     {/* <MasterProcurementPlan/> */}
     {/* <ItemstobeShipped/> */}
     {/* <Stock/> */}
