@@ -43,7 +43,7 @@ function App() {
     {/* <ManageAuction/> */}
     {/* <NotificationPage/> */}
     {/* <CreateSubProcurementPlan/> */}
-    <PublishPaperAd/>
+    {/* <PublishPaperAd/> */}
     {/* <FinalizedMasterProcurementPlan/> */}
     {/* <MasterProcurementPlanStatus/> */}
     {/* <ViewMasterProcurementPlan/> */}
@@ -52,19 +52,19 @@ function App() {
     {/* <MasterProcurementPlanEvalate/> */}
     {/* <AddItemtoSubProcurementPlan/>  */}
     {/* <ApprovalForMasterProcurementPlan/> */}
-    {/* <ViewItem/> */}
+    <ViewItem/>
     {/* <CreateModifyBidOpeningCommittee/> */}
     {/* <ViewFinalizedMasterProcurementPlans/> */}
-    {/* <AuditFinalizedMasterProcurementPlan/> */}
+    <AuditFinalizedMasterProcurementPlan/>
     {/* <BidTender/> */}
     {/* <BidDetails/> */}
     {/* <BidDetailsView/> */}
-    <VendorSelection/>
+    {/* <VendorSelection/> */}
     {/* <MasterProcurementPlan/> */}
     {/* <ItemstobeShipped/> */}
     {/* <Stock/> */}
     {/* <DGViewFinalizedMasterProcurementPlans/> */}
-    {/*<EvaluateFinalizedMasterProcurementPlan/>*/}
+    <EvaluateFinalizedMasterProcurementPlan/>
      </div>
 
   );
