@@ -31,6 +31,8 @@ import PublishPaperAd from './pages/CoparateCommunicationDivision/PublishPaperAd
 import BidDetails from './pages/Procurement Officer/BidDetails/BidDetails';
 import BidDetailsView from './pages/Procurement Officer/BidDetails/BidDetails';
 import VendorSelection from './pages/TEC Committee/Vendor Selection/VendorSelection';
+import TecReport from './pages/ProcurementCommitee/TecReport/TecReport';
+import TecReportView from './pages/ProcurementCommitee/TecReportView/TecReportView';
 
 
 
