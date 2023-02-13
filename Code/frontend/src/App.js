@@ -24,11 +24,17 @@ import ViewItem from './pages/ProcurementCommitee/ViewItem/ViewItem';
 import CreateModifyBidOpeningCommittee from './pages/Procurement Officer/CreateModifyBidOpeningCommittee/CreateModifyBidOpeningCommittee';
 import MasterProcurementPlan from './pages/ProcurementCommitee/MasterProcurementPlan/MasterProcurementPlan';
 import BidTender from './pages/Vendor/BidTender/BidTender';
+import RequesttoInitiateSubProcurementPlan from './pages/RequesttoInitiateSubProcurementPlan/RequesttoInitiateSubProcurementPlan'
+import ViewSubProcurementPlan from './pages/ViewSubProcurementPlan/ViewSubProcurementPlan';
+import ApprovedItemList from './pages/ProcurementCommitee/ApprovedItemList/ApprovedItemList';
+import PublishPaperAd from './pages/CoparateCommunicationDivision/PublishPaperAd/PublishPaperAd';
 import BidDetails from './pages/Procurement Officer/BidDetails/BidDetails';
 import BidDetailsView from './pages/Procurement Officer/BidDetails/BidDetails';
 import VendorSelection from './pages/TEC Committee/Vendor Selection/VendorSelection';
 import TecReport from './pages/ProcurementCommitee/TecReport/TecReport';
 import TecReportView from './pages/ProcurementCommitee/TecReportView/TecReportView';
+
+
 
 function App() {
   return (
@@ -39,29 +45,30 @@ function App() {
     {/* <ManageAuction/> */}
     {/* <NotificationPage/> */}
     {/* <CreateSubProcurementPlan/> */}
+    {/* <PublishPaperAd/> */}
     {/* <FinalizedMasterProcurementPlan/> */}
     {/* <MasterProcurementPlanStatus/> */}
     {/* <ViewMasterProcurementPlan/> */}
+    {/* <ApprovedItemList/> */}
     {/* <CreateModifyTECCommittee/> */}
     {/* <MasterProcurementPlanEvalate/> */}
     {/* <AddItemtoSubProcurementPlan/>  */}
     {/* <ApprovalForMasterProcurementPlan/> */}
-    {/* <ViewItem/> */}
+    <ViewItem/>
     {/* <CreateModifyBidOpeningCommittee/> */}
     {/* <ViewFinalizedMasterProcurementPlans/> */}
-    {/* <AuditFinalizedMasterProcurementPlan/> */}
+    <AuditFinalizedMasterProcurementPlan/>
     {/* <BidTender/> */}
     {/* <BidDetails/> */}
     {/* <BidDetailsView/> */}
     {/* <VendorSelection/> */}
-    {/* <TecReport/> */}
-    <TecReportView/>
     {/* <MasterProcurementPlan/> */}
     {/* <ItemstobeShipped/> */}
     {/* <Stock/> */}
     {/* <DGViewFinalizedMasterProcurementPlans/> */}
-    {/*<EvaluateFinalizedMasterProcurementPlan/>*/}
+    <EvaluateFinalizedMasterProcurementPlan/>
      </div>
+
   );
 }
 export default App;

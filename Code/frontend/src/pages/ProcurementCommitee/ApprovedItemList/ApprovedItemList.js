@@ -1,5 +1,5 @@
 import React from "react";
-import SideNavBar from "../../components/SideNavigationBar/SideNavBar";
+import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import {
   Button,
@@ -20,12 +20,12 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import SearchNoFilter from "../../components/Search/Search";
+import SearchNoFilter from "../../../components/Search/Search";
 import { Container } from "@mui/system";
-import styles from "./ViewMasterProcurementPlan.module.css";
-import SelectDropDown from "../../components/SelectDropDown/SelectDropDown";
-import ViewRecomandedVendors from "../../components/Popups/ViewRecomandedVendors/ViewRecomandedVendors";
-import {vendors} from "../../users/vendors.js"
+import styles from "./ApprovedItemList.module.css";
+import SelectDropDown from "../../../components/SelectDropDown/SelectDropDown";
+import ViewVendors from "../../../components/Popups/ViewVendors/ViewVendors";
+import {vendors} from "../../../users/vendors.js"
 
 function ViewMasterProcurementPlan() {
 const Recomandedvendors1=vendors;
@@ -48,10 +48,14 @@ const Recomandedvendors1=vendors;
     { id: "ItemID", label: "Item ID", Width: 300, align: "center" },
     { id: "ItemName", label: "Item Name", Width: 300, align: "center" },
     { id: "Qty", label: "Quantity", Width: 300, align: "center" },
-    { id: "Devi", label: "Devision", Width: 300, align: "center" },
-    { id: "Specs", label: "Specifications", Width: 300, align: "center" },
-    { id: "RVen", label: "Recommended Vendors", Width: 300, align: "center" },
-    { id: "Edate",label: "Expected Delivery date",Width: 300,align: "center",},
+   
+    { id: "Ven", label: "Vendors", Width: 300, align: "center" },
+    {
+      id: "Action",
+      label: "Action",
+      Width: 300,
+      align: "center",
+    },
   ];
 
   function Setdate(date) {
@@ -72,8 +76,8 @@ const Recomandedvendors1=vendors;
     );
   }
 
-  function createData(ItemID, ItemName, Qty, Devi, Specs, RVen, Edate) {
-    return { ItemID, ItemName, Qty, Devi, Specs, RVen, Edate };
+  function createData(ItemID, ItemName, Qty, Ven, Action) {
+    return { ItemID, ItemName, Qty, Ven, Action };
   }
 
   const rows = [
@@ -81,92 +85,67 @@ const Recomandedvendors1=vendors;
       "I0014",
       "A4 Papers",
       "500",
-      "Finance",
-      "240 GSM",
-      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
-      Setdate("2022.12.12")
+      
+      <ViewVendors vendors={Recomandedvendors1}/>,
+      <Button  variant='contained' className={styles.NotifyVendors}>Notify Vendors</Button>
     ),
     createData(
       "I0028",
       "Ruler",
       "10",
-      "Finance",
-      "240 GSM",
-      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
-      Setdate("2022.12.12")
+      
+      <ViewVendors vendors={Recomandedvendors1}/>,
+      <Button  variant='contained' className={styles.NotifyVendors}>Notify Vendors</Button>
     ),
     createData(
       "I0015",
       "Stapler",
       "50",
-      "Finance",
-      "240 GSM",
-      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
-      Setdate("2022.12.12")
+      
+      <ViewVendors vendors={Recomandedvendors1}/>,
+      <Button  variant='contained' className={styles.NotifyVendors}>Notify Vendors</Button>
     ),
     createData(
       "I0016",
       "Pens",
       "100",
-      "Finance",
-      "24 BOX",
-      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
-      Setdate("2022.12.12")
+      
+      <ViewVendors vendors={Recomandedvendors1}/>,
+      <Button  variant='contained' className={styles.NotifyVendors}>Notify Vendors</Button>
     ),
     createData(
       "I0017",
       "Notebooks",
       "25",
-      "Finance",
-      "240 GSM",
-      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
-      Setdate("2022.12.12")
+      
+      <ViewVendors vendors={Recomandedvendors1}/>,
+      <Button  variant='contained' className={styles.NotifyVendors}>Notify Vendors</Button>
     ),
     createData(
       "I0018",
       "Printer Ink",
       "10",
-      "Finance",
-      "Black",
-      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
-      Setdate("2022.12.12")
+      
+      <ViewVendors vendors={Recomandedvendors1}/>,
+      <Button  variant='contained' className={styles.NotifyVendors}>Notify Vendors</Button>
     ),
     createData(
       "I0019",
       "Paper Clips",
       "200",
-      "Finance",
-      "Aluminium",
-      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
-      Setdate("2022.12.12")
+      
+      <ViewVendors vendors={Recomandedvendors1}/>,
+      <Button  variant='contained' className={styles.NotifyVendors}>Notify Vendors</Button>
     ),
     createData(
       "I0020",
       "Tape",
       "15",
-      "Finance",
-      "240 GSM",
-      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
-      Setdate("2022.12.12")
+      
+      <ViewVendors vendors={Recomandedvendors1}/>,
+      <Button  variant='contained' className={styles.NotifyVendors}>Notify Vendors</Button>
     ),
-    createData(
-      "I0021",
-      "Envelopes",
-      "75",
-      "Finance",
-      "240 GSM",
-      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
-      Setdate("2022.12.12")
-    ),
-    createData(
-      "I0022",
-      "File Folders",
-      "50",
-      "Finance",
-      "240 GSM",
-      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
-      Setdate("2022.12.12")
-    ),
+    
   ];
 
   const [page, setPage] = React.useState(0);
@@ -180,15 +159,11 @@ const Recomandedvendors1=vendors;
     setPage(0);
   };
 
-  const [age, setAge] = React.useState("");
-
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
-  const list = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
+ 
+  
 
   return (
-    <div className={styles.outer} >
+    <div className={styles.outer} style={{overflowX:'hidden'}}>
       <div className={styles.sideNavBar}>
         <SideNavBar list1={list1} list2={list2} user={user} />
       </div>
@@ -209,15 +184,15 @@ const Recomandedvendors1=vendors;
               <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
             </IconButton>
 
-            <h1 className={styles.Header}>Master Procurement Plan</h1>
+            <h1 className={styles.Header}>Approved Item List</h1>
           </div>
         </div>
 
         <div className={styles.MiddleSection}>
           <div className={styles.header2Section}>
-            <div>
-              <Typography  sx={{fontFamily:'mulish',fontSize:{xs:'14px',sm:'15px',md:'16px'},ml:1.2,color:'#ffffff'}}>MASTER PROCUREMENT PLAN ID*</Typography>
-              <SelectDropDown className={styles.dropDown} list={list} />
+            <div style={{display:'flex',flexDirection:'row'}}>
+              <Typography  sx={{fontFamily:'inter',fontWeight:'500',fontSize:28,ml:1.2,mr:4,color:'#ffffff',alignSelf:'flex-end',mt:4}}>Items to Notify</Typography>
+              
             </div>
           </div>
           <SearchNoFilter className={styles.search} />
@@ -291,23 +266,7 @@ const Recomandedvendors1=vendors;
               onRowsPerPageChange={handleChangeRowsPerPage}
             />
           </Paper>
-          <Container
-            className={styles.rightButton}
-            sx={{ justifyContent: { xs: "center", md: "right" } }}
-          >
-            <Button
-              className={styles.TecAppointButton}
-              variant="contained"
-              sx={{
-                mt: 1.2,
-                mr: { xs: 6, sm: 4, md: 6 },
-                borderRadius: 8,
-                mb: 0.3,
-              }}
-            >
-              Appoint TEC Committee
-            </Button>
-          </Container>
+         
         </div>
       </Container>
     </div>

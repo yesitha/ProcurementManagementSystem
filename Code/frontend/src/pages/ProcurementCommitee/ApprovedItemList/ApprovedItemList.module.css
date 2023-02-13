@@ -1,4 +1,4 @@
-@import "../../fonts.css";
+@import "../../../fonts.css";
 
 .th1 {
   font-family: "Inter", sans-serif;
@@ -60,6 +60,7 @@
 }
 .MiddleSection {
   padding-right: 15px;
+
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -141,3 +142,17 @@
 .outer{
  overflow-x: "hidden" ;
 }
+
+
+.NotifyVendors{
+    background-color: #205295 !important;
+   
+    margin-left: 2.5px!important;
+    margin-right: 2.5px!important;
+    color: #ffffff!important;
+    ;
+  }
+  .NotifyVendors:hover{
+    background-color: #2c74b3 !important;
+    color: #ffffff!important;
+  }

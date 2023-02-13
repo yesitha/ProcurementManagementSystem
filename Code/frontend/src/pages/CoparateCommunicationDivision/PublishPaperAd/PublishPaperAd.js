@@ -1,6 +1,6 @@
 import React from 'react'
-import SideNavBar from "../../components/SideNavigationBar/SideNavBar";
-import styles from "./CreateSubProcurementPlan.module.css";
+import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
+import styles from "./PublishPaperAd.module.css";
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { Container, Button, FormControl, Box, NativeSelect, Card, CardContent, IconButton, Paper, Stack, TextField, Typography, Select, MenuItem, InputLabel, CssBaseline } from "@mui/material";
 import Table from '@mui/material/Table';
@@ -11,10 +11,10 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import Grid from '@mui/material/Unstable_Grid2';
-import SearchFilter from "../../../src/components/SearchNoFilter/SearchNoFilter";
+
 import DeleteIcon from '@mui/icons-material/Delete';
-import SearchNoFilter from "../../components/Search/Search";
-import SelectDropDown from '../../components/SelectDropDown/SelectDropDown';
+
+
 
 
 function CreateSubProcurementPlan() {
@@ -36,39 +36,23 @@ function CreateSubProcurementPlan() {
     { id: 'ItemID', label: 'Item ID', Width: 300, align: 'center' },
     { id: 'ItemName', label: 'Item Name', Width: 300, align: 'center' },
     { id: 'Qty', label: 'Quantity', Width: 300, align: 'center' },
-    { id: 'Specification', label: 'Specification', Width: 300, align: 'center' },
-    { id: 'RV', label: 'Recommended Vendors', Width: 300, align: 'center' },
-    { id: 'EDD', label: 'Expected Delivery Date', Width: 300, align: 'center' },
-    { id: 'Del', Width: 300, align: 'center' },
+    { id: 'Action', label: 'Action', Width: 300, align: 'center' },
+   
   ];
-  function createData(ItemID, ItemName, Qty, Specification, RV, EDD, Del) {
-    return { ItemID, ItemName, Qty, Specification, RV, EDD, Del };
+  function createData(ItemID, ItemName, Qty, Action) {
+    return { ItemID, ItemName, Qty, Action };
   }
 
   const rows = [
-    createData('I0014', 'A4 Papers', '500', 'GSM 80', 'ABC Bookshop', '2023-10-05',
-      <IconButton aria-label="delete" sx={{ color: '#205295' }}><DeleteIcon /></IconButton>),
-    createData("P0023", "Printer Ink Cartridges", "100", "Epson Compatible", "XYZ Office Supplies", "2022-03-15",
-      <IconButton aria-label="delete" sx={{ color: '#205295' }}><DeleteIcon /></IconButton>),
-    createData("C0012", "Computer Monitors", "50", "27 inch, 1080p", "DEF Electronics", "2022-05-20",
-      <IconButton aria-label="delete" sx={{ color: '#205295' }}><DeleteIcon /></IconButton>),
-    createData("S0056", "Safety Gloves", "1000", "Latex-free, Medium Size", "GHI Workwear", "2022-07-10",
-      <IconButton aria-label="delete" sx={{ color: '#205295' }}><DeleteIcon /></IconButton>),
-    createData("M0089", "Medical Supplies", "500", "Sterilized, Disposable", "JKL Healthcare", "2022-09-15",
-      <IconButton aria-label="delete" sx={{ color: '#205295' }}><DeleteIcon /></IconButton>),
-    createData("F0035", "Furniture", "20", "Leather, Executive office chair", "MNO Interior Design", "2022-11-25",
-      <IconButton aria-label="delete" sx={{ color: '#205295' }}><DeleteIcon /></IconButton>),
-    createData("T0078", "Telecommunication Equipment", "30", "5G compatible, Router", "PQR Technology", "2023-01-15",
-      <IconButton aria-label="delete" sx={{ color: '#205295' }}><DeleteIcon /></IconButton>),
-    createData("B0092", "Building Materials", "200", "Galvanized steel, 2x4", "STU Construction", "2023-03-10",
-      <IconButton aria-label="delete" sx={{ color: '#205295' }}><DeleteIcon /></IconButton>),
-    createData("L0101", "Lab Equipment", "50", "Digital, pH meter", "VWX Science", "2023-05-20",
-      <IconButton aria-label="delete" sx={{ color: '#205295' }}><DeleteIcon /></IconButton>),
-    createData("G0049", "Gardening Equipment", "100", "Gas-powered, Lawnmower", "YZ Landscaping", "2023-07-15",
-      <IconButton aria-label="delete" sx={{ color: '#205295' }}><DeleteIcon /></IconButton>),
-    createData("D0123", "Janitorial Supplies", "300", "Eco-friendly, All-purpose cleaner", "ABC Cleaning", "2023-09-10",
-      <IconButton aria-label="delete" sx={{ color: '#205295' }}><DeleteIcon /></IconButton>),
-
+    createData('I0014', 'A4 Papers', '500',<Button  className={styles.ViewButton} variant="contained">View</Button> ),
+    createData("P0023", "Printer Ink Cartridges", "100",<Button  className={styles.ViewButton} variant="contained">View</Button> ),
+    createData("C0012", "Computer Monitors", "50",<Button  className={styles.ViewButton} variant="contained">View</Button>),
+    createData("S0056", "Safety Gloves", "1000",<Button  className={styles.ViewButton} variant="contained">View</Button>),
+    createData("M0089", "Medical Supplies", "500", <Button  className={styles.ViewButton} variant="contained">View</Button>),
+    createData("F0035", "Furniture", "20",<Button  className={styles.ViewButton} variant="contained">View</Button> ),
+    createData("T0078", "Telecommunication Equipment", "30",<Button  className={styles.ViewButton} variant="contained">View</Button> ),
+    createData("B0092", "Building Materials", "200",<Button  className={styles.ViewButton} variant="contained">View</Button>),
+   
   ]
 
   const list = ['MPPI10000', 'MPPI10001', 'MPPI10002', 'MPPI10003'];
@@ -100,23 +84,16 @@ function CreateSubProcurementPlan() {
           <div className={styles.ManageAuctionPageContainer__header}>
             <IconButton sx={{ pl: '15px', height: '34px', width: '34px', mt: 3.7 }}><ArrowBackIosIcon sx={{ color: '#ffffff', }} /></IconButton>
 
-            <h1 className={styles.Header}>Sub Procurement Plan</h1>
+            <h1 className={styles.Header}>Publish Paper Ad</h1>
           </div>
         </div>
         <div className={styles.OuterMiddle}>
           <div className={styles.Ph2}>
-            <h4>Division: [Production Division]</h4>
+            <h4>PRE-BID MEETING DATE: 2023.05.19</h4>
           </div>
 
 
-          <div className={styles.MiddleSectionN}>
-            <div className={styles.Ph3}>
-              <h4 className={styles.h4m}>SUB PROCUREMENT ID*</h4>
-              <SelectDropDown list={list} />
-            </div>
-
-            <SearchNoFilter className={styles.search} />
-          </div>
+          
         </div>
 
         <div className={styles.downSection}>
@@ -172,12 +149,7 @@ function CreateSubProcurementPlan() {
             />
           </Paper>
 
-          <div classname='footerButton' style={{display:'flex', alignContent:'flex-end',marginTop:15}}>
-            <Button variant="contained">Add Item</Button>
-            <Button variant="contained" style={{marginLeft:40}}>Modify item</Button>
-            <Button variant="contained" style={{marginLeft:40}}>Submit</Button>
-
-          </div>
+          
 
 
 
