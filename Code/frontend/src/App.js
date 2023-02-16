@@ -34,6 +34,10 @@ import VendorSelection from './pages/TEC Committee/Vendor Selection/VendorSelect
 import TecReport from './pages/ProcurementCommitee/TecReport/TecReport';
 import TecReportView from './pages/ProcurementCommitee/TecReportView/TecReportView';
 
+import AddNewItem from './pages/InventoryManager/AddNewItem/AddNewItem';
+import AddItemstoGoodsReceivedNote from './pages/AddItemstoGoodsReceivedNote/AddItemstoGoodsReceivedNote';
+import GoodsReceivedNote from './pages/GoodsReceivedNote/GoodsReceivedNote';
+import ViewGRN from './pages/ViewGRN/ViewGRN';
 
 
 function App() {
@@ -54,7 +58,7 @@ function App() {
     {/* <MasterProcurementPlanEvalate/> */}
     {/* <AddItemtoSubProcurementPlan/>  */}
     {/* <ApprovalForMasterProcurementPlan/> */}
-    <ViewItem/>
+    {/*ViewItem*/}
     {/* <CreateModifyBidOpeningCommittee/> */}
     {/* <ViewFinalizedMasterProcurementPlans/> */}
     <AuditFinalizedMasterProcurementPlan/>
@@ -67,8 +71,14 @@ function App() {
     {/* <Stock/> */}
     {/* <DGViewFinalizedMasterProcurementPlans/> */}
     <EvaluateFinalizedMasterProcurementPlan/>
-     </div>
+    {/*EvaluateFinalizedMasterProcurementPlan*/}
+    {/*AddNewItem*/}
+    {/*GoodsReceivedNote*/}
+    <ViewGRN/>
+    {/*AddItemstoGoodsReceivedNote */}
 
+    
+    </div>
   );
 }
 export default App;
