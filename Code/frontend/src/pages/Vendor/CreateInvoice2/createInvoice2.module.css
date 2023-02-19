@@ -1,0 +1,28 @@
+.afmpp_mainBody{
+    margin-left: 60px;
+    overflow-x: hidden;
+}
+
+.afmpp_heading{
+    font-family: 'Inter', sans-serif; 
+    font-weight: 500;
+    color: #ffffff;
+    font-size: 36px;
+    position: relative;
+    margin-top: 30px;
+}
+
+.POID{
+    font-size: 16;
+    color:white;
+    background-color: #205295;
+    width :332px;
+    height: 57px;
+    border-radius: 17px;
+    text-align: center;
+    margin-top: 50px;
+    margin-left: 81px;
+    align-items: center;
+    display:flex;
+
+}

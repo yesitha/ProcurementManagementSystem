@@ -38,6 +38,9 @@ import AddNewItem from './pages/InventoryManager/AddNewItem/AddNewItem';
 import AddItemstoGoodsReceivedNote from './pages/AddItemstoGoodsReceivedNote/AddItemstoGoodsReceivedNote';
 import GoodsReceivedNote from './pages/GoodsReceivedNote/GoodsReceivedNote';
 import ViewGRN from './pages/ViewGRN/ViewGRN';
+import Invoice from './pages/Procurement Officer/Invoice(companyside)/Invoice';
+import CreateInvoice from './pages/Vendor/CreateInvoice/CreateInvoice';
+import CreateInvoice2 from './pages/Vendor/CreateInvoice2/CreateInvoice2';
 
 
 function App() {
@@ -61,7 +64,7 @@ function App() {
     {/*ViewItem*/}
     {/* <CreateModifyBidOpeningCommittee/> */}
     {/* <ViewFinalizedMasterProcurementPlans/> */}
-    <AuditFinalizedMasterProcurementPlan/>
+    {/* <AuditFinalizedMasterProcurementPlan/> */}
     {/* <BidTender/> */}
     {/* <BidDetails/> */}
     {/* <BidDetailsView/> */}
@@ -70,12 +73,15 @@ function App() {
     {/* <ItemstobeShipped/> */}
     {/* <Stock/> */}
     {/* <DGViewFinalizedMasterProcurementPlans/> */}
-    <EvaluateFinalizedMasterProcurementPlan/>
+    {/* <EvaluateFinalizedMasterProcurementPlan/> */}
     {/*EvaluateFinalizedMasterProcurementPlan*/}
     {/*AddNewItem*/}
-    {/*GoodsReceivedNote*/}
+    <CreateInvoice/>
+    <GoodsReceivedNote/>
     <ViewGRN/>
+    <Invoice/>
     {/*AddItemstoGoodsReceivedNote */}
+    <CreateInvoice2/>
 
     
     </div>
