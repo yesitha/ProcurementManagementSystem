@@ -41,6 +41,7 @@ import ViewGRN from './pages/ViewGRN/ViewGRN';
 import Invoice from './pages/Procurement Officer/Invoice(companyside)/Invoice';
 import CreateInvoice from './pages/Vendor/CreateInvoice/CreateInvoice';
 import CreateInvoice2 from './pages/Vendor/CreateInvoice2/CreateInvoice2';
+import SendInvoice from './pages/Vendor/SendInvoice/SendInvoice';
 
 
 function App() {
@@ -82,6 +83,7 @@ function App() {
     <Invoice/>
     {/*AddItemstoGoodsReceivedNote */}
     <CreateInvoice2/>
+    <SendInvoice/>
 
     
     </div>
