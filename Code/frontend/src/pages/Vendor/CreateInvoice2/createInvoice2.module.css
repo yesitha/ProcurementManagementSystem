@@ -21,8 +21,25 @@
     border-radius: 17px;
     text-align: center;
     margin-top: 50px;
-    margin-left: 81px;
+    margin-left: 30px;
     align-items: center;
     display:flex;
 
+}
+
+.divide{
+    display:flex;
+    flex-direction: row;
+}
+
+.dropDown{
+    margin-top: 50px;
+    margin-left: 60px;   
+}
+
+.TableHeaders {
+    font-family: "Inter", sans-serif;
+    position: sticky !important;
+    margin-bottom: 4px;
+    z-index: 3;
 }

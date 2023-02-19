@@ -53,7 +53,7 @@ function App() {
     {/* <NotificationPage/> */}
     {/* <CreateSubProcurementPlan/> */}
     {/* <PublishPaperAd/> */}
-    {/* <FinalizedMasterProcurementPlan/> */}
+    <FinalizedMasterProcurementPlan/>
     {/* <MasterProcurementPlanStatus/> */}
     {/* <ViewMasterProcurementPlan/> */}
     {/* <ApprovedItemList/> */}
