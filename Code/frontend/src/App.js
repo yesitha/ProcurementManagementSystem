@@ -42,6 +42,7 @@ import Invoice from './pages/Procurement Officer/Invoice(companyside)/Invoice';
 import CreateInvoice from './pages/Vendor/CreateInvoice/CreateInvoice';
 import CreateInvoice2 from './pages/Vendor/CreateInvoice2/CreateInvoice2';
 import SendInvoice from './pages/Vendor/SendInvoice/SendInvoice';
+import InvoicestobePaid from './pages/FinanceDivisionAccountant/InvoicestobePaid/InvoicestobePaid';
 
 
 function App() {
@@ -84,6 +85,7 @@ function App() {
     {/*AddItemstoGoodsReceivedNote */}
     <CreateInvoice2/>
     <SendInvoice/>
+    <InvoicestobePaid/>
 
     
     </div>
