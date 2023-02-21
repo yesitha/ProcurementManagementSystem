@@ -35,7 +35,7 @@ import TecReport from './pages/ProcurementCommitee/TecReport/TecReport';
 import TecReportView from './pages/ProcurementCommitee/TecReportView/TecReportView';
 
 import AddNewItem from './pages/InventoryManager/AddNewItem/AddNewItem';
-import AddItemstoGoodsReceivedNote from './pages/AddItemstoGoodsReceivedNote/AddItemstoGoodsReceivedNote';
+
 import GoodsReceivedNote from './pages/GoodsReceivedNote/GoodsReceivedNote';
 import ViewGRN from './pages/ViewGRN/ViewGRN';
 import Invoice from './pages/Procurement Officer/Invoice(companyside)/Invoice';
@@ -44,6 +44,7 @@ import CreateInvoice2 from './pages/Vendor/CreateInvoice2/CreateInvoice2';
 import SendInvoice from './pages/Vendor/SendInvoice/SendInvoice';
 import InvoicestobePaid from './pages/FinanceDivisionAccountant/InvoicestobePaid/InvoicestobePaid';
 import UploadPaymentVoucher from './pages/FinanceDivisionAccountant/UploadPaymentVouncher/UploadPaymentVoucher';
+import AddItemstoGRN from "./pages/FinanceDivisionHOD/AddItemstoGRN/AddItemstoGRN";
 
 
 function App() {
@@ -82,12 +83,15 @@ function App() {
     {/* <CreateInvoice/> */}
     {/* <GoodsReceivedNote/> */}
     {/* <ViewGRN/> */}
-    <Invoice/>
-    {/*AddItemstoGoodsReceivedNote */}
+    {/* <Invoice/> */}
     {/* <CreateInvoice2/> */}
     {/* <SendInvoice/> */}
     {/* <InvoicestobePaid/> */}
-    <UploadPaymentVoucher/>
+    {/* <UploadPaymentVoucher/> */}
+    <AddItemstoGRN/>
+   
+
+    
     </div>
 
   );
