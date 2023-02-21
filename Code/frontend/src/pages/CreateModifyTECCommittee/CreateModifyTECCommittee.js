@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import SideNavBar from "../../components/SideNavigationBar/SideNavBar";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { Container } from "@mui/system";
-import {users} from "../../users/SystemUsers";
+import { users } from "../../users/SystemUsers";
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 import DonePopup from '../../components/Popups/DonePopup/DonePopup';
 import {
@@ -34,20 +34,20 @@ const rows = users;
 
 function CreateModifyTECCommittee() {
 
-    
-//   const classes = useStyles();
-const [leftTableData, setLeftTableData] = useState(rows);
-const [rightTableData, setRightTableData] = useState([]);
 
-const handleClickLeftToRight = (row) => {
+  //   const classes = useStyles();
+  const [leftTableData, setLeftTableData] = useState(rows);
+  const [rightTableData, setRightTableData] = useState([]);
+
+  const handleClickLeftToRight = (row) => {
     setRightTableData([...rightTableData, row]);
     setLeftTableData(leftTableData.filter((data) => data.id !== row.id));
-};
+  };
 
-const handleClickRightToLeft = (row) => {
+  const handleClickRightToLeft = (row) => {
     setLeftTableData([...leftTableData, row]);
     setRightTableData(rightTableData.filter((data) => data.id !== row.id));
-};
+  };
   const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
   const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
   const masterProcurementId = "MP0001";
@@ -73,9 +73,9 @@ const handleClickRightToLeft = (row) => {
         sx={{
           ml: { xs: "60px", sm: "65px", md: "65px", lg: "68px", xl: "70px" },
           display: "flex",
-          
+
           flexDirection: "column",
-        //   overflowY: "hidden",
+          //   overflowY: "hidden",
         }}
       >
         <div className={styles.upperSection}>
@@ -93,9 +93,9 @@ const handleClickRightToLeft = (row) => {
           <div className={styles.Ph2}>
             <h4>Master Procurement Id : {masterProcurementId}</h4>
           </div>
-        
-        <Container className={styles.MiddleSection} sx={{display:"flex",pt:4,flexDirection:{xs:"column",lg:"row"}}} style={{display:'flex', justifyContent:'space-around', flexWrap:'wrap'}}>
-          <div className={styles.leftTable}>
+
+          <Container className={styles.MiddleSection} sx={{ display: "flex", pt: 4, flexDirection: { xs: "column", lg: "row" } }} style={{ display: 'flex', justifyContent: 'space-around', flexWrap: 'wrap' }}>
+            <div className={styles.leftTable}>
               <TableContainer className={styles.TableContainer} component={Paper}>
                 <Table className={styles.table} aria-label="left table">
                   <TableHead>
@@ -103,7 +103,7 @@ const handleClickRightToLeft = (row) => {
                       <TableCell>ID</TableCell>
                       <TableCell>Name</TableCell>
                       <TableCell>Department</TableCell>
-                      
+
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -112,18 +112,18 @@ const handleClickRightToLeft = (row) => {
                         <TableCell component="th" scope="row">
                           {row.id}
                         </TableCell>
-                        <TableCell>{row.firstname +" " +row.lastname}</TableCell>
+                        <TableCell>{row.firstname + " " + row.lastname}</TableCell>
                         <TableCell>{row.department}</TableCell>
-                        
+
                       </TableRow>
                     ))}
                   </TableBody>
                 </Table>
               </TableContainer>
-          </div>
+            </div>
 
-          <div className="ArrowSection" style={{alignSelf:'center',margin:10,}}><DoubleArrowIcon style={{ fontSize: 50, }} sx={{transform:{xs:'rotate(90deg)',sm:'rotate(90deg)',lg:'rotate(0deg)'}}} /> </div>
-         <div className={styles.rightTable} >
+            <div className="ArrowSection" style={{ alignSelf: 'center', margin: 10, }}><DoubleArrowIcon style={{ fontSize: 50, }} sx={{ transform: { xs: 'rotate(90deg)', sm: 'rotate(90deg)', lg: 'rotate(0deg)' } }} /> </div>
+            <div className={styles.rightTable} >
               <TableContainer className={styles.TableContainer} component={Paper}   >
                 <Table className={styles.table} aria-label="right table">
                   <TableHead>
@@ -135,44 +135,43 @@ const handleClickRightToLeft = (row) => {
                   </TableHead>
                   <TableBody>
                     {rightTableData.map((row) => (
-                      <TableRow className={styles.TableRow} key={row.id}   onClick={() => handleClickRightToLeft(row)}>
+                      <TableRow className={styles.TableRow} key={row.id} onClick={() => handleClickRightToLeft(row)}>
                         <TableCell component="th" scope="row">
                           {row.id}
                         </TableCell>
-                        <TableCell>{row.firstname +" " +row.lastname}</TableCell>
+                        <TableCell>{row.firstname + " " + row.lastname}</TableCell>
                         <TableCell>{row.department}</TableCell>
-                        
+
                       </TableRow>
                     ))}
                   </TableBody>
                 </Table>
               </TableContainer>
-         </div>
-        </Container>
+            </div>
+          </Container>
         </div>
         <div className={styles.lowerSection}>
-        <Container
+          <Container
             className={styles.rightButton}
-            sx={{ justifyContent: { xs: "left" ,sm:"center", lg: "center" } }}
+            sx={{ justifyContent: { xs: "left", sm: "center", lg: "center" } }}
           >
-            
+
             <Button
               className={styles.TecAppointButton}
-              
+
               variant="contained"
               sx={{
                 mt: 2,
-                ml:{xs:14,md:2},
+                ml: { xs: 14, md: 2 },
                 borderRadius: 4,
                 mb: 0.3,
-                minWidth:'150px'
+                minWidth: '150px'
               }}
             >
               Create TEC Committee
             </Button>
           </Container>
-
-            </div>
+        </div>
       </Container>
     </div>
   );

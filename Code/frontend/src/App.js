@@ -88,9 +88,8 @@ function App() {
     {/* <SendInvoice/> */}
     {/* <InvoicestobePaid/> */}
     <UploadPaymentVoucher/>
-
-    
     </div>
+
   );
 }
 export default App;
