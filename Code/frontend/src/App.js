@@ -37,36 +37,28 @@ import VendorSelection from './pages/TEC Committee/Vendor Selection/VendorSelect
 function App() {
   return (
     <div>
-    {/* <Login/> */}
-    {/* <SignUp/> */}
-    {/* <Dashboard/> */}
-    {/* <ManageAuction/> */}
-    {/* <NotificationPage/> */}
-    {/* <CreateSubProcurementPlan/> */}
-    <PublishPaperAd/>
-    {/* <FinalizedMasterProcurementPlan/> */}
-    {/* <MasterProcurementPlanStatus/> */}
-    {/* <ViewMasterProcurementPlan/> */}
-    {/* <ApprovedItemList/> */}
-    {/* <CreateModifyTECCommittee/> */}
-    {/* <MasterProcurementPlanEvalate/> */}
-    {/* <AddItemtoSubProcurementPlan/>  */}
-    {/* <ApprovalForMasterProcurementPlan/> */}
-    {/* <ViewItem/> */}
-    {/* <CreateModifyBidOpeningCommittee/> */}
-    {/* <ViewFinalizedMasterProcurementPlans/> */}
-    {/* <AuditFinalizedMasterProcurementPlan/> */}
-    {/* <BidTender/> */}
-    {/* <BidDetails/> */}
-    {/* <BidDetailsView/> */}
-    <VendorSelection/>
-    {/* <MasterProcurementPlan/> */}
-    {/* <ItemstobeShipped/> */}
-    {/* <Stock/> */}
-    {/* <DGViewFinalizedMasterProcurementPlans/> */}
-    {/*<EvaluateFinalizedMasterProcurementPlan/>*/}
-     </div>
 
+<ViewSubProcurementPlan/>
+      {/* <ViewSubProcurementPlan/> */}
+      {/* <Login/> */}
+      {/* <SignUp/> */}
+      {/* <Dashboard/> */}
+      {/* <ManageAuction/> */}
+      {/* <NotificationPage/> */}
+      {/* <CreateSubProcurementPlan/> */}
+      {/* <FinalizedMasterProcurementPlan/> */}
+      {/* <MasterProcurementPlanStatus/> */}
+      {/* <ViewMasterProcurementPlan/> */}
+      {/* <CreateModifyTECCommittee/> */}
+      {/*<AddItemtoSubProcurementPlan/>*/}
+      {/* <ViewFinalizedMasterProcurementPlans/> */}
+      {/* <AuditFinalizedMasterProcurementPlan/> */}
+      {/* <ItemstobeShipped/> */}
+      {/* <Stock/> */}
+      {/* <DGViewFinalizedMasterProcurementPlans/> */}
+      {/*<EvaluateFinalizedMasterProcurementPlan/>*/}
+      {/*<RequesttoInitiateSubProcurementPlan/>*/}
+</div>
   );
 }
 export default App;
