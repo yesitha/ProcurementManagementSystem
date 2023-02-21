@@ -11,6 +11,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TablePagination from "@mui/material/TablePagination";
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import Visibility from '../../../pages/FinanceDivisionAccountant/InvoicestobePaid/Visibility';
+
 
 const columns = [
     {id: 'InvoiceID', label: 'Invoice ID', Width: 300, align:'center'},
@@ -23,8 +25,9 @@ const columns = [
     return {InvoiceID,VendorName,Action,PaymentStatus};
   }
 
+
   const rows = [
-    createData("I0017", "Namal", <VisibilityIcon/>, "Payment Status")
+    createData("I0017", "Namal", <Visibility/>, "Payment Status")
   ];
 
 

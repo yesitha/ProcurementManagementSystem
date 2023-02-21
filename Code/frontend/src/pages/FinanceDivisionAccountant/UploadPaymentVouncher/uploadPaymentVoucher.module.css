@@ -1,0 +1,87 @@
+@import '../../../fonts.css';
+
+.upperSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+.uppercontainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.Header {
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    color: #ffffff;
+    font-size: 36px;
+  }
+.tag{
+    display: flex;
+    flex-direction: column;
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    color: #ffffff;
+    font-size: 15px;
+}
+.midSection {
+    overflow-x: hidden;
+    flex-wrap: wrap;
+}
+.baseTableContainer {
+    border-radius: 20px;
+    width: 100%;
+}
+.tableContainer {
+    border-radius: 20px;
+}
+.TableHeaders {
+    font-family: "Inter", sans-serif;
+    position: sticky !important;
+    margin-bottom: 4px;
+    z-index: 3;
+}
+.downSection{
+    display: flex;
+    flex-direction: column;
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    color: #ffffff;
+    flex-wrap: wrap;
+}
+.downcontainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.btn{
+    justify-content: right;
+    display: flex;
+    align-content: flex-end;
+    
+}
+
+.payment{
+    display:flex;
+    flex-direction: row;
+    background-color:white;
+    width:406px;
+    height:53px;
+   align-items: center;
+   border-radius: 21px;
+   padding-left: 10px;
+   color:#0A2647 !important;
+   margin-top: 20px;
+}
+
+.flex{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
