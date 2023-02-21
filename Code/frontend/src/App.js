@@ -31,34 +31,65 @@ import PublishPaperAd from './pages/CoparateCommunicationDivision/PublishPaperAd
 import BidDetails from './pages/Procurement Officer/BidDetails/BidDetails';
 import BidDetailsView from './pages/Procurement Officer/BidDetails/BidDetails';
 import VendorSelection from './pages/TEC Committee/Vendor Selection/VendorSelection';
+import TecReport from './pages/ProcurementCommitee/TecReport/TecReport';
+import TecReportView from './pages/ProcurementCommitee/TecReportView/TecReportView';
 
+import AddNewItem from './pages/InventoryManager/AddNewItem/AddNewItem';
+import AddItemstoGoodsReceivedNote from './pages/AddItemstoGoodsReceivedNote/AddItemstoGoodsReceivedNote';
+import GoodsReceivedNote from './pages/GoodsReceivedNote/GoodsReceivedNote';
+import ViewGRN from './pages/ViewGRN/ViewGRN';
+import Invoice from './pages/Procurement Officer/Invoice(companyside)/Invoice';
+import CreateInvoice from './pages/Vendor/CreateInvoice/CreateInvoice';
+import CreateInvoice2 from './pages/Vendor/CreateInvoice2/CreateInvoice2';
+import SendInvoice from './pages/Vendor/SendInvoice/SendInvoice';
+import InvoicestobePaid from './pages/FinanceDivisionAccountant/InvoicestobePaid/InvoicestobePaid';
+import UploadPaymentVoucher from './pages/FinanceDivisionAccountant/UploadPaymentVouncher/UploadPaymentVoucher';
 
 
 function App() {
   return (
     <div>
+    {/* <Login/> */}
+    {/* <SignUp/> */}
+    {/* <Dashboard/> */}
+    {/* <ManageAuction/> */}
+    {/* <NotificationPage/> */}
+    {/* <CreateSubProcurementPlan/> */}
+    {/* <PublishPaperAd/> */}
+    {/* <FinalizedMasterProcurementPlan/> */}
+    {/* <MasterProcurementPlanStatus/> */}
+    {/* <ViewMasterProcurementPlan/> */}
+    {/* <ApprovedItemList/> */}
+    {/* <CreateModifyTECCommittee/> */}
+    {/* <MasterProcurementPlanEvalate/> */}
+    {/* <AddItemtoSubProcurementPlan/>  */}
+    {/* <ApprovalForMasterProcurementPlan/> */}
+    {/*ViewItem*/}
+    {/* <CreateModifyBidOpeningCommittee/> */}
+    {/* <ViewFinalizedMasterProcurementPlans/> */}
+    {/* <AuditFinalizedMasterProcurementPlan/> */}
+    {/* <BidTender/> */}
+    {/* <BidDetails/> */}
+    {/* <BidDetailsView/> */}
+    {/* <VendorSelection/> */}
+    {/* <MasterProcurementPlan/> */}
+    {/* <ItemstobeShipped/> */}
+    {/* <Stock/> */}
+    {/* <DGViewFinalizedMasterProcurementPlans/> */}
+    {/* <EvaluateFinalizedMasterProcurementPlan/> */}
+    {/*EvaluateFinalizedMasterProcurementPlan*/}
+    {/*AddNewItem*/}
+    {/* <CreateInvoice/> */}
+    {/* <GoodsReceivedNote/> */}
+    {/* <ViewGRN/> */}
+    <Invoice/>
+    {/*AddItemstoGoodsReceivedNote */}
+    {/* <CreateInvoice2/> */}
+    {/* <SendInvoice/> */}
+    {/* <InvoicestobePaid/> */}
+    <UploadPaymentVoucher/>
+    </div>
 
-<ViewSubProcurementPlan/>
-      {/* <ViewSubProcurementPlan/> */}
-      {/* <Login/> */}
-      {/* <SignUp/> */}
-      {/* <Dashboard/> */}
-      {/* <ManageAuction/> */}
-      {/* <NotificationPage/> */}
-      {/* <CreateSubProcurementPlan/> */}
-      {/* <FinalizedMasterProcurementPlan/> */}
-      {/* <MasterProcurementPlanStatus/> */}
-      {/* <ViewMasterProcurementPlan/> */}
-      {/* <CreateModifyTECCommittee/> */}
-      {/*<AddItemtoSubProcurementPlan/>*/}
-      {/* <ViewFinalizedMasterProcurementPlans/> */}
-      {/* <AuditFinalizedMasterProcurementPlan/> */}
-      {/* <ItemstobeShipped/> */}
-      {/* <Stock/> */}
-      {/* <DGViewFinalizedMasterProcurementPlans/> */}
-      {/*<EvaluateFinalizedMasterProcurementPlan/>*/}
-      {/*<RequesttoInitiateSubProcurementPlan/>*/}
-</div>
   );
 }
 export default App;
