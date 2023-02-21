@@ -43,6 +43,7 @@ import CreateInvoice from './pages/Vendor/CreateInvoice/CreateInvoice';
 import CreateInvoice2 from './pages/Vendor/CreateInvoice2/CreateInvoice2';
 import SendInvoice from './pages/Vendor/SendInvoice/SendInvoice';
 import InvoicestobePaid from './pages/FinanceDivisionAccountant/InvoicestobePaid/InvoicestobePaid';
+import UploadPaymentVoucher from './pages/FinanceDivisionAccountant/UploadPaymentVouncher/UploadPaymentVoucher';
 
 
 function App() {
@@ -55,7 +56,7 @@ function App() {
     {/* <NotificationPage/> */}
     {/* <CreateSubProcurementPlan/> */}
     {/* <PublishPaperAd/> */}
-    <FinalizedMasterProcurementPlan/>
+    {/* <FinalizedMasterProcurementPlan/> */}
     {/* <MasterProcurementPlanStatus/> */}
     {/* <ViewMasterProcurementPlan/> */}
     {/* <ApprovedItemList/> */}
@@ -78,14 +79,15 @@ function App() {
     {/* <EvaluateFinalizedMasterProcurementPlan/> */}
     {/*EvaluateFinalizedMasterProcurementPlan*/}
     {/*AddNewItem*/}
-    <CreateInvoice/>
-    <GoodsReceivedNote/>
-    <ViewGRN/>
+    {/* <CreateInvoice/> */}
+    {/* <GoodsReceivedNote/> */}
+    {/* <ViewGRN/> */}
     <Invoice/>
     {/*AddItemstoGoodsReceivedNote */}
-    <CreateInvoice2/>
-    <SendInvoice/>
-    <InvoicestobePaid/>
+    {/* <CreateInvoice2/> */}
+    {/* <SendInvoice/> */}
+    {/* <InvoicestobePaid/> */}
+    <UploadPaymentVoucher/>
 
     
     </div>
