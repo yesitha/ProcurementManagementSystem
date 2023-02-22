@@ -1,4 +1,4 @@
-import styles from "./addItemstoGRN.module.css";
+import styles from "./InvoicestobePaidFin.module.css";
 import React, { useState } from "react";
 import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -27,7 +27,7 @@ import SelectDropDown from "../../../components/SelectDropDown/SelectDropDown";
 //   },
 // });
 
-const rows = users;
+const rows = [users];
 
 function CreateModifyTECCommittee() {
   //   const classes = useStyles();
@@ -84,26 +84,11 @@ function CreateModifyTECCommittee() {
               <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
             </IconButton>
 
-            <h1 className={styles.Header}>Goods Received Note</h1>
+            <h1 className={styles.Header}>Invoices to be Paid</h1>
           </div>
         </div>
         <div className={styles.OuterMiddle}>
-          <div className={styles.flexrow}>
-            <div>
-              <label style={{ color: "white", marginLeft: "10px" }}>
-                PURCHASE ORDER ID*
-              </label>
-              <SelectDropDown list={list} />
-            </div>
-
-            <div >
-            <label style={{ color: "white", marginLeft: "10px" }}>
-                GRN ID*
-              </label>
-              <SelectDropDown list={list3} /> 
-            </div>
-          </div>
-
+         
           <Container
             className={styles.MiddleSection}
             sx={{
@@ -125,9 +110,9 @@ function CreateModifyTECCommittee() {
                 <Table className={styles.table} aria-label="left table">
                   <TableHead>
                     <TableRow>
-                      <TableCell>Item ID</TableCell>
-                      <TableCell>Item Name</TableCell>
-                      <TableCell>Order Quantity</TableCell>
+                      <TableCell>Invoice ID</TableCell>
+                      <TableCell>Vendor Name</TableCell>
+                      <TableCell>Action</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -174,9 +159,9 @@ function CreateModifyTECCommittee() {
                 <Table className={styles.table} aria-label="right table">
                   <TableHead>
                     <TableRow>
-                      <TableCell>Item Name</TableCell>
-                      <TableCell>Order Quantity</TableCell>
-                      <TableCell>Received Quantity</TableCell>
+                      <TableCell>Invoice ID</TableCell>
+                      <TableCell>Vendor Name</TableCell>
+                      <TableCell>Payment status</TableCell>
                       <TableCell></TableCell>
                     </TableRow>
                   </TableHead>
@@ -202,26 +187,7 @@ function CreateModifyTECCommittee() {
             </div>
           </Container>
         </div>
-        <div className={styles.lowerSection}>
-          <Container
-            className={styles.rightButton}
-            sx={{ justifyContent: { xs: "left", sm: "center", lg: "center" } }}
-          >
-            <Button
-              className={styles.TecAppointButton}
-              variant="contained"
-              sx={{
-                mt: 4,
-                ml: 110,
-                borderRadius: 4,
-                mb: 0.3,
-                minWidth: "50px",
-              }}
-            >
-              Next
-            </Button>
-          </Container>
-        </div>
+        
       </Container>
     </div>
   );

@@ -45,6 +45,10 @@ import SendInvoice from './pages/Vendor/SendInvoice/SendInvoice';
 import InvoicestobePaid from './pages/FinanceDivisionAccountant/InvoicestobePaid/InvoicestobePaid';
 import UploadPaymentVoucher from './pages/FinanceDivisionAccountant/UploadPaymentVouncher/UploadPaymentVoucher';
 import AddItemstoGRN from "./pages/FinanceDivisionHOD/AddItemstoGRN/AddItemstoGRN";
+import InvoicestobePaidFin from "./pages/FinanceDivisionHOD/InvoicestobePaid/InvoicestobePaidFin";
+
+
+
 
 
 function App() {
@@ -89,6 +93,7 @@ function App() {
     {/* <InvoicestobePaid/> */}
     {/* <UploadPaymentVoucher/> */}
     <AddItemstoGRN/>
+    <InvoicestobePaidFin/>
    
 
     
