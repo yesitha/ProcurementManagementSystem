@@ -27,7 +27,7 @@ import SelectDropDown from "../../../components/SelectDropDown/SelectDropDown";
 //   },
 // });
 
-const rows = [users];
+const rows = users;
 
 function CreateModifyTECCommittee() {
   //   const classes = useStyles();
