@@ -29,6 +29,7 @@ import ApprovedItemList from './pages/ProcurementCommitee/ApprovedItemList/Appro
 import PublishPaperAd from './pages/CoparateCommunicationDivision/PublishPaperAd/PublishPaperAd';
 
 import BidDetails from './pages/Procurement Officer/BidDetails/BidDetails';
+import ItemDetails from './pages/CoparateCommunicationDivision/ItemDetails/ItemDetails';
 
 
 function App() {
@@ -36,11 +37,11 @@ function App() {
     <div>
     {/* <Login/> */}
     {/* <SignUp/> */}
-    {/* <Dashboard/> */}
+    <Dashboard/>
     {/* <ManageAuction/> */}
     {/* <NotificationPage/> */}
     {/* <CreateSubProcurementPlan/> */}
-    <PublishPaperAd/>
+    {/* <PublishPaperAd/> */}
     {/* <FinalizedMasterProcurementPlan/> */}
     {/* <MasterProcurementPlanStatus/> */}
     {/* <ViewMasterProcurementPlan/> */}
@@ -48,6 +49,7 @@ function App() {
     {/* <CreateModifyTECCommittee/> */}
     {/* <MasterProcurementPlanEvalate/> */}
     {/* <AddItemtoSubProcurementPlan/>  */}
+    {/* <ItemDetails/> */}
     {/* <ApprovalForMasterProcurementPlan/> */}
     {/* <ViewItem/> */}
     {/* <CreateModifyBidOpeningCommittee/> */}
