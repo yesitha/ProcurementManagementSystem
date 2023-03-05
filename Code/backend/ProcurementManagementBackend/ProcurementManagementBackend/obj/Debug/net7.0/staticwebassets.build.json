@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "C5EV2L69oBfzE1aaOCFoeHLOOCG6dF42m+6qbHMuJz0=",
+  "Source": "ProcurementManagementBackend",
+  "BasePath": "_content/ProcurementManagementBackend",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
