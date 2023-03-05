@@ -24,12 +24,35 @@ import ViewItem from './pages/ProcurementCommitee/ViewItem/ViewItem';
 import CreateModifyBidOpeningCommittee from './pages/Procurement Officer/CreateModifyBidOpeningCommittee/CreateModifyBidOpeningCommittee';
 import MasterProcurementPlan from './pages/ProcurementCommitee/MasterProcurementPlan/MasterProcurementPlan';
 import BidTender from './pages/Vendor/BidTender/BidTender';
-
+import RequesttoInitiateSubProcurementPlan from './pages/RequesttoInitiateSubProcurementPlan/RequesttoInitiateSubProcurementPlan'
+import ViewSubProcurementPlan from './pages/ViewSubProcurementPlan/ViewSubProcurementPlan';
 import ApprovedItemList from './pages/ProcurementCommitee/ApprovedItemList/ApprovedItemList';
 import PublishPaperAd from './pages/CoparateCommunicationDivision/PublishPaperAd/PublishPaperAd';
-
 import BidDetails from './pages/Procurement Officer/BidDetails/BidDetails';
+
 import ItemDetails from './pages/CoparateCommunicationDivision/ItemDetails/ItemDetails';
+
+import BidDetailsView from './pages/Procurement Officer/BidDetails/BidDetails';
+import VendorSelection from './pages/TEC Committee/Vendor Selection/VendorSelection';
+import TecReport from './pages/ProcurementCommitee/TecReport/TecReport';
+import TecReportView from './pages/ProcurementCommitee/TecReportView/TecReportView';
+
+import AddNewItem from './pages/InventoryManager/AddNewItem/AddNewItem';
+
+import GoodsReceivedNote from './pages/GoodsReceivedNote/GoodsReceivedNote';
+import ViewGRN from './pages/ViewGRN/ViewGRN';
+import Invoice from './pages/Procurement Officer/Invoice(companyside)/Invoice';
+import CreateInvoice from './pages/Vendor/CreateInvoice/CreateInvoice';
+import CreateInvoice2 from './pages/Vendor/CreateInvoice2/CreateInvoice2';
+import SendInvoice from './pages/Vendor/SendInvoice/SendInvoice';
+import InvoicestobePaid from './pages/FinanceDivisionAccountant/InvoicestobePaid/InvoicestobePaid';
+import UploadPaymentVoucher from './pages/FinanceDivisionAccountant/UploadPaymentVouncher/UploadPaymentVoucher';
+import AddItemstoGRN from "./pages/FinanceDivisionHOD/AddItemstoGRN/AddItemstoGRN";
+import InvoicestobePaidFin from "./pages/FinanceDivisionHOD/InvoicestobePaid/InvoicestobePaidFin";
+
+
+
+
 
 
 function App() {
@@ -51,18 +74,36 @@ function App() {
     {/* <AddItemtoSubProcurementPlan/>  */}
     {/* <ItemDetails/> */}
     {/* <ApprovalForMasterProcurementPlan/> */}
-    {/* <ViewItem/> */}
+    {/*ViewItem*/}
     {/* <CreateModifyBidOpeningCommittee/> */}
     {/* <ViewFinalizedMasterProcurementPlans/> */}
     {/* <AuditFinalizedMasterProcurementPlan/> */}
     {/* <BidTender/> */}
-    {/*<BidDetails/>}
+    {/* <BidDetails/> */}
+    {/* <BidDetailsView/> */}
+    {/* <VendorSelection/> */}
     {/* <MasterProcurementPlan/> */}
     {/* <ItemstobeShipped/> */}
     {/* <Stock/> */}
     {/* <DGViewFinalizedMasterProcurementPlans/> */}
-    {/*<EvaluateFinalizedMasterProcurementPlan/>*/}
-     </div>
+    {/* <EvaluateFinalizedMasterProcurementPlan/> */}
+    {/*EvaluateFinalizedMasterProcurementPlan*/}
+    {/*AddNewItem*/}
+    {/* <CreateInvoice/> */}
+    {/* <GoodsReceivedNote/> */}
+    {/* <ViewGRN/> */}
+    {/* <Invoice/> */}
+    {/* <CreateInvoice2/> */}
+    {/* <SendInvoice/> */}
+    {/* <InvoicestobePaid/> */}
+    {/* <UploadPaymentVoucher/> */}
+    <AddItemstoGRN/>
+    <InvoicestobePaidFin/>
+   
+
+    
+    </div>
+
   );
 }
 export default App;
