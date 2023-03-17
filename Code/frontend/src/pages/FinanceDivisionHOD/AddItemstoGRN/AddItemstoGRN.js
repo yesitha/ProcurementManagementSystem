@@ -1,11 +1,11 @@
-import styles from "./CreateModifyTECCommittee.module.css";
+import styles from "./addItemstoGRN.module.css";
 import React, { useState } from "react";
-import SideNavBar from "../../components/SideNavigationBar/SideNavBar";
+import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { Container } from "@mui/system";
-import { users } from "../../users/SystemUsers";
-import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
-import DonePopup from '../../components/Popups/DonePopup/DonePopup';
+import { users } from "../../../users/SystemUsers";
+import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
+import DonePopup from "../../../components/Popups/DonePopup/DonePopup";
 import {
   IconButton,
   TableRow,
@@ -19,6 +19,7 @@ import {
   Button,
 } from "@mui/material";
 import { Rotate90DegreesCcw } from "@mui/icons-material";
+import SelectDropDown from "../../../components/SelectDropDown/SelectDropDown";
 
 // const useStyles = makeStyles({
 //   table: {
@@ -26,15 +27,9 @@ import { Rotate90DegreesCcw } from "@mui/icons-material";
 //   },
 // });
 
-
 const rows = users;
 
-
-
-
 function CreateModifyTECCommittee() {
-
-
   //   const classes = useStyles();
   const [leftTableData, setLeftTableData] = useState(rows);
   const [rightTableData, setRightTableData] = useState([]);
@@ -62,6 +57,9 @@ function CreateModifyTECCommittee() {
     gender: "Male",
     profilePic: "https://www.w3schools.com/howto/img_avatar.png",
   };
+
+  const list = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
+  const list3 = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
   return (
     <div style={{ overflowX: "auto" }}>
       <div className={styles.sideNavBar}>
@@ -86,35 +84,66 @@ function CreateModifyTECCommittee() {
               <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
             </IconButton>
 
-            <h1 className={styles.Header}>Create TEC Committee</h1>
+            <h1 className={styles.Header}>Goods Received Note</h1>
           </div>
         </div>
         <div className={styles.OuterMiddle}>
-          <div className={styles.Ph2}>
-            <h4>Master Procurement Id : {masterProcurementId}</h4>
+          <div className={styles.flexrow}>
+            <div>
+              <label style={{ color: "white", marginLeft: "10px" }}>
+                PURCHASE ORDER ID*
+              </label>
+              <SelectDropDown list={list} />
+            </div>
+
+            <div >
+            <label style={{ color: "white", marginLeft: "10px" }}>
+                GRN ID*
+              </label>
+              <SelectDropDown list={list3} /> 
+            </div>
           </div>
 
-          <Container className={styles.MiddleSection} sx={{ display: "flex", pt: 4, flexDirection: { xs: "column", lg: "row" } }} style={{ display: 'flex', justifyContent: 'space-around', flexWrap: 'wrap' }}>
+          <Container
+            className={styles.MiddleSection}
+            sx={{
+              display: "flex",
+              pt: 4,
+              flexDirection: { xs: "column", lg: "row" },
+            }}
+            style={{
+              display: "flex",
+              justifyContent: "space-around",
+              flexWrap: "wrap",
+            }}
+          >
             <div className={styles.leftTable}>
-              <TableContainer className={styles.TableContainer} component={Paper}>
+              <TableContainer
+                className={styles.TableContainer}
+                component={Paper}
+              >
                 <Table className={styles.table} aria-label="left table">
                   <TableHead>
                     <TableRow>
-                      <TableCell>ID</TableCell>
-                      <TableCell>Name</TableCell>
-                      <TableCell>Department</TableCell>
-
+                      <TableCell>Item ID</TableCell>
+                      <TableCell>Item Name</TableCell>
+                      <TableCell>Order Quantity</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {leftTableData.map((row) => (
-                      <TableRow className={styles.TableRow} key={row.id} onClick={() => handleClickLeftToRight(row)} >
+                      <TableRow
+                        className={styles.TableRow}
+                        key={row.id}
+                        onClick={() => handleClickLeftToRight(row)}
+                      >
                         <TableCell component="th" scope="row">
                           {row.id}
                         </TableCell>
-                        <TableCell>{row.firstname + " " + row.lastname}</TableCell>
+                        <TableCell>
+                          {row.firstname + " " + row.lastname}
+                        </TableCell>
                         <TableCell>{row.department}</TableCell>
-
                       </TableRow>
                     ))}
                   </TableBody>
@@ -122,26 +151,49 @@ function CreateModifyTECCommittee() {
               </TableContainer>
             </div>
 
-            <div className="ArrowSection" style={{ alignSelf: 'center', margin: 10, }}><DoubleArrowIcon style={{ fontSize: 50, }} sx={{ transform: { xs: 'rotate(90deg)', sm: 'rotate(90deg)', lg: 'rotate(0deg)' } }} /> </div>
-            <div className={styles.rightTable} >
-              <TableContainer className={styles.TableContainer} component={Paper}   >
+            <div
+              className="ArrowSection"
+              style={{ alignSelf: "center", margin: 10 }}
+            >
+              <DoubleArrowIcon
+                style={{ fontSize: 50 }}
+                sx={{
+                  transform: {
+                    xs: "rotate(90deg)",
+                    sm: "rotate(90deg)",
+                    lg: "rotate(0deg)",
+                  },
+                }}
+              />{" "}
+            </div>
+            <div className={styles.rightTable}>
+              <TableContainer
+                className={styles.TableContainer}
+                component={Paper}
+              >
                 <Table className={styles.table} aria-label="right table">
                   <TableHead>
                     <TableRow>
-                      <TableCell>ID</TableCell>
-                      <TableCell>Name</TableCell>
-                      <TableCell>Department</TableCell>
+                      <TableCell>Item Name</TableCell>
+                      <TableCell>Order Quantity</TableCell>
+                      <TableCell>Received Quantity</TableCell>
+                      <TableCell></TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {rightTableData.map((row) => (
-                      <TableRow className={styles.TableRow} key={row.id} onClick={() => handleClickRightToLeft(row)}>
+                      <TableRow
+                        className={styles.TableRow}
+                        key={row.id}
+                        onClick={() => handleClickRightToLeft(row)}
+                      >
                         <TableCell component="th" scope="row">
                           {row.id}
                         </TableCell>
-                        <TableCell>{row.firstname + " " + row.lastname}</TableCell>
+                        <TableCell>
+                          {row.firstname + " " + row.lastname}
+                        </TableCell>
                         <TableCell>{row.department}</TableCell>
-
                       </TableRow>
                     ))}
                   </TableBody>
@@ -155,20 +207,18 @@ function CreateModifyTECCommittee() {
             className={styles.rightButton}
             sx={{ justifyContent: { xs: "left", sm: "center", lg: "center" } }}
           >
-
             <Button
               className={styles.TecAppointButton}
-
               variant="contained"
               sx={{
-                mt: 2,
-                ml: { xs: 14, md: 2 },
+                mt: 4,
+                ml: 110,
                 borderRadius: 4,
                 mb: 0.3,
-                minWidth: '150px'
+                minWidth: "50px",
               }}
             >
-              Create TEC Committee
+              Next
             </Button>
           </Container>
         </div>

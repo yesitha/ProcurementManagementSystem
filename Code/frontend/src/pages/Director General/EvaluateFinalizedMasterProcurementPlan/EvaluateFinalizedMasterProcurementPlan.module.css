@@ -39,3 +39,8 @@
     position: relative;
 }
 
+.efmpp_ActionButonsContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}

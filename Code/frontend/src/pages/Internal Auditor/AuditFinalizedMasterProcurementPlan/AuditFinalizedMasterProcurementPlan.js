@@ -18,6 +18,8 @@ import DonePopup from '../../../components/Popups/DonePopup/DonePopup';
 import SetPreBidMeetingDate from '../../../components/Popups/SetPreBidMeetingDate/SetPreBidMeetingDate';
 import Approve from '../../../images/Approve.png';
 import Reject from '../../../images/Reject.png';
+import ApprovePopup from '../../../components/Popups/DonePopup/ApprovePopup';
+import RejectPopup from '../../../components/Popups/DonePopup/RejectPopup';
 //===============Applicable for table data===================================
 
 const columns = [
@@ -35,29 +37,29 @@ const columns = [
     return { ItemID,ItemName,Qty,Spe,Division,Vendor,EDdate,Action};
   }
 
-  const ApproveRejctButton = (
-    <>
-      <IconButton><img src={Approve}/></IconButton>
-      <IconButton><img src={Reject}/></IconButton>
-    </>
-  )
+//   const ApproveRejctButton = (
+//     <>
+//       <IconButton><img src={Approve}/></IconButton>
+//       <IconButton><img src={Reject}/></IconButton>
+//     </>
+//   )
   
   const rows = [
-    createData('I0014','A4 Papers','500','loerm','IT Department',<VendorDetails/>,'2023/01/01',ApproveRejctButton),
-    createData('I0028', 'Ruler', '10','loerm','IT Department',<VendorDetails/>,'2023/01/01',ApproveRejctButton),
-    createData('I0015', 'Stapler', '50','loerm','IT Department',<VendorDetails/>,'2023/01/01',ApproveRejctButton),
-    createData('I0016', 'Pens', '100','loerm','Engineering Department',<VendorDetails/>,'2023/01/01',ApproveRejctButton),
-    createData('I0017', 'Notebooks', '25','loerm','Engineering Department',<VendorDetails/>,'2023/01/01',ApproveRejctButton),
-    createData('I0018', 'Printer Ink', '10','loerm','Engineering Department',<VendorDetails/>,'2023/01/01',ApproveRejctButton),
-    createData('I0019', 'Paper Clips', '200','loerm','Engineering Department',<VendorDetails/>,'2023/01/01',ApproveRejctButton),
-    createData('I0020', 'Tape', '15','loerm','Finance Department',<VendorDetails/>,'2023/01/01',ApproveRejctButton),
-    createData('I0021', 'Envelopes', '75','loerm','Finance Department',<VendorDetails/>,'2023/01/01',ApproveRejctButton),
-    createData('I0022', 'File Folders', '50','loerm','Finance Department',<VendorDetails/>,'2023/01/01',ApproveRejctButton),
-    createData('I0023', 'Scissors', '20','loerm','Finance Department',<VendorDetails/>,'2023/01/01',ApproveRejctButton),
-    createData('I0024', 'Whiteboard Markers', '30','loerm','Finance Department',<VendorDetails/>,'2023/01/01',ApproveRejctButton),
-    createData('I0025', 'Calculator', '5','loerm','Finance Department',<VendorDetails/>,'2023/01/01',ApproveRejctButton),
-    createData('I0026', 'Post-it Notes', '100','loerm','Technical Department',<VendorDetails/>,'2023/01/01',ApproveRejctButton),
-    createData('I0027', 'Highlighters', '20','loerm','Technical Department',<VendorDetails/>,'2023/01/01',ApproveRejctButton),
+    createData('I0014','A4 Papers','500','loerm','IT Department',<VendorDetails/>,'2023/01/01',<div className={styles.afmpp_ActionButonsContainer}><ApprovePopup/><RejectPopup/></div>),
+    createData('I0028', 'Ruler', '10','loerm','IT Department',<VendorDetails/>,'2023/01/01',<div className={styles.afmpp_ActionButonsContainer}><ApprovePopup/><RejectPopup/></div>),
+    createData('I0015', 'Stapler', '50','loerm','IT Department',<VendorDetails/>,'2023/01/01',<div className={styles.afmpp_ActionButonsContainer}><ApprovePopup/><RejectPopup/></div>),
+    createData('I0016', 'Pens', '100','loerm','Engineering Department',<VendorDetails/>,'2023/01/01',<div className={styles.afmpp_ActionButonsContainer}><ApprovePopup/><RejectPopup/></div>),
+    createData('I0017', 'Notebooks', '25','loerm','Engineering Department',<VendorDetails/>,'2023/01/01',<div className={styles.afmpp_ActionButonsContainer}><ApprovePopup/><RejectPopup/></div>),
+    createData('I0018', 'Printer Ink', '10','loerm','Engineering Department',<VendorDetails/>,'2023/01/01',<div className={styles.afmpp_ActionButonsContainer}><ApprovePopup/><RejectPopup/></div>),
+    createData('I0019', 'Paper Clips', '200','loerm','Engineering Department',<VendorDetails/>,'2023/01/01',<div className={styles.afmpp_ActionButonsContainer}><ApprovePopup/><RejectPopup/></div>),
+    createData('I0020', 'Tape', '15','loerm','Finance Department',<VendorDetails/>,'2023/01/01',<div className={styles.afmpp_ActionButonsContainer}><ApprovePopup/><RejectPopup/></div>),
+    createData('I0021', 'Envelopes', '75','loerm','Finance Department',<VendorDetails/>,'2023/01/01',<div className={styles.afmpp_ActionButonsContainer}><ApprovePopup/><RejectPopup/></div>),
+    createData('I0022', 'File Folders', '50','loerm','Finance Department',<VendorDetails/>,'2023/01/01',<div className={styles.afmpp_ActionButonsContainer}><ApprovePopup/><RejectPopup/></div>),
+    createData('I0023', 'Scissors', '20','loerm','Finance Department',<VendorDetails/>,'2023/01/01',<div className={styles.afmpp_ActionButonsContainer}><ApprovePopup/><RejectPopup/></div>),
+    createData('I0024', 'Whiteboard Markers', '30','loerm','Finance Department',<VendorDetails/>,'2023/01/01',<div className={styles.afmpp_ActionButonsContainer}><ApprovePopup/><RejectPopup/></div>),
+    createData('I0025', 'Calculator', '5','loerm','Finance Department',<VendorDetails/>,'2023/01/01',<div className={styles.afmpp_ActionButonsContainer}><ApprovePopup/><RejectPopup/></div>),
+    createData('I0026', 'Post-it Notes', '100','loerm','Technical Department',<VendorDetails/>,'2023/01/01',<div className={styles.afmpp_ActionButonsContainer}><ApprovePopup/><RejectPopup/></div>),
+    createData('I0027', 'Highlighters', '20','loerm','Technical Department',<VendorDetails/>,'2023/01/01',<div className={styles.afmpp_ActionButonsContainer}><ApprovePopup/><RejectPopup/></div>),
   ]
 
 //===========================================================================

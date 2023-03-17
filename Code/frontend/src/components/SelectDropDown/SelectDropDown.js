@@ -16,6 +16,7 @@ export default function SelectDropDown({list}) {
     <div>
       <FormControl sx={{ my: 0.5,ml:1,mr:10, minWidth: {xs:200,sm:280,md:300},maxWidth: 300}}>
         <Select
+          label="Age"
           value={SelectorValue}
           onChange={handleChange}
           displayEmpty

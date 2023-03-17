@@ -39,3 +39,9 @@
     position: relative;
 }
 
+.afmpp_ActionButonsContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+

@@ -51,12 +51,7 @@ const Recomandedvendors1=vendors;
     { id: "Devi", label: "Devision", Width: 300, align: "center" },
     { id: "Specs", label: "Specifications", Width: 300, align: "center" },
     { id: "RVen", label: "Recommended Vendors", Width: 300, align: "center" },
-    {
-      id: "Edate",
-      label: "Expected Delivery date",
-      Width: 300,
-      align: "center",
-    },
+    { id: "Edate",label: "Expected Delivery date",Width: 300,align: "center",},
   ];
 
   function Setdate(date) {
@@ -223,6 +218,7 @@ const Recomandedvendors1=vendors;
             <div>
               <Typography  sx={{fontFamily:'mulish',fontSize:{xs:'14px',sm:'15px',md:'16px'},ml:1.2,color:'#ffffff'}}>MASTER PROCUREMENT PLAN ID*</Typography>
               <SelectDropDown className={styles.dropDown} list={list} />
+              
             </div>
           </div>
           <SearchNoFilter className={styles.search} />
