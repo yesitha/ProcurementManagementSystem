@@ -2,6 +2,7 @@ global using ProcurementManagementBackend.Models;
 global using Microsoft.EntityFrameworkCore;
 global using ProcurementManagementBackend.Data;
 using ProcurementManagementBackend.Services.EmployeeServices;
+using ProcurementManagementBackend.Services.CommitteeService;
 using ProcurementManagementBackend.Services.EmloyeeServices;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IEmployeeServices, EmployeeServices>();
+builder.Services.AddScoped<ICommitteeService, CommitteeService>();
 builder.Services.AddDbContext<DataContext>();
 
 var app = builder.Build();

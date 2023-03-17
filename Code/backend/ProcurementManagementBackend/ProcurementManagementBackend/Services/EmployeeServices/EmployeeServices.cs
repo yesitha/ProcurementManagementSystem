@@ -44,8 +44,10 @@ namespace ProcurementManagementBackend.Services.EmloyeeServices
             var employee = await _context.Employees.FindAsync(id);
             if (employee == null) { return null; }
             employee.employeeId = request.employeeId != null ? request.employeeId : employee.employeeId;
-            employee.employeeName = request.employeeName!=null?request.employeeName:employee.employeeName;
+            employee.employeeFirstName = request.employeeFirstName != null?request.employeeFirstName : employee.employeeFirstName;
+            employee.employeeLastName = request.employeeLastName != null?request.employeeLastName : employee.employeeLastName;
             employee.committeeId = request.committeeId != null ? request.committeeId : employee.committeeId;
+            employee.employeeDesignation= request.employeeDesignation!=null?request.employeeDesignation:employee.employeeDesignation;
 
 
 

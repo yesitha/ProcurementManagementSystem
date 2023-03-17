@@ -22,6 +22,10 @@ namespace ProcurementManagementBackend.Controllers
         public async Task<ActionResult<List<Employee>>> GetAllEmployees()
         {
             var result = await _EmployeeService.GetAllEmployees();
+            if (result == null)
+            {
+                return NotFound("No Employees  Found");
+            }
             return Ok(result);
 
         }

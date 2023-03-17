@@ -14,6 +14,7 @@
         }
 
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<Committee> Committee { get; set; }
     }
 }
 
