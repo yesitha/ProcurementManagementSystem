@@ -29,6 +29,9 @@ import ViewSubProcurementPlan from './pages/ViewSubProcurementPlan/ViewSubProcur
 import ApprovedItemList from './pages/ProcurementCommitee/ApprovedItemList/ApprovedItemList';
 import PublishPaperAd from './pages/CoparateCommunicationDivision/PublishPaperAd/PublishPaperAd';
 import BidDetails from './pages/Procurement Officer/BidDetails/BidDetails';
+
+import ItemDetails from './pages/CoparateCommunicationDivision/ItemDetails/ItemDetails';
+
 import BidDetailsView from './pages/Procurement Officer/BidDetails/BidDetails';
 import VendorSelection from './pages/TEC Committee/Vendor Selection/VendorSelection';
 import TecReport from './pages/ProcurementCommitee/TecReport/TecReport';
@@ -51,12 +54,13 @@ import InvoicestobePaidFin from "./pages/FinanceDivisionHOD/InvoicestobePaid/Inv
 
 
 
+
 function App() {
   return (
     <div>
     {/* <Login/> */}
     {/* <SignUp/> */}
-    {/* <Dashboard/> */}
+    <Dashboard/>
     {/* <ManageAuction/> */}
     {/* <NotificationPage/> */}
     {/* <CreateSubProcurementPlan/> */}
@@ -68,6 +72,7 @@ function App() {
     {/* <CreateModifyTECCommittee/> */}
     {/* <MasterProcurementPlanEvalate/> */}
     {/* <AddItemtoSubProcurementPlan/>  */}
+    {/* <ItemDetails/> */}
     {/* <ApprovalForMasterProcurementPlan/> */}
     {/*ViewItem*/}
     {/* <CreateModifyBidOpeningCommittee/> */}
