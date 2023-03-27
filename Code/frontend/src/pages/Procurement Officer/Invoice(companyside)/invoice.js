@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './invoice.module.css';
+import styles from './Invoice.module.css';
 import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { Button, IconButton, Paper, Typography } from "@mui/material";

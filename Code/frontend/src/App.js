@@ -49,6 +49,7 @@ import InvoicestobePaid from './pages/FinanceDivisionAccountant/InvoicestobePaid
 import UploadPaymentVoucher from './pages/FinanceDivisionAccountant/UploadPaymentVouncher/UploadPaymentVoucher';
 import AddItemstoGRN from "./pages/FinanceDivisionHOD/AddItemstoGRN/AddItemstoGRN";
 import InvoicestobePaidFin from "./pages/FinanceDivisionHOD/InvoicestobePaid/InvoicestobePaidFin";
+import ReviseVendorSelection from './pages/TEC Committee/Revise Vendor Selection/ReviseVendorSelection';
 
 
 
@@ -60,7 +61,7 @@ function App() {
     <div>
     {/* <Login/> */}
     {/* <SignUp/> */}
-    <Dashboard/>
+    {/* <Dashboard/> */}
     {/* <ManageAuction/> */}
     {/* <NotificationPage/> */}
     {/* <CreateSubProcurementPlan/> */}
@@ -97,8 +98,9 @@ function App() {
     {/* <SendInvoice/> */}
     {/* <InvoicestobePaid/> */}
     {/* <UploadPaymentVoucher/> */}
-    <AddItemstoGRN/>
-    <InvoicestobePaidFin/>
+    {/* <AddItemstoGRN/> */}
+    {/* <InvoicestobePaidFin/> */}
+    <ReviseVendorSelection/>
    
 
     
