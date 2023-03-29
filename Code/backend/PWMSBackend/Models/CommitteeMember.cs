@@ -1,11 +1,9 @@
 ﻿using System;
 namespace PWMSBackend.Models
 {
-	public class CommitteeMember
+	public class CommitteeMember:ProcurementEmployee
 	{
-		public CommitteeMember()
-		{
-		}
+		
 	}
 }
 

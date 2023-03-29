@@ -1,11 +1,9 @@
 ﻿using System;
 namespace PWMSBackend.Models
 {
-	public class BidOpeningCommittee
-	{
-		public BidOpeningCommittee()
-		{
-		}
+	public class BidOpeningCommittee: Committee
+    {
+		
 	}
 }
 
