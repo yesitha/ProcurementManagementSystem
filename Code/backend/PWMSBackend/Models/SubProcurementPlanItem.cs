@@ -2,7 +2,7 @@
 {
     public class SubProcurementPlanItem
     {
-        public string SPPId { get; set; }
+        public string SppId { get; set; }
         public string ItemId { get; set; }
         public string RecommendedVendor { get; set; }
         public byte[] EvidenceOfAuthorization { get; set; }

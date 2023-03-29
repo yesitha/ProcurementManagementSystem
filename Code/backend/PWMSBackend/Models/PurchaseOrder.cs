@@ -2,7 +2,7 @@
 {
     public class PurchaseOrder
     {
-        public string POId { get; set; }
+        public string PoId { get; set; }
 
         public DateTime Date { get; set; }
 

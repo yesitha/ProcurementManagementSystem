@@ -1,8 +1,11 @@
-﻿namespace PWMSBackend.Models
+﻿using MessagePack;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace PWMSBackend.Models
 {
     public class MasterProcurementPlan
     {
-        public string MPPId { get; set; }
+        public string MppId { get; set; }
         public DateTime CreationDate { get; set; }
         public int EstimatedGrandTotal { get; set; }
 
@@ -19,5 +22,12 @@
 
         //Many to many relationships
         public ICollection<MasterProcurementPlanStatus> MasterProcurementPlanStatuses { get; set; }
+
+        [ForeignKey("TecCommittee")]
+        public string TecCommitteeId { get; set; }
+
+        [ForeignKey("BidOpeningCommittee")]
+        public string BidOpeningCommitteeId { get; set; }
+
     }
 }

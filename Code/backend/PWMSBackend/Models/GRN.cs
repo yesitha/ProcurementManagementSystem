@@ -2,7 +2,7 @@
 {
     public class GRN
     {
-        public string GRNId { get; set; }
+        public string GrnId { get; set; }
 
         public string Checkedby { get; set; }
 

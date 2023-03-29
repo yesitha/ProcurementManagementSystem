@@ -5,7 +5,7 @@ namespace PWMSBackend.Models
     public class SubProcurementPlan
     {
         [Required]
-        public string SPPId { get; set; } = null!;
+        public string SppId { get; set; } = null!;
 
         public double EstimatedTotal { get; set; }
 

@@ -2,7 +2,7 @@
 {
     public class MasterProcurementPlanStatus
     {
-        public string MPPId { get; set; }
+        public string MppId { get; set; }
         public string StatusId { get; set; }
         public DateTime Date { get; set; }
 
