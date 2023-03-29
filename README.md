@@ -6,7 +6,7 @@ Procurement management is the process of acquiring goods and services for an org
 ## Collaborators
  - [Nelaka Gunawardhana](https://github.com/NelakaGunawardhana)
  - [Yesitha Sathsara](https://github.com/yesitha)
- - [Pruthuwi Dilshan](https://github.com/PruthuviKGAP)
+ - [Pruthuwi Dilshan](https://github.com/PruthuviKGA)
  - [Kalana Lakshan](https://github.com/KalanaLakshan)
  - [Shakila Kularathna](https://github.com/shakila2030)
  
