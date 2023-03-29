@@ -54,6 +54,7 @@ import ReviseVendorSelection from "./pages/TEC Committee/Revise Vendor Selection
 function App() {
   return (
     <div>
+<<<<<<< Updated upstream
       {/* <Login/> */}
       {/* <SignUp/> */}
       {/* <Dashboard/> */}
@@ -96,6 +97,56 @@ function App() {
       {/* <AddItemstoGRN/> */}
       {/* <InvoicestobePaidFin/> */}
       <ReviseVendorSelection />
+=======
+    {/* <Login/> */}
+    {/* <SignUp/> */}
+    {/* <Dashboard/> */}
+    {/* <ManageAuction/> */}
+    {/* <NotificationPage/> */}
+    {/* <CreateSubProcurementPlan/> */}
+    {/* <PublishPaperAd/> */}
+    {/* <FinalizedMasterProcurementPlan/> */}
+    {/* <MasterProcurementPlanStatus/> */}
+    {/* <ViewMasterProcurementPlan/> */}
+    {/* <ApprovedItemList/> */}
+    {/* <CreateModifyTECCommittee/> */}
+    {/* <MasterProcurementPlanEvalate/> */}
+    {/* <AddItemtoSubProcurementPlan/>  */}
+    {/* <ItemDetails/> */}
+    {/* <ApprovalForMasterProcurementPlan/> */}
+    {/*ViewItem*/}
+    {/* <CreateModifyBidOpeningCommittee/> */}
+    {/* <ViewFinalizedMasterProcurementPlans/> */}
+    {/* <AuditFinalizedMasterProcurementPlan/> */}
+    {/* <BidTender/> */}
+    {/* <BidDetails/> */}
+    {/* <BidDetailsView/> */}
+    {/* <VendorSelection/> */}
+    {/* <MasterProcurementPlan/> */}
+    {/* <ItemstobeShipped/> */}
+    {/* <Stock/> */}
+    {/* <DGViewFinalizedMasterProcurementPlans/> */}
+    {/* <EvaluateFinalizedMasterProcurementPlan/> */}
+    {/*EvaluateFinalizedMasterProcurementPlan*/}
+    {/*AddNewItem*/}
+    {/* <CreateInvoice/> */}
+    {/* <GoodsReceivedNote/> */}
+    {/* <ViewGRN/> */}
+    {/* <Invoice/> */}
+    {/* <CreateInvoice2/> */}
+    {/* <SendInvoice/> */}
+    {/* <InvoicestobePaid/> */}
+    {/* <UploadPaymentVoucher/> */}
+    {/* <AddItemstoGRN/> */}
+    {/* <InvoicestobePaidFin/> */}
+    {/* <ReviseVendorSelection/> */}
+    {/* <Stock/> */}
+    <AddNewItem/>
+    
+   
+
+    
+>>>>>>> Stashed changes
     </div>
   );
 }
