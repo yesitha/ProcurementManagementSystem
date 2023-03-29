@@ -1,9 +1,6 @@
-﻿using System;
-namespace PWMSBackend.Models
+﻿namespace PWMSBackend.Models
 {
-	public class DirectorGeneral:ProcurementEmployee
-	{
-		
-	}
+    public class DirectorGeneral : ProcurementEmployee
+    {
+    }
 }
-

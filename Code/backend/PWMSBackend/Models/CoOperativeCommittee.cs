@@ -1,10 +1,6 @@
-﻿using System;
-namespace PWMSBackend.Models
+﻿namespace PWMSBackend.Models
 {
-	public class CoOperativeCommittee: Committee
+    public class CoOperativeCommittee : Committee
     {
-		
-		
-	}
+    }
 }
-

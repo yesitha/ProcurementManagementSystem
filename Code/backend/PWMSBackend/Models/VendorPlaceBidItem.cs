@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualBasic;
-
-namespace PWMSBackend.Models
+﻿namespace PWMSBackend.Models
 {
     public class VendorPlaceBidItem
     {
@@ -12,6 +10,5 @@ namespace PWMSBackend.Models
         public IFormFile ProofDocument { get; set; }
         public Vendor Vendor { get; set; }
         public ApprovedItem ApprovedItem { get; set; }
-
-        }
+    }
 }

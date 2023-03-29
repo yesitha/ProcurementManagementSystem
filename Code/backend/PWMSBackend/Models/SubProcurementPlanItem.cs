@@ -22,6 +22,5 @@
 
         public SubProcurementPlan SubProcurementPlan { get; set; }
         public Item Item { get; set; }
-
     }
 }

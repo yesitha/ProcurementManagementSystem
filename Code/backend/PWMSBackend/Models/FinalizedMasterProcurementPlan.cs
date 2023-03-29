@@ -1,9 +1,8 @@
-﻿using System;
-namespace PWMSBackend.Models
+﻿namespace PWMSBackend.Models
 {
-	public class FinalizedMasterProcuementPlan
-	{
-		public string FMPPId { get; set; }
+    public class FinalizedMasterProcuementPlan
+    {
+        public string FMPPId { get; set; }
         public double GrandTotal { get; set; }
 
         //One to one relationships
@@ -13,4 +12,3 @@ namespace PWMSBackend.Models
         public ICollection<ApprovedItem> ApprovedItems { get; set; }
     }
 }
-

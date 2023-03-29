@@ -1,10 +1,8 @@
-﻿using System;
-namespace PWMSBackend.Models
+﻿namespace PWMSBackend.Models
 {
-	public class ProcurementCommittee: Committee
+    public class ProcurementCommittee : Committee
     {
         //One to many relationships
         public ICollection<MasterProcurementPlan> MasterProcurementPlans { get; set; }
     }
 }
-

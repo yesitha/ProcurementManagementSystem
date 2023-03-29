@@ -1,9 +1,8 @@
-﻿using System;
-namespace PWMSBackend.Models
+﻿namespace PWMSBackend.Models
 {
-	public class GRN
-	{
-		public string GRNId { get; set; }
+    public class GRN
+    {
+        public string GRNId { get; set; }
 
         public string Checkedby { get; set; }
 
@@ -12,8 +11,5 @@ namespace PWMSBackend.Models
         public Invoice Invoice { get; set; }
 
         public ICollection<GRNItemTobeShipped> GRNItemTobeShippeds { get; set; }
-
-
     }
 }
-
