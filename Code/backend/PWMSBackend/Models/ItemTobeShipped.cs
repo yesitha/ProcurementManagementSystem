@@ -1,11 +1,10 @@
 ﻿using System;
 namespace PWMSBackend.Models
 {
-	public class ItemTobeShipped
+	public class ItemTobeShipped:Item
 	{
-		public ItemTobeShipped()
-		{
-		}
+		public DateOnly ShippingDate { get; set; }
 	}
 }
+
 

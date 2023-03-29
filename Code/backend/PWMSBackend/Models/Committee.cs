@@ -3,9 +3,7 @@ namespace PWMSBackend.Models
 {
 	public class Committee
 	{
-		public Committee()
-		{
-		}
+		public string CommitteeId { get; set; }
 	}
 }
 

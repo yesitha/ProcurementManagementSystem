@@ -1,11 +1,9 @@
 ﻿using System;
 namespace PWMSBackend.Models
 {
-	public class InvoiceTobePay
+	public class InvoiceTobePay:Invoice
 	{
-		public InvoiceTobePay()
-		{
-		}
+		public string PaymentStatus { get; set; }
 	}
 }
 
