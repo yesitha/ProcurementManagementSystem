@@ -1,9 +1,8 @@
-﻿using System;
-namespace PWMSBackend.Models
+﻿namespace PWMSBackend.Models
 {
-	public class PurchaseOrder
-	{
-		public string POId { get; set; }
+    public class PurchaseOrder
+    {
+        public string POId { get; set; }
 
         public DateTime Date { get; set; }
 
@@ -21,11 +20,14 @@ namespace PWMSBackend.Models
 
         public IFormFile ProcumentOfficerStatus { get; set; }
 
-        public  ICollection<ApprovedItemPurchaseOrder>  ApprovedItemPurchaseOrders { get; set; }
+
+        public ICollection<ApprovedItemPurchaseOrder> ApprovedItemPurchaseOrders { get; set; }
+        public ICollection<PurchaseOrder_ItemTobeShipped> purchaseOrder_ItemTobeShippeds { get; set; }
+
 
         public Vendor Vendor { get; set; }
 
 
+
     }
 }
-
