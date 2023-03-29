@@ -9,7 +9,7 @@ namespace PWMSBackend.Models
 
         public int EstimatedGrandTotal { get; set; }
 
-
+        public ICollection<SubProcurementPlan> SubProcurementPlans { get; set; }
 
     }
 }

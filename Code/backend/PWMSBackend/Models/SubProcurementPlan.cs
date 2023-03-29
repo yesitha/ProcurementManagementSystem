@@ -1,13 +1,21 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+
 namespace PWMSBackend.Models
 {
 	public class SubProcurementPlan
 	{
-		public string SPPId { get; set; }
+		[Required]
+		public string SPPId { get; set; } = null!;
 
-		public double EstimatedTotal { get; set; }
+		public double? EstimatedTotal { get; set; }
 
-		public object MyProperty { get; set; }
+		public MasterProcurementPlan MasterProcurementPlan { get; set; }
+
+		public HOD HOD { get; set; }
+
 	}
 }
 
