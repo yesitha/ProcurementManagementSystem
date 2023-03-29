@@ -2,6 +2,6 @@
 {
     public class CommitteeMember : ProcurementEmployee
     {
-        public ICollection<CommitteeMemberCommitee> CommitteeMembersCommittees { get; set; }
+        public ICollection<CommitteeMemberCommittee> CommitteeMembersCommittees { get; set; }
     }
 }

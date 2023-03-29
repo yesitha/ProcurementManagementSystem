@@ -10,7 +10,7 @@
         public TecCommittee TecCommittee { get; set; }
 
         public BidOpeningCommittee BidOpeningCommittee { get; set; }
-        public FinalizedMasterProcuementPlan FinalizedMasterProcuementPlan { get; set; }
+        public FinalizedMasterProcurementPlan FinalizedMasterProcuementPlan { get; set; }
 
         //One to many relationships
         public ProcurementCommittee ProcurementCommittee { get; set; }

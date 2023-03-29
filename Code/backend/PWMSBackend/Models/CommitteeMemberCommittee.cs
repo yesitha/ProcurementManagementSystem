@@ -1,6 +1,6 @@
 ﻿namespace PWMSBackend.Models
 {
-    public class CommitteeMemberCommitee
+    public class CommitteeMemberCommittee
     {
     }
 }
