@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
+using Microsoft.EntityFrameworkCore;
 using PWMSBackend.Models;
 
 namespace PWMSBackend.Data
@@ -45,4 +46,23 @@ namespace PWMSBackend.Data
         public DbSet<VendorhasItem> VendorhasItems { get; set; } = null!;
         public DbSet<VendorPlaceBidItem> VendorPlaceBidItems { get; set; } = null!;
     }
+
+
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<SubProcurementApprovedItems>()
+            .HasKey(sa => new { sa.SPPId, sa.ItemId});
+        modelBuilder.Entity<SubProcurementApprovedItems>()
+            .HasOne(s => s.SPPId)
+            .WithMany(sa => sa.SubProcurementApprovedItems)
+            .HasForeignKey(a => a.ItemId);
+        modelBuilder.Entity<SubProcurementApprovedItems>()
+            .HasOne(a => a.ItemId)
+            .WithMany(sa => sa.SubProcurementApprovedItems)
+            .HasForeignKey(s => s.SPPId);
+
+    }
 }
+
+
