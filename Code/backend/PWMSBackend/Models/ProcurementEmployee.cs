@@ -12,7 +12,6 @@
 
         public string Salutation { get; set; }
 
-        public Division Division{ get; set; }
-
+        public Division Division { get; set; }
     }
 }

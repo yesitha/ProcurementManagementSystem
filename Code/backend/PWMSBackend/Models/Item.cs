@@ -1,9 +1,8 @@
-﻿using System;
-namespace PWMSBackend.Models
+﻿namespace PWMSBackend.Models
 {
-	public abstract class Item
-	{
-		public string ItemId { get; set; }
+    public abstract class Item
+    {
+        public string ItemId { get; set; }
         public string ItemName { get; set; }
         public string Specification { get; set; }
         public ICollection<VendorhasItem> VendorhasItems { get; set; }
@@ -13,7 +12,5 @@ namespace PWMSBackend.Models
 
         //Many to many Relationships
         public ICollection<SubProcurementPlanItem> subProcurementPlanItems { get; set; }
-
     }
 }
-
