@@ -1,9 +1,8 @@
-﻿using System;
-namespace PWMSBackend.Models
+﻿namespace PWMSBackend.Models
 {
-	public class Vendor
-	{
-		public string VendorId { get; set; }
+    public class Vendor
+    {
+        public string VendorId { get; set; }
 
         public string FirstName { get; set; }
 
@@ -40,7 +39,5 @@ namespace PWMSBackend.Models
         public IFormFile OtherDocs { get; set; }
         public ICollection<VendorPlaceBidItem> VendorPlaceBidItems { get; set; }
         public ICollection<VendorhasItem> VendorhasItems { get; set; }
-
     }
 }
-

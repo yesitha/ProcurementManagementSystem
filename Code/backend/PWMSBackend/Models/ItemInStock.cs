@@ -1,11 +1,7 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.Xml.Linq;
-
-namespace PWMSBackend.Models
+﻿namespace PWMSBackend.Models
 {
-	public class ItemInStock : Item
-	{
+    public class ItemInStock : Item
+    {
         /*[DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Date")]*/
@@ -14,8 +10,5 @@ namespace PWMSBackend.Models
         public double UnitPrice { get; set; }
 
         public int QuantityAvailable { get; set; }
-
-
     }
 }
-

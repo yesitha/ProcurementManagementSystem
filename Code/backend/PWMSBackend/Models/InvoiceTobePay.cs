@@ -1,12 +1,9 @@
-﻿using System;
-namespace PWMSBackend.Models
+﻿namespace PWMSBackend.Models
 {
-	public class InvoiceTobePay:Invoice
-	{
-		public string PaymentStatus { get; set; }
+    public class InvoiceTobePay : Invoice
+    {
+        public string PaymentStatus { get; set; }
 
-		public PaymentVoucher PaymentVoucher  { get; set; }
-
-	}
+        public PaymentVoucher PaymentVoucher { get; set; }
+    }
 }
-

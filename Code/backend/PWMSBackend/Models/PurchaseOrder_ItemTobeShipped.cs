@@ -11,12 +11,5 @@
         public ItemTobeShipped ItemTobeShipped { get; set; }
 
         public int Shipped_Qty { get; set; }
-
-
-
-
-
-
-
     }
 }

@@ -1,8 +1,6 @@
-﻿using System;
-namespace PWMSBackend.Models
+﻿namespace PWMSBackend.Models
 {
-	public class InternalAuditor:ProcurementEmployee
-	{
-	}
+    public class InternalAuditor : ProcurementEmployee
+    {
+    }
 }
-

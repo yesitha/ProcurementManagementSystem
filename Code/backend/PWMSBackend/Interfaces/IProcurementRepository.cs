@@ -4,7 +4,6 @@ namespace PWMSBackend.Interfaces
 {
     public interface IProcurementRepository
     {
-
         ICollection<ProcurementEmployee> GetProcurementEmployees();
     }
 }
