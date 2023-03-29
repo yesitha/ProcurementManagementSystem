@@ -25,10 +25,10 @@ import { Container } from "@mui/system";
 import styles from "./ViewMasterProcurementPlan.module.css";
 import SelectDropDown from "../../components/SelectDropDown/SelectDropDown";
 import ViewRecomandedVendors from "../../components/Popups/ViewRecomandedVendors/ViewRecomandedVendors";
-import {vendors} from "../../users/vendors.js"
+import { vendors } from "../../users/vendors.js";
 
 function ViewMasterProcurementPlan() {
-const Recomandedvendors1=vendors;
+  const Recomandedvendors1 = vendors;
 
   const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
   const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
@@ -51,7 +51,12 @@ const Recomandedvendors1=vendors;
     { id: "Devi", label: "Devision", Width: 300, align: "center" },
     { id: "Specs", label: "Specifications", Width: 300, align: "center" },
     { id: "RVen", label: "Recommended Vendors", Width: 300, align: "center" },
-    { id: "Edate",label: "Expected Delivery date",Width: 300,align: "center",},
+    {
+      id: "Edate",
+      label: "Expected Delivery date",
+      Width: 300,
+      align: "center",
+    },
   ];
 
   function Setdate(date) {
@@ -83,7 +88,7 @@ const Recomandedvendors1=vendors;
       "500",
       "Finance",
       "240 GSM",
-      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
+      <ViewRecomandedVendors vendors={Recomandedvendors1} />,
       Setdate("2022.12.12")
     ),
     createData(
@@ -92,7 +97,7 @@ const Recomandedvendors1=vendors;
       "10",
       "Finance",
       "240 GSM",
-      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
+      <ViewRecomandedVendors vendors={Recomandedvendors1} />,
       Setdate("2022.12.12")
     ),
     createData(
@@ -101,7 +106,7 @@ const Recomandedvendors1=vendors;
       "50",
       "Finance",
       "240 GSM",
-      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
+      <ViewRecomandedVendors vendors={Recomandedvendors1} />,
       Setdate("2022.12.12")
     ),
     createData(
@@ -110,7 +115,7 @@ const Recomandedvendors1=vendors;
       "100",
       "Finance",
       "24 BOX",
-      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
+      <ViewRecomandedVendors vendors={Recomandedvendors1} />,
       Setdate("2022.12.12")
     ),
     createData(
@@ -119,7 +124,7 @@ const Recomandedvendors1=vendors;
       "25",
       "Finance",
       "240 GSM",
-      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
+      <ViewRecomandedVendors vendors={Recomandedvendors1} />,
       Setdate("2022.12.12")
     ),
     createData(
@@ -128,7 +133,7 @@ const Recomandedvendors1=vendors;
       "10",
       "Finance",
       "Black",
-      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
+      <ViewRecomandedVendors vendors={Recomandedvendors1} />,
       Setdate("2022.12.12")
     ),
     createData(
@@ -137,7 +142,7 @@ const Recomandedvendors1=vendors;
       "200",
       "Finance",
       "Aluminium",
-      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
+      <ViewRecomandedVendors vendors={Recomandedvendors1} />,
       Setdate("2022.12.12")
     ),
     createData(
@@ -146,7 +151,7 @@ const Recomandedvendors1=vendors;
       "15",
       "Finance",
       "240 GSM",
-      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
+      <ViewRecomandedVendors vendors={Recomandedvendors1} />,
       Setdate("2022.12.12")
     ),
     createData(
@@ -155,7 +160,7 @@ const Recomandedvendors1=vendors;
       "75",
       "Finance",
       "240 GSM",
-      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
+      <ViewRecomandedVendors vendors={Recomandedvendors1} />,
       Setdate("2022.12.12")
     ),
     createData(
@@ -164,7 +169,7 @@ const Recomandedvendors1=vendors;
       "50",
       "Finance",
       "240 GSM",
-      <ViewRecomandedVendors vendors={Recomandedvendors1}/>,
+      <ViewRecomandedVendors vendors={Recomandedvendors1} />,
       Setdate("2022.12.12")
     ),
   ];
@@ -188,13 +193,12 @@ const Recomandedvendors1=vendors;
   const list = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
 
   return (
-    <div className={styles.outer} >
+    <div className={styles.outer}>
       <div className={styles.sideNavBar}>
         <SideNavBar list1={list1} list2={list2} user={user} />
       </div>
 
       <Container
-        
         sx={{
           ml: { xs: "60px", sm: "65px", md: "65px", lg: "68px", xl: "70px" },
           display: "flex",
@@ -216,9 +220,17 @@ const Recomandedvendors1=vendors;
         <div className={styles.MiddleSection}>
           <div className={styles.header2Section}>
             <div>
-              <Typography  sx={{fontFamily:'mulish',fontSize:{xs:'14px',sm:'15px',md:'16px'},ml:1.2,color:'#ffffff'}}>MASTER PROCUREMENT PLAN ID*</Typography>
+              <Typography
+                sx={{
+                  fontFamily: "mulish",
+                  fontSize: { xs: "14px", sm: "15px", md: "16px" },
+                  ml: 1.2,
+                  color: "#ffffff",
+                }}
+              >
+                MASTER PROCUREMENT PLAN ID*
+              </Typography>
               <SelectDropDown className={styles.dropDown} list={list} />
-              
             </div>
           </div>
           <SearchNoFilter className={styles.search} />

@@ -1,41 +1,39 @@
 @import "../../../fonts.css";
 
-.fmpp_mainBody{
-    margin-left: 60px;
+.fmpp_mainBody {
+  margin-left: 60px;
 }
 
-.fmpp_heading{
-    font-family: 'Inter', sans-serif; 
-    font-weight: 500;
-    color: #ffffff;
-    font-size: 36px;
-    position: relative;
-    margin-top: 30px;
+.fmpp_heading {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  color: #ffffff;
+  font-size: 36px;
+  position: relative;
+  margin-top: 30px;
 }
 
-
-.fmpp_title_search{
-    margin-top: 40px;
-    margin-bottom: 40px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
+.fmpp_title_search {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.fmpp_title label{
-    font-family: Mulish;
-    font-size: 16px;
-    margin-left: 10px;
-    color: #ffffff;
+.fmpp_title label {
+  font-family: Mulish;
+  font-size: 16px;
+  margin-left: 10px;
+  color: #ffffff;
 }
 
-.fmpp_table{
-    margin-bottom: 30px;
-    margin-left: 10px;
+.fmpp_table {
+  margin-bottom: 30px;
+  margin-left: 10px;
 }
 
-.fmpp_button{
-    position: relative;
+.fmpp_button {
+  position: relative;
 }
-

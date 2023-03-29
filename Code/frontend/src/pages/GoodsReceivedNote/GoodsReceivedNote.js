@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./goodsReceivedNote.module.css";
 import SideNavBar from "../../components/SideNavigationBar/SideNavBar";
 import { Typography } from "@mui/material";
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { Button, IconButton, Paper, Stack, TextField } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -12,11 +12,10 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { flexbox } from "@mui/system";
-import DonePopup from "../../components/Popups/DonePopup/DonePopup"
-import '../../users/vendors.js'
-import EnterNotePopup from '../../components/Popups/DonePopup/EnterNotePopup';
+import DonePopup from "../../components/Popups/DonePopup/DonePopup";
+import "../../users/vendors.js";
+import EnterNotePopup from "../../components/Popups/DonePopup/EnterNotePopup";
 import { vendors } from "../../users/vendors.js";
-
 
 const columns = [
   { id: "ItemID", label: "Item ID", Width: 150, align: "center" },
@@ -41,7 +40,15 @@ function createData(
 }
 
 const rows = [
-  createData("I0014", "A4 Papers", "loerm", "100 ", "50", "50", <EnterNotePopup/>),
+  createData(
+    "I0014",
+    "A4 Papers",
+    "loerm",
+    "100 ",
+    "50",
+    "50",
+    <EnterNotePopup />
+  ),
 ];
 
 const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
@@ -70,18 +77,19 @@ export default function GoodsReceivedNote() {
     setPage(0);
   };
 
-  const supplier=vendors[0].name
-  const text = `Successfully sent GRN to vendor ${supplier}`
-
+  const supplier = vendors[0].name;
+  const text = `Successfully sent GRN to vendor ${supplier}`;
 
   return (
     <div style={{ overflowX: "hidden" }}>
       <SideNavBar list1={list1} list2={list2} user={user} />
       <div className={styles.afmpp_mainBody}>
-      <div className={styles.afmpp_heading}>
-                <IconButton sx={{pl:'15px',height:'34px',width:'34px'}}><ArrowBackIosIcon sx={{color:'#ffffff'}}/></IconButton>
-                Good Receive Note
-            </div>
+        <div className={styles.afmpp_heading}>
+          <IconButton sx={{ pl: "15px", height: "34px", width: "34px" }}>
+            <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
+          </IconButton>
+          Good Receive Note
+        </div>
         <div className={styles.GRNno}>
           <Typography>
             GRN No
@@ -183,15 +191,17 @@ export default function GoodsReceivedNote() {
                   borderRadius: "32px",
                   width: "111px",
                   height: "48px",
-                  marginRight:'10px'
+                  marginRight: "10px",
                 }}
               >
                 PRINT
               </Button>
             </div>
             <div>
-              
-              <DonePopup text={text} title="SEND TO VENDORS" styles={{
+              <DonePopup
+                text={text}
+                title="SEND TO VENDORS"
+                styles={{
                   backgroundColor: "#205295",
                   borderRadius: "32px",
                   width: "200px",

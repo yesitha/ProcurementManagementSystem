@@ -1,100 +1,93 @@
-
-
 @import "../../fonts.css";
-.topic{
-    margin-left: 100px;
-    color:white;
+.topic {
+  margin-left: 100px;
+  color: white;
 }
 
-.GRNno{
-    font-size: 20;
-    color: white;
-    margin-left: 100px;
-    margin-top: 64px;
-
+.GRNno {
+  font-size: 20;
+  color: white;
+  margin-left: 100px;
+  margin-top: 64px;
 }
 
-.supplierdetails{
-    font-size: 20;
-    color: white;
-    margin-left: 100px;
-    margin-top:54px;
-    width:643px
+.supplierdetails {
+  font-size: 20;
+  color: white;
+  margin-left: 100px;
+  margin-top: 54px;
+  width: 643px;
 }
-.delivery{
-    font-size: 20;
-    color: white;
-    margin-left: 100px;
-    margin-top:54px;
-}
-
-.adjust{
-    display: flex;
-    flex-direction: row;
-    
+.delivery {
+  font-size: 20;
+  color: white;
+  margin-left: 100px;
+  margin-top: 54px;
 }
 
-.space{
-    height:58px;
+.adjust {
+  display: flex;
+  flex-direction: row;
 }
 
-.checkedby{
-    color: white;
-    font-size: 20;
-    margin-left: 100px;
-    margin-top: 50px;
-    width:750px
+.space {
+  height: 58px;
 }
 
-.divide{
-    display:flex;
-    flex-direction: row;
+.checkedby {
+  color: white;
+  font-size: 20;
+  margin-left: 100px;
+  margin-top: 50px;
+  width: 750px;
 }
 
-.divide2{
-    display:flex;
-    flex-direction: row;
-    margin-top: 110px;
+.divide {
+  display: flex;
+  flex-direction: row;
 }
 
-
-.afmpp_mainBody{
-    margin-left: 60px;
-    overflow-x: hidden;
+.divide2 {
+  display: flex;
+  flex-direction: row;
+  margin-top: 110px;
 }
 
-.afmpp_heading{
-    font-family: 'Inter', sans-serif; 
-    font-weight: 500;
-    color: #ffffff;
-    font-size: 36px;
-    position: relative;
-    margin-top: 30px;
+.afmpp_mainBody {
+  margin-left: 60px;
+  overflow-x: hidden;
 }
 
-
-.afmpp_title_search{
-    margin-top: 40px;
-    margin-bottom: 40px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
+.afmpp_heading {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  color: #ffffff;
+  font-size: 36px;
+  position: relative;
+  margin-top: 30px;
 }
 
-.afmpp_title label{
-    font-family: Mulish;
-    font-size: 16px;
-    margin-left: 10px;
-    color: #ffffff;
+.afmpp_title_search {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.afmpp_table{
-    margin-bottom: 30px;
-    margin-left: 10px;
+.afmpp_title label {
+  font-family: Mulish;
+  font-size: 16px;
+  margin-left: 10px;
+  color: #ffffff;
 }
 
-.afmpp_button{
-    position: relative;
+.afmpp_table {
+  margin-bottom: 30px;
+  margin-left: 10px;
 }
 
+.afmpp_button {
+  position: relative;
+}

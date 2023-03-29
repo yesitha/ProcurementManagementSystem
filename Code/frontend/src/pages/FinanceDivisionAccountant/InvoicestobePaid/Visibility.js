@@ -13,7 +13,12 @@ export default function () {
   return (
     <div>
       <IconButton
-        sx={{bgcolor: '#205295', borderRadius: 5,color:"white","&:hover":{bgcolor:'#4573af'}}}
+        sx={{
+          bgcolor: "#205295",
+          borderRadius: 5,
+          color: "white",
+          "&:hover": { bgcolor: "#4573af" },
+        }}
       >
         <VisibilityIcon />
       </IconButton>

@@ -1,8 +1,15 @@
-import React from 'react'
+import React from "react";
 import styles from "./createInvoice2.module.css";
 import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { Button, IconButton, Paper, Stack, TextField, Typography } from "@mui/material";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import {
+  Button,
+  IconButton,
+  Paper,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -28,56 +35,40 @@ const user = {
 };
 
 const columns = [
-    { id: "ItemID", label: "Item ID", Width: 100, align: "center" },
-    { id: "ItemName", label: "Item Name", Width: 150, align: "center" },
-    { id: "DeliveredQ", label: "Delivered Qty", Width: 150, align: "center" },
-    { id: "Des", label: "Description", Width: 150, align: "center" },
-    { id: "UnitPrice", label: "Unit Price", Width: 150, align: "center" },
-    { id: "Amount", label: "Amount", Width: 150, align: "center" },
-    
-  ];
+  { id: "ItemID", label: "Item ID", Width: 100, align: "center" },
+  { id: "ItemName", label: "Item Name", Width: 150, align: "center" },
+  { id: "DeliveredQ", label: "Delivered Qty", Width: 150, align: "center" },
+  { id: "Des", label: "Description", Width: 150, align: "center" },
+  { id: "UnitPrice", label: "Unit Price", Width: 150, align: "center" },
+  { id: "Amount", label: "Amount", Width: 150, align: "center" },
+];
 
-  function createData(
-    ItemID,
-    ItemName,
-    DeliveredQ,
-    Des,
-    UnitPrice,
-    Amount
-  ) {
-    return { ItemID,
-        ItemName,
-        DeliveredQ,
-        Des,
-        UnitPrice,
-        Amount };
-  }
+function createData(ItemID, ItemName, DeliveredQ, Des, UnitPrice, Amount) {
+  return { ItemID, ItemName, DeliveredQ, Des, UnitPrice, Amount };
+}
 
-  const rows = [
-    createData("I0014", "A4 Papers", "100", "Very Big ", "30", "50"),
-  ];
+const rows = [createData("I0014", "A4 Papers", "100", "Very Big ", "30", "50")];
 
 function Setdate() {
-    return (
-      <Stack component="form" noValidate spacing={3} >
-        <TextField
-          id="date"
-          label="Date"
-          type="date"
-          align="center"
-          defaultValue={new Date().toISOString().substr(0, 10)}
-          sx={{ width: 200, height: 50 }}
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-      </Stack>
-    );
-  }
+  return (
+    <Stack component="form" noValidate spacing={3}>
+      <TextField
+        id="date"
+        label="Date"
+        type="date"
+        align="center"
+        defaultValue={new Date().toISOString().substr(0, 10)}
+        sx={{ width: 200, height: 50 }}
+        InputLabelProps={{
+          shrink: true,
+        }}
+      />
+    </Stack>
+  );
+}
 
 export default function CreateInvoice2() {
-
-    const [page, setPage] = React.useState(0);
+  const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -90,37 +81,33 @@ export default function CreateInvoice2() {
 
   return (
     <div style={{ overflowX: "hidden" }}>
-        <SideNavBar list1={list1} list2={list2} user={user} />
-        <div className={styles.afmpp_mainBody}>
-      <div className={styles.afmpp_heading}>
-                <IconButton sx={{pl:'15px',height:'34px',width:'34px'}}><ArrowBackIosIcon sx={{color:'#ffffff'}}/></IconButton>
-                INVOICE
-            </div>
-            <div className={styles.POID}>
-                <Typography sx={{marginLeft:'10px'}}>
-                    PURCHASE ORDER ID:
-                </Typography>
+      <SideNavBar list1={list1} list2={list2} user={user} />
+      <div className={styles.afmpp_mainBody}>
+        <div className={styles.afmpp_heading}>
+          <IconButton sx={{ pl: "15px", height: "34px", width: "34px" }}>
+            <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
+          </IconButton>
+          INVOICE
+        </div>
+        <div className={styles.POID}>
+          <Typography sx={{ marginLeft: "10px" }}>
+            PURCHASE ORDER ID:
+          </Typography>
+        </div>
+        <div className={styles.divide}>
+          <div className={styles.POID}>
+            <Typography sx={{ marginLeft: "10px" }}>GRN ID:</Typography>
+          </div>
+          <div className={styles.dropDown}>
+            <Setdate />
+          </div>
+        </div>
+        <div style={{ height: "50px" }}></div>
 
-            </div>
-            <div className={styles.divide}>
-                <div className={styles.POID}>
-                <Typography sx={{marginLeft:'10px'}}>
-                    GRN ID:
-                </Typography>
-                </div>
-                <div className={styles.dropDown}>
-                <Setdate/>
-
-                </div>
-            </div>
-            <div style={{height:"50px"}}>
-                
-            </div>
-
-            <div className={styles.afmpp_table}>
+        <div className={styles.afmpp_table}>
           <Paper
             sx={{
-              marginLeft:"20px"  ,
+              marginLeft: "20px",
               width: "98%",
               overflow: "auto",
               borderRadius: 5,
@@ -181,24 +168,21 @@ export default function CreateInvoice2() {
           </Paper>
         </div>
 
-        <div style={{display:"flex",justifyContent:"right"}}>
-              
-              <Button variant="contained" 
-              style={{
-                  backgroundColor: "#205295",
-                  borderRadius: "50px",
-                  width: "200px",
-                  height: "48px",
-                  marginTop:"40px",
-                  
-                  
-                }}>Create Invoice
-
-                </Button>
-              
-            </div>
-
-            </div>
+        <div style={{ display: "flex", justifyContent: "right" }}>
+          <Button
+            variant="contained"
+            style={{
+              backgroundColor: "#205295",
+              borderRadius: "50px",
+              width: "200px",
+              height: "48px",
+              marginTop: "40px",
+            }}
+          >
+            Create Invoice
+          </Button>
+        </div>
+      </div>
     </div>
-  )
+  );
 }
