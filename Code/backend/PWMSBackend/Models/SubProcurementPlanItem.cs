@@ -5,7 +5,7 @@
         public string SPPId { get; set; }
         public string ItemId { get; set; }
         public string RecommendedVendor { get; set; }
-        public IFormFile EvidenceOfAuthorization { get; set; }
+        public byte[] EvidenceOfAuthorization { get; set; }
         public string ProcuremnetCommitteeStatus { get; set; }
         public string ProcurementCommitteeComment { get; set; }
         public int Quantity { get; set; }
