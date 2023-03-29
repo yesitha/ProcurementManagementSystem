@@ -19,7 +19,6 @@ namespace PWMSBackend.Models
         //Many to many relationships
         public ICollection<MasterProcurementPlanStatus> MasterProcurementPlanStatuses { get; set; }
 
-
     }
 }
 
