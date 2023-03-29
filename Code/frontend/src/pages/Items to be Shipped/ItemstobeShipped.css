@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 .note1 {
   font-size: 36px;
   font-family: "inter";
@@ -17,4 +18,26 @@
   width: 132px;
   display: flex;
   justify-content: center;
+=======
+.Title{
+    font-size: 36px;
+    font-family: "inter";
+    margin-left: 100px;
+    color:white;
+}
+
+.Button{
+
+    margin-left:1675px;
+    margin-top: 30px;
+    border-radius: 90px;
+    font-size: 24px;
+    background-color: #205295;
+    color:white;
+    padding:8px;
+    border:none;
+    width:132px;
+    display:flex;
+    justify-content:center;
+>>>>>>> Stashed changes
 }

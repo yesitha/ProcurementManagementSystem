@@ -57,8 +57,13 @@ function createData(
 }
 
 const rows = [
+<<<<<<< Updated upstream
   createData("I0014", "A4 Papers", "2023-05-10", "gygygttg", "2000lkr", "52"),
   createData("I0015", "Staplers", "2023-03-12", "dfdffd", "5000lkr", "63"),
+=======
+  createData("I0014", "A4 Papers", "2023-05-10", "A4 sized Papers", "2000lkr", "52"),
+  createData("I0015", "Staplers", "2023-03-12", "Atlas Staplers", "5000lkr", "63"),
+>>>>>>> Stashed changes
 ];
 
 export default function ItemstobeShipped() {
@@ -77,7 +82,7 @@ export default function ItemstobeShipped() {
     <div>
       <SideNavBar list1={list1} list2={list2} user={user} />
 
-      <div className="note1">Items to be Shipped</div>
+      <div className={styles.Title}>Items to be Shipped</div>
 
       <div style={{ marginTop: "30px" }}>
         <h1 style={{ marginLeft: "100px", fontSize: "16px", color: "white" }}>
@@ -164,7 +169,11 @@ export default function ItemstobeShipped() {
         </Paper>
       </div>
 
+<<<<<<< Updated upstream
       <div classname="note2">
+=======
+      <div classname={styles.Button}>
+>>>>>>> Stashed changes
         <div>
           <Sucessfullyinformed
             styles={{
@@ -176,7 +185,11 @@ export default function ItemstobeShipped() {
               width: 130,
               marginTop: 10,
             }}
+<<<<<<< Updated upstream
             name=" To Procurement Officer"
+=======
+            name=" To  the Procurement Officer"
+>>>>>>> Stashed changes
             title="Inform"
           />
         </div>
