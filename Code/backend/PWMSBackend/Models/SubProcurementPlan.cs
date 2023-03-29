@@ -16,7 +16,7 @@ namespace PWMSBackend.Models
         public ICollection<SubProcurementPlanItem> subProcurementPlanItems { get; set; }
 
         public ICollection<SubProcurementApprovedItems> SubProcurementApprovedItems { get; set; }
-        public FinalizedMasterProcuementPlan FinalizedMasterProcuementPlan { get; set; }
+        public FinalizedMasterProcurementPlan FinalizedMasterProcuementPlan { get; set; }
         public HOD HOD { get; set; }
     }
 }

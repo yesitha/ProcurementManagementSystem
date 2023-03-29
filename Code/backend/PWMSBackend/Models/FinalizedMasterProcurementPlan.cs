@@ -1,6 +1,6 @@
 ﻿namespace PWMSBackend.Models
 {
-    public class FinalizedMasterProcuementPlan
+    public class FinalizedMasterProcurementPlan
     {
         public string FMPPId { get; set; }
         public double GrandTotal { get; set; }
