@@ -21,6 +21,8 @@ namespace PWMSBackend.Models
 
         public IFormFile ProcumentOfficerStatus { get; set; }
 
+        public ICollection<PurchaseOrder_ItemTobeShipped> purchaseOrder_ItemTobeShippeds { get; set; }
+
 
     }
 }
