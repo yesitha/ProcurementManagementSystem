@@ -9,7 +9,5 @@
         public  DateOnly AuctionClosingDate { get; set; }
         public  DateOnly AuctionOpeningDate { get; set; }
         public DateOnly  PreBidMeetingDate { get; set; }
-
-        public 
     }
 }
