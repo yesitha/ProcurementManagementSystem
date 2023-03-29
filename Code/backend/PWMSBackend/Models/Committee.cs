@@ -3,6 +3,6 @@
     public class Committee
     {
         public string CommitteeId { get; set; }
-        public ICollection<CommitteeMemberCommitee> CommitteeMembersCommittees { get; set; }
+        public ICollection<CommitteeMemberCommittee> CommitteeMembersCommittees { get; set; }
     }
 }
