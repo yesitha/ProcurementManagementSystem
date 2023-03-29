@@ -202,7 +202,7 @@ namespace PWMSBackend.Data
             //    .HasKey(t => t.CommitteeId);
             modelBuilder.Entity<Vendor>()
                 .HasKey(v => v.VendorId);
-
+          
         }
     }
 }
