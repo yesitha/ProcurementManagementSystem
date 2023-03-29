@@ -39,5 +39,6 @@
         public IFormFile OtherDocs { get; set; }
         public ICollection<VendorPlaceBidItem> VendorPlaceBidItems { get; set; }
         public ICollection<VendorhasItem> VendorhasItems { get; set; }
+        public ICollection<PurchaseOrder> PurchaseOrders { get; set; }
     }
 }

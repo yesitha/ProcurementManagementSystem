@@ -23,6 +23,8 @@ namespace PWMSBackend.Models
 
         public  ICollection<ApprovedItemPurchaseOrder>  ApprovedItemPurchaseOrders { get; set; }
 
+        public Vendor Vendor { get; set; }
+
 
     }
 }
