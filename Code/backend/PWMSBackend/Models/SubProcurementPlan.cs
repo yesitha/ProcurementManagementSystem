@@ -7,15 +7,22 @@ namespace PWMSBackend.Models
 {
 	public class SubProcurementPlan
 	{
-		[Required]
-		public string SPPId { get; set; } = null!;
 
-		public double? EstimatedTotal { get; set; }
+        [Required]
+        public string SPPId { get; set; } = null!;
 
-		public MasterProcurementPlan MasterProcurementPlan { get; set; }
+        public double EstimatedTotal { get; set; }
+		
+        //One to many relationships
+        public MasterProcurementPlan MasterProcurementPlan { get; set; }
 
-		public HOD HOD { get; set; }
-
+        //Many to many Relationships
+        public ICollection<SubProcurementPlanItem> subProcurementPlanItems { get; set; }
+    
+		    public ICollection<SubProcurementApprovedItems> SubProcurementApprovedItems { get; set; }
+        
+        public HOD HOD { get; set; }
 	}
+
 }
 
