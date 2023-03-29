@@ -9,7 +9,7 @@
         public string ProcuremnetCommitteeStatus { get; set; }
         public string ProcurementCommitteeComment { get; set; }
         public int Quantity { get; set; }
-        public DateOnly ExpectedDeliveryDate { get; set; }
+        public DateTime ExpectedDeliveryDate { get; set; }
         public string TecCommitteeStatus { get; set; }
         public string TecCommitteeComment { get; set; }
         public string DGStatus { get; set; }
