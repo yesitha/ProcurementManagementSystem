@@ -38,6 +38,8 @@ namespace PWMSBackend.Models
         public IFormFile InsuaranceCertificate { get; set; }
 
         public IFormFile OtherDocs { get; set; }
+        public ICollection<VendorPlaceBidItem> VendorPlaceBidItems { get; set; }
+        public ICollection<VendorhasItem> VendorhasItems { get; set; }
 
     }
 }

@@ -8,6 +8,7 @@ namespace PWMSBackend.Models
         public string ItemName { get; set; }
 
         public string Specification { get; set; }
+        public ICollection<VendorhasItem> VendorhasItems { get; set; }
 
     }
 }

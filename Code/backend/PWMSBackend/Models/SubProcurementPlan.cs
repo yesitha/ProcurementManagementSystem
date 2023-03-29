@@ -8,6 +8,7 @@ namespace PWMSBackend.Models
 		public double EstimatedTotal { get; set; }
 
 		public object MyProperty { get; set; }
+		public FinalizedMasterProcuementPlan FinalizedMasterProcuementPlan { get; set; }
 	}
 }
 
