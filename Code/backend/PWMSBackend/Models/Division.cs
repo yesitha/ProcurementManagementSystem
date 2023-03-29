@@ -10,6 +10,8 @@ namespace PWMSBackend.Models
 
 		public ICollection<ProcurementEmployee> procurementEmployees { get; set; }
 
-	} 
+        //One to one relationships
+        public HOD HOD { get; set; }
+    } 
 }
 
