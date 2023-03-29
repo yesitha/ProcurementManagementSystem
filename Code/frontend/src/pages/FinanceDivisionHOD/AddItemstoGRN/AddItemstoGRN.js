@@ -96,11 +96,11 @@ function CreateModifyTECCommittee() {
               <SelectDropDown list={list} />
             </div>
 
-            <div >
-            <label style={{ color: "white", marginLeft: "10px" }}>
+            <div>
+              <label style={{ color: "white", marginLeft: "10px" }}>
                 GRN ID*
               </label>
-              <SelectDropDown list={list3} /> 
+              <SelectDropDown list={list3} />
             </div>
           </div>
 

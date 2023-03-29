@@ -58,11 +58,10 @@ function createData(
 
 const rows = [
   createData("I0014", "A4 Papers", "2023-05-10", "gygygttg", "2000lkr", "52"),
-  createData("I0015","Staplers","2023-03-12","dfdffd","5000lkr","63")
+  createData("I0015", "Staplers", "2023-03-12", "dfdffd", "5000lkr", "63"),
 ];
 
 export default function ItemstobeShipped() {
-
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const handleChangePage = (event, newPage) => {
@@ -105,10 +104,13 @@ export default function ItemstobeShipped() {
           sx={{
             mr: { xs: "60px", sm: "65px", md: "65px", lg: "68px", xl: "70px" },
             alignItems: "center",
-            borderRadius: 10
+            borderRadius: 10,
           }}
         >
-          <TableContainer sx={{borderRadius:10}} className={styles.tableContainer}>
+          <TableContainer
+            sx={{ borderRadius: 10 }}
+            className={styles.tableContainer}
+          >
             <Table stickyHeader aria-label="sticky table">
               <TableHead className={styles.TableHeaders}>
                 <TableRow>
@@ -161,9 +163,24 @@ export default function ItemstobeShipped() {
           />
         </Paper>
       </div>
-      
-      <div classname="note2"><div><Sucessfullyinformed styles={{position: 'absolute', right:'5%', bgcolor: '#205295', borderRadius: 5, height: 60, width: 130, marginTop:10}} name=" To Procurement Officer" title="Inform"/></div></div>
-      
+
+      <div classname="note2">
+        <div>
+          <Sucessfullyinformed
+            styles={{
+              position: "absolute",
+              right: "5%",
+              bgcolor: "#205295",
+              borderRadius: 5,
+              height: 60,
+              width: 130,
+              marginTop: 10,
+            }}
+            name=" To Procurement Officer"
+            title="Inform"
+          />
+        </div>
+      </div>
     </div>
   );
 }

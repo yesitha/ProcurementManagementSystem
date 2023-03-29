@@ -4,8 +4,8 @@ import SideNavBar from "../../components/SideNavigationBar/SideNavBar";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { Container } from "@mui/system";
 import { users } from "../../users/SystemUsers";
-import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
-import DonePopup from '../../components/Popups/DonePopup/DonePopup';
+import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
+import DonePopup from "../../components/Popups/DonePopup/DonePopup";
 import {
   IconButton,
   TableRow,
@@ -26,15 +26,9 @@ import { Rotate90DegreesCcw } from "@mui/icons-material";
 //   },
 // });
 
-
 const rows = users;
 
-
-
-
 function CreateModifyTECCommittee() {
-
-
   //   const classes = useStyles();
   const [leftTableData, setLeftTableData] = useState(rows);
   const [rightTableData, setRightTableData] = useState([]);
@@ -94,27 +88,46 @@ function CreateModifyTECCommittee() {
             <h4>Master Procurement Id : {masterProcurementId}</h4>
           </div>
 
-          <Container className={styles.MiddleSection} sx={{ display: "flex", pt: 4, flexDirection: { xs: "column", lg: "row" } }} style={{ display: 'flex', justifyContent: 'space-around', flexWrap: 'wrap' }}>
+          <Container
+            className={styles.MiddleSection}
+            sx={{
+              display: "flex",
+              pt: 4,
+              flexDirection: { xs: "column", lg: "row" },
+            }}
+            style={{
+              display: "flex",
+              justifyContent: "space-around",
+              flexWrap: "wrap",
+            }}
+          >
             <div className={styles.leftTable}>
-              <TableContainer className={styles.TableContainer} component={Paper}>
+              <TableContainer
+                className={styles.TableContainer}
+                component={Paper}
+              >
                 <Table className={styles.table} aria-label="left table">
                   <TableHead>
                     <TableRow>
                       <TableCell>ID</TableCell>
                       <TableCell>Name</TableCell>
                       <TableCell>Department</TableCell>
-
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {leftTableData.map((row) => (
-                      <TableRow className={styles.TableRow} key={row.id} onClick={() => handleClickLeftToRight(row)} >
+                      <TableRow
+                        className={styles.TableRow}
+                        key={row.id}
+                        onClick={() => handleClickLeftToRight(row)}
+                      >
                         <TableCell component="th" scope="row">
                           {row.id}
                         </TableCell>
-                        <TableCell>{row.firstname + " " + row.lastname}</TableCell>
+                        <TableCell>
+                          {row.firstname + " " + row.lastname}
+                        </TableCell>
                         <TableCell>{row.department}</TableCell>
-
                       </TableRow>
                     ))}
                   </TableBody>
@@ -122,9 +135,26 @@ function CreateModifyTECCommittee() {
               </TableContainer>
             </div>
 
-            <div className="ArrowSection" style={{ alignSelf: 'center', margin: 10, }}><DoubleArrowIcon style={{ fontSize: 50, }} sx={{ transform: { xs: 'rotate(90deg)', sm: 'rotate(90deg)', lg: 'rotate(0deg)' } }} /> </div>
-            <div className={styles.rightTable} >
-              <TableContainer className={styles.TableContainer} component={Paper}   >
+            <div
+              className="ArrowSection"
+              style={{ alignSelf: "center", margin: 10 }}
+            >
+              <DoubleArrowIcon
+                style={{ fontSize: 50 }}
+                sx={{
+                  transform: {
+                    xs: "rotate(90deg)",
+                    sm: "rotate(90deg)",
+                    lg: "rotate(0deg)",
+                  },
+                }}
+              />{" "}
+            </div>
+            <div className={styles.rightTable}>
+              <TableContainer
+                className={styles.TableContainer}
+                component={Paper}
+              >
                 <Table className={styles.table} aria-label="right table">
                   <TableHead>
                     <TableRow>
@@ -135,13 +165,18 @@ function CreateModifyTECCommittee() {
                   </TableHead>
                   <TableBody>
                     {rightTableData.map((row) => (
-                      <TableRow className={styles.TableRow} key={row.id} onClick={() => handleClickRightToLeft(row)}>
+                      <TableRow
+                        className={styles.TableRow}
+                        key={row.id}
+                        onClick={() => handleClickRightToLeft(row)}
+                      >
                         <TableCell component="th" scope="row">
                           {row.id}
                         </TableCell>
-                        <TableCell>{row.firstname + " " + row.lastname}</TableCell>
+                        <TableCell>
+                          {row.firstname + " " + row.lastname}
+                        </TableCell>
                         <TableCell>{row.department}</TableCell>
-
                       </TableRow>
                     ))}
                   </TableBody>
@@ -155,17 +190,15 @@ function CreateModifyTECCommittee() {
             className={styles.rightButton}
             sx={{ justifyContent: { xs: "left", sm: "center", lg: "center" } }}
           >
-
             <Button
               className={styles.TecAppointButton}
-
               variant="contained"
               sx={{
                 mt: 2,
                 ml: { xs: 14, md: 2 },
                 borderRadius: 4,
                 mb: 0.3,
-                minWidth: '150px'
+                minWidth: "150px",
               }}
             >
               Create TEC Committee

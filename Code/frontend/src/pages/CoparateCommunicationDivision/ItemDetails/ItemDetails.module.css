@@ -1,84 +1,72 @@
-.sideNavBar{
-    display: flexbox;
-    z-index: 3;
-    overflow:"hidden";
-    height: 100%;
+.sideNavBar {
+  display: flexbox;
+  z-index: 3;
+  overflow: "hidden";
+  height: 100%;
 }
-.headTitle{
-    display: flex;
-    flex-direction: row;
+.headTitle {
+  display: flex;
+  flex-direction: row;
 }
-.headTitleName{
-    font-family: 'Inter', sans-serif; 
-    font-weight: 500;
-    color: #ffffff;
-    font-size: 36px;
-    position: relative;
-    margin-right: 10vw;
-
-}
-
-
-
-.bodyBlueContainer{
-    font-family: 'Inter', sans-serif; 
-    font-weight: 500;
-    color: #ffffff;
-    font-size: 15px;
-    background-color: #205295;
-    border-radius: 5px;
-    padding: 2px;
-    width: fit-content;
-    margin-top: 10px;
+.headTitleName {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  color: #ffffff;
+  font-size: 36px;
+  position: relative;
+  margin-right: 10vw;
 }
 
-
-
-.bodyContainer{
-    justify-content: space-around;
-    display: flex;
-    flex-wrap: wrap;
-    
-
-}
-.bodyLeft{
-    max-width: 400px;
-    margin-right:10px ;
-
+.bodyBlueContainer {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  color: #ffffff;
+  font-size: 15px;
+  background-color: #205295;
+  border-radius: 5px;
+  padding: 2px;
+  width: fit-content;
+  margin-top: 10px;
 }
 
-.bodyRight{
-    max-width: 400px;
+.bodyContainer {
+  justify-content: space-around;
+  display: flex;
+  flex-wrap: wrap;
+}
+.bodyLeft {
+  max-width: 400px;
+  margin-right: 10px;
 }
 
-.evidenceContainer{
-    margin-top: 13px;
-    font-family: 'Inter', sans-serif; 
-    font-weight: 5;
-    font-size: small;
-    padding: 5px;
-    border: 1px solid darkgray;
-    border-radius: 10px;
-
-}
-.doneButtonOuter{
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 13px;
-    margin-bottom: 13px;
-    padding-right: 15px;
-    
+.bodyRight {
+  max-width: 400px;
 }
 
-.doneButton{
-    background-color: #205295 !important;
-    margin-top: 13px;
-    
-    
-    color: #ffffff!important;
-    ;
-  }
-  .doneButton:hover{
-    background-color: #2c74b3 !important;
-    color: #ffffff!important;
-  }
+.evidenceContainer {
+  margin-top: 13px;
+  font-family: "Inter", sans-serif;
+  font-weight: 5;
+  font-size: small;
+  padding: 5px;
+  border: 1px solid darkgray;
+  border-radius: 10px;
+}
+.doneButtonOuter {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 13px;
+  margin-bottom: 13px;
+  padding-right: 15px;
+}
+
+.doneButton {
+  background-color: #205295 !important;
+  margin-top: 13px;
+
+  color: #ffffff !important;
+}
+.doneButton:hover {
+  background-color: #2c74b3 !important;
+  color: #ffffff !important;
+}

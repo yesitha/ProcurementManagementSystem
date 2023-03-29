@@ -1,45 +1,44 @@
-.afmpp_mainBody{
-    margin-left: 60px;
-    overflow-x: hidden;
+.afmpp_mainBody {
+  margin-left: 60px;
+  overflow-x: hidden;
 }
 
-.afmpp_heading{
-    font-family: 'Inter', sans-serif; 
-    font-weight: 500;
-    color: #ffffff;
-    font-size: 36px;
-    position: relative;
-    margin-top: 30px;
+.afmpp_heading {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  color: #ffffff;
+  font-size: 36px;
+  position: relative;
+  margin-top: 30px;
 }
 
-.POID{
-    font-size: 16;
-    color:white;
-    background-color: #205295;
-    width :332px;
-    height: 57px;
-    border-radius: 17px;
-    text-align: center;
-    margin-top: 50px;
-    margin-left: 30px;
-    align-items: center;
-    display:flex;
-
+.POID {
+  font-size: 16;
+  color: white;
+  background-color: #205295;
+  width: 332px;
+  height: 57px;
+  border-radius: 17px;
+  text-align: center;
+  margin-top: 50px;
+  margin-left: 30px;
+  align-items: center;
+  display: flex;
 }
 
-.divide{
-    display:flex;
-    flex-direction: row;
+.divide {
+  display: flex;
+  flex-direction: row;
 }
 
-.dropDown{
-    margin-top: 50px;
-    margin-left: 60px;   
+.dropDown {
+  margin-top: 50px;
+  margin-left: 60px;
 }
 
 .TableHeaders {
-    font-family: "Inter", sans-serif;
-    position: sticky !important;
-    margin-bottom: 4px;
-    z-index: 3;
+  font-family: "Inter", sans-serif;
+  position: sticky !important;
+  margin-bottom: 4px;
+  z-index: 3;
 }

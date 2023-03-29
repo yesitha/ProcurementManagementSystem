@@ -1,35 +1,31 @@
-@import '../../fonts.css';
-.search{
-    position: fixed;
-    
-     margin-top: 10px;
-   
-    display: flex;
-    justify-items: center;
-   margin-right: 40px;
- 
- }
- .searchArea{
-     display:flex;
-     flex-direction: row;
-     justify-content: space-between;
-     width: 100%;
-     justify-self: center;
-     margin-right: 30px;
-     
- }
-   .searchInput{
-     align-self: center;
-     
-     margin-bottom: 10px;
-     
-   }
-   .searchIcons{
-     flex-direction: row;
-     display: flex;
-    padding-top: 2px;
-    justify-items: center;
-   
-    margin-bottom: 5px;
-     
-   }
+@import "../../fonts.css";
+.search {
+  position: fixed;
+
+  margin-top: 10px;
+
+  display: flex;
+  justify-items: center;
+  margin-right: 40px;
+}
+.searchArea {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  justify-self: center;
+  margin-right: 30px;
+}
+.searchInput {
+  align-self: center;
+
+  margin-bottom: 10px;
+}
+.searchIcons {
+  flex-direction: row;
+  display: flex;
+  padding-top: 2px;
+  justify-items: center;
+
+  margin-bottom: 5px;
+}
