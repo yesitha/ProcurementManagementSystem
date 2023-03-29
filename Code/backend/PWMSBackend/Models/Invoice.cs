@@ -9,6 +9,9 @@ namespace PWMSBackend.Models
 
         public DateOnly Date { get; set; }
 
+        public GRN GRN { get; set; }
+
+
 
     }
 }

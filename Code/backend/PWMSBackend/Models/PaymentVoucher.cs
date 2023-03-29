@@ -6,6 +6,10 @@ namespace PWMSBackend.Models
 		public string PVId { get; set; }
 
 		public string Evidence { get; set; }
+
+		public InvoiceTobePay InvoiceTobePay { get; set; }
+
+
 	}
 }
 
