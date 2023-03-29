@@ -3,9 +3,7 @@ namespace PWMSBackend.Models
 {
 	public class ApprovedItem:Item
 	{
-        //One to many relationships
-        public FinalizedMasterProcuementPlan FinalizedMasterProcuementPlan { get; set; }
-
+        public ICollection<VendorPlaceBidItem> VendorPlaceBidItems { get; set; }
     }
 }
 

@@ -6,6 +6,7 @@ namespace PWMSBackend.Models
 		public string ItemId { get; set; }
         public string ItemName { get; set; }
         public string Specification { get; set; }
+        public ICollection<VendorhasItem> VendorhasItems { get; set; }
 
         //One to many Relationships
         public Category Category { get; set; }
