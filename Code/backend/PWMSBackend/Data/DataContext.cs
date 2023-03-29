@@ -45,23 +45,111 @@ namespace PWMSBackend.Data
         public DbSet<Vendor> Vendors { get; set; } = null!;
         public DbSet<VendorhasItem> VendorhasItems { get; set; } = null!;
         public DbSet<VendorPlaceBidItem> VendorPlaceBidItems { get; set; } = null!;
-    }
 
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            
+            modelBuilder.Entity<ApprovedItemPurchaseOrder>()
+                .HasKey(ab => new { ab.ItemId, ab.POId });
+            modelBuilder.Entity<ApprovedItemPurchaseOrder>()
+                .HasOne(a => a.ApprovedItem)
+                .WithMany(ab => ab.ApprovedItemPurchaseOrders)
+                .HasForeignKey(b => b.POId);
+            modelBuilder.Entity<ApprovedItemPurchaseOrder>()
+                .HasOne(b => b.PurchaseOrder)
+                .WithMany(ab => ab.ApprovedItemPurchaseOrders)
+                .HasForeignKey(a => a.ItemId);
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<SubProcurementApprovedItems>()
-            .HasKey(sa => new { sa.SPPId, sa.ItemId});
-        modelBuilder.Entity<SubProcurementApprovedItems>()
-            .HasOne(s => s.SPPId)
-            .WithMany(sa => sa.SubProcurementApprovedItems)
-            .HasForeignKey(a => a.ItemId);
-        modelBuilder.Entity<SubProcurementApprovedItems>()
-            .HasOne(a => a.ItemId)
-            .WithMany(sa => sa.SubProcurementApprovedItems)
-            .HasForeignKey(s => s.SPPId);
+            modelBuilder.Entity<CommitteeMemberCommittee>()
+                .HasKey(cd => new { cd.EmployeeId, cd.CommitteeId });
+            modelBuilder.Entity<CommitteeMemberCommittee>()
+                .HasOne(c => c.CommitteeMember)
+                .WithMany(cd => cd.CommitteeMembersCommittees)
+                .HasForeignKey(d => d.CommitteeId);
+            modelBuilder.Entity<CommitteeMemberCommittee>()
+                .HasOne(d => d.Committee)
+                .WithMany(cd => cd.CommitteeMembersCommittees)
+                .HasForeignKey(c => c.EmployeeId);
 
+            modelBuilder.Entity<GRNItemTobeShipped>()
+               .HasKey(ea => new { ea.GRNId, ea.ItemId });
+            modelBuilder.Entity<GRNItemTobeShipped>()
+                .HasOne(e => e.GRN)
+                .WithMany(ea => ea.GRNItemTobeShippeds)
+                .HasForeignKey(a => a.ItemId);
+            modelBuilder.Entity<GRNItemTobeShipped>()
+                .HasOne(a => a.ItemTobeShipped)
+                .WithMany(ea => ea.GRNItemTobeShippeds)
+                .HasForeignKey(e => e.GRNId);
+
+            modelBuilder.Entity<MasterProcurementPlanStatus>()
+               .HasKey(fg => new { fg.MPPId, fg.StatusId });
+            modelBuilder.Entity<MasterProcurementPlanStatus>()
+                .HasOne(f => f.MasterProcurementPlan)
+                .WithMany(fg => fg.MasterProcurementPlanStatuses)
+                .HasForeignKey(g => g.StatusId);
+            modelBuilder.Entity<MasterProcurementPlanStatus>()
+                .HasOne(g => g.Status)
+                .WithMany(fg => fg.MasterProcurementPlanStatuses)
+                .HasForeignKey(f => f.MPPId);
+
+            modelBuilder.Entity<PurchaseOrder_ItemTobeShipped>()
+               .HasKey(ba => new { ba.POId, ba.ItemId });
+            modelBuilder.Entity<PurchaseOrder_ItemTobeShipped>()
+                .HasOne(b => b.PurchaseOrder)
+                .WithMany(ba => ba.purchaseOrder_ItemTobeShippeds)
+                .HasForeignKey(a => a.ItemId);
+            modelBuilder.Entity<PurchaseOrder_ItemTobeShipped>()
+                .HasOne(a => a.ItemTobeShipped)
+                .WithMany(ba => ba.PurchaseOrder_ItemTobeShippeds)
+                .HasForeignKey(b => b.POId);
+
+            modelBuilder.Entity<SubProcurementApprovedItems>()
+                .HasKey(ha => new { ha.SPPId, ha.ItemId });
+            modelBuilder.Entity<SubProcurementApprovedItems>()
+                .HasOne(h => h.SubProcurementPlan)
+                .WithMany(ha => ha.SubProcurementApprovedItems)
+                .HasForeignKey(a => a.ItemId);
+            modelBuilder.Entity<SubProcurementApprovedItems>()
+                .HasOne(a => a.ApprovedItem)
+                .WithMany(ha => ha.SubProcurementApprovedItems)
+                .HasForeignKey(h => h.SPPId);
+
+            modelBuilder.Entity<SubProcurementPlanItem>()
+                .HasKey(ha => new { ha.SPPId, ha.ItemId });
+            modelBuilder.Entity<SubProcurementPlanItem>()
+                .HasOne(h => h.SubProcurementPlan)
+                .WithMany(ha => ha.subProcurementPlanItems)
+                .HasForeignKey(a => a.ItemId);
+            modelBuilder.Entity<SubProcurementPlanItem>()
+                .HasOne(a => a.Item)
+                .WithMany(ha => ha.subProcurementPlanItems)
+                .HasForeignKey(h => h.SPPId);
+
+            modelBuilder.Entity<VendorhasItem>()
+                .HasKey(ia => new { ia.VendorId, ia.ItemId });
+            modelBuilder.Entity<VendorhasItem>()
+                .HasOne(i => i.Vendor)
+                .WithMany(ia => ia.VendorhasItems)
+                .HasForeignKey(a => a.ItemId);
+            modelBuilder.Entity<VendorhasItem>()
+                .HasOne(a => a.Item)
+                .WithMany(ia => ia.VendorhasItems)
+                .HasForeignKey(i => i.VendorId);
+
+            modelBuilder.Entity<VendorPlaceBidItem>()
+                .HasKey(ia => new { ia.VendorId, ia.ItemId });
+            modelBuilder.Entity<VendorPlaceBidItem>()
+                .HasOne(i => i.Vendor)
+                .WithMany(ia => ia.VendorPlaceBidItems)
+                .HasForeignKey(a => a.ItemId);
+            modelBuilder.Entity<VendorPlaceBidItem>()
+                .HasOne(a => a.ApprovedItem)
+                .WithMany(ia => ia.VendorPlaceBidItems)
+                .HasForeignKey(i => i.VendorId);
+
+        }
     }
 }
 

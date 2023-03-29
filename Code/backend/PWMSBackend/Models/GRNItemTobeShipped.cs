@@ -3,6 +3,7 @@
     public class GRNItemTobeShipped
     {
         public string GRNId { get; set; }
+        public string ItemId { get; set; }
 
         public DateOnly ShippingDate { get; set; }
 
