@@ -23,10 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <EditorConfigFiles Remove="E:\UOM\level 2\project\Procurement Management System\ProcurementManagementSystem\Code\backend\PWMSBackend\.editorconfig" />
   </ItemGroup>
 

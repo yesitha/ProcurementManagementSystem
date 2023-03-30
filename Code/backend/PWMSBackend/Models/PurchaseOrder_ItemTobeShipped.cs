@@ -2,7 +2,7 @@
 {
     public class PurchaseOrder_ItemTobeShipped
     {
-        public string POId { get; set; }
+        public string PoId { get; set; }
 
         public string ItemId { get; set; }
 

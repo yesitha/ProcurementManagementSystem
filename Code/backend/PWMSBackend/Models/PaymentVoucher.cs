@@ -1,11 +1,16 @@
-﻿namespace PWMSBackend.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace PWMSBackend.Models
 {
     public class PaymentVoucher
     {
-        public string PVId { get; set; }
+        public string PvId { get; set; }
 
         public string Evidence { get; set; }
 
         public InvoiceTobePay InvoiceTobePay { get; set; }
+
+        [ForeignKey("InvoiceTobePay")]
+        public string InvoiceTobePayId { get; set; }
     }
 }

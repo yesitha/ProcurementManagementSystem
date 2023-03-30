@@ -49,7 +49,6 @@
 
 .bodyRight {
   flex-grow: 4;
-
   display: flex;
   flex-direction: column;
   margin-right: 20px;

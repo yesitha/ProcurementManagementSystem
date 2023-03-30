@@ -2,7 +2,7 @@
 {
     public class ItemTobeShipped : Item
     {
-        public DateOnly ShippingDate { get; set; }
+        public DateTime ShippingDate { get; set; }
 
         public ICollection<PurchaseOrder_ItemTobeShipped> PurchaseOrder_ItemTobeShippeds { get; set; }
 
