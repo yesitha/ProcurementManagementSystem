@@ -53,91 +53,51 @@ import ReviseVendorSelection from "./pages/TEC Committee/Revise Vendor Selection
 function App() {
   return (
     <div>
-      {/* <Login/> */}
-      {/* <SignUp/> */}
-      {/* <Dashboard/> */}
-      {/* <ManageAuction/> */}
-      {/* <NotificationPage/> */}
-      {/* <CreateSubProcurementPlan/> */}
-      {/* <PublishPaperAd/> */}
-      {/* <FinalizedMasterProcurementPlan/> */}
-      {/* <MasterProcurementPlanStatus/> */}
-      {/* <ViewMasterProcurementPlan/> */}
-      {/* <ApprovedItemList/> */}
-      {/* <CreateModifyTECCommittee/> */}
-      {/* <MasterProcurementPlanEvalate/> */}
-      {/* <AddItemtoSubProcurementPlan/>  */}
-      {/* <ItemDetails/> */}
-      {/* <ApprovalForMasterProcurementPlan/> */}
-      {/*ViewItem*/}
-      {/* <CreateModifyBidOpeningCommittee/> */}
-      {/* <ViewFinalizedMasterProcurementPlans/> */}
-      {/* <AuditFinalizedMasterProcurementPlan/> */}
-      {/* <BidTender/> */}
-      {/* <BidDetails/> */}
-      {/* <BidDetailsView/> */}
-      {/* <VendorSelection/> */}
-      {/* <MasterProcurementPlan/> */}
-      {/* <ItemstobeShipped/> */}
-      {/* <Stock/> */}
-      {/* <DGViewFinalizedMasterProcurementPlans/> */}
-      {/* <EvaluateFinalizedMasterProcurementPlan/> */}
-      {/*EvaluateFinalizedMasterProcurementPlan*/}
-      {/*AddNewItem*/}
-      {/* <CreateInvoice/> */}
-      {/* <GoodsReceivedNote/> */}
-      {/* <ViewGRN/> */}
-      {/* <Invoice/> */}
-      {/* <CreateInvoice2/> */}
-      {/* <SendInvoice/> */}
-      {/* <InvoicestobePaid/> */}
-      {/* <UploadPaymentVoucher/> */}
-      {/* <AddItemstoGRN/> */}
-      {/* <InvoicestobePaidFin/> */}
-      {/* <Login/> */}
-      {/* <SignUp/> */}
-      {/* <Dashboard/> */}
-      {/* <ManageAuction/> */}
-      {/* <NotificationPage/> */}
-      {/* <CreateSubProcurementPlan/> */}
-      {/* <PublishPaperAd/> */}
-      {/* <FinalizedMasterProcurementPlan/> */}
-      {/* <MasterProcurementPlanStatus/> */}
-      {/* <ViewMasterProcurementPlan/> */}
-      {/* <ApprovedItemList/> */}
-      {/* <CreateModifyTECCommittee/> */}
-      {/* <MasterProcurementPlanEvalate/> */}
-      {/* <AddItemtoSubProcurementPlan/>  */}
-      {/* <ItemDetails/> */}
-      {/* <ApprovalForMasterProcurementPlan/> */}
-      {/*ViewItem*/}
-      {/* <CreateModifyBidOpeningCommittee/> */}
-      {/* <ViewFinalizedMasterProcurementPlans/> */}
-      {/* <AuditFinalizedMasterProcurementPlan/> */}
-      {/* <BidTender/> */}
-      {/* <BidDetails/> */}
-      {/* <BidDetailsView/> */}
-      {/* <VendorSelection/> */}
-      {/* <MasterProcurementPlan/> */}
-      {/* <ItemstobeShipped/> */}
-      {/* <Stock/> */}
-      {/* <DGViewFinalizedMasterProcurementPlans/> */}
-      {/* <EvaluateFinalizedMasterProcurementPlan/> */}
-      {/*EvaluateFinalizedMasterProcurementPlan*/}
-      {/*AddNewItem*/}
-      {/* <CreateInvoice/> */}
-      {/* <GoodsReceivedNote/> */}
-      {/* <ViewGRN/> */}
-      {/* <Invoice/> */}
-      {/* <CreateInvoice2/> */}
-      {/* <SendInvoice/> */}
-      {/* <InvoicestobePaid/> */}
-      {/* <UploadPaymentVoucher/> */}
-      {/* <AddItemstoGRN/> */}
-      {/* <InvoicestobePaidFin/> */}
-      {/* <ReviseVendorSelection/> */}
-      {/* <Stock/> */}
-      <AddNewItem />
+    {/* <Login/> */}
+    {/* <SignUp/> */}
+    {/* <Dashboard/> */}
+    {/* <ManageAuction/> */}
+    {/* <NotificationPage/> */}
+    {/* <CreateSubProcurementPlan/> */}
+    {/* <PublishPaperAd/> */}
+    {/* <FinalizedMasterProcurementPlan/> */}
+    {/* <MasterProcurementPlanStatus/> */}
+    {/* <ViewMasterProcurementPlan/> */}
+    {/* <ApprovedItemList/> */}
+    {/* <CreateModifyTECCommittee/> */}
+    {/* <MasterProcurementPlanEvalate/> */}
+    {/* <AddItemtoSubProcurementPlan/>  */}
+    {/* <ItemDetails/> */}
+    {/* <ApprovalForMasterProcurementPlan/> */}
+    {/*ViewItem*/}
+    {/* <CreateModifyBidOpeningCommittee/> */}
+    {/* <ViewFinalizedMasterProcurementPlans/> */}
+    {/* <AuditFinalizedMasterProcurementPlan/> */}
+    {/* <BidTender/> */}
+    {/* <BidDetails/> */}
+    {/* <BidDetailsView/> */}
+    {/* <VendorSelection/> */}
+    {/* <MasterProcurementPlan/> */}
+    {/* <ItemstobeShipped/> */}
+    {/* <Stock/> */}
+    {/* <DGViewFinalizedMasterProcurementPlans/> */}
+    {/* <EvaluateFinalizedMasterProcurementPlan/> */}
+    {/*EvaluateFinalizedMasterProcurementPlan*/}
+    {/*AddNewItem*/}
+    {/* <CreateInvoice/> */}
+    {/* <GoodsReceivedNote/> */}
+    {/* <ViewGRN/> */}
+    {/* <Invoice/> */}
+    {/* <CreateInvoice2/> */}
+    {/* <SendInvoice/> */}
+    {/* <InvoicestobePaid/> */}
+    {/* <UploadPaymentVoucher/> */}
+    {/* <AddItemstoGRN/> */}
+    {/* <InvoicestobePaidFin/> */}
+        <CreateSubProcurementPlan/>
+    {/* <ReviseVendorSelection/> */}
+    {/* <Stock/> */}
+    <AddNewItem/>
     </div>
   );
 }
