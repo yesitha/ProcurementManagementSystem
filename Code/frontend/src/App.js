@@ -1,5 +1,4 @@
 import "./App.css";
-
 import ManageAuction from "./pages/BidOpeningCommitee/ManageAuction/ManageAuction";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import NotificationPage from "./pages/NotificationPage/NotificationPage";
@@ -29,16 +28,12 @@ import ViewSubProcurementPlan from "./pages/ViewSubProcurementPlan/ViewSubProcur
 import ApprovedItemList from "./pages/ProcurementCommitee/ApprovedItemList/ApprovedItemList";
 import PublishPaperAd from "./pages/CoparateCommunicationDivision/PublishPaperAd/PublishPaperAd";
 import BidDetails from "./pages/Procurement Officer/BidDetails/BidDetails";
-
 import ItemDetails from "./pages/CoparateCommunicationDivision/ItemDetails/ItemDetails";
-
 import BidDetailsView from "./pages/Procurement Officer/BidDetails/BidDetails";
 import VendorSelection from "./pages/TEC Committee/Vendor Selection/VendorSelection";
 import TecReport from "./pages/ProcurementCommitee/TecReport/TecReport";
 import TecReportView from "./pages/ProcurementCommitee/TecReportView/TecReportView";
-
 import AddNewItem from "./pages/InventoryManager/AddNewItem/AddNewItem";
-
 import GoodsReceivedNote from "./pages/GoodsReceivedNote/GoodsReceivedNote";
 import ViewGRN from "./pages/ViewGRN/ViewGRN";
 import Invoice from "./pages/Procurement Officer/Invoice(companyside)/Invoice";
@@ -54,6 +49,7 @@ import ReviseVendorSelection from "./pages/TEC Committee/Revise Vendor Selection
 function App() {
   return (
     <div>
+
       {/* <Login/> */}
       {/* <SignUp/> */}
       {/* <Dashboard/> */}
@@ -79,7 +75,6 @@ function App() {
       {/* <BidDetailsView/> */}
       {/* <VendorSelection/> */}
       {/* <MasterProcurementPlan/> */}
-
       {/* <Stock/> */}
       {/* <DGViewFinalizedMasterProcurementPlans/> */}
       {/* <EvaluateFinalizedMasterProcurementPlan/> */}
@@ -98,6 +93,7 @@ function App() {
       {/* <ReviseVendorSelection/> */}
       {/* <Stock/> */}
       <AddNewItem />
+
     </div>
   );
 }
