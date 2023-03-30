@@ -1,45 +1,43 @@
 #parentSub {
-    display: flex;
-    flex-direction: row ;
-    flex-wrap:nowrap;
-    justify-content:space-between;
-    column-gap: 20px;
-
-  }
-
-#child{
-    width: 350px; 
-    height: 75px; 
-    margin: auto; 
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  column-gap: 20px;
 }
 
-#childSalutation{
-    width: 350px; 
-    height: 75px; 
+#child {
+  width: 350px;
+  height: 75px;
+  margin: auto;
 }
 
-#section{
-    margin-top: 10px;
+#childSalutation {
+  width: 350px;
+  height: 75px;
 }
 
-#uploadSectionHead{
-    margin-top: 10px;
+#section {
+  margin-top: 10px;
 }
 
-#uploadSectionElement{
-    display: flex;
-    margin-top: 5px;
-    
+#uploadSectionHead {
+  margin-top: 10px;
 }
-#uploadSectionOuter{
-    border: 2px solid #dadada;
-    padding-left: 10px;
-    padding-right: 10px;
-    width: fit-content;
-    border-radius: 5px;
-    margin-top: 10px;
+
+#uploadSectionElement {
+  display: flex;
+  margin-top: 5px;
 }
-#plusIconOuter{
-    align-content: flex-end;
-    border: 1px solid red;
+#uploadSectionOuter {
+  border: 2px solid #dadada;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: fit-content;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+#plusIconOuter {
+  align-content: flex-end;
+  border: 1px solid red;
 }

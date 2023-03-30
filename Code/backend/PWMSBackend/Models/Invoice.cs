@@ -1,4 +1,6 @@
-﻿namespace PWMSBackend.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace PWMSBackend.Models
 {
     public class Invoice
     {
@@ -6,8 +8,12 @@
 
         public double Tax { get; set; }
 
-        public DateOnly Date { get; set; }
+        public DateTime Date { get; set; }
 
         public GRN GRN { get; set; }
+
+
+        [ForeignKey("GRN")]
+        public string GrnId { get; set; }
     }
 }

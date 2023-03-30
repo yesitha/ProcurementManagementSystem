@@ -1,46 +1,45 @@
 @import "../../../fonts.css";
 
-.efmpp_mainBody{
-    margin-left: 60px;
+.efmpp_mainBody {
+  margin-left: 60px;
 }
 
-.efmpp_heading{
-    font-family: 'Inter', sans-serif; 
-    font-weight: 500;
-    color: #ffffff;
-    font-size: 36px;
-    position: relative;
-    margin-top: 30px;
+.efmpp_heading {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  color: #ffffff;
+  font-size: 36px;
+  position: relative;
+  margin-top: 30px;
 }
 
-
-.efmpp_title_search{
-    margin-top: 40px;
-    margin-bottom: 40px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
+.efmpp_title_search {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.efmpp_title label{
-    font-family: Mulish;
-    font-size: 16px;
-    margin-left: 10px;
-    color: #ffffff;
+.efmpp_title label {
+  font-family: Mulish;
+  font-size: 16px;
+  margin-left: 10px;
+  color: #ffffff;
 }
 
-.efmpp_table{
-    margin-bottom: 30px;
-    margin-left: 10px;
+.efmpp_table {
+  margin-bottom: 30px;
+  margin-left: 10px;
 }
 
-.efmpp_button{
-    position: relative;
+.efmpp_button {
+  position: relative;
 }
 
-.efmpp_ActionButonsContainer{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+.efmpp_ActionButonsContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }

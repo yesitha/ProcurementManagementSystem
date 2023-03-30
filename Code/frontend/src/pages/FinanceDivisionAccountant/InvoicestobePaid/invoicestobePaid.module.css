@@ -1,13 +1,13 @@
-.afmpp_mainBody{
-    margin-left: 60px;
-    overflow-x: hidden;
+.afmpp_mainBody {
+  margin-left: 60px;
+  overflow-x: hidden;
 }
 
-.afmpp_heading{
-    font-family: 'Inter', sans-serif; 
-    font-weight: 500;
-    color: #ffffff;
-    font-size: 36px;
-    position: relative;
-    margin-top: 30px;
+.afmpp_heading {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  color: #ffffff;
+  font-size: 36px;
+  position: relative;
+  margin-top: 30px;
 }

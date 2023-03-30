@@ -2,11 +2,11 @@
 {
     public class GRN
     {
-        public string GRNId { get; set; }
+        public string GrnId { get; set; }
 
         public string Checkedby { get; set; }
 
-        public DateOnly Date { get; set; }
+        public DateTime Date { get; set; }
 
         public Invoice Invoice { get; set; }
 

@@ -36,7 +36,9 @@ function AddItemtoSubProcurementPlan() {
       </div>
       <Container
         sx={{
+
           ml: { xs: "20px", sm: "20px", md: "20px", lg: "21px", xl: "22px" },
+
         }}
       >
         <div className="upperSection">

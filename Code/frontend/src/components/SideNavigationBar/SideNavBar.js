@@ -19,7 +19,6 @@ import { Avatar } from "@mui/material";
 
 const drawerWidth = 305;
 
-
 const openedMixin = (theme) => ({
   width: drawerWidth,
   transition: theme.transitions.create("width", {
@@ -46,16 +45,9 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   justifyContent: "space-between",
   alignItems: "center",
 
-
   padding: theme.spacing(0, 1),
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
-  
-    
-     
-  
-    
-  
 }));
 function ListItemRawIcon(props) {
   return (
@@ -67,7 +59,6 @@ function ListItemRawIcon(props) {
   );
 }
 
-
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
@@ -75,7 +66,7 @@ const Drawer = styled(MuiDrawer, {
   flexShrink: 0,
   whiteSpace: "nowrap",
   boxSizing: "border-box",
-  
+
   ...(open && {
     ...openedMixin(theme),
     "& .MuiDrawer-paper": openedMixin(theme),
@@ -87,8 +78,6 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function SideNavBar({ list1, list2, user }) {
- 
-
   const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
@@ -100,7 +89,6 @@ export default function SideNavBar({ list1, list2, user }) {
   };
 
   return (
-  
     <Drawer className={styles.Drawer} variant="permanent" open={open}>
       <DrawerHeader>
         <Toolbar
@@ -144,7 +132,7 @@ export default function SideNavBar({ list1, list2, user }) {
           <ChevronLeftIcon />
         </IconButton>
       </DrawerHeader>
-      
+
       <List>
         {list1.map((text, index) => (
           <ListItem key={text} disablePadding sx={{ display: "block" }}>
@@ -164,11 +152,14 @@ export default function SideNavBar({ list1, list2, user }) {
               >
                 {<ListItemRawIcon content={text} />}
               </ListItemIcon>
-              <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} primaryTypographyProps={{
-                  fontFamily:'Inter',
-                  fontWeight: '500',
-                  
-                }} />
+              <ListItemText
+                primary={text}
+                sx={{ opacity: open ? 1 : 0 }}
+                primaryTypographyProps={{
+                  fontFamily: "Inter",
+                  fontWeight: "500",
+                }}
+              />
             </ListItemButton>
           </ListItem>
         ))}
@@ -193,18 +184,20 @@ export default function SideNavBar({ list1, list2, user }) {
               >
                 {<ListItemRawIcon content={text} />}
               </ListItemIcon>
-              <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} primaryTypographyProps={{
-                  fontFamily:'Inter',
-                  fontWeight: '500',
-                  
-                }}/>
+              <ListItemText
+                primary={text}
+                sx={{ opacity: open ? 1 : 0 }}
+                primaryTypographyProps={{
+                  fontFamily: "Inter",
+                  fontWeight: "500",
+                }}
+              />
             </ListItemButton>
           </ListItem>
         ))}
       </List>
-      
+
       <div className={styles.OuterLogoutUser}>
-      
         <div style={{}}>
           <List>
             <ListItem disablePadding sx={{ display: "block" }}>
@@ -228,9 +221,8 @@ export default function SideNavBar({ list1, list2, user }) {
                   primary={"Logout"}
                   sx={{ opacity: open ? 1 : 0 }}
                   primaryTypographyProps={{
-                    fontFamily:'Inter',
-                    fontWeight: '500',
-                    
+                    fontFamily: "Inter",
+                    fontWeight: "500",
                   }}
                 />
               </ListItemButton>
@@ -257,14 +249,12 @@ export default function SideNavBar({ list1, list2, user }) {
                   secondary={user.email}
                   sx={{ opacity: open ? 1 : 0 }}
                   primaryTypographyProps={{
-                    fontFamily:'Inter',
-                    fontWeight: '500',
-                    
+                    fontFamily: "Inter",
+                    fontWeight: "500",
                   }}
                   secondaryTypographyProps={{
-                    fontFamily:'Inter',
-                    fontWeight: '400',
-                    
+                    fontFamily: "Inter",
+                    fontWeight: "400",
                   }}
                 />
               </ListItemButton>
@@ -273,6 +263,5 @@ export default function SideNavBar({ list1, list2, user }) {
         </div>
       </div>
     </Drawer>
-    
   );
 }

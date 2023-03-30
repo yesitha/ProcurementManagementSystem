@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Mulish:wght@600&display=swap");
 
 body {
-  background-color: #2C74B3!important;
+  background-color: #2c74b3 !important;
 }
 
-.titleHead{
+.titleHead {
   color: rgb(255, 255, 255);
 }

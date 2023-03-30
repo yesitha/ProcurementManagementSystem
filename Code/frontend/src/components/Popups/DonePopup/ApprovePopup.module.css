@@ -1,12 +1,11 @@
-.approveButton{
-    background-color: #227C70!important;
-   
-    margin-left: 2.5px!important;
-    margin-right: 2.5px!important;
-    color: #ffffff!important;
-    ;
-  }
-  .approveButton:hover{
-    background-color: #2da393 !important;
-    color: #ffffff!important;
-  }
+.approveButton {
+  background-color: #227c70 !important;
+
+  margin-left: 2.5px !important;
+  margin-right: 2.5px !important;
+  color: #ffffff !important;
+}
+.approveButton:hover {
+  background-color: #2da393 !important;
+  color: #ffffff !important;
+}

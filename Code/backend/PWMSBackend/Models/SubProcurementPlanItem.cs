@@ -2,14 +2,14 @@
 {
     public class SubProcurementPlanItem
     {
-        public string SPPId { get; set; }
+        public string SppId { get; set; }
         public string ItemId { get; set; }
         public string RecommendedVendor { get; set; }
-        public IFormFile EvidenceOfAuthorization { get; set; }
+        public byte[] EvidenceOfAuthorization { get; set; }
         public string ProcuremnetCommitteeStatus { get; set; }
         public string ProcurementCommitteeComment { get; set; }
         public int Quantity { get; set; }
-        public DateOnly ExpectedDeliveryDate { get; set; }
+        public DateTime ExpectedDeliveryDate { get; set; }
         public string TecCommitteeStatus { get; set; }
         public string TecCommitteeComment { get; set; }
         public string DGStatus { get; set; }
