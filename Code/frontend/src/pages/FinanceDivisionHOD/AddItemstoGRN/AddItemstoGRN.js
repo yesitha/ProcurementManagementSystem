@@ -18,7 +18,7 @@ import {
   Paper,
   Button,
 } from "@mui/material";
-import { Rotate90DegreesCcw } from "@mui/icons-material";
+//import { Rotate90DegreesCcw } from "@mui/icons-material";
 import SelectDropDown from "../../../components/SelectDropDown/SelectDropDown";
 
 // const useStyles = makeStyles({
@@ -29,7 +29,7 @@ import SelectDropDown from "../../../components/SelectDropDown/SelectDropDown";
 
 const rows = users;
 
-function CreateModifyTECCommittee() {
+function AddItemstoGRN() {
   //   const classes = useStyles();
   const [leftTableData, setLeftTableData] = useState(rows);
   const [rightTableData, setRightTableData] = useState([]);
@@ -227,4 +227,4 @@ function CreateModifyTECCommittee() {
   );
 }
 
-export default CreateModifyTECCommittee;
+export default AddItemstoGRN;
