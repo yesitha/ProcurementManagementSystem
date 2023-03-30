@@ -29,16 +29,12 @@ import ViewSubProcurementPlan from './pages/ViewSubProcurementPlan/ViewSubProcur
 import ApprovedItemList from './pages/ProcurementCommitee/ApprovedItemList/ApprovedItemList';
 import PublishPaperAd from './pages/CoparateCommunicationDivision/PublishPaperAd/PublishPaperAd';
 import BidDetails from './pages/Procurement Officer/BidDetails/BidDetails';
-
 import ItemDetails from './pages/CoparateCommunicationDivision/ItemDetails/ItemDetails';
-
 import BidDetailsView from './pages/Procurement Officer/BidDetails/BidDetails';
 import VendorSelection from './pages/TEC Committee/Vendor Selection/VendorSelection';
 import TecReport from './pages/ProcurementCommitee/TecReport/TecReport';
 import TecReportView from './pages/ProcurementCommitee/TecReportView/TecReportView';
-
 import AddNewItem from './pages/InventoryManager/AddNewItem/AddNewItem';
-
 import GoodsReceivedNote from './pages/GoodsReceivedNote/GoodsReceivedNote';
 import ViewGRN from './pages/ViewGRN/ViewGRN';
 import Invoice from './pages/Procurement Officer/Invoice(companyside)/Invoice';
@@ -50,11 +46,6 @@ import UploadPaymentVoucher from './pages/FinanceDivisionAccountant/UploadPaymen
 import AddItemstoGRN from "./pages/FinanceDivisionHOD/AddItemstoGRN/AddItemstoGRN";
 import InvoicestobePaidFin from "./pages/FinanceDivisionHOD/InvoicestobePaid/InvoicestobePaidFin";
 import ReviseVendorSelection from './pages/TEC Committee/Revise Vendor Selection/ReviseVendorSelection';
-
-
-
-
-
 
 function App() {
   return (
@@ -100,10 +91,7 @@ function App() {
     {/* <UploadPaymentVoucher/> */}
     {/* <AddItemstoGRN/> */}
     {/* <InvoicestobePaidFin/> */}
-    <ReviseVendorSelection/>
-   
-
-    
+    <CreateSubProcurementPlan/>
     </div>
 
   );

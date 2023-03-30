@@ -85,6 +85,7 @@
   justify-content: space-between;
   padding-right: 50px;
   padding-left: 5px;
+  padding-bottom: 10px;
 
   display: flex;
   flex-direction: row;

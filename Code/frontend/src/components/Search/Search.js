@@ -1,7 +1,6 @@
 import React from 'react'
 import styles from './Search.module.css'
 import InputBase from '@mui/material/InputBase';
-
 import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { styled, alpha } from '@mui/material/styles';
@@ -18,8 +17,6 @@ const Search = styled('div')(({ theme }) => ({
     width: '450px',
     
   }));
-  
-  
   
   const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: 'black',

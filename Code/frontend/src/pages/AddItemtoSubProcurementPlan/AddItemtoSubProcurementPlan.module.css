@@ -1,80 +1,70 @@
-.sideNavBar{
-    display: flex;
-    z-index: 3;
-    overflow:"hidden";
-    height: 100%;
+.sideNavBar {
+  display: flex;
+  z-index: 3;
+  overflow: "hidden";
+  height: 100%;
 }
-.headTitle{
-    display: flex;
-    flex-direction: row;
+.headTitle {
+  display: flex;
+  flex-direction: row;
 }
-.headTitleName{
-    font-family: 'Inter', sans-serif; 
-    font-weight: 500;
-    color: #ffffff;
-    font-size: 36px;
-    position: relative;
-    margin-right: 10vw;
-
-}
-
-
-
-.bodyBlueContainer{
-    font-family: 'Inter', sans-serif; 
-    font-weight: 500;
-    color: #ffffff;
-    font-size: 15px;
-    background-color: #205295;
-    border-radius: 5px;
-    padding: 5px;
-    width: fit-content;
-    margin-top: 10px;
+.headTitleName {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  color: #ffffff;
+  font-size: 36px;
+  position: relative;
+  margin-right: 10vw;
 }
 
-.bodyBlueContainerMain{
-    padding-top: 10px;
+.bodyBlueContainer {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  color: #ffffff;
+  font-size: 15px;
+  background-color: #205295;
+  border-radius: 5px;
+  padding: 5px;
+  width: fit-content;
+  margin-top: 10px;
 }
 
-
-
-.bodyContainer{
-    margin-right: 10px;
-    justify-content: space-around;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    
-
-}
-.bodyLeft{
-    flex-grow: 4;
-   display: flex;
-   flex-direction: column;
-    margin-right:20px ;
-
+.bodyBlueContainerMain {
+  padding-top: 10px;
 }
 
-.bodyRight{
-    flex-grow: 4;
-
-    display: flex;
-   flex-direction: column;
-    margin-right:20px 
+.bodyContainer {
+  margin-right: 10px;
+  justify-content: space-around;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.bodyLeft {
+  flex-grow: 4;
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px;
 }
 
-.evidenceContainer{
-    margin-top: 13px;
-    font-family: 'Inter', sans-serif; 
-    font-weight: 5;
-    font-size: small;
-    padding: 5px;
-    border: 1px solid darkgray;
-    border-radius: 10px;
-
+.bodyRight {
+  flex-grow: 4;
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px;
 }
-.addButton{
-    padding: 10px;
-    margin-top: 13px;
-    margin-bottom: 13px;
+
+.evidenceContainer {
+  margin-top: 13px;
+  font-family: "Inter", sans-serif;
+  font-weight: 5;
+  font-size: small;
+  padding: 5px;
+  border: 1px solid darkgray;
+  border-radius: 10px;
+}
+.addButton {
+  padding: 10px;
+  margin-top: 13px;
+  margin-bottom: 13px;
 }
