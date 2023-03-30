@@ -28,16 +28,12 @@ import ViewSubProcurementPlan from "./pages/ViewSubProcurementPlan/ViewSubProcur
 import ApprovedItemList from "./pages/ProcurementCommitee/ApprovedItemList/ApprovedItemList";
 import PublishPaperAd from "./pages/CoparateCommunicationDivision/PublishPaperAd/PublishPaperAd";
 import BidDetails from "./pages/Procurement Officer/BidDetails/BidDetails";
-
 import ItemDetails from "./pages/CoparateCommunicationDivision/ItemDetails/ItemDetails";
-
 import BidDetailsView from "./pages/Procurement Officer/BidDetails/BidDetails";
 import VendorSelection from "./pages/TEC Committee/Vendor Selection/VendorSelection";
 import TecReport from "./pages/ProcurementCommitee/TecReport/TecReport";
 import TecReportView from "./pages/ProcurementCommitee/TecReportView/TecReportView";
-
 import AddNewItem from "./pages/InventoryManager/AddNewItem/AddNewItem";
-
 import GoodsReceivedNote from "./pages/GoodsReceivedNote/GoodsReceivedNote";
 import ViewGRN from "./pages/ViewGRN/ViewGRN";
 import Invoice from "./pages/Procurement Officer/Invoice(companyside)/Invoice";
@@ -53,51 +49,51 @@ import ReviseVendorSelection from "./pages/TEC Committee/Revise Vendor Selection
 function App() {
   return (
     <div>
-    {/* <Login/> */}
-    {/* <SignUp/> */}
-    {/* <Dashboard/> */}
-    {/* <ManageAuction/> */}
-    {/* <NotificationPage/> */}
-    {/* <CreateSubProcurementPlan/> */}
-    {/* <PublishPaperAd/> */}
-    {/* <FinalizedMasterProcurementPlan/> */}
-    {/* <MasterProcurementPlanStatus/> */}
-    {/* <ViewMasterProcurementPlan/> */}
-    {/* <ApprovedItemList/> */}
-    {/* <CreateModifyTECCommittee/> */}
-    {/* <MasterProcurementPlanEvalate/> */}
-    {/* <AddItemtoSubProcurementPlan/>  */}
-    {/* <ItemDetails/> */}
-    {/* <ApprovalForMasterProcurementPlan/> */}
-    {/*ViewItem*/}
-    {/* <CreateModifyBidOpeningCommittee/> */}
-    {/* <ViewFinalizedMasterProcurementPlans/> */}
-    {/* <AuditFinalizedMasterProcurementPlan/> */}
-    {/* <BidTender/> */}
-    {/* <BidDetails/> */}
-    {/* <BidDetailsView/> */}
-    {/* <VendorSelection/> */}
-    {/* <MasterProcurementPlan/> */}
-    {/* <ItemstobeShipped/> */}
-    {/* <Stock/> */}
-    {/* <DGViewFinalizedMasterProcurementPlans/> */}
-    {/* <EvaluateFinalizedMasterProcurementPlan/> */}
-    {/*EvaluateFinalizedMasterProcurementPlan*/}
-    {/*AddNewItem*/}
-    {/* <CreateInvoice/> */}
-    {/* <GoodsReceivedNote/> */}
-    {/* <ViewGRN/> */}
-    {/* <Invoice/> */}
-    {/* <CreateInvoice2/> */}
-    {/* <SendInvoice/> */}
-    {/* <InvoicestobePaid/> */}
-    {/* <UploadPaymentVoucher/> */}
-    {/* <AddItemstoGRN/> */}
-    {/* <InvoicestobePaidFin/> */}
-        <CreateSubProcurementPlan/>
-    {/* <ReviseVendorSelection/> */}
-    {/* <Stock/> */}
-    <AddNewItem/>
+
+      {/* <Login/> */}
+      {/* <SignUp/> */}
+      {/* <Dashboard/> */}
+      {/* <ManageAuction/> */}
+      {/* <NotificationPage/> */}
+      {/* <CreateSubProcurementPlan/> */}
+      {/* <PublishPaperAd/> */}
+      {/* <FinalizedMasterProcurementPlan/> */}
+      {/* <MasterProcurementPlanStatus/> */}
+      {/* <ViewMasterProcurementPlan/> */}
+      {/* <ApprovedItemList/> */}
+      {/* <CreateModifyTECCommittee/> */}
+      {/* <MasterProcurementPlanEvalate/> */}
+      {/* <AddItemtoSubProcurementPlan/>  */}
+      {/* <ItemDetails/> */}
+      {/* <ApprovalForMasterProcurementPlan/> */}
+      {/*ViewItem*/}
+      {/* <CreateModifyBidOpeningCommittee/> */}
+      {/* <ViewFinalizedMasterProcurementPlans/> */}
+      {/* <AuditFinalizedMasterProcurementPlan/> */}
+      {/* <BidTender/> */}
+      {/* <BidDetails/> */}
+      {/* <BidDetailsView/> */}
+      {/* <VendorSelection/> */}
+      {/* <MasterProcurementPlan/> */}
+      {/* <Stock/> */}
+      {/* <DGViewFinalizedMasterProcurementPlans/> */}
+      {/* <EvaluateFinalizedMasterProcurementPlan/> */}
+      {/*EvaluateFinalizedMasterProcurementPlan*/}
+      {/*AddNewItem*/}
+      {/* <CreateInvoice/> */}
+      {/* <GoodsReceivedNote/> */}
+      {/* <ViewGRN/> */}
+      {/* <Invoice/> */}
+      {/* <CreateInvoice2/> */}
+      {/* <SendInvoice/> */}
+      {/* <InvoicestobePaid/> */}
+      {/* <UploadPaymentVoucher/> */}
+      {/* <AddItemstoGRN/> */}
+      {/* <InvoicestobePaidFin/> */}
+      {/* <ReviseVendorSelection/> */}
+      {/* <Stock/> */}
+      <AddNewItem />
+
     </div>
   );
 }
