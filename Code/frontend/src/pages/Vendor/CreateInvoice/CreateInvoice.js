@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./createInvoice.module.css";
 import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import { ButtonBase, Typography } from "@mui/material";
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { Button, IconButton, Paper, Stack, TextField } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -13,11 +13,10 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { flexbox } from "@mui/system";
 import DonePopup from "../../../components/Popups/DonePopup/DonePopup";
-import '../../../users/vendors.js';
-import EnterNotePopup from '../../../components/Popups/DonePopup/EnterNotePopup';
+import "../../../users/vendors.js";
+import EnterNotePopup from "../../../components/Popups/DonePopup/EnterNotePopup";
 import { vendors } from "../../../users/vendors.js";
-import ViewNote from '../../../components/Popups/DonePopup/ViewNote';
-
+import ViewNote from "../../../components/Popups/DonePopup/ViewNote";
 
 const columns = [
   { id: "ItemID", label: "Item ID", Width: 150, align: "center" },
@@ -42,7 +41,7 @@ function createData(
 }
 
 const rows = [
-  createData("I0014", "A4 Papers", "loerm", "100 ", "50", "50", <ViewNote/>),
+  createData("I0014", "A4 Papers", "loerm", "100 ", "50", "50", <ViewNote />),
 ];
 
 const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
@@ -71,18 +70,19 @@ export default function CreateInvoice() {
     setPage(0);
   };
 
-  const supplier=vendors[0].name
-  const text = `Successfully sent GRN to vendor ${supplier}`
-
+  const supplier = vendors[0].name;
+  const text = `Successfully sent GRN to vendor ${supplier}`;
 
   return (
     <div style={{ overflowX: "hidden" }}>
       <SideNavBar list1={list1} list2={list2} user={user} />
       <div className={styles.afmpp_mainBody}>
-      <div className={styles.afmpp_heading}>
-                <IconButton sx={{pl:'15px',height:'34px',width:'34px'}}><ArrowBackIosIcon sx={{color:'#ffffff'}}/></IconButton>
-                [GRN NO]
-            </div>
+        <div className={styles.afmpp_heading}>
+          <IconButton sx={{ pl: "15px", height: "34px", width: "34px" }}>
+            <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
+          </IconButton>
+          [GRN NO]
+        </div>
         <div className={styles.GRNno}>
           <Typography>
             GRN No
@@ -175,9 +175,7 @@ export default function CreateInvoice() {
             <Typography>Supplier Name:</Typography>
           </div>
           <div className={styles.checkedBy}>
-            <Typography>
-              Checked By:
-            </Typography>
+            <Typography>Checked By:</Typography>
           </div>
 
           <div className={styles.divide2}>
@@ -189,24 +187,24 @@ export default function CreateInvoice() {
                   borderRadius: "50px",
                   width: "111px",
                   height: "48px",
-                  marginRight:'10px'
+                  marginRight: "10px",
                 }}
               >
                 PRINT
               </Button>
             </div>
             <div>
-              
-              <Button variant="contained" 
-              style={{
+              <Button
+                variant="contained"
+                style={{
                   backgroundColor: "#205295",
                   borderRadius: "50px",
                   width: "200px",
                   height: "48px",
-                }}>Create Invoice
-
-                </Button>
-              
+                }}
+              >
+                Create Invoice
+              </Button>
             </div>
           </div>
         </div>

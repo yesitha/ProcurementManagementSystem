@@ -88,7 +88,6 @@ function CreateModifyTECCommittee() {
           </div>
         </div>
         <div className={styles.OuterMiddle}>
-         
           <Container
             className={styles.MiddleSection}
             sx={{
@@ -187,7 +186,6 @@ function CreateModifyTECCommittee() {
             </div>
           </Container>
         </div>
-        
       </Container>
     </div>
   );

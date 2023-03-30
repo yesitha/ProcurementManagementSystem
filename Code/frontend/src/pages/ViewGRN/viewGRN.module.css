@@ -1,15 +1,15 @@
-.afmpp_heading{
-    font-family: 'Inter', sans-serif; 
-    font-weight: 500;
-    color: #ffffff;
-    font-size: 36px;
-    position: relative;
-    margin-top: 30px;
-    margin-left: 60px;
+.afmpp_heading {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  color: #ffffff;
+  font-size: 36px;
+  position: relative;
+  margin-top: 30px;
+  margin-left: 60px;
 }
 
-.afmpp_table{
-    margin-bottom: 30px;
-    margin-left: 10px;
-    margin-top: 135px;
+.afmpp_table {
+  margin-bottom: 30px;
+  margin-left: 10px;
+  margin-top: 135px;
 }

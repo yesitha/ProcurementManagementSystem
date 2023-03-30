@@ -68,14 +68,14 @@ export default function BasicModal() {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              height:"max-content"
+              height: "max-content",
             }}
           >
             <TextField
               Input
               disabled
               defaultValue="Details of thknfjknfkjenfkejfnekjnfekjnfefefegg"
-              sx={{ width: "230px", size:"400px", marginBottom:"30px" }}
+              sx={{ width: "230px", size: "400px", marginBottom: "30px" }}
               id="outlined-search"
               label="Note"
               type="search"

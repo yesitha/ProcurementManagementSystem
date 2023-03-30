@@ -2,23 +2,23 @@
 {
     public class PurchaseOrder
     {
-        public string POId { get; set; }
+        public string PoId { get; set; }
 
         public DateTime Date { get; set; }
 
         public double TotalAmount { get; set; }
 
-        public IFormFile Agreement { get; set; }
+        public byte[] Agreement { get; set; }
 
-        public IFormFile Bond { get; set; }
+        public byte[] Bond { get; set; }
 
-        public IFormFile BankGuarantee { get; set; }
+        public byte[] BankGuarantee { get; set; }
 
-        public IFormFile CommentsForSpecialInstruction { get; set; }
+        public byte[] CommentsForSpecialInstruction { get; set; }
 
-        public IFormFile LetterOfAcceptance { get; set; }
+        public byte[] LetterOfAcceptance { get; set; }
 
-        public IFormFile ProcumentOfficerStatus { get; set; }
+        public byte[] ProcumentOfficerStatus { get; set; }
 
 
         public ICollection<ApprovedItemPurchaseOrder> ApprovedItemPurchaseOrders { get; set; }

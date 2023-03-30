@@ -1,24 +1,21 @@
-@import '../../fonts.css';
+@import "../../fonts.css";
 
-.logo{
-    margin-left: 10px;
-    margin-right: 6px;
+.logo {
+  margin-left: 10px;
+  margin-right: 6px;
 }
-.headerFlexWrapper{
-    display: flex;
-    flex-direction: row;
-    
-  
+.headerFlexWrapper {
+  display: flex;
+  flex-direction: row;
 }
 
-.HeaderTitle{
-padding-left: 15px;
- font-family: 'Inter', sans-serif; 
-font-weight: 600;
-font-size: 18px;
-
+.HeaderTitle {
+  padding-left: 15px;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 18px;
 }
-.OuterLogoutUser{
-    position: absolute;
-    bottom: 1px;
+.OuterLogoutUser {
+  position: absolute;
+  bottom: 1px;
 }

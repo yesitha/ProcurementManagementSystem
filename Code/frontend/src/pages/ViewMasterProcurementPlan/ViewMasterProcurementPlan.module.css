@@ -70,7 +70,7 @@
   overflow-x: scroll;
   scroll-behavior: smooth;
 }
-.search{
+.search {
   margin-bottom: 10px;
 
   align-self: flex-end;
@@ -138,6 +138,6 @@
   overflow-x: auto;
 }
 
-.outer{
- overflow-x: "hidden" ;
+.outer {
+  overflow-x: "hidden";
 }
