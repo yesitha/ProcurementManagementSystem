@@ -1,4 +1,4 @@
-<<<<<<< Updated upstream
+
 .note1 {
   font-size: 36px;
   font-family: "inter";
@@ -18,7 +18,8 @@
   width: 132px;
   display: flex;
   justify-content: center;
-=======
+}
+
 .Title{
     font-size: 36px;
     font-family: "inter";
@@ -39,5 +40,5 @@
     width:132px;
     display:flex;
     justify-content:center;
->>>>>>> Stashed changes
+
 }
