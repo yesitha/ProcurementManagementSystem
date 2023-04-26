@@ -92,7 +92,8 @@ function App() {
       {/* <InvoicestobePaidFin/> */}
       {/* <ReviseVendorSelection/> */}
       {/* <Stock/> */}
-      <AddNewItem />
+      {/* <AddNewItem /> */}
+      <Dashboard/>
 
     </div>
   );
