@@ -6,7 +6,7 @@
 
         public string? DivisionName { get; set; }
 
-        public ICollection<ProcurementEmployee> procurementEmployees { get; set; }
+        public ICollection<ProcurementEmployee> ProcurementEmployees { get; set; }
 
         //One to one relationships
         public HOD HOD { get; set; }
