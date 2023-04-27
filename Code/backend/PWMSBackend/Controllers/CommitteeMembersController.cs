@@ -130,6 +130,14 @@ namespace PWMSBackend.Controllers
             return NoContent();
         }
 
+        //[HttpGet("{id}")]
+        //[Route("GetM")]
+        //public List<CommitteeMember> GetMember(string id)
+        //{
+        //    var committeeMember = _context.CommitteeMembers.Where(x => x.EmployeeName == "dfds").Select(x => x).ToList();
+        //    return committeeMember;
+        //}
+
         private bool CommitteeMemberExists(string id)
         {
             return (_context.CommitteeMembers?.Any(e => e.EmployeeId == id)).GetValueOrDefault();

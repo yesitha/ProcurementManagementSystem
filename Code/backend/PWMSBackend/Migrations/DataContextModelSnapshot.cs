@@ -17,7 +17,7 @@ namespace PWMSBackend.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.15")
+                .HasAnnotation("ProductVersion", "6.0.16")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -225,10 +225,6 @@ namespace PWMSBackend.Migrations
                     b.Property<int>("EstimatedGrandTotal")
                         .HasColumnType("int");
 
-                    b.Property<string>("ProcurementCommitteeCommitteeId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("TecCommitteeId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -237,8 +233,6 @@ namespace PWMSBackend.Migrations
 
                     b.HasIndex("BidOpeningCommitteeId")
                         .IsUnique();
-
-                    b.HasIndex("ProcurementCommitteeCommitteeId");
 
                     b.HasIndex("TecCommitteeId")
                         .IsUnique();
@@ -871,7 +865,7 @@ namespace PWMSBackend.Migrations
 
                     b.HasOne("PWMSBackend.Models.ProcurementCommittee", "ProcurementCommittee")
                         .WithMany("MasterProcurementPlans")
-                        .HasForeignKey("ProcurementCommitteeCommitteeId")
+                        .HasForeignKey("MppId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -921,7 +915,7 @@ namespace PWMSBackend.Migrations
             modelBuilder.Entity("PWMSBackend.Models.ProcurementEmployee", b =>
                 {
                     b.HasOne("PWMSBackend.Models.Division", "Division")
-                        .WithMany("procurementEmployees")
+                        .WithMany("ProcurementEmployees")
                         .HasForeignKey("DivisionId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1123,7 +1117,7 @@ namespace PWMSBackend.Migrations
                     b.Navigation("HOD")
                         .IsRequired();
 
-                    b.Navigation("procurementEmployees");
+                    b.Navigation("ProcurementEmployees");
                 });
 
             modelBuilder.Entity("PWMSBackend.Models.FinalizedMasterProcurementPlan", b =>

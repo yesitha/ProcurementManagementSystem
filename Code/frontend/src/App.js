@@ -49,7 +49,6 @@ import ReviseVendorSelection from "./pages/TEC Committee/Revise Vendor Selection
 function App() {
   return (
     <div>
-
       {/* <Login/> */}
       {/* <SignUp/> */}
       {/* <Dashboard/> */}
@@ -93,8 +92,7 @@ function App() {
       {/* <ReviseVendorSelection/> */}
       {/* <Stock/> */}
       {/* <AddNewItem /> */}
-      <Dashboard/>
-
+      <CreateSubProcurementPlan/>
     </div>
   );
 }
