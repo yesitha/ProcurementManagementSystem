@@ -149,6 +149,27 @@ namespace PWMSBackend.Data
                 .WithMany(ia => ia.VendorPlaceBidItems)
                 .HasForeignKey(i => i.VendorId);
 
+            //modelBuilder.Entity<MasterProcurementPlan>()
+            //    .HasOne(ia => ia.ProcurementCommittee)
+            //    .WithMany(ia => ia.MasterProcurementPlans)
+            //    .HasForeignKey(i => i.MppId);
+
+            //modelBuilder.Entity<MasterProcurementPlan>()
+            //    .HasKey(ia => new { ia.MppId, ia.CommitteeId });
+            //modelBuilder.Entity<MasterProcurementPlanhasCommittee>()
+            //    .HasOne(i => i.CommitteeId)
+            //    .WithMany(ia => ia.VendorhasItems)
+            //    .HasForeignKey(a => a.ItemId);
+            //modelBuilder.Entity<VendorhasItem>()
+            //    .HasOne(a => a.Item)
+            //    .WithMany(ia => ia.VendorhasItems)
+            //    .HasForeignKey(i => i.VendorId);
+
+            modelBuilder.Entity<ProcurementCommittee>()
+                .HasMany(e => e.MasterProcurementPlans)
+                .WithOne(e => e.ProcurementCommittee)
+                .HasForeignKey(e => e.MppId)
+                .IsRequired();
             //===============================================================
             //modelBuilder.Entity<ApprovedItem>()
             //    .HasKey(a => a.ItemId);
@@ -192,6 +213,8 @@ namespace PWMSBackend.Data
             //    .HasKey(p => p.CommitteeId);
             modelBuilder.Entity<ProcurementEmployee>()
                 .HasKey(p => p.EmployeeId);
+            modelBuilder.Entity<Division>()
+                .HasKey(d => d.DivisionId);
             modelBuilder.Entity<PurchaseOrder>()
                 .HasKey(p => p.PoId);
             modelBuilder.Entity<Status>()
@@ -202,6 +225,7 @@ namespace PWMSBackend.Data
             //    .HasKey(t => t.CommitteeId);
             modelBuilder.Entity<Vendor>()
                 .HasKey(v => v.VendorId);
+
           
         }
     }

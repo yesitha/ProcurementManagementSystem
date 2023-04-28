@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PWMSBackend.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -105,7 +105,6 @@ namespace PWMSBackend.Migrations
                     MppId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EstimatedGrandTotal = table.Column<int>(type: "int", nullable: false),
-                    ProcurementCommitteeCommitteeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     TecCommitteeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     BidOpeningCommitteeId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -117,19 +116,19 @@ namespace PWMSBackend.Migrations
                         column: x => x.BidOpeningCommitteeId,
                         principalTable: "Committees",
                         principalColumn: "CommitteeId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
-                        name: "FK_MasterProcurementPlans_Committees_ProcurementCommitteeCommitteeId",
-                        column: x => x.ProcurementCommitteeCommitteeId,
+                        name: "FK_MasterProcurementPlans_Committees_MppId",
+                        column: x => x.MppId,
                         principalTable: "Committees",
                         principalColumn: "CommitteeId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_MasterProcurementPlans_Committees_TecCommitteeId",
                         column: x => x.TecCommitteeId,
                         principalTable: "Committees",
                         principalColumn: "CommitteeId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -153,13 +152,13 @@ namespace PWMSBackend.Migrations
                         column: x => x.DivisionId,
                         principalTable: "Divisions",
                         principalColumn: "DivisionId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_ProcurementEmployees_Divisions_DivisionId1",
                         column: x => x.DivisionId1,
                         principalTable: "Divisions",
                         principalColumn: "DivisionId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -181,7 +180,7 @@ namespace PWMSBackend.Migrations
                         column: x => x.GrnId,
                         principalTable: "GRNs",
                         principalColumn: "GrnId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -225,7 +224,7 @@ namespace PWMSBackend.Migrations
                         column: x => x.MppId,
                         principalTable: "MasterProcurementPlans",
                         principalColumn: "MppId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -244,13 +243,13 @@ namespace PWMSBackend.Migrations
                         column: x => x.StatusId,
                         principalTable: "MasterProcurementPlans",
                         principalColumn: "MppId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_MasterProcurementPlanStatuses_Statuses_MppId",
                         column: x => x.MppId,
                         principalTable: "Statuses",
                         principalColumn: "StatusId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -268,13 +267,13 @@ namespace PWMSBackend.Migrations
                         column: x => x.EmployeeId,
                         principalTable: "Committees",
                         principalColumn: "CommitteeId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_CommitteeMemberCommittees_ProcurementEmployees_CommitteeId",
                         column: x => x.CommitteeId,
                         principalTable: "ProcurementEmployees",
                         principalColumn: "EmployeeId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -293,7 +292,7 @@ namespace PWMSBackend.Migrations
                         column: x => x.InvoiceTobePayId,
                         principalTable: "Invoices",
                         principalColumn: "InvoiceId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -326,19 +325,19 @@ namespace PWMSBackend.Migrations
                         column: x => x.ItemInStock_CategoryId,
                         principalTable: "Categories",
                         principalColumn: "CategoryId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Items_Categories_ItemTobeShipped_CategoryId",
                         column: x => x.ItemTobeShipped_CategoryId,
                         principalTable: "Categories",
                         principalColumn: "CategoryId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Items_FinalizedMasterProcurementPlans_FinalizedMasterProcurementPlanFmppId",
                         column: x => x.FinalizedMasterProcurementPlanFmppId,
                         principalTable: "FinalizedMasterProcurementPlans",
                         principalColumn: "FmppId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -359,19 +358,19 @@ namespace PWMSBackend.Migrations
                         column: x => x.FinalizedMasterProcuementPlanFmppId,
                         principalTable: "FinalizedMasterProcurementPlans",
                         principalColumn: "FmppId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_SubProcurementPlans_MasterProcurementPlans_MasterProcurementPlanMppId",
                         column: x => x.MasterProcurementPlanMppId,
                         principalTable: "MasterProcurementPlans",
                         principalColumn: "MppId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_SubProcurementPlans_ProcurementEmployees_HODEmployeeId",
                         column: x => x.HODEmployeeId,
                         principalTable: "ProcurementEmployees",
                         principalColumn: "EmployeeId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -389,13 +388,13 @@ namespace PWMSBackend.Migrations
                         column: x => x.PoId,
                         principalTable: "Items",
                         principalColumn: "ItemId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_ApprovedItemPurchaseOrders_PurchaseOrders_ItemId",
                         column: x => x.ItemId,
                         principalTable: "PurchaseOrders",
                         principalColumn: "PoId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -416,13 +415,13 @@ namespace PWMSBackend.Migrations
                         column: x => x.ItemId,
                         principalTable: "GRNs",
                         principalColumn: "GrnId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_GRNItemsToBeShipped_Items_GrnId",
                         column: x => x.GrnId,
                         principalTable: "Items",
                         principalColumn: "ItemId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -441,13 +440,13 @@ namespace PWMSBackend.Migrations
                         column: x => x.PoId,
                         principalTable: "Items",
                         principalColumn: "ItemId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_PurchaseOrder_ItemTobeShippeds_PurchaseOrders_ItemId",
                         column: x => x.ItemId,
                         principalTable: "PurchaseOrders",
                         principalColumn: "PoId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -465,13 +464,13 @@ namespace PWMSBackend.Migrations
                         column: x => x.VendorId,
                         principalTable: "Items",
                         principalColumn: "ItemId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_VendorhasItems_Vendors_ItemId",
                         column: x => x.ItemId,
                         principalTable: "Vendors",
                         principalColumn: "VendorId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -493,13 +492,13 @@ namespace PWMSBackend.Migrations
                         column: x => x.VendorId,
                         principalTable: "Items",
                         principalColumn: "ItemId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_VendorPlaceBidItems_Vendors_ItemId",
                         column: x => x.ItemId,
                         principalTable: "Vendors",
                         principalColumn: "VendorId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -520,13 +519,13 @@ namespace PWMSBackend.Migrations
                         column: x => x.SppId,
                         principalTable: "Items",
                         principalColumn: "ItemId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_SubProcurementApprovedItems_SubProcurementPlans_ItemId",
                         column: x => x.ItemId,
                         principalTable: "SubProcurementPlans",
                         principalColumn: "SppId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -559,13 +558,13 @@ namespace PWMSBackend.Migrations
                         column: x => x.SppId,
                         principalTable: "Items",
                         principalColumn: "ItemId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_SubProcurementPlanItems_SubProcurementPlans_ItemId",
                         column: x => x.ItemId,
                         principalTable: "SubProcurementPlans",
                         principalColumn: "SppId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(
@@ -620,11 +619,6 @@ namespace PWMSBackend.Migrations
                 table: "MasterProcurementPlans",
                 column: "BidOpeningCommitteeId",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MasterProcurementPlans_ProcurementCommitteeCommitteeId",
-                table: "MasterProcurementPlans",
-                column: "ProcurementCommitteeCommitteeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MasterProcurementPlans_TecCommitteeId",
