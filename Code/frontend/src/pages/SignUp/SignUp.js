@@ -153,18 +153,7 @@ export default function SignIn() {
                     </Grid>
                   </Grid>
                   <Grid container sx={{ justifyContent: "space-around" }}>
-                    <Grid item md={11} xs={11}>
-                      <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="email"
-                        label="Salutation"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
-                      />
-                    </Grid>
+                    
                     <Grid item md={5} xs={11}>
                       <TextField
                         margin="normal"
