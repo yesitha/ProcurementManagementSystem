@@ -263,9 +263,9 @@ namespace PWMSBackend.Migrations
                     b.Property<string>("PvId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Evidence")
+                    b.Property<byte[]>("Evidence")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("InvoiceTobePayId")
                         .IsRequired()
@@ -633,6 +633,7 @@ namespace PWMSBackend.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<byte[]>("ProofDocument")
+                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.HasKey("VendorId", "ItemId");

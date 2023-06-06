@@ -12,8 +12,8 @@ using PWMSBackend.Data;
 namespace PWMSBackend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230428063858_fix1")]
-    partial class fix1
+    [Migration("20230606185249_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -265,9 +265,9 @@ namespace PWMSBackend.Migrations
                     b.Property<string>("PvId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Evidence")
+                    b.Property<byte[]>("Evidence")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("InvoiceTobePayId")
                         .IsRequired()
@@ -635,6 +635,7 @@ namespace PWMSBackend.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<byte[]>("ProofDocument")
+                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.HasKey("VendorId", "ItemId");
