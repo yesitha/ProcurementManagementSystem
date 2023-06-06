@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PWMSBackend.Migrations
 {
-    public partial class Initial : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -281,7 +281,7 @@ namespace PWMSBackend.Migrations
                 columns: table => new
                 {
                     PvId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Evidence = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Evidence = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     InvoiceTobePayId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>

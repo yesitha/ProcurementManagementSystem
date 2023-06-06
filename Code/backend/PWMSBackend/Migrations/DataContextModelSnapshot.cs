@@ -263,9 +263,9 @@ namespace PWMSBackend.Migrations
                     b.Property<string>("PvId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Evidence")
+                    b.Property<byte[]>("Evidence")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("InvoiceTobePayId")
                         .IsRequired()

@@ -16,6 +16,23 @@ import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import GavelIcon from "@mui/icons-material/Gavel";
+import axios from "axios";
+
+///////////////Add axios/////////////
+function dummy(){
+  axios.get(`https://jsonplaceholder.typicode.com/users`)
+      .then(res => {
+        console.log(res);
+      
+      }).catch((error)=> {
+    console.log(error);
+      
+  }).then( function () {
+    // always executed
+  });
+}
+
+
 
 const columns = [
   { id: "DOC", Width: 200, align: "center" },
