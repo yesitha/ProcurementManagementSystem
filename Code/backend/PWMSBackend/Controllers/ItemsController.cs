@@ -2,24 +2,52 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PWMSBackend.Data;
+using PWMSBackend.DTOs.Outgoing;
 using PWMSBackend.Models;
+
+
 
 namespace PWMSBackend.Controllers
 {
+
+
+   
+
     [Route("api/[controller]")]
     [ApiController]
+
+    
     public class ItemsController : ControllerBase
     {
         private readonly DataContext _context;
+        private readonly IMapper _mapper;
 
-        public ItemsController(DataContext context)
+        public ItemsController(DataContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
+
+        //// GET: api/GetItemSpecifications/5
+        [HttpGet("specifications/{id}")] 
+        public async Task<ActionResult<IEnumerable<ItemSpecificationDTO>>> GetItemSpecifications(string id)
+        {
+            var item = await _context.Items.FindAsync(id);
+
+            if (item == null)
+            {
+                return NotFound();
+            }
+    
+            var itemSpecifications = _mapper.Map<IEnumerable<ItemSpecificationDTO>>(item);
+            return Ok(itemSpecifications);
+        }
+
 
         // GET: api/Items
         [HttpGet]

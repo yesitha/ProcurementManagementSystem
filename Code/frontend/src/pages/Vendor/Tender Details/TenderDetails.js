@@ -20,7 +20,7 @@ import axios from "axios";
 
 ///////////////Add axios/////////////
 function dummy(){
-  axios.get(`https://jsonplaceholder.typicode.com/users`)
+  axios.get(`https://localhost:7102/api/Items/specifications`)
       .then(res => {
         console.log(res);
       
