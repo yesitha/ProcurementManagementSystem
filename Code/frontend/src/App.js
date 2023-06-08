@@ -46,6 +46,7 @@ import AddItemstoGRN from "./pages/FinanceDivisionHOD/AddItemstoGRN/AddItemstoGR
 import InvoicestobePaidFin from "./pages/FinanceDivisionHOD/InvoicestobePaid/InvoicestobePaidFin";
 import ReviseVendorSelection from "./pages/TEC Committee/Revise Vendor Selection/ReviseVendorSelection";
 import FormInputText from "./components/FormComponents/FormInputText";
+import TenderDetails from "./pages/Vendor/Tender Details/TenderDetails";
 
 function App() {
   return (
@@ -93,7 +94,8 @@ function App() {
       {/* <ReviseVendorSelection/> */}
       {/* <Stock/> */}
       {/* <AddNewItem /> */}
-      <Login/> 
+      <TenderDetails/>
+      {/* <Login/>  */}
           </div>
   );
 }
