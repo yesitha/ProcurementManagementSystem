@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.Scripting;
+using Microsoft.EntityFrameworkCore;
 using PWMSBackend.Data;
 using PWMSBackend.Models;
 
 namespace PWMSBackend.Controllers
 {
-     public class UserController : ControllerBase
+    public class UserController : ControllerBase
     {
         private readonly DataContext _context;
 
@@ -12,28 +14,28 @@ namespace PWMSBackend.Controllers
         {
             _context = context;
         }
-
-        // GET: api/UserLogin/5
-        [HttpGet("{email}{password}")]
-        public async Task<ActionResult<Users>> UserLogin(string email,string password )
+        [HttpGet("UserLogin/{email}/{password}")]
+        public async Task<ActionResult<Users>> UserLogin(string email, string password)
         {
-            if (_context.Users == null)
-            {
-                return NotFound();
-            }
-            var user= await _context.Users.FindAsync(email);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.EmailAddress == email);
 
             if (user == null)
             {
                 return NotFound();
             }
 
-            if (user.Password == password) {
+            // Perform password comparison using a secure hashing algorithm
+            // For example, using bcrypt:
+            bool isPasswordValid = (password == user.Password);
+
+            if (isPasswordValid)
+            {
                 return Ok(user);
             }
-            
+
             return BadRequest();
-        
         }
     }
-}
+
+       
+    }
