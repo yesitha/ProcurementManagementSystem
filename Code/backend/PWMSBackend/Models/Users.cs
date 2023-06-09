@@ -1,4 +1,6 @@
-﻿namespace PWMSBackend.Models
+﻿using Newtonsoft.Json;
+
+namespace PWMSBackend.Models
 {
     public class Users
     {
@@ -15,5 +17,9 @@
         public string Salutation { get; set; }
 
         public string Designation { get; set; }
+
+
+        [JsonIgnore]
+        public ICollection<UserNotification> UserNotifications { get; set; }
     }
 }
