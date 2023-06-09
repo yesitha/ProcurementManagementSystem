@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PWMSBackend.Data;
 using PWMSBackend.Models;
@@ -25,10 +20,10 @@ namespace PWMSBackend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Committee>>> GetCommittees()
         {
-          if (_context.Committees == null)
-          {
-              return NotFound();
-          }
+            if (_context.Committees == null)
+            {
+                return NotFound();
+            }
             return await _context.Committees.ToListAsync();
         }
 
@@ -36,10 +31,10 @@ namespace PWMSBackend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Committee>> GetCommittee(string id)
         {
-          if (_context.Committees == null)
-          {
-              return NotFound();
-          }
+            if (_context.Committees == null)
+            {
+                return NotFound();
+            }
             var committee = await _context.Committees.FindAsync(id);
 
             if (committee == null)
@@ -86,10 +81,10 @@ namespace PWMSBackend.Controllers
         [HttpPost]
         public async Task<ActionResult<Committee>> PostCommittee(Committee committee)
         {
-          if (_context.Committees == null)
-          {
-              return Problem("Entity set 'DataContext.Committees'  is null.");
-          }
+            if (_context.Committees == null)
+            {
+                return Problem("Entity set 'DataContext.Committees'  is null.");
+            }
             _context.Committees.Add(committee);
             try
             {

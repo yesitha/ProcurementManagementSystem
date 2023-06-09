@@ -47,10 +47,18 @@ import InvoicestobePaidFin from "./pages/FinanceDivisionHOD/InvoicestobePaid/Inv
 import ReviseVendorSelection from "./pages/TEC Committee/Revise Vendor Selection/ReviseVendorSelection";
 import FormInputText from "./components/FormComponents/FormInputText";
 import TenderDetails from "./pages/Vendor/Tender Details/TenderDetails";
+import {Routes, Route } from "react-router-dom";
 
 function App() {
   return (
     <div>
+      <Routes>
+        <Route path="/BidTender" element={<BidTender/>}></Route>
+        <Route path="/TenderDetails/:itemId" element={<TenderDetails/>}></Route>
+        
+      </Routes>
+      
+
       {/* <Login/> */}
       {/* <SignUp/> */}
       {/* <Dashboard/> */}
@@ -94,7 +102,8 @@ function App() {
       {/* <ReviseVendorSelection/> */}
       {/* <Stock/> */}
       {/* <AddNewItem /> */}
-      <TenderDetails/>
+      {/* <TenderDetails/> */}
+      {/* <BidTender/> */}
       {/* <Login/>  */}
           </div>
   );

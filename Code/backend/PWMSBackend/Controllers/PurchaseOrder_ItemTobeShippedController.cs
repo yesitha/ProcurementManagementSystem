@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PWMSBackend.Data;
 using PWMSBackend.Models;
@@ -25,10 +20,10 @@ namespace PWMSBackend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PurchaseOrder_ItemTobeShipped>>> GetPurchaseOrder_ItemTobeShippeds()
         {
-          if (_context.PurchaseOrder_ItemTobeShippeds == null)
-          {
-              return NotFound();
-          }
+            if (_context.PurchaseOrder_ItemTobeShippeds == null)
+            {
+                return NotFound();
+            }
             return await _context.PurchaseOrder_ItemTobeShippeds.ToListAsync();
         }
 
@@ -36,10 +31,10 @@ namespace PWMSBackend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<PurchaseOrder_ItemTobeShipped>> GetPurchaseOrder_ItemTobeShipped(string id)
         {
-          if (_context.PurchaseOrder_ItemTobeShippeds == null)
-          {
-              return NotFound();
-          }
+            if (_context.PurchaseOrder_ItemTobeShippeds == null)
+            {
+                return NotFound();
+            }
             var purchaseOrder_ItemTobeShipped = await _context.PurchaseOrder_ItemTobeShippeds.FindAsync(id);
 
             if (purchaseOrder_ItemTobeShipped == null)
@@ -86,10 +81,10 @@ namespace PWMSBackend.Controllers
         [HttpPost]
         public async Task<ActionResult<PurchaseOrder_ItemTobeShipped>> PostPurchaseOrder_ItemTobeShipped(PurchaseOrder_ItemTobeShipped purchaseOrder_ItemTobeShipped)
         {
-          if (_context.PurchaseOrder_ItemTobeShippeds == null)
-          {
-              return Problem("Entity set 'DataContext.PurchaseOrder_ItemTobeShippeds'  is null.");
-          }
+            if (_context.PurchaseOrder_ItemTobeShippeds == null)
+            {
+                return Problem("Entity set 'DataContext.PurchaseOrder_ItemTobeShippeds'  is null.");
+            }
             _context.PurchaseOrder_ItemTobeShippeds.Add(purchaseOrder_ItemTobeShipped);
             try
             {

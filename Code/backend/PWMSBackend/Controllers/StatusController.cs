@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PWMSBackend.Data;
 using PWMSBackend.Models;
@@ -25,10 +20,10 @@ namespace PWMSBackend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Status>>> GetStatuses()
         {
-          if (_context.Statuses == null)
-          {
-              return NotFound();
-          }
+            if (_context.Statuses == null)
+            {
+                return NotFound();
+            }
             return await _context.Statuses.ToListAsync();
         }
 
@@ -36,10 +31,10 @@ namespace PWMSBackend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Status>> GetStatus(string id)
         {
-          if (_context.Statuses == null)
-          {
-              return NotFound();
-          }
+            if (_context.Statuses == null)
+            {
+                return NotFound();
+            }
             var status = await _context.Statuses.FindAsync(id);
 
             if (status == null)
@@ -86,10 +81,10 @@ namespace PWMSBackend.Controllers
         [HttpPost]
         public async Task<ActionResult<Status>> PostStatus(Status status)
         {
-          if (_context.Statuses == null)
-          {
-              return Problem("Entity set 'DataContext.Statuses'  is null.");
-          }
+            if (_context.Statuses == null)
+            {
+                return Problem("Entity set 'DataContext.Statuses'  is null.");
+            }
             _context.Statuses.Add(status);
             try
             {

@@ -1,7 +1,8 @@
-﻿namespace PWMSBackend.DTOs.Outgoing
+﻿namespace PWMSBackend.DTOs.outgoing
 {
-    public class ItemSpecificationDTO 
+    public class ItemTobeShippedDTO
     {
+
         public string ItemName { get; set; }
         public string Specification { get; set; }
     }
