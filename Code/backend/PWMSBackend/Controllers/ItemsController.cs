@@ -34,8 +34,8 @@ namespace PWMSBackend.Controllers
         }
 
         //// GET: api/GetTenderItemDetailsDTO/5
-        [HttpGet("TenderItemDetails/{mppId}/{itemId}")] 
-        public async Task<ActionResult<IEnumerable<TenderItemDetailsDTO>>> GetTenderItemDetailsDTO(string mppId,string itemId)
+        [HttpGet("TenderItemDetails/{mppId}/{itemId}")]
+        public async Task<ActionResult<IEnumerable<TenderItemDetailsDTO>>> GetTenderItemDetailsDTO(string mppId, string itemId)
 
         {
             var subProcurementPlans = await _context.SubProcurementPlans
@@ -50,7 +50,6 @@ namespace PWMSBackend.Controllers
 
             return Ok(totalQuantity);
         }
-
 
         // GET: api/Items
         [HttpGet]
