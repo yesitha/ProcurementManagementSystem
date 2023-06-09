@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PWMSBackend.Data;
 using PWMSBackend.Models;
@@ -25,10 +20,10 @@ namespace PWMSBackend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ItemTobeShipped>>> GetItemTobeShippeds()
         {
-          if (_context.ItemTobeShippeds == null)
-          {
-              return NotFound();
-          }
+            if (_context.ItemTobeShippeds == null)
+            {
+                return NotFound();
+            }
             return await _context.ItemTobeShippeds.ToListAsync();
         }
 
@@ -36,10 +31,10 @@ namespace PWMSBackend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ItemTobeShipped>> GetItemTobeShipped(string id)
         {
-          if (_context.ItemTobeShippeds == null)
-          {
-              return NotFound();
-          }
+            if (_context.ItemTobeShippeds == null)
+            {
+                return NotFound();
+            }
             var itemTobeShipped = await _context.ItemTobeShippeds.FindAsync(id);
 
             if (itemTobeShipped == null)
@@ -86,10 +81,10 @@ namespace PWMSBackend.Controllers
         [HttpPost]
         public async Task<ActionResult<ItemTobeShipped>> PostItemTobeShipped(ItemTobeShipped itemTobeShipped)
         {
-          if (_context.ItemTobeShippeds == null)
-          {
-              return Problem("Entity set 'DataContext.ItemTobeShippeds'  is null.");
-          }
+            if (_context.ItemTobeShippeds == null)
+            {
+                return Problem("Entity set 'DataContext.ItemTobeShippeds'  is null.");
+            }
             _context.ItemTobeShippeds.Add(itemTobeShipped);
             try
             {

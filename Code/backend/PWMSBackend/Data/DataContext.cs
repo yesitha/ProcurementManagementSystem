@@ -47,6 +47,8 @@ namespace PWMSBackend.Data
         public DbSet<VendorPlaceBidItem> VendorPlaceBidItems { get; set; } = null!;
         public DbSet<Users> Users { get; set; } = null!;
 
+        public DbSet<UserNotification> UserNotifications { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             
@@ -233,6 +235,8 @@ namespace PWMSBackend.Data
                 .HasKey(v => v.VendorId);
             modelBuilder.Entity<Users>()
                 .HasKey(v => v.UserId);
+            modelBuilder.Entity<UserNotification>()
+                .HasKey(v => v.notificationId);
         }
     }
 }
