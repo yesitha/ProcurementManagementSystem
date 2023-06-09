@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PWMSBackend.Data;
 using PWMSBackend.Models;
@@ -25,10 +20,10 @@ namespace PWMSBackend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<InvoiceTobePay>>> GetInvoiceTobePays()
         {
-          if (_context.InvoiceTobePays == null)
-          {
-              return NotFound();
-          }
+            if (_context.InvoiceTobePays == null)
+            {
+                return NotFound();
+            }
             return await _context.InvoiceTobePays.ToListAsync();
         }
 
@@ -36,10 +31,10 @@ namespace PWMSBackend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<InvoiceTobePay>> GetInvoiceTobePay(string id)
         {
-          if (_context.InvoiceTobePays == null)
-          {
-              return NotFound();
-          }
+            if (_context.InvoiceTobePays == null)
+            {
+                return NotFound();
+            }
             var invoiceTobePay = await _context.InvoiceTobePays.FindAsync(id);
 
             if (invoiceTobePay == null)
@@ -86,10 +81,10 @@ namespace PWMSBackend.Controllers
         [HttpPost]
         public async Task<ActionResult<InvoiceTobePay>> PostInvoiceTobePay(InvoiceTobePay invoiceTobePay)
         {
-          if (_context.InvoiceTobePays == null)
-          {
-              return Problem("Entity set 'DataContext.InvoiceTobePays'  is null.");
-          }
+            if (_context.InvoiceTobePays == null)
+            {
+                return Problem("Entity set 'DataContext.InvoiceTobePays'  is null.");
+            }
             _context.InvoiceTobePays.Add(invoiceTobePay);
             try
             {

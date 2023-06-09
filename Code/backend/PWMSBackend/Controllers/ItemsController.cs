@@ -33,19 +33,22 @@ namespace PWMSBackend.Controllers
             _mapper = mapper;
         }
 
-        //// GET: api/GetItemSpecifications/5
-        [HttpGet("specifications/{id}")] 
-        public async Task<ActionResult<IEnumerable<ItemSpecificationDTO>>> GetItemSpecifications(string id)
-        {
-            var item = await _context.Items.FindAsync(id);
+        //// GET: api/GetTenderItemDetailsDTO/5
+        [HttpGet("TenderItemDetails/{mppId}/{itemId}")] 
+        public async Task<ActionResult<IEnumerable<TenderItemDetailsDTO>>> GetTenderItemDetailsDTO(string mppId,string itemId)
 
-            if (item == null)
-            {
-                return NotFound();
-            }
-    
-            var itemSpecifications = _mapper.Map<IEnumerable<ItemSpecificationDTO>>(item);
-            return Ok(itemSpecifications);
+        {
+            var subProcurementPlans = await _context.SubProcurementPlans
+                .Include(plan => plan.subProcurementPlanItems)
+                .Where(plan => plan.MasterProcurementPlan.MppId == mppId)
+                .ToListAsync();
+
+            var totalQuantity = subProcurementPlans
+                .SelectMany(plan => plan.subProcurementPlanItems)
+                .Where(item => item.ItemId == itemId)
+                .Sum(item => item.Quantity);
+
+            return Ok(totalQuantity);
         }
 
 

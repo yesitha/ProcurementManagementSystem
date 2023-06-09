@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PWMSBackend.Data;
 using PWMSBackend.Models;
@@ -25,10 +20,10 @@ namespace PWMSBackend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<InternalAuditor>>> GetInternalAuditors()
         {
-          if (_context.InternalAuditors == null)
-          {
-              return NotFound();
-          }
+            if (_context.InternalAuditors == null)
+            {
+                return NotFound();
+            }
             return await _context.InternalAuditors.ToListAsync();
         }
 
@@ -36,10 +31,10 @@ namespace PWMSBackend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<InternalAuditor>> GetInternalAuditor(string id)
         {
-          if (_context.InternalAuditors == null)
-          {
-              return NotFound();
-          }
+            if (_context.InternalAuditors == null)
+            {
+                return NotFound();
+            }
             var internalAuditor = await _context.InternalAuditors.FindAsync(id);
 
             if (internalAuditor == null)
@@ -86,10 +81,10 @@ namespace PWMSBackend.Controllers
         [HttpPost]
         public async Task<ActionResult<InternalAuditor>> PostInternalAuditor(InternalAuditor internalAuditor)
         {
-          if (_context.InternalAuditors == null)
-          {
-              return Problem("Entity set 'DataContext.InternalAuditors'  is null.");
-          }
+            if (_context.InternalAuditors == null)
+            {
+                return Problem("Entity set 'DataContext.InternalAuditors'  is null.");
+            }
             _context.InternalAuditors.Add(internalAuditor);
             try
             {

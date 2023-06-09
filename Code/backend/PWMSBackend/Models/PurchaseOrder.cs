@@ -20,14 +20,9 @@
 
         public byte[] ProcumentOfficerStatus { get; set; }
 
-
         public ICollection<ApprovedItemPurchaseOrder> ApprovedItemPurchaseOrders { get; set; }
         public ICollection<PurchaseOrder_ItemTobeShipped> purchaseOrder_ItemTobeShippeds { get; set; }
 
-
         public Vendor Vendor { get; set; }
-
-
-
     }
 }
