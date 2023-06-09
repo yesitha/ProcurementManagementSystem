@@ -45,7 +45,7 @@ namespace PWMSBackend.Data
         public DbSet<Vendor> Vendors { get; set; } = null!;
         public DbSet<VendorhasItem> VendorhasItems { get; set; } = null!;
         public DbSet<VendorPlaceBidItem> VendorPlaceBidItems { get; set; } = null!;
-
+        public DbSet<Users> Users { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -171,11 +171,11 @@ namespace PWMSBackend.Data
             //    .WithMany(ia => ia.VendorhasItems)
             //    .HasForeignKey(i => i.VendorId);
 
-            modelBuilder.Entity<ProcurementCommittee>()
-                .HasMany(e => e.MasterProcurementPlans)
-                .WithOne(e => e.ProcurementCommittee)
-                .HasForeignKey(e => e.MppId)
-                .IsRequired();
+            //modelBuilder.Entity<ProcurementCommittee>()
+            //    .HasMany(e => e.MasterProcurementPlans)
+            //    .WithOne(e => e.ProcurementCommittee)
+            //    .HasForeignKey(e => e.MppId)
+            //    .IsRequired();
             //===============================================================
             //modelBuilder.Entity<ApprovedItem>()
             //    .HasKey(a => a.ItemId);
@@ -231,8 +231,8 @@ namespace PWMSBackend.Data
             //    .HasKey(t => t.CommitteeId);
             modelBuilder.Entity<Vendor>()
                 .HasKey(v => v.VendorId);
-
-          
+            modelBuilder.Entity<Users>()
+                .HasKey(v => v.UserId);
         }
     }
 }
