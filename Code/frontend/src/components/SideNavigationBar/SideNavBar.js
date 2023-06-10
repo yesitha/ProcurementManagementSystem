@@ -165,6 +165,7 @@ export default function SideNavBar({ list1, list2, user }) {
                 }}
               />
             </ListItemButton>
+            </Routerlink>
           </ListItem>
         ))}
       </List>
