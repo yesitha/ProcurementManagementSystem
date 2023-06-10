@@ -19,7 +19,64 @@ namespace PWMSBackend.Controllers
         public ItemsController(DataContext context)
         {
             _context = context;
+
+            _mapper = mapper;
         }
+
+        //// GET: api/GetTenderItemDetailsDTO/5
+        [HttpGet("TenderItemDetails/{mppId}/{itemId}")]
+        public async Task<ActionResult<IEnumerable<TenderItemDetailsDTO>>> GetTenderItemDetails(string mppId,
+            string itemId)
+
+        {
+            var subProcurementPlans = await _context.SubProcurementPlans
+                .Include(plan => plan.subProcurementPlanItems)
+                .Where(plan => plan.MasterProcurementPlan.MppId == mppId)
+                .ToListAsync();
+
+            var totalQuantity = subProcurementPlans
+                .SelectMany(plan => plan.subProcurementPlanItems)
+                .Where(item => item.ItemId == itemId)
+
+                .Sum(item => item.Quantity);
+
+
+    
+            var tenderItemDetails = new TenderItemDetailsDTO
+            {
+                ItemName = _context.Items.Find(itemId).ItemName,
+                Quantity = totalQuantity,
+                Specification = _context.Items.Find(itemId).Specification,
+                expectedDeliveryDate = subProcurementPlans
+                    .SelectMany(plan => plan.subProcurementPlanItems)
+                    .Where(item => item.ItemId == itemId)
+                    .Select(item => item.ExpectedDeliveryDate)
+                    .OrderBy(date => date) // Sort the dates in ascending order
+                    .FirstOrDefault()
+            };
+
+            return Ok(tenderItemDetails);
+            
+        }
+
+
+        //// GET: api/GetTenderItemDetailsDTO/5
+        [HttpGet("TenderItemsDetails/{mppId}")]
+        public async Task<ActionResult<TenderItemDetailsDTO>> GetTenderItemsDetails(string mppId,
+            string itemId)
+
+        {
+
+
+
+            return Ok();
+
+        }
+
+
+
+
+
 
         // GET: api/Items
         [HttpGet]

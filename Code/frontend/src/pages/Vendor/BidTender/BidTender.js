@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./BidTender.module.css";
 import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -14,6 +14,10 @@ import SearchNoFilter from "../../../components/Search/Search";
 import { Container } from "@mui/system";
 import GavelIcon from "@mui/icons-material/Gavel";
 
+import { Link } from "react-router-dom";
+import axios from "axios";
+
+
 const columns = [
   { id: "ItemName", label: "Item Name", Width: 300, align: "center" },
   { id: "Qty", label: "Quantity", Width: 300, align: "center" },
@@ -26,6 +30,19 @@ const columns = [
 function createData(ItemName, Qty, specification, duedate, bidstatus, act) {
   return { ItemName, Qty, specification, duedate, bidstatus, act };
 }
+
+
+async function getTenderItemDetails(id) {
+  try {
+    const response = await axios.get(`https://localhost:7102/api/Items/TenderItemDetails/${id}`);
+   
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
 
 const rows = [
   createData(
@@ -69,6 +86,7 @@ const rows = [
 function BidTender() {
   const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
   const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
+  const [data, setData] = useState(null);
   const user = {
     firstname: "John",
     lastname: "Doe",
@@ -80,6 +98,19 @@ function BidTender() {
     gender: "Male",
     profilePic: "https://www.w3schools.com/howto/img_avatar.png",
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getTenderItemDetails(itemId);
+        setData(response);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  console.log(data);
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
