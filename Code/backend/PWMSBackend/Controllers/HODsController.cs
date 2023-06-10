@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PWMSBackend.Data;
 using PWMSBackend.Models;
@@ -20,10 +25,10 @@ namespace PWMSBackend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<HOD>>> GetHODs()
         {
-            if (_context.HODs == null)
-            {
-                return NotFound();
-            }
+          if (_context.HODs == null)
+          {
+              return NotFound();
+          }
             return await _context.HODs.ToListAsync();
         }
 
@@ -31,10 +36,10 @@ namespace PWMSBackend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<HOD>> GetHOD(string id)
         {
-            if (_context.HODs == null)
-            {
-                return NotFound();
-            }
+          if (_context.HODs == null)
+          {
+              return NotFound();
+          }
             var hOD = await _context.HODs.FindAsync(id);
 
             if (hOD == null)
@@ -81,10 +86,10 @@ namespace PWMSBackend.Controllers
         [HttpPost]
         public async Task<ActionResult<HOD>> PostHOD(HOD hOD)
         {
-            if (_context.HODs == null)
-            {
-                return Problem("Entity set 'DataContext.HODs'  is null.");
-            }
+          if (_context.HODs == null)
+          {
+              return Problem("Entity set 'DataContext.HODs'  is null.");
+          }
             _context.HODs.Add(hOD);
             try
             {

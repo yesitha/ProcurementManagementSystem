@@ -13,11 +13,10 @@ import TableRow from "@mui/material/TableRow";
 import SearchNoFilter from "../../../components/Search/Search";
 import { Container } from "@mui/system";
 import GavelIcon from "@mui/icons-material/Gavel";
-<<<<<<< Updated upstream
-=======
+
 import { Link } from "react-router-dom";
 import axios from "axios";
->>>>>>> Stashed changes
+
 
 const columns = [
   { id: "ItemName", label: "Item Name", Width: 300, align: "center" },
@@ -32,6 +31,7 @@ function createData(ItemName, Qty, specification, duedate, bidstatus, act) {
   return { ItemName, Qty, specification, duedate, bidstatus, act };
 }
 
+
 async function getTenderItemDetails(id) {
   try {
     const response = await axios.get(`https://localhost:7102/api/Items/TenderItemDetails/${id}`);
@@ -42,6 +42,7 @@ async function getTenderItemDetails(id) {
     throw error;
   }
 }
+
 
 const rows = [
   createData(

@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PWMSBackend.Data;
 using PWMSBackend.Models;
@@ -20,10 +25,10 @@ namespace PWMSBackend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<DirectorGeneral>>> GetDirectorGenerals()
         {
-            if (_context.DirectorGenerals == null)
-            {
-                return NotFound();
-            }
+          if (_context.DirectorGenerals == null)
+          {
+              return NotFound();
+          }
             return await _context.DirectorGenerals.ToListAsync();
         }
 
@@ -31,10 +36,10 @@ namespace PWMSBackend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<DirectorGeneral>> GetDirectorGeneral(string id)
         {
-            if (_context.DirectorGenerals == null)
-            {
-                return NotFound();
-            }
+          if (_context.DirectorGenerals == null)
+          {
+              return NotFound();
+          }
             var directorGeneral = await _context.DirectorGenerals.FindAsync(id);
 
             if (directorGeneral == null)
@@ -81,10 +86,10 @@ namespace PWMSBackend.Controllers
         [HttpPost]
         public async Task<ActionResult<DirectorGeneral>> PostDirectorGeneral(DirectorGeneral directorGeneral)
         {
-            if (_context.DirectorGenerals == null)
-            {
-                return Problem("Entity set 'DataContext.DirectorGenerals'  is null.");
-            }
+          if (_context.DirectorGenerals == null)
+          {
+              return Problem("Entity set 'DataContext.DirectorGenerals'  is null.");
+          }
             _context.DirectorGenerals.Add(directorGeneral);
             try
             {
