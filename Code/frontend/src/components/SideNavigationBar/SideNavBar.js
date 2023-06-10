@@ -163,7 +163,6 @@ export default function SideNavBar({ list1, list2, user }) {
                 }}
               />
             </ListItemButton>
-            </Routerlink>
           </ListItem>
         ))}
       </List>
@@ -204,7 +203,6 @@ export default function SideNavBar({ list1, list2, user }) {
         <div style={{}}>
           <List>
             <ListItem disablePadding sx={{ display: "block" }}>
-            <Routerlink to={"/procurement%20officer%20login"}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
@@ -230,7 +228,6 @@ export default function SideNavBar({ list1, list2, user }) {
                   }}
                 />
               </ListItemButton>
-              </Routerlink>
             </ListItem>
           </List>
           <List>

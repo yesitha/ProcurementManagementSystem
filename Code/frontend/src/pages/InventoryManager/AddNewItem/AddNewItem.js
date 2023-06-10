@@ -71,7 +71,7 @@ export default function AddNewItem() {
           </div>
           <div className={styles.bodyContent}>
             <TextField
-              width="10px"
+              width="7000px"
               height="210px"
               id="email"
               label="SPECIFICATION"

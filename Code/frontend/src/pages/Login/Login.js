@@ -4,8 +4,8 @@ import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import {Link as Routerlink} from "react-router-dom";
 import Checkbox from "@mui/material/Checkbox";
+import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -26,7 +26,6 @@ import "./Login.css";
 import logo from "../../images/logo.png";
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
-
 
 const theme = createTheme({
   typography: {
@@ -58,12 +57,11 @@ export default function SignIn() {
 
   const form = useForm();
   const { register, handleSubmit, control, formState } = form;
-  const { errors,isValid } = formState;
+  const { errors } = formState;
 
   return (
     <ThemeProvider theme={theme}>
-      <div style={{ display: 'flex', justifyContent: 'center' ,padding:75}}>
-      <Card sx={{ minWidth: 275,maxWidth:500}}>
+      <Card sx={{ minWidth: 275,maxWidth:500,}}>
         <CardContent>
           <Container component="main" maxWidth="xs">
             <CssBaseline />
@@ -127,7 +125,6 @@ export default function SignIn() {
                 <p className="error">{errors.password?.message}</p>
 
                 <Button
-                  disabled={!isValid}
                   type="submit"
                   fullWidth
                   variant="contained"
@@ -140,7 +137,6 @@ export default function SignIn() {
           </Container>
         </CardContent>
       </Card>
-      </div>
     </ThemeProvider>
   );
 }

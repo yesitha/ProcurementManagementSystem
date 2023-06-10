@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PWMSBackend.Data;
 using PWMSBackend.Models;
@@ -20,10 +25,10 @@ namespace PWMSBackend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MasterProcurementPlanStatus>>> GetMasterProcurementPlanStatuses()
         {
-            if (_context.MasterProcurementPlanStatuses == null)
-            {
-                return NotFound();
-            }
+          if (_context.MasterProcurementPlanStatuses == null)
+          {
+              return NotFound();
+          }
             return await _context.MasterProcurementPlanStatuses.ToListAsync();
         }
 
@@ -31,10 +36,10 @@ namespace PWMSBackend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<MasterProcurementPlanStatus>> GetMasterProcurementPlanStatus(string id)
         {
-            if (_context.MasterProcurementPlanStatuses == null)
-            {
-                return NotFound();
-            }
+          if (_context.MasterProcurementPlanStatuses == null)
+          {
+              return NotFound();
+          }
             var masterProcurementPlanStatus = await _context.MasterProcurementPlanStatuses.FindAsync(id);
 
             if (masterProcurementPlanStatus == null)
@@ -81,10 +86,10 @@ namespace PWMSBackend.Controllers
         [HttpPost]
         public async Task<ActionResult<MasterProcurementPlanStatus>> PostMasterProcurementPlanStatus(MasterProcurementPlanStatus masterProcurementPlanStatus)
         {
-            if (_context.MasterProcurementPlanStatuses == null)
-            {
-                return Problem("Entity set 'DataContext.MasterProcurementPlanStatuses'  is null.");
-            }
+          if (_context.MasterProcurementPlanStatuses == null)
+          {
+              return Problem("Entity set 'DataContext.MasterProcurementPlanStatuses'  is null.");
+          }
             _context.MasterProcurementPlanStatuses.Add(masterProcurementPlanStatus);
             try
             {

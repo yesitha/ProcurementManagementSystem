@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PWMSBackend.Data;
 using PWMSBackend.Models;
@@ -20,10 +25,10 @@ namespace PWMSBackend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PaymentVoucher>>> GetPaymentVouchers()
         {
-            if (_context.PaymentVouchers == null)
-            {
-                return NotFound();
-            }
+          if (_context.PaymentVouchers == null)
+          {
+              return NotFound();
+          }
             return await _context.PaymentVouchers.ToListAsync();
         }
 
@@ -31,10 +36,10 @@ namespace PWMSBackend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<PaymentVoucher>> GetPaymentVoucher(string id)
         {
-            if (_context.PaymentVouchers == null)
-            {
-                return NotFound();
-            }
+          if (_context.PaymentVouchers == null)
+          {
+              return NotFound();
+          }
             var paymentVoucher = await _context.PaymentVouchers.FindAsync(id);
 
             if (paymentVoucher == null)
@@ -81,10 +86,10 @@ namespace PWMSBackend.Controllers
         [HttpPost]
         public async Task<ActionResult<PaymentVoucher>> PostPaymentVoucher(PaymentVoucher paymentVoucher)
         {
-            if (_context.PaymentVouchers == null)
-            {
-                return Problem("Entity set 'DataContext.PaymentVouchers'  is null.");
-            }
+          if (_context.PaymentVouchers == null)
+          {
+              return Problem("Entity set 'DataContext.PaymentVouchers'  is null.");
+          }
             _context.PaymentVouchers.Add(paymentVoucher);
             try
             {
