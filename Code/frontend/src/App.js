@@ -45,7 +45,8 @@ import UploadPaymentVoucher from "./pages/FinanceDivisionAccountant/UploadPaymen
 import AddItemstoGRN from "./pages/FinanceDivisionHOD/AddItemstoGRN/AddItemstoGRN";
 import InvoicestobePaidFin from "./pages/FinanceDivisionHOD/InvoicestobePaid/InvoicestobePaidFin";
 import ReviseVendorSelection from "./pages/TEC Committee/Revise Vendor Selection/ReviseVendorSelection";
-import FormInputText from "./components/FormComponents/FormInputText";
+import BidHistory from "./pages/Vendor/BidHistory/BidHistory";
+import CreateMasterProcurementPlan from "./pages/CreateMasterProcurementPlan/CreateMasterProcurementPlan"
 
 function App() {
   return (
@@ -93,7 +94,7 @@ function App() {
       {/* <ReviseVendorSelection/> */}
       {/* <Stock/> */}
       {/* <AddNewItem /> */}
-      <Login/> 
+      <CreateMasterProcurementPlan/>
           </div>
   );
 }
