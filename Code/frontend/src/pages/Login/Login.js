@@ -4,15 +4,15 @@ import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import {Link as Routerlink} from "react-router-dom";
 import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Card, CardContent } from "@mui/material";
+import { Card, CardContent, Link as Muilink} from "@mui/material";
 import { maxWidth } from "@mui/system";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
@@ -24,6 +24,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import { Login, NoEncryption } from "@mui/icons-material";
 import "./Login.css";
 import logo from "../../images/logo.png";
+
 
 const theme = createTheme({
   typography: {
@@ -119,14 +120,15 @@ export default function SignIn() {
                     />
                   </FormControl>
                   <div id="outerForgetPassword">
-                    <Link href="#" style={{ textDecoration: "none" }}>
+                    <Muilink href="#" style={{ textDecoration: "none" }}>
                       <Typography variant="overline">
                         Forgot password?
                       </Typography>
-                    </Link>
+                    </Muilink>
                   </div>
 
                   <div id="outerButton">
+                    <Routerlink to={"/procurement%20officer%20dashboard"}>
                     <Button
                       type="submit"
                       variant="contained"
@@ -134,6 +136,7 @@ export default function SignIn() {
                     >
                       Sign In
                     </Button>
+                    </Routerlink>
                   </div>
                 </Box>
               </Box>
