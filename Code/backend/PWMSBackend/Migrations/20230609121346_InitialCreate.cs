@@ -105,6 +105,7 @@ namespace PWMSBackend.Migrations
                     MppId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EstimatedGrandTotal = table.Column<int>(type: "int", nullable: false),
+                    ProcurementCommitteeCommitteeId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     TecCommitteeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     BidOpeningCommitteeId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -118,11 +119,10 @@ namespace PWMSBackend.Migrations
                         principalColumn: "CommitteeId",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
-                        name: "FK_MasterProcurementPlans_Committees_MppId",
-                        column: x => x.MppId,
+                        name: "FK_MasterProcurementPlans_Committees_ProcurementCommitteeCommitteeId",
+                        column: x => x.ProcurementCommitteeCommitteeId,
                         principalTable: "Committees",
-                        principalColumn: "CommitteeId",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "CommitteeId");
                     table.ForeignKey(
                         name: "FK_MasterProcurementPlans_Committees_TecCommitteeId",
                         column: x => x.TecCommitteeId,
@@ -239,14 +239,14 @@ namespace PWMSBackend.Migrations
                 {
                     table.PrimaryKey("PK_MasterProcurementPlanStatuses", x => new { x.MppId, x.StatusId });
                     table.ForeignKey(
-                        name: "FK_MasterProcurementPlanStatuses_MasterProcurementPlans_StatusId",
-                        column: x => x.StatusId,
+                        name: "FK_MasterProcurementPlanStatuses_MasterProcurementPlans_MppId",
+                        column: x => x.MppId,
                         principalTable: "MasterProcurementPlans",
                         principalColumn: "MppId",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
-                        name: "FK_MasterProcurementPlanStatuses_Statuses_MppId",
-                        column: x => x.MppId,
+                        name: "FK_MasterProcurementPlanStatuses_Statuses_StatusId",
+                        column: x => x.StatusId,
                         principalTable: "Statuses",
                         principalColumn: "StatusId",
                         onDelete: ReferentialAction.NoAction);
@@ -263,14 +263,14 @@ namespace PWMSBackend.Migrations
                 {
                     table.PrimaryKey("PK_CommitteeMemberCommittees", x => new { x.EmployeeId, x.CommitteeId });
                     table.ForeignKey(
-                        name: "FK_CommitteeMemberCommittees_Committees_EmployeeId",
-                        column: x => x.EmployeeId,
+                        name: "FK_CommitteeMemberCommittees_Committees_CommitteeId",
+                        column: x => x.CommitteeId,
                         principalTable: "Committees",
                         principalColumn: "CommitteeId",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
-                        name: "FK_CommitteeMemberCommittees_ProcurementEmployees_CommitteeId",
-                        column: x => x.CommitteeId,
+                        name: "FK_CommitteeMemberCommittees_ProcurementEmployees_EmployeeId",
+                        column: x => x.EmployeeId,
                         principalTable: "ProcurementEmployees",
                         principalColumn: "EmployeeId",
                         onDelete: ReferentialAction.NoAction);
@@ -384,14 +384,14 @@ namespace PWMSBackend.Migrations
                 {
                     table.PrimaryKey("PK_ApprovedItemPurchaseOrders", x => new { x.ItemId, x.PoId });
                     table.ForeignKey(
-                        name: "FK_ApprovedItemPurchaseOrders_Items_PoId",
-                        column: x => x.PoId,
+                        name: "FK_ApprovedItemPurchaseOrders_Items_ItemId",
+                        column: x => x.ItemId,
                         principalTable: "Items",
                         principalColumn: "ItemId",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
-                        name: "FK_ApprovedItemPurchaseOrders_PurchaseOrders_ItemId",
-                        column: x => x.ItemId,
+                        name: "FK_ApprovedItemPurchaseOrders_PurchaseOrders_PoId",
+                        column: x => x.PoId,
                         principalTable: "PurchaseOrders",
                         principalColumn: "PoId",
                         onDelete: ReferentialAction.NoAction);
@@ -411,14 +411,14 @@ namespace PWMSBackend.Migrations
                 {
                     table.PrimaryKey("PK_GRNItemsToBeShipped", x => new { x.GrnId, x.ItemId });
                     table.ForeignKey(
-                        name: "FK_GRNItemsToBeShipped_GRNs_ItemId",
-                        column: x => x.ItemId,
+                        name: "FK_GRNItemsToBeShipped_GRNs_GrnId",
+                        column: x => x.GrnId,
                         principalTable: "GRNs",
                         principalColumn: "GrnId",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
-                        name: "FK_GRNItemsToBeShipped_Items_GrnId",
-                        column: x => x.GrnId,
+                        name: "FK_GRNItemsToBeShipped_Items_ItemId",
+                        column: x => x.ItemId,
                         principalTable: "Items",
                         principalColumn: "ItemId",
                         onDelete: ReferentialAction.NoAction);
@@ -436,14 +436,14 @@ namespace PWMSBackend.Migrations
                 {
                     table.PrimaryKey("PK_PurchaseOrder_ItemTobeShippeds", x => new { x.PoId, x.ItemId });
                     table.ForeignKey(
-                        name: "FK_PurchaseOrder_ItemTobeShippeds_Items_PoId",
-                        column: x => x.PoId,
+                        name: "FK_PurchaseOrder_ItemTobeShippeds_Items_ItemId",
+                        column: x => x.ItemId,
                         principalTable: "Items",
                         principalColumn: "ItemId",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
-                        name: "FK_PurchaseOrder_ItemTobeShippeds_PurchaseOrders_ItemId",
-                        column: x => x.ItemId,
+                        name: "FK_PurchaseOrder_ItemTobeShippeds_PurchaseOrders_PoId",
+                        column: x => x.PoId,
                         principalTable: "PurchaseOrders",
                         principalColumn: "PoId",
                         onDelete: ReferentialAction.NoAction);
@@ -460,14 +460,14 @@ namespace PWMSBackend.Migrations
                 {
                     table.PrimaryKey("PK_VendorhasItems", x => new { x.VendorId, x.ItemId });
                     table.ForeignKey(
-                        name: "FK_VendorhasItems_Items_VendorId",
-                        column: x => x.VendorId,
+                        name: "FK_VendorhasItems_Items_ItemId",
+                        column: x => x.ItemId,
                         principalTable: "Items",
                         principalColumn: "ItemId",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
-                        name: "FK_VendorhasItems_Vendors_ItemId",
-                        column: x => x.ItemId,
+                        name: "FK_VendorhasItems_Vendors_VendorId",
+                        column: x => x.VendorId,
                         principalTable: "Vendors",
                         principalColumn: "VendorId",
                         onDelete: ReferentialAction.NoAction);
@@ -488,14 +488,14 @@ namespace PWMSBackend.Migrations
                 {
                     table.PrimaryKey("PK_VendorPlaceBidItems", x => new { x.VendorId, x.ItemId });
                     table.ForeignKey(
-                        name: "FK_VendorPlaceBidItems_Items_VendorId",
-                        column: x => x.VendorId,
+                        name: "FK_VendorPlaceBidItems_Items_ItemId",
+                        column: x => x.ItemId,
                         principalTable: "Items",
                         principalColumn: "ItemId",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
-                        name: "FK_VendorPlaceBidItems_Vendors_ItemId",
-                        column: x => x.ItemId,
+                        name: "FK_VendorPlaceBidItems_Vendors_VendorId",
+                        column: x => x.VendorId,
                         principalTable: "Vendors",
                         principalColumn: "VendorId",
                         onDelete: ReferentialAction.NoAction);
@@ -515,14 +515,14 @@ namespace PWMSBackend.Migrations
                 {
                     table.PrimaryKey("PK_SubProcurementApprovedItems", x => new { x.SppId, x.ItemId });
                     table.ForeignKey(
-                        name: "FK_SubProcurementApprovedItems_Items_SppId",
-                        column: x => x.SppId,
+                        name: "FK_SubProcurementApprovedItems_Items_ItemId",
+                        column: x => x.ItemId,
                         principalTable: "Items",
                         principalColumn: "ItemId",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
-                        name: "FK_SubProcurementApprovedItems_SubProcurementPlans_ItemId",
-                        column: x => x.ItemId,
+                        name: "FK_SubProcurementApprovedItems_SubProcurementPlans_SppId",
+                        column: x => x.SppId,
                         principalTable: "SubProcurementPlans",
                         principalColumn: "SppId",
                         onDelete: ReferentialAction.NoAction);
@@ -554,14 +554,14 @@ namespace PWMSBackend.Migrations
                 {
                     table.PrimaryKey("PK_SubProcurementPlanItems", x => new { x.SppId, x.ItemId });
                     table.ForeignKey(
-                        name: "FK_SubProcurementPlanItems_Items_SppId",
-                        column: x => x.SppId,
+                        name: "FK_SubProcurementPlanItems_Items_ItemId",
+                        column: x => x.ItemId,
                         principalTable: "Items",
                         principalColumn: "ItemId",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
-                        name: "FK_SubProcurementPlanItems_SubProcurementPlans_ItemId",
-                        column: x => x.ItemId,
+                        name: "FK_SubProcurementPlanItems_SubProcurementPlans_SppId",
+                        column: x => x.SppId,
                         principalTable: "SubProcurementPlans",
                         principalColumn: "SppId",
                         onDelete: ReferentialAction.NoAction);
@@ -619,6 +619,11 @@ namespace PWMSBackend.Migrations
                 table: "MasterProcurementPlans",
                 column: "BidOpeningCommitteeId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MasterProcurementPlans_ProcurementCommitteeCommitteeId",
+                table: "MasterProcurementPlans",
+                column: "ProcurementCommitteeCommitteeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MasterProcurementPlans_TecCommitteeId",

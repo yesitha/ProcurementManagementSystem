@@ -13,6 +13,7 @@ import TableRow from "@mui/material/TableRow";
 import SearchNoFilter from "../../../components/Search/Search";
 import { Container } from "@mui/system";
 import GavelIcon from "@mui/icons-material/Gavel";
+import { Link } from "react-router-dom";
 
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -30,6 +31,7 @@ const columns = [
 function createData(ItemName, Qty, specification, duedate, bidstatus, act) {
   return { ItemName, Qty, specification, duedate, bidstatus, act };
 }
+const itemId = "PAY35503";
 
 
 async function getTenderItemDetails(id) {
@@ -51,6 +53,7 @@ const rows = [
     "GSM 80",
     "2023-01-23",
     <Typography sx={{ color: "#227C70" }}>LKR 4000</Typography>,
+    <Link to={`/TenderDetails/${itemId}`}>
     <Button
       variant="contained"
       sx={{
@@ -62,6 +65,7 @@ const rows = [
     >
       <GavelIcon style={{ fontSize: 30 }} />
     </Button>
+    </Link>
   ),
   createData(
     "Pens",
@@ -69,6 +73,7 @@ const rows = [
     "Blue",
     "2023-01-23",
     <Typography sx={{ color: "#9C254D" }}>Not Bided</Typography>,
+    <Link to={`/TenderDetails/${itemId}`}>
     <Button
       variant="contained"
       sx={{
@@ -80,6 +85,7 @@ const rows = [
     >
       <GavelIcon style={{ fontSize: 30 }} />
     </Button>
+    </Link>
   ),
 ];
 

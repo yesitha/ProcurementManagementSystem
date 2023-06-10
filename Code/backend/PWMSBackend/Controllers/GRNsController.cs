@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PWMSBackend.Data;
 using PWMSBackend.Models;
@@ -25,10 +20,10 @@ namespace PWMSBackend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GRN>>> GetGRNs()
         {
-          if (_context.GRNs == null)
-          {
-              return NotFound();
-          }
+            if (_context.GRNs == null)
+            {
+                return NotFound();
+            }
             return await _context.GRNs.ToListAsync();
         }
 
@@ -36,10 +31,10 @@ namespace PWMSBackend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<GRN>> GetGRN(string id)
         {
-          if (_context.GRNs == null)
-          {
-              return NotFound();
-          }
+            if (_context.GRNs == null)
+            {
+                return NotFound();
+            }
             var gRN = await _context.GRNs.FindAsync(id);
 
             if (gRN == null)
@@ -86,10 +81,10 @@ namespace PWMSBackend.Controllers
         [HttpPost]
         public async Task<ActionResult<GRN>> PostGRN(GRN gRN)
         {
-          if (_context.GRNs == null)
-          {
-              return Problem("Entity set 'DataContext.GRNs'  is null.");
-          }
+            if (_context.GRNs == null)
+            {
+                return Problem("Entity set 'DataContext.GRNs'  is null.");
+            }
             _context.GRNs.Add(gRN);
             try
             {
