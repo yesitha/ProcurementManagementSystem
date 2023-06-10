@@ -45,6 +45,7 @@ import UploadPaymentVoucher from "./pages/FinanceDivisionAccountant/UploadPaymen
 import AddItemstoGRN from "./pages/FinanceDivisionHOD/AddItemstoGRN/AddItemstoGRN";
 import InvoicestobePaidFin from "./pages/FinanceDivisionHOD/InvoicestobePaid/InvoicestobePaidFin";
 import ReviseVendorSelection from "./pages/TEC Committee/Revise Vendor Selection/ReviseVendorSelection";
+
 import {Route , Routes} from "react-router-dom";
 import FormInputText from "./components/FormComponents/FormInputText";
 import TenderDetails from "./pages/Vendor/Tender Details/TenderDetails";
@@ -55,33 +56,13 @@ const USER_TYPES = {
 
 const CURRENT_USER_TYPE=USER_TYPES.Procurement_Officer;
 
+import BidHistory from "./pages/Vendor/BidHistory/BidHistory";
+import CreateMasterProcurementPlan from "./pages/CreateMasterProcurementPlan/CreateMasterProcurementPlan"
+
+
 function App() {
   return (
     <div>
-
-    <Routes>
-      <Route path="/procurement%20officer%20login" element={<Login/>}></Route>
-      <Route path="/procurement%20officer%20dashboard" element={<Dashboard/>}></Route>
-      <Route path="/Sub%20Procurment%20Plan" element={<CreateSubProcurementPlan/>}></Route>
-      <Route path="/Master%20Procurement%20Plan" element={<MasterProcurementPlan/>}></Route>
-      {/* purchase order page */}
-      <Route path="/Good%20Receive%20Note" element={<GoodsReceivedNote/>}></Route>
-      <Route path="/Notification%Page" element={<NotificationPage/>}></Route>
-      <Route path="/Appoint%20Bid%20Opening%20Committee" element={<CreateModifyBidOpeningCommittee/>}></Route>
-      <Route Path="/Evaluate%20Master%20Procurement%20Plan" element={<MasterProcurementPlanStatus/>}></Route>
-
-
-       <Route path="/BidTender" element={<BidTender/>}></Route>
-       <Route path="/TenderDetails/:itemId" element={<TenderDetails/>}></Route>
-
-      <Route path="*" element={<div>Page Not Found!</div>}></Route>
-    </Routes>
-    </div>
-  );
-}
-export default App;
-
-     
       {/* <Login/> */}
       {/* <SignUp/> */}
       {/* <Dashboard/> */}
@@ -125,8 +106,16 @@ export default App;
       {/* <ReviseVendorSelection/> */}
       {/* <Stock/> */}
       {/* <AddNewItem /> */}
+
       {/* <AddNewItem /> */}
       {/* <TenderDetails/> */}
       {/* <BidTender/> */}
       {/* <Login/>  */}
+
+
+      <CreateMasterProcurementPlan/>
+          </div>
+  );
+}
+export default App;
 
