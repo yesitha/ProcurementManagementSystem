@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PWMSBackend.Data;
 using PWMSBackend.Models;
@@ -25,10 +20,10 @@ namespace PWMSBackend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TecCommittee>>> GetTecCommittees()
         {
-          if (_context.TecCommittees == null)
-          {
-              return NotFound();
-          }
+            if (_context.TecCommittees == null)
+            {
+                return NotFound();
+            }
             return await _context.TecCommittees.ToListAsync();
         }
 
@@ -36,10 +31,10 @@ namespace PWMSBackend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<TecCommittee>> GetTecCommittee(string id)
         {
-          if (_context.TecCommittees == null)
-          {
-              return NotFound();
-          }
+            if (_context.TecCommittees == null)
+            {
+                return NotFound();
+            }
             var tecCommittee = await _context.TecCommittees.FindAsync(id);
 
             if (tecCommittee == null)
@@ -86,10 +81,10 @@ namespace PWMSBackend.Controllers
         [HttpPost]
         public async Task<ActionResult<TecCommittee>> PostTecCommittee(TecCommittee tecCommittee)
         {
-          if (_context.TecCommittees == null)
-          {
-              return Problem("Entity set 'DataContext.TecCommittees'  is null.");
-          }
+            if (_context.TecCommittees == null)
+            {
+                return Problem("Entity set 'DataContext.TecCommittees'  is null.");
+            }
             _context.TecCommittees.Add(tecCommittee);
             try
             {

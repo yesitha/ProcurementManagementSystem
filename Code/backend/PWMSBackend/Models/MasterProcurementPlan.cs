@@ -1,5 +1,4 @@
-﻿using MessagePack;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PWMSBackend.Models
 {
@@ -16,7 +15,7 @@ namespace PWMSBackend.Models
         public FinalizedMasterProcurementPlan FinalizedMasterProcuementPlan { get; set; }
 
         //One to many relationships
-        public ProcurementCommittee ProcurementCommittee { get; set; }
+        public ProcurementCommittee? ProcurementCommittee { get; set; }
 
         public ICollection<SubProcurementPlan> SubProcurementPlans { get; set; }
 
@@ -28,6 +27,5 @@ namespace PWMSBackend.Models
 
         [ForeignKey("BidOpeningCommittee")]
         public string BidOpeningCommitteeId { get; set; }
-
     }
 }

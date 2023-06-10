@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./styles.module.css";
+import styles from "./AddNewItem.module.css";
 import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import TextField from "@mui/material/TextField";
 import { Paper } from "@mui/material";
@@ -63,7 +63,10 @@ export default function AddNewItem() {
               />
             </div>
             <div className={styles.dropdown}>
-              <SelectDropDown list={list} />
+              <Typography sx={{marginLeft:"10px",marginTop:"5px"}}>ITEM CATEGORY</Typography>
+              <SelectDropDown 
+              label="Item Category"
+              list={list} />
             </div>
           </div>
           <div className={styles.bodyContent}>

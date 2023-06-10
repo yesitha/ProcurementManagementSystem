@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PWMSBackend.Data;
 using PWMSBackend.Models;
@@ -25,10 +20,10 @@ namespace PWMSBackend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ApprovedItemPurchaseOrder>>> GetApprovedItemPurchaseOrders()
         {
-          if (_context.ApprovedItemPurchaseOrders == null)
-          {
-              return NotFound();
-          }
+            if (_context.ApprovedItemPurchaseOrders == null)
+            {
+                return NotFound();
+            }
             return await _context.ApprovedItemPurchaseOrders.ToListAsync();
         }
 
@@ -36,10 +31,10 @@ namespace PWMSBackend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ApprovedItemPurchaseOrder>> GetApprovedItemPurchaseOrder(string id)
         {
-          if (_context.ApprovedItemPurchaseOrders == null)
-          {
-              return NotFound();
-          }
+            if (_context.ApprovedItemPurchaseOrders == null)
+            {
+                return NotFound();
+            }
             var approvedItemPurchaseOrder = await _context.ApprovedItemPurchaseOrders.FindAsync(id);
 
             if (approvedItemPurchaseOrder == null)
@@ -86,10 +81,10 @@ namespace PWMSBackend.Controllers
         [HttpPost]
         public async Task<ActionResult<ApprovedItemPurchaseOrder>> PostApprovedItemPurchaseOrder(ApprovedItemPurchaseOrder approvedItemPurchaseOrder)
         {
-          if (_context.ApprovedItemPurchaseOrders == null)
-          {
-              return Problem("Entity set 'DataContext.ApprovedItemPurchaseOrders'  is null.");
-          }
+            if (_context.ApprovedItemPurchaseOrders == null)
+            {
+                return Problem("Entity set 'DataContext.ApprovedItemPurchaseOrders'  is null.");
+            }
             _context.ApprovedItemPurchaseOrders.Add(approvedItemPurchaseOrder);
             try
             {

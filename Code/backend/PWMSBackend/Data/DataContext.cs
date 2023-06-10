@@ -45,7 +45,9 @@ namespace PWMSBackend.Data
         public DbSet<Vendor> Vendors { get; set; } = null!;
         public DbSet<VendorhasItem> VendorhasItems { get; set; } = null!;
         public DbSet<VendorPlaceBidItem> VendorPlaceBidItems { get; set; } = null!;
+        public DbSet<Users> Users { get; set; } = null!;
 
+        public DbSet<UserNotification> UserNotifications { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -55,100 +57,127 @@ namespace PWMSBackend.Data
             modelBuilder.Entity<ApprovedItemPurchaseOrder>()
                 .HasOne(a => a.ApprovedItem)
                 .WithMany(ab => ab.ApprovedItemPurchaseOrders)
-                .HasForeignKey(b => b.PoId);
+                .HasForeignKey(a => a.ItemId);
             modelBuilder.Entity<ApprovedItemPurchaseOrder>()
                 .HasOne(b => b.PurchaseOrder)
                 .WithMany(ab => ab.ApprovedItemPurchaseOrders)
-                .HasForeignKey(a => a.ItemId);
+                .HasForeignKey(b => b.PoId);
 
             modelBuilder.Entity<CommitteeMemberCommittee>()
                 .HasKey(cd => new { cd.EmployeeId, cd.CommitteeId });
             modelBuilder.Entity<CommitteeMemberCommittee>()
                 .HasOne(c => c.CommitteeMember)
                 .WithMany(cd => cd.CommitteeMembersCommittees)
-                .HasForeignKey(d => d.CommitteeId);
+                .HasForeignKey(c => c.EmployeeId);
             modelBuilder.Entity<CommitteeMemberCommittee>()
                 .HasOne(d => d.Committee)
                 .WithMany(cd => cd.CommitteeMembersCommittees)
-                .HasForeignKey(c => c.EmployeeId);
+                .HasForeignKey(d => d.CommitteeId);
 
             modelBuilder.Entity<GRNItemTobeShipped>()
                .HasKey(ea => new { ea.GrnId, ea.ItemId });
             modelBuilder.Entity<GRNItemTobeShipped>()
                 .HasOne(e => e.GRN)
                 .WithMany(ea => ea.GRNItemTobeShippeds)
-                .HasForeignKey(a => a.ItemId);
+                .HasForeignKey(e => e.GrnId);
             modelBuilder.Entity<GRNItemTobeShipped>()
                 .HasOne(a => a.ItemTobeShipped)
                 .WithMany(ea => ea.GRNItemTobeShippeds)
-                .HasForeignKey(e => e.GrnId);
+                .HasForeignKey(a => a.ItemId);
 
             modelBuilder.Entity<MasterProcurementPlanStatus>()
                .HasKey(fg => new { fg.MppId, fg.StatusId });
             modelBuilder.Entity<MasterProcurementPlanStatus>()
                 .HasOne(f => f.MasterProcurementPlan)
                 .WithMany(fg => fg.MasterProcurementPlanStatuses)
-                .HasForeignKey(g => g.StatusId);
+                .HasForeignKey(f => f.MppId);
             modelBuilder.Entity<MasterProcurementPlanStatus>()
                 .HasOne(g => g.Status)
                 .WithMany(fg => fg.MasterProcurementPlanStatuses)
-                .HasForeignKey(f => f.MppId);
+                .HasForeignKey(g => g.StatusId);
+                
 
             modelBuilder.Entity<PurchaseOrder_ItemTobeShipped>()
                .HasKey(ba => new { ba.PoId, ba.ItemId });
             modelBuilder.Entity<PurchaseOrder_ItemTobeShipped>()
                 .HasOne(b => b.PurchaseOrder)
                 .WithMany(ba => ba.purchaseOrder_ItemTobeShippeds)
-                .HasForeignKey(a => a.ItemId);
+                .HasForeignKey(b => b.PoId);
             modelBuilder.Entity<PurchaseOrder_ItemTobeShipped>()
                 .HasOne(a => a.ItemTobeShipped)
                 .WithMany(ba => ba.PurchaseOrder_ItemTobeShippeds)
-                .HasForeignKey(b => b.PoId);
+                .HasForeignKey(a => a.ItemId);
+                
 
             modelBuilder.Entity<SubProcurementApprovedItems>()
                 .HasKey(ha => new { ha.SppId, ha.ItemId });
             modelBuilder.Entity<SubProcurementApprovedItems>()
                 .HasOne(h => h.SubProcurementPlan)
                 .WithMany(ha => ha.SubProcurementApprovedItems)
-                .HasForeignKey(a => a.ItemId);
+                .HasForeignKey(h => h.SppId);
             modelBuilder.Entity<SubProcurementApprovedItems>()
                 .HasOne(a => a.ApprovedItem)
                 .WithMany(ha => ha.SubProcurementApprovedItems)
-                .HasForeignKey(h => h.SppId);
+                .HasForeignKey(a => a.ItemId);
+                
 
             modelBuilder.Entity<SubProcurementPlanItem>()
                 .HasKey(ha => new { ha.SppId, ha.ItemId });
             modelBuilder.Entity<SubProcurementPlanItem>()
                 .HasOne(h => h.SubProcurementPlan)
                 .WithMany(ha => ha.subProcurementPlanItems)
-                .HasForeignKey(a => a.ItemId);
+                .HasForeignKey(h => h.SppId);
             modelBuilder.Entity<SubProcurementPlanItem>()
                 .HasOne(a => a.Item)
                 .WithMany(ha => ha.subProcurementPlanItems)
-                .HasForeignKey(h => h.SppId);
+                .HasForeignKey(a => a.ItemId);
+                
 
             modelBuilder.Entity<VendorhasItem>()
                 .HasKey(ia => new { ia.VendorId, ia.ItemId });
             modelBuilder.Entity<VendorhasItem>()
                 .HasOne(i => i.Vendor)
                 .WithMany(ia => ia.VendorhasItems)
-                .HasForeignKey(a => a.ItemId);
+                .HasForeignKey(i => i.VendorId);
             modelBuilder.Entity<VendorhasItem>()
                 .HasOne(a => a.Item)
                 .WithMany(ia => ia.VendorhasItems)
-                .HasForeignKey(i => i.VendorId);
+                .HasForeignKey(a => a.ItemId);
+                
 
             modelBuilder.Entity<VendorPlaceBidItem>()
                 .HasKey(ia => new { ia.VendorId, ia.ItemId });
             modelBuilder.Entity<VendorPlaceBidItem>()
                 .HasOne(i => i.Vendor)
                 .WithMany(ia => ia.VendorPlaceBidItems)
-                .HasForeignKey(a => a.ItemId);
+                .HasForeignKey(i => i.VendorId);
             modelBuilder.Entity<VendorPlaceBidItem>()
                 .HasOne(a => a.ApprovedItem)
                 .WithMany(ia => ia.VendorPlaceBidItems)
-                .HasForeignKey(i => i.VendorId);
+                .HasForeignKey(a => a.ItemId);
+                
 
+            //modelBuilder.Entity<MasterProcurementPlan>()
+            //    .HasOne(ia => ia.ProcurementCommittee)
+            //    .WithMany(ia => ia.MasterProcurementPlans)
+            //    .HasForeignKey(i => i.MppId);
+
+            //modelBuilder.Entity<MasterProcurementPlan>()
+            //    .HasKey(ia => new { ia.MppId, ia.CommitteeId });
+            //modelBuilder.Entity<MasterProcurementPlanhasCommittee>()
+            //    .HasOne(i => i.CommitteeId)
+            //    .WithMany(ia => ia.VendorhasItems)
+            //    .HasForeignKey(a => a.ItemId);
+            //modelBuilder.Entity<VendorhasItem>()
+            //    .HasOne(a => a.Item)
+            //    .WithMany(ia => ia.VendorhasItems)
+            //    .HasForeignKey(i => i.VendorId);
+
+            //modelBuilder.Entity<ProcurementCommittee>()
+            //    .HasMany(e => e.MasterProcurementPlans)
+            //    .WithOne(e => e.ProcurementCommittee)
+            //    .HasForeignKey(e => e.MppId)
+            //    .IsRequired();
             //===============================================================
             //modelBuilder.Entity<ApprovedItem>()
             //    .HasKey(a => a.ItemId);
@@ -192,6 +221,8 @@ namespace PWMSBackend.Data
             //    .HasKey(p => p.CommitteeId);
             modelBuilder.Entity<ProcurementEmployee>()
                 .HasKey(p => p.EmployeeId);
+            modelBuilder.Entity<Division>()
+                .HasKey(d => d.DivisionId);
             modelBuilder.Entity<PurchaseOrder>()
                 .HasKey(p => p.PoId);
             modelBuilder.Entity<Status>()
@@ -202,9 +233,10 @@ namespace PWMSBackend.Data
             //    .HasKey(t => t.CommitteeId);
             modelBuilder.Entity<Vendor>()
                 .HasKey(v => v.VendorId);
-          
+            modelBuilder.Entity<Users>()
+                .HasKey(v => v.UserId);
+            modelBuilder.Entity<UserNotification>()
+                .HasKey(v => v.notificationId);
         }
     }
 }
-
-

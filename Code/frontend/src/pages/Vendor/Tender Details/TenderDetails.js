@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./TenderDetails.module.css";
 import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
+import { useParams } from "react-router-dom";
 import {
   Button,
   IconButton,
@@ -16,6 +17,23 @@ import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import GavelIcon from "@mui/icons-material/Gavel";
+import axios from "axios";
+import { useEffect } from "react";
+import { useState } from "react";
+
+///////////////Add axios/////////////
+async function getTenderItemDetails(id) {
+  try {
+    const response = await axios.get(`https://localhost:7102/api/Items/TenderItemDetails/${id}`);
+   
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+
 
 const columns = [
   { id: "DOC", Width: 200, align: "center" },
@@ -50,6 +68,27 @@ const rows = [
 ];
 
 function TenderDetails() {
+
+  
+  
+  const { itemId } = useParams();
+  const [data, setData] = useState(null);
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getTenderItemDetails(itemId);
+        setData(response);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  console.log(data);
+   
+  
   const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
   const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
   const user = {
@@ -63,7 +102,7 @@ function TenderDetails() {
     gender: "Male",
     profilePic: "https://www.w3schools.com/howto/img_avatar.png",
   };
-
+if(data!=null){
   return (
     <div style={{ overflowX: "hidden" }}>
       <div className={styles.sideNavBar}>
@@ -85,7 +124,7 @@ function TenderDetails() {
             >
               <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
             </IconButton>
-            <h1 className={styles.Header}> [Item Name]</h1>
+            <h1 className={styles.Header}> {data.itemName} </h1>
           </div>
         </div>
 
@@ -112,6 +151,7 @@ function TenderDetails() {
               multiline
               rows={4}
               sx={{ width: 500 }}
+              value={data.specification}
             />
             DUE DATE
             <TextField
@@ -227,6 +267,7 @@ function TenderDetails() {
                 height: 150,
                 borderRadius: "20px",
               }}
+              
             >
               <Container display="flex" flexDirection="column">
                 <GavelIcon style={{ fontSize: 40 }} />
@@ -238,6 +279,7 @@ function TenderDetails() {
       </Container>
     </div>
   );
+            }
 }
 
 export default TenderDetails;
