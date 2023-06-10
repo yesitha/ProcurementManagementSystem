@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PWMSBackend.Data;
 using PWMSBackend.Models;
@@ -20,10 +25,10 @@ namespace PWMSBackend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GRNItemTobeShipped>>> GetGRNItemsToBeShipped()
         {
-            if (_context.GRNItemsToBeShipped == null)
-            {
-                return NotFound();
-            }
+          if (_context.GRNItemsToBeShipped == null)
+          {
+              return NotFound();
+          }
             return await _context.GRNItemsToBeShipped.ToListAsync();
         }
 
@@ -31,10 +36,10 @@ namespace PWMSBackend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<GRNItemTobeShipped>> GetGRNItemTobeShipped(string id)
         {
-            if (_context.GRNItemsToBeShipped == null)
-            {
-                return NotFound();
-            }
+          if (_context.GRNItemsToBeShipped == null)
+          {
+              return NotFound();
+          }
             var gRNItemTobeShipped = await _context.GRNItemsToBeShipped.FindAsync(id);
 
             if (gRNItemTobeShipped == null)
@@ -81,10 +86,10 @@ namespace PWMSBackend.Controllers
         [HttpPost]
         public async Task<ActionResult<GRNItemTobeShipped>> PostGRNItemTobeShipped(GRNItemTobeShipped gRNItemTobeShipped)
         {
-            if (_context.GRNItemsToBeShipped == null)
-            {
-                return Problem("Entity set 'DataContext.GRNItemsToBeShipped'  is null.");
-            }
+          if (_context.GRNItemsToBeShipped == null)
+          {
+              return Problem("Entity set 'DataContext.GRNItemsToBeShipped'  is null.");
+          }
             _context.GRNItemsToBeShipped.Add(gRNItemTobeShipped);
             try
             {

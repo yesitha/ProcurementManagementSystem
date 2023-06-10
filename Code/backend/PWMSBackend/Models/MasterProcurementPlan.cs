@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using MessagePack;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PWMSBackend.Models
 {
@@ -27,5 +28,6 @@ namespace PWMSBackend.Models
 
         [ForeignKey("BidOpeningCommittee")]
         public string BidOpeningCommitteeId { get; set; }
+
     }
 }
