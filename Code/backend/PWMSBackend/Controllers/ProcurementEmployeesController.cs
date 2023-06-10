@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PWMSBackend.Data;
 using PWMSBackend.Models;
@@ -20,10 +25,10 @@ namespace PWMSBackend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ProcurementEmployee>>> GetProcurementEmployees()
         {
-            if (_context.ProcurementEmployees == null)
-            {
-                return NotFound();
-            }
+          if (_context.ProcurementEmployees == null)
+          {
+              return NotFound();
+          }
             return await _context.ProcurementEmployees.ToListAsync();
         }
 
@@ -31,10 +36,10 @@ namespace PWMSBackend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ProcurementEmployee>> GetProcurementEmployee(string id)
         {
-            if (_context.ProcurementEmployees == null)
-            {
-                return NotFound();
-            }
+          if (_context.ProcurementEmployees == null)
+          {
+              return NotFound();
+          }
             var procurementEmployee = await _context.ProcurementEmployees.FindAsync(id);
 
             if (procurementEmployee == null)
@@ -81,10 +86,10 @@ namespace PWMSBackend.Controllers
         [HttpPost]
         public async Task<ActionResult<ProcurementEmployee>> PostProcurementEmployee(ProcurementEmployee procurementEmployee)
         {
-            if (_context.ProcurementEmployees == null)
-            {
-                return Problem("Entity set 'DataContext.ProcurementEmployees'  is null.");
-            }
+          if (_context.ProcurementEmployees == null)
+          {
+              return Problem("Entity set 'DataContext.ProcurementEmployees'  is null.");
+          }
             _context.ProcurementEmployees.Add(procurementEmployee);
             try
             {

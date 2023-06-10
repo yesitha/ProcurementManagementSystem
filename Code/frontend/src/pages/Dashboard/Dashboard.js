@@ -96,6 +96,7 @@ function Dashboard() {
                   <h5 className={styles.confuciusName}>-{quote.author}-</h5>
                 )}
 
+
                 <Routerlink to={'/view-notification'}>
                   <Button
                     variant="contained"
@@ -109,6 +110,7 @@ function Dashboard() {
                     View New <br /> Notifications
                   </Button>
                 </Routerlink>
+
               </div>
             </Paper>
           </div>
@@ -155,6 +157,7 @@ function Dashboard() {
                 {x.displayName}
               </Button>
             </Routerlink>
+
           ))}
         </div>
         <div className={styles.lowerSection}>

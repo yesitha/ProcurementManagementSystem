@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PWMSBackend.Data;
 using PWMSBackend.Models;
@@ -20,10 +25,10 @@ namespace PWMSBackend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ApprovedItem>>> GetApprovedItems()
         {
-            if (_context.ApprovedItems == null)
-            {
-                return NotFound();
-            }
+          if (_context.ApprovedItems == null)
+          {
+              return NotFound();
+          }
             return await _context.ApprovedItems.ToListAsync();
         }
 
@@ -31,10 +36,10 @@ namespace PWMSBackend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ApprovedItem>> GetApprovedItem(string id)
         {
-            if (_context.ApprovedItems == null)
-            {
-                return NotFound();
-            }
+          if (_context.ApprovedItems == null)
+          {
+              return NotFound();
+          }
             var approvedItem = await _context.ApprovedItems.FindAsync(id);
 
             if (approvedItem == null)
@@ -81,10 +86,10 @@ namespace PWMSBackend.Controllers
         [HttpPost]
         public async Task<ActionResult<ApprovedItem>> PostApprovedItem(ApprovedItem approvedItem)
         {
-            if (_context.ApprovedItems == null)
-            {
-                return Problem("Entity set 'DataContext.ApprovedItems'  is null.");
-            }
+          if (_context.ApprovedItems == null)
+          {
+              return Problem("Entity set 'DataContext.ApprovedItems'  is null.");
+          }
             _context.ApprovedItems.Add(approvedItem);
             try
             {

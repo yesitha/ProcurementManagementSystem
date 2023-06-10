@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PWMSBackend.Data;
 using PWMSBackend.Models;
@@ -20,10 +25,10 @@ namespace PWMSBackend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MasterProcurementPlan>>> GetMasterProcurementPlans()
         {
-            if (_context.MasterProcurementPlans == null)
-            {
-                return NotFound();
-            }
+          if (_context.MasterProcurementPlans == null)
+          {
+              return NotFound();
+          }
             return await _context.MasterProcurementPlans.ToListAsync();
         }
 
@@ -31,10 +36,10 @@ namespace PWMSBackend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<MasterProcurementPlan>> GetMasterProcurementPlan(string id)
         {
-            if (_context.MasterProcurementPlans == null)
-            {
-                return NotFound();
-            }
+          if (_context.MasterProcurementPlans == null)
+          {
+              return NotFound();
+          }
             var masterProcurementPlan = await _context.MasterProcurementPlans.FindAsync(id);
 
             if (masterProcurementPlan == null)
@@ -81,10 +86,10 @@ namespace PWMSBackend.Controllers
         [HttpPost]
         public async Task<ActionResult<MasterProcurementPlan>> PostMasterProcurementPlan(MasterProcurementPlan masterProcurementPlan)
         {
-            if (_context.MasterProcurementPlans == null)
-            {
-                return Problem("Entity set 'DataContext.MasterProcurementPlans'  is null.");
-            }
+          if (_context.MasterProcurementPlans == null)
+          {
+              return Problem("Entity set 'DataContext.MasterProcurementPlans'  is null.");
+          }
             _context.MasterProcurementPlans.Add(masterProcurementPlan);
             try
             {
