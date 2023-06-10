@@ -45,6 +45,8 @@ import UploadPaymentVoucher from "./pages/FinanceDivisionAccountant/UploadPaymen
 import AddItemstoGRN from "./pages/FinanceDivisionHOD/AddItemstoGRN/AddItemstoGRN";
 import InvoicestobePaidFin from "./pages/FinanceDivisionHOD/InvoicestobePaid/InvoicestobePaidFin";
 import ReviseVendorSelection from "./pages/TEC Committee/Revise Vendor Selection/ReviseVendorSelection";
+import BidHistory from "./pages/Vendor/BidHistory/BidHistory";
+import CreateMasterProcurementPlan from "./pages/CreateMasterProcurementPlan/CreateMasterProcurementPlan"
 import {Route , Routes} from "react-router-dom";
 import FormInputText from "./components/FormComponents/FormInputText";
 import TenderDetails from "./pages/Vendor/Tender Details/TenderDetails";
@@ -125,8 +127,3 @@ export default App;
       {/* <ReviseVendorSelection/> */}
       {/* <Stock/> */}
       {/* <AddNewItem /> */}
-      {/* <AddNewItem /> */}
-      {/* <TenderDetails/> */}
-      {/* <BidTender/> */}
-      {/* <Login/>  */}
-

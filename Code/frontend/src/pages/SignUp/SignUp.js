@@ -14,6 +14,8 @@ import { Card, CardContent, Divider } from "@mui/material";
 import "./SignUp.css";
 import logo from "../../images/logo.png";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import { useForm } from "react-hook-form";
+import { DevTool } from "@hookform/devtools";
 
 const theme = createTheme({
   typography: {
@@ -34,19 +36,18 @@ const theme = createTheme({
 });
 
 export default function SignIn() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+  const onSubmit = (data) => {
+    console.log("Form Submitted", data);
   };
 
+  const form = useForm();
+  const { register, handleSubmit, control, formState } = form;
+  const { errors,isValid } = formState;
+
   return (
-    <div id="outer">
-      <Card id="inner" variant="outlined">
-        <CardContent>
+    <div style={{ display: 'flex', justifyContent: 'center' ,padding:75}}>
+      <Card variant="outlined" sx={{ minWidth: 275,maxWidth:600}}>
+        <CardContent  >
           <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="md">
               <CssBaseline />
@@ -81,9 +82,11 @@ export default function SignIn() {
                   </Grid>
                 </Grid>
 
+                {/* Form Start */}
+
                 <Box
                   component="form"
-                  onSubmit={handleSubmit}
+                  onSubmit={handleSubmit(onSubmit)}
                   noValidate
                   sx={{ mt: 1 }}
                 >
@@ -97,50 +100,51 @@ export default function SignIn() {
                   <Grid container sx={{ justifyContent: "space-around" }}>
                     <Grid item md={5} xs={11}>
                       <TextField
+                        {...register("companyName", {
+                          required: "Company Name Required",
+                        })}
                         margin="normal"
-                        required
                         fullWidth
-                        id="email"
+                        id="companyName"
                         label="Company full name"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
+                        name="companyName"
                       />
+                      <p className="error">{errors.companyName?.message}</p>
                     </Grid>
                     <Grid item md={5} xs={11}>
                       <TextField
+                        {...register("registrationType")}
                         margin="normal"
-                        required
                         fullWidth
-                        id="email"
+                        id="registrationType"
                         label="Registration Type"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
+                        name="registrationType"
                       />
+                      <p className="error">
+                        {errors.registrationType?.message}
+                      </p>
                     </Grid>
                     <Grid item md={5} xs={11}>
                       <TextField
+                        {...register("businessRegNo", {
+                          required: "Business Registration No is required",
+                        })}
                         margin="normal"
-                        required
                         fullWidth
-                        id="email"
+                        id="businessRegNo"
                         label="Business Registration No"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
+                        name="businessRegNo"
                       />
+                      <p className="error">{errors.businessRegNo?.message}</p>
                     </Grid>
                     <Grid item md={5} xs={11}>
                       <TextField
+                        {...register("noofEmployes")}
                         margin="normal"
-                        required
                         fullWidth
-                        id="email"
+                        id="noofEmployes"
                         label="No of employees"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
+                        name="noofEmployes"
                       />
                     </Grid>
                   </Grid>
@@ -153,79 +157,74 @@ export default function SignIn() {
                     </Grid>
                   </Grid>
                   <Grid container sx={{ justifyContent: "space-around" }}>
-                    
                     <Grid item md={5} xs={11}>
                       <TextField
+                        {...register("fName", {
+                          required: "Firstname is required",
+                        })}
                         margin="normal"
-                        required
                         fullWidth
-                        id="email"
+                        id="fName"
                         label="First name"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
+                        name="fName"
                       />
+                      <p className="error">{errors.fName?.message}</p>
                     </Grid>
                     <Grid item md={5} xs={11}>
                       <TextField
+                        {...register("lName", {
+                          required: "Last Name is required",
+                        })}
                         margin="normal"
-                        required
                         fullWidth
-                        id="email"
+                        id="lName"
                         label="Last name"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
+                        name="lName"
                       />
+                      <p className="error">{errors.lName?.message}</p>
                     </Grid>
                     <Grid item md={5} xs={11}>
                       <TextField
+                        {...register("telNo", {
+                          required: "Telephone no is required",
+                        })}
                         margin="normal"
-                        required
                         fullWidth
-                        id="email"
+                        id="telNo"
                         label="Contact no"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
+                        name="telNo"
                       />
+                      <p className="error">{errors.telNo?.message}</p>
                     </Grid>
                     <Grid item md={5} xs={11}>
                       <TextField
+                        {...register("email", {
+                          required: "Email Cant be Empty!",
+                          pattern: {
+                            value:
+                              /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                            message: "Email format Error!",
+                          },
+                        })}
                         margin="normal"
-                        required
                         fullWidth
                         id="email"
-                        label="User name"
+                        label="Email Address"
                         name="email"
-                        autoComplete="email"
-                        autoFocus
                       />
+                      <p className="error">{errors.email?.message}</p>
                     </Grid>
                     <Grid item md={5} xs={11}>
                       <TextField
+                        {...register("jobTitle")}
                         margin="normal"
-                        required
                         fullWidth
-                        id="email"
-                        label="Email"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
-                      />
-                    </Grid>
-                    <Grid item md={5} xs={11}>
-                      <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="email"
+                        id="jobTitle"
                         label="Job title"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
+                        name="jobTitle"
                       />
                     </Grid>
+                    <Grid item md={5} xs={11}></Grid>
                   </Grid>
                   <Grid container sx={{ justifyContent: "space-between" }}>
                     <Grid item>
@@ -237,75 +236,67 @@ export default function SignIn() {
                   <Grid container sx={{ justifyContent: "space-around" }}>
                     <Grid item md={5} xs={11}>
                       <TextField
+                        {...register("address1", {
+                          required: "Address Required",
+                        })}
                         margin="normal"
-                        required
                         fullWidth
-                        id="email"
+                        id="address1"
                         label="Address line 1"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
+                        name="address1"
                       />
+                      <p className="error">{errors.address1?.message}</p>
                     </Grid>
                     <Grid item md={5} xs={11}>
                       <TextField
+                        {...register("address2")}
                         margin="normal"
-                        required
                         fullWidth
-                        id="email"
+                        id="address2"
                         label="Address line 2"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
+                        name="address2"
                       />
                     </Grid>
                     <Grid item md={5} xs={11}>
                       <TextField
+                        {...register("address3")}
                         margin="normal"
-                        required
                         fullWidth
-                        id="email"
+                        id="address3"
                         label="Address line 3"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
+                        name="address3"
                       />
                     </Grid>
                     <Grid item md={5} xs={11}>
                       <TextField
+                        {...register("city", { required: "City Required" })}
                         margin="normal"
-                        required
                         fullWidth
-                        id="email"
+                        id="city"
                         label="City"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
+                        name="city"
                       />
+                      <p className="error">{errors.city?.message}</p>
                     </Grid>
                     <Grid item md={5} xs={11}>
                       <TextField
+                        {...register("state")}
                         margin="normal"
-                        required
                         fullWidth
-                        id="email"
+                        id="state"
                         label="State"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
+                        name="state"
                       />
                     </Grid>
 
                     <Grid item md={5} xs={11}>
                       <TextField
+                        {...register("postalCode")}
                         margin="normal"
-                        required
                         fullWidth
-                        id="email"
+                        id="postalCode"
                         label="Postal code"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
+                        name="postalCode"
                       />
                     </Grid>
                   </Grid>
@@ -368,6 +359,7 @@ export default function SignIn() {
                   </div>
                   <div id="outerButton">
                     <Button
+                      disabled={!isValid}
                       type="submit"
                       variant="contained"
                       sx={{ mt: 2, mb: 2, borderRadius: 4 }}
@@ -376,6 +368,7 @@ export default function SignIn() {
                     </Button>
                   </div>
                 </Box>
+                <DevTool control={control} />
               </Box>
             </Container>
           </ThemeProvider>
