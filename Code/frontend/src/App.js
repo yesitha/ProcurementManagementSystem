@@ -50,34 +50,41 @@ import ReviseVendorSelection from "./pages/TEC Committee/Revise Vendor Selection
 
 
 import {Route , Routes} from "react-router-dom";
-import FormInputText from "./components/FormComponents/FormInputText";
 import TenderDetails from "./pages/Vendor/Tender Details/TenderDetails";
-
-const USER_TYPES = {
-  Procurement_Officer:"Procurement Officer"
-}
-
-const CURRENT_USER_TYPE=USER_TYPES.Procurement_Officer;
-
-import BidHistory from "./pages/Vendor/BidHistory/BidHistory";
-import CreateMasterProcurementPlan from "./pages/CreateMasterProcurementPlan/CreateMasterProcurementPlan"
-
-
-import BidHistory from "./pages/Vendor/BidHistory/BidHistory";
-import CreateMasterProcurementPlan from "./pages/CreateMasterProcurementPlan/CreateMasterProcurementPlan"
-
-
-import BidHistory from "./pages/Vendor/BidHistory/BidHistory";
-import CreateMasterProcurementPlan from "./pages/CreateMasterProcurementPlan/CreateMasterProcurementPlan"
-
-
-import BidHistory from "./pages/Vendor/BidHistory/BidHistory";
-import CreateMasterProcurementPlan from "./pages/CreateMasterProcurementPlan/CreateMasterProcurementPlan"
+import SideNavBar from "./components/SideNavigationBar/SideNavBar";
+import { user, list1, list2 } from './pages/Usermanage';
 
 
 function App() {
   return (
     <div>
+      <SideNavBar list1={list1} list2={list2} user={user} />
+
+      <Routes>
+        <Route path='/' element={<Login/>}/>
+
+        <Route path='/dashboard' element={<Dashboard/>}/>
+        <Route path='/view-notification' element={<NotificationPage/>}/>
+        <Route path='/item-rejected' element={<AddItemtoSubProcurementPlan/>}/>
+
+       
+        <Route path='/SubProcurmentPlan' element={<CreateSubProcurementPlan/>}/>
+        <Route path="*" element={<p>Page not found</p>}></Route> 
+
+
+
+      </Routes>
+      
+
+
+
+
+
+
+
+
+
+
       {/* <Login/> */}
       {/* <SignUp/> */}
       {/* <Dashboard/> */}
@@ -121,23 +128,8 @@ function App() {
       {/* <ReviseVendorSelection/> */}
       {/* <Stock/> */}
       {/* <AddNewItem /> */}
+      </div>
+  )
+  }
+  export default App;
 
-
-
-
-      {/* <AddNewItem /> */}
-      {/* <TenderDetails/> */}
-      {/* <BidTender/> */}
-      {/* <Login/>  */}
-
-
-
-
-
-
-
-      <CreateMasterProcurementPlan/>
-          </div>
-  );
-}
-export default App;
