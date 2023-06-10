@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PWMSBackend.Data;
 
@@ -11,9 +12,10 @@ using PWMSBackend.Data;
 namespace PWMSBackend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230609125134_fix1")]
+    partial class fix1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -524,39 +526,6 @@ namespace PWMSBackend.Migrations
                     b.HasIndex("ItemId");
 
                     b.ToTable("SubProcurementPlanItems");
-                });
-
-            modelBuilder.Entity("PWMSBackend.Models.UserNotification", b =>
-                {
-                    b.Property<int>("notificationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("notificationId"), 1L, 1);
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<bool>("isRead")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("message")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("timeStamp")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("notificationId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserNotifications");
                 });
 
             modelBuilder.Entity("PWMSBackend.Models.Users", b =>
@@ -1086,17 +1055,6 @@ namespace PWMSBackend.Migrations
                     b.Navigation("SubProcurementPlan");
                 });
 
-            modelBuilder.Entity("PWMSBackend.Models.UserNotification", b =>
-                {
-                    b.HasOne("PWMSBackend.Models.Users", "User")
-                        .WithMany("UserNotifications")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("PWMSBackend.Models.VendorhasItem", b =>
                 {
                     b.HasOne("PWMSBackend.Models.Item", "Item")
@@ -1248,11 +1206,6 @@ namespace PWMSBackend.Migrations
                     b.Navigation("SubProcurementApprovedItems");
 
                     b.Navigation("subProcurementPlanItems");
-                });
-
-            modelBuilder.Entity("PWMSBackend.Models.Users", b =>
-                {
-                    b.Navigation("UserNotifications");
                 });
 
             modelBuilder.Entity("PWMSBackend.Models.Vendor", b =>

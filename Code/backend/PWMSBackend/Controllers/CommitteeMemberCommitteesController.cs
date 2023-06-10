@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PWMSBackend.Data;
 using PWMSBackend.Models;
@@ -25,10 +20,10 @@ namespace PWMSBackend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CommitteeMemberCommittee>>> GetCommitteeMemberCommittees()
         {
-          if (_context.CommitteeMemberCommittees == null)
-          {
-              return NotFound();
-          }
+            if (_context.CommitteeMemberCommittees == null)
+            {
+                return NotFound();
+            }
             return await _context.CommitteeMemberCommittees.ToListAsync();
         }
 
@@ -36,10 +31,10 @@ namespace PWMSBackend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<CommitteeMemberCommittee>> GetCommitteeMemberCommittee(string id)
         {
-          if (_context.CommitteeMemberCommittees == null)
-          {
-              return NotFound();
-          }
+            if (_context.CommitteeMemberCommittees == null)
+            {
+                return NotFound();
+            }
             var committeeMemberCommittee = await _context.CommitteeMemberCommittees.FindAsync(id);
 
             if (committeeMemberCommittee == null)
@@ -86,10 +81,10 @@ namespace PWMSBackend.Controllers
         [HttpPost]
         public async Task<ActionResult<CommitteeMemberCommittee>> PostCommitteeMemberCommittee(CommitteeMemberCommittee committeeMemberCommittee)
         {
-          if (_context.CommitteeMemberCommittees == null)
-          {
-              return Problem("Entity set 'DataContext.CommitteeMemberCommittees'  is null.");
-          }
+            if (_context.CommitteeMemberCommittees == null)
+            {
+                return Problem("Entity set 'DataContext.CommitteeMemberCommittees'  is null.");
+            }
             _context.CommitteeMemberCommittees.Add(committeeMemberCommittee);
             try
             {

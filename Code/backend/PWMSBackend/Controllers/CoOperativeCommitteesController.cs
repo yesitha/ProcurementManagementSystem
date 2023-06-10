@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PWMSBackend.Data;
 using PWMSBackend.Models;
@@ -25,10 +20,10 @@ namespace PWMSBackend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CoOperativeCommittee>>> GetCoOperativeCommittees()
         {
-          if (_context.CoOperativeCommittees == null)
-          {
-              return NotFound();
-          }
+            if (_context.CoOperativeCommittees == null)
+            {
+                return NotFound();
+            }
             return await _context.CoOperativeCommittees.ToListAsync();
         }
 
@@ -36,10 +31,10 @@ namespace PWMSBackend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<CoOperativeCommittee>> GetCoOperativeCommittee(string id)
         {
-          if (_context.CoOperativeCommittees == null)
-          {
-              return NotFound();
-          }
+            if (_context.CoOperativeCommittees == null)
+            {
+                return NotFound();
+            }
             var coOperativeCommittee = await _context.CoOperativeCommittees.FindAsync(id);
 
             if (coOperativeCommittee == null)
@@ -86,10 +81,10 @@ namespace PWMSBackend.Controllers
         [HttpPost]
         public async Task<ActionResult<CoOperativeCommittee>> PostCoOperativeCommittee(CoOperativeCommittee coOperativeCommittee)
         {
-          if (_context.CoOperativeCommittees == null)
-          {
-              return Problem("Entity set 'DataContext.CoOperativeCommittees'  is null.");
-          }
+            if (_context.CoOperativeCommittees == null)
+            {
+                return Problem("Entity set 'DataContext.CoOperativeCommittees'  is null.");
+            }
             _context.CoOperativeCommittees.Add(coOperativeCommittee);
             try
             {

@@ -2,23 +2,53 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PWMSBackend.Data;
+using PWMSBackend.DTOs.Outgoing;
 using PWMSBackend.Models;
+
+
 
 namespace PWMSBackend.Controllers
 {
+
+
+   
+
     [Route("api/[controller]")]
     [ApiController]
+
+    
     public class ItemsController : ControllerBase
     {
         private readonly DataContext _context;
+        private readonly IMapper _mapper;
 
-        public ItemsController(DataContext context)
+        public ItemsController(DataContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
+        }
+
+        //// GET: api/GetTenderItemDetailsDTO/5
+        [HttpGet("TenderItemDetails/{mppId}/{itemId}")]
+        public async Task<ActionResult<IEnumerable<TenderItemDetailsDTO>>> GetTenderItemDetailsDTO(string mppId, string itemId)
+
+        {
+            var subProcurementPlans = await _context.SubProcurementPlans
+                .Include(plan => plan.subProcurementPlanItems)
+                .Where(plan => plan.MasterProcurementPlan.MppId == mppId)
+                .ToListAsync();
+
+            var totalQuantity = subProcurementPlans
+                .SelectMany(plan => plan.subProcurementPlanItems)
+                .Where(item => item.ItemId == itemId)
+                .Sum(item => item.Quantity);
+
+            return Ok(totalQuantity);
         }
 
         // GET: api/Items
