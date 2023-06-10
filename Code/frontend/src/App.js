@@ -66,6 +66,8 @@ function App() {
         <Route path='/dashboard' element={<Dashboard/>}/>
         <Route path='/view-notification' element={<NotificationPage/>}/>
         <Route path='/item-rejected' element={<AddItemtoSubProcurementPlan/>}/>
+        <Route path='/add-new-item' element={<AddNewItemtoSubProcurementPlan/>}/>
+
 
        
         <Route path='/SubProcurmentPlan' element={<CreateSubProcurementPlan/>}/>
@@ -132,4 +134,3 @@ function App() {
   )
   }
   export default App;
-

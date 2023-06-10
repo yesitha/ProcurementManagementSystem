@@ -14,25 +14,10 @@ import Styles from "./AddNewItemtoSubProcurementPlan.module.css";
 import TextField from "@mui/material/TextField";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
-const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
-const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
-const user = {
-  firstname: "John",
-  lastname: "Doe",
-  email: "johndoe@gmail.com",
-  designation: "Financial Division HOD",
-  department: "Finance",
-  phone: "1234567890",
-  address: "123, ABC Street, XYZ City, 123456",
-  gender: "Male",
-  profilePic: "https://www.w3schools.com/howto/img_avatar.png",
-};
-
 function AddNewItemtoSubProcurementPlan() {
   return (
     <div>
       <div className={Styles.sideNavBar}>
-        <SideNavBar list1={list1} list2={list2} user={user} />
       </div>
       <Container
         sx={{
