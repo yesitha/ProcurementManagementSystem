@@ -32,7 +32,6 @@ function AddItemtoSubProcurementPlan() {
   return (
     <div style={{ display: "flex", overflow: "hidden" }}>
       <div className={Styles.sideNavBar}>
-        <SideNavBar list1={list1} list2={list2} user={user} />
       </div>
       <Container
         sx={{
@@ -77,21 +76,21 @@ function AddItemtoSubProcurementPlan() {
                     margin="normal"
                     required
                     fullWidth
-                    id="email"
+                    id="itemName"
                     label="Item Name"
-                    name="email"
-                    autoComplete="email"
+                    name="itemName"
                     autoFocus
                   />
+
+
 
                   <TextField
                     margin="normal"
                     required
                     fullWidth
-                    id="email"
+                    id="itemId"
                     label="Item ID"
-                    name="email"
-                    autoComplete="email"
+                    name="itemId"
                     autoFocus
                   />
 
@@ -160,7 +159,9 @@ function AddItemtoSubProcurementPlan() {
                 </div>
               </div>
               <div className={Styles.addButton}>
-                <Button variant="contained">Add Item</Button>
+                <Button className="butt" variant="contained">Add Item to Sub Procurement Plan</Button>
+                <Button className="butt" variant="contained">Add a new Item to system</Button>
+
               </div>
             </div>
           </Paper>

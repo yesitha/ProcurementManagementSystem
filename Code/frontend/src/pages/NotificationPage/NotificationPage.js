@@ -5,6 +5,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
+import { user, list1, list2, actions, actionButtons } from '../Usermanage';
+
 
 import {
   Button,
@@ -31,30 +33,9 @@ import "../../fonts.css";
 import { Box } from "@mui/system";
 import SearchNoFilter from "../../components/SearchNoFilter/SearchNoFilter";
 
-const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
-const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
-const actionButtons = [
-  { name: "New Master Procurement plan for Evaluate", number: "2" },
-  { name: "Rejected Item Modified", number: "1" },
-  { name: "Auctions End", number: "1/30" },
-  { name: "Vendor Rejected", number: "1" },
-];
-const user = {
-  firstname: "John",
-  lastname: "Doe",
-  email: "johndoe@gmail.com",
-  designation: "Financial Division HOD",
-  department: "Finance",
-  phone: "1234567890",
-  address: "123, ABC Street, XYZ City, 123456",
-  gender: "Male",
-  profilePic: "https://www.w3schools.com/howto/img_avatar.png",
-};
-
 function NotificationPage() {
   return (
     <div style={{ display: "flex", overflow: "hidden" }}>
-      <SideNavBar list1={list1} list2={list2} user={user} />
       <div className={styles.NotificationPageContainer}>
         <div className={styles.supperSection}>
           <div className={styles.NotificationPageContainer__header}>

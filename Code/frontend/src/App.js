@@ -49,11 +49,42 @@ import BidHistory from "./pages/Vendor/BidHistory/BidHistory";
 import CreateMasterProcurementPlan from "./pages/CreateMasterProcurementPlan/CreateMasterProcurementPlan"
 import {Route , Routes} from "react-router-dom";
 import TenderDetails from "./pages/Vendor/Tender Details/TenderDetails";
+import SideNavBar from "./components/SideNavigationBar/SideNavBar";
+import { user, list1, list2 } from './pages/Usermanage';
 
 
 function App() {
   return (
     <div>
+      <SideNavBar list1={list1} list2={list2} user={user} />
+
+      <Routes>
+        <Route path='/' element={<Login/>}/>
+
+        <Route path='/dashboard' element={<Dashboard/>}/>
+        <Route path='/view-notification' element={<NotificationPage/>}/>
+        <Route path='/item-rejected' element={<AddItemtoSubProcurementPlan/>}/>
+
+       
+        <Route path='/SubProcurmentPlan' element={<CreateSubProcurementPlan/>}/>
+        <Route path="*" element={<p>Page not found</p>}></Route> 
+
+
+
+      </Routes>
+      
+
+
+
+
+
+
+
+
+
+
+
+
       {/* <Login/> */}
       {/* <SignUp/> */}
       {/* <Dashboard/> */}
@@ -97,7 +128,6 @@ function App() {
       {/* <ReviseVendorSelection/> */}
       {/* <Stock/> */}
       {/* <AddNewItem /> */}
-      <Login/>
       </div>
   )
   }
