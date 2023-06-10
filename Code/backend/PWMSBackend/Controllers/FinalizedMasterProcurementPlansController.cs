@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PWMSBackend.Data;
 using PWMSBackend.Models;
@@ -25,10 +20,10 @@ namespace PWMSBackend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<FinalizedMasterProcurementPlan>>> GetFinalizedMasterProcurementPlans()
         {
-          if (_context.FinalizedMasterProcurementPlans == null)
-          {
-              return NotFound();
-          }
+            if (_context.FinalizedMasterProcurementPlans == null)
+            {
+                return NotFound();
+            }
             return await _context.FinalizedMasterProcurementPlans.ToListAsync();
         }
 
@@ -36,10 +31,10 @@ namespace PWMSBackend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<FinalizedMasterProcurementPlan>> GetFinalizedMasterProcurementPlan(string id)
         {
-          if (_context.FinalizedMasterProcurementPlans == null)
-          {
-              return NotFound();
-          }
+            if (_context.FinalizedMasterProcurementPlans == null)
+            {
+                return NotFound();
+            }
             var finalizedMasterProcurementPlan = await _context.FinalizedMasterProcurementPlans.FindAsync(id);
 
             if (finalizedMasterProcurementPlan == null)
@@ -86,10 +81,10 @@ namespace PWMSBackend.Controllers
         [HttpPost]
         public async Task<ActionResult<FinalizedMasterProcurementPlan>> PostFinalizedMasterProcurementPlan(FinalizedMasterProcurementPlan finalizedMasterProcurementPlan)
         {
-          if (_context.FinalizedMasterProcurementPlans == null)
-          {
-              return Problem("Entity set 'DataContext.FinalizedMasterProcurementPlans'  is null.");
-          }
+            if (_context.FinalizedMasterProcurementPlans == null)
+            {
+                return Problem("Entity set 'DataContext.FinalizedMasterProcurementPlans'  is null.");
+            }
             _context.FinalizedMasterProcurementPlans.Add(finalizedMasterProcurementPlan);
             try
             {

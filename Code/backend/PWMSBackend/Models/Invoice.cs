@@ -12,7 +12,6 @@ namespace PWMSBackend.Models
 
         public GRN GRN { get; set; }
 
-
         [ForeignKey("GRN")]
         public string GrnId { get; set; }
     }

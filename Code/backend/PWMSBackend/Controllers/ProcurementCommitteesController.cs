@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PWMSBackend.Data;
 using PWMSBackend.Models;
@@ -25,10 +20,10 @@ namespace PWMSBackend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ProcurementCommittee>>> GetProcurementCommittees()
         {
-          if (_context.ProcurementCommittees == null)
-          {
-              return NotFound();
-          }
+            if (_context.ProcurementCommittees == null)
+            {
+                return NotFound();
+            }
             return await _context.ProcurementCommittees.ToListAsync();
         }
 
@@ -36,10 +31,10 @@ namespace PWMSBackend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ProcurementCommittee>> GetProcurementCommittee(string id)
         {
-          if (_context.ProcurementCommittees == null)
-          {
-              return NotFound();
-          }
+            if (_context.ProcurementCommittees == null)
+            {
+                return NotFound();
+            }
             var procurementCommittee = await _context.ProcurementCommittees.FindAsync(id);
 
             if (procurementCommittee == null)
@@ -86,10 +81,10 @@ namespace PWMSBackend.Controllers
         [HttpPost]
         public async Task<ActionResult<ProcurementCommittee>> PostProcurementCommittee(ProcurementCommittee procurementCommittee)
         {
-          if (_context.ProcurementCommittees == null)
-          {
-              return Problem("Entity set 'DataContext.ProcurementCommittees'  is null.");
-          }
+            if (_context.ProcurementCommittees == null)
+            {
+                return Problem("Entity set 'DataContext.ProcurementCommittees'  is null.");
+            }
             _context.ProcurementCommittees.Add(procurementCommittee);
             try
             {

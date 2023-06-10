@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PWMSBackend.Data;
 using PWMSBackend.Models;
@@ -25,10 +20,10 @@ namespace PWMSBackend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<VendorhasItem>>> GetVendorhasItems()
         {
-          if (_context.VendorhasItems == null)
-          {
-              return NotFound();
-          }
+            if (_context.VendorhasItems == null)
+            {
+                return NotFound();
+            }
             return await _context.VendorhasItems.ToListAsync();
         }
 
@@ -36,10 +31,10 @@ namespace PWMSBackend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<VendorhasItem>> GetVendorhasItem(string id)
         {
-          if (_context.VendorhasItems == null)
-          {
-              return NotFound();
-          }
+            if (_context.VendorhasItems == null)
+            {
+                return NotFound();
+            }
             var vendorhasItem = await _context.VendorhasItems.FindAsync(id);
 
             if (vendorhasItem == null)
@@ -86,10 +81,10 @@ namespace PWMSBackend.Controllers
         [HttpPost]
         public async Task<ActionResult<VendorhasItem>> PostVendorhasItem(VendorhasItem vendorhasItem)
         {
-          if (_context.VendorhasItems == null)
-          {
-              return Problem("Entity set 'DataContext.VendorhasItems'  is null.");
-          }
+            if (_context.VendorhasItems == null)
+            {
+                return Problem("Entity set 'DataContext.VendorhasItems'  is null.");
+            }
             _context.VendorhasItems.Add(vendorhasItem);
             try
             {

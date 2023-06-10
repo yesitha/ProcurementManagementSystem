@@ -225,6 +225,9 @@ namespace PWMSBackend.Migrations
                     b.Property<int>("EstimatedGrandTotal")
                         .HasColumnType("int");
 
+                    b.Property<string>("ProcurementCommitteeCommitteeId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("TecCommitteeId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -233,6 +236,8 @@ namespace PWMSBackend.Migrations
 
                     b.HasIndex("BidOpeningCommitteeId")
                         .IsUnique();
+
+                    b.HasIndex("ProcurementCommitteeCommitteeId");
 
                     b.HasIndex("TecCommitteeId")
                         .IsUnique();
@@ -521,6 +526,73 @@ namespace PWMSBackend.Migrations
                     b.ToTable("SubProcurementPlanItems");
                 });
 
+            modelBuilder.Entity("PWMSBackend.Models.UserNotification", b =>
+                {
+                    b.Property<int>("notificationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("notificationId"), 1L, 1);
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("isRead")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("timeStamp")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("notificationId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserNotifications");
+                });
+
+            modelBuilder.Entity("PWMSBackend.Models.Users", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Designation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmailAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Salutation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("PWMSBackend.Models.Vendor", b =>
                 {
                     b.Property<string>("VendorId")
@@ -778,13 +850,13 @@ namespace PWMSBackend.Migrations
 
             modelBuilder.Entity("PWMSBackend.Models.ApprovedItemPurchaseOrder", b =>
                 {
-                    b.HasOne("PWMSBackend.Models.PurchaseOrder", "PurchaseOrder")
+                    b.HasOne("PWMSBackend.Models.ApprovedItem", "ApprovedItem")
                         .WithMany("ApprovedItemPurchaseOrders")
                         .HasForeignKey("ItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PWMSBackend.Models.ApprovedItem", "ApprovedItem")
+                    b.HasOne("PWMSBackend.Models.PurchaseOrder", "PurchaseOrder")
                         .WithMany("ApprovedItemPurchaseOrders")
                         .HasForeignKey("PoId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -797,13 +869,13 @@ namespace PWMSBackend.Migrations
 
             modelBuilder.Entity("PWMSBackend.Models.CommitteeMemberCommittee", b =>
                 {
-                    b.HasOne("PWMSBackend.Models.CommitteeMember", "CommitteeMember")
+                    b.HasOne("PWMSBackend.Models.Committee", "Committee")
                         .WithMany("CommitteeMembersCommittees")
                         .HasForeignKey("CommitteeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PWMSBackend.Models.Committee", "Committee")
+                    b.HasOne("PWMSBackend.Models.CommitteeMember", "CommitteeMember")
                         .WithMany("CommitteeMembersCommittees")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -827,13 +899,13 @@ namespace PWMSBackend.Migrations
 
             modelBuilder.Entity("PWMSBackend.Models.GRNItemTobeShipped", b =>
                 {
-                    b.HasOne("PWMSBackend.Models.ItemTobeShipped", "ItemTobeShipped")
+                    b.HasOne("PWMSBackend.Models.GRN", "GRN")
                         .WithMany("GRNItemTobeShippeds")
                         .HasForeignKey("GrnId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PWMSBackend.Models.GRN", "GRN")
+                    b.HasOne("PWMSBackend.Models.ItemTobeShipped", "ItemTobeShipped")
                         .WithMany("GRNItemTobeShippeds")
                         .HasForeignKey("ItemId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -865,9 +937,7 @@ namespace PWMSBackend.Migrations
 
                     b.HasOne("PWMSBackend.Models.ProcurementCommittee", "ProcurementCommittee")
                         .WithMany("MasterProcurementPlans")
-                        .HasForeignKey("MppId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProcurementCommitteeCommitteeId");
 
                     b.HasOne("PWMSBackend.Models.TecCommittee", "TecCommittee")
                         .WithOne("MasterProcurementPlan")
@@ -884,13 +954,13 @@ namespace PWMSBackend.Migrations
 
             modelBuilder.Entity("PWMSBackend.Models.MasterProcurementPlanStatus", b =>
                 {
-                    b.HasOne("PWMSBackend.Models.Status", "Status")
+                    b.HasOne("PWMSBackend.Models.MasterProcurementPlan", "MasterProcurementPlan")
                         .WithMany("MasterProcurementPlanStatuses")
                         .HasForeignKey("MppId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PWMSBackend.Models.MasterProcurementPlan", "MasterProcurementPlan")
+                    b.HasOne("PWMSBackend.Models.Status", "Status")
                         .WithMany("MasterProcurementPlanStatuses")
                         .HasForeignKey("StatusId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -934,14 +1004,14 @@ namespace PWMSBackend.Migrations
 
             modelBuilder.Entity("PWMSBackend.Models.PurchaseOrder_ItemTobeShipped", b =>
                 {
-                    b.HasOne("PWMSBackend.Models.PurchaseOrder", "PurchaseOrder")
-                        .WithMany("purchaseOrder_ItemTobeShippeds")
+                    b.HasOne("PWMSBackend.Models.ItemTobeShipped", "ItemTobeShipped")
+                        .WithMany("PurchaseOrder_ItemTobeShippeds")
                         .HasForeignKey("ItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PWMSBackend.Models.ItemTobeShipped", "ItemTobeShipped")
-                        .WithMany("PurchaseOrder_ItemTobeShippeds")
+                    b.HasOne("PWMSBackend.Models.PurchaseOrder", "PurchaseOrder")
+                        .WithMany("purchaseOrder_ItemTobeShippeds")
                         .HasForeignKey("PoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -953,13 +1023,13 @@ namespace PWMSBackend.Migrations
 
             modelBuilder.Entity("PWMSBackend.Models.SubProcurementApprovedItems", b =>
                 {
-                    b.HasOne("PWMSBackend.Models.SubProcurementPlan", "SubProcurementPlan")
+                    b.HasOne("PWMSBackend.Models.ApprovedItem", "ApprovedItem")
                         .WithMany("SubProcurementApprovedItems")
                         .HasForeignKey("ItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PWMSBackend.Models.ApprovedItem", "ApprovedItem")
+                    b.HasOne("PWMSBackend.Models.SubProcurementPlan", "SubProcurementPlan")
                         .WithMany("SubProcurementApprovedItems")
                         .HasForeignKey("SppId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -999,13 +1069,13 @@ namespace PWMSBackend.Migrations
 
             modelBuilder.Entity("PWMSBackend.Models.SubProcurementPlanItem", b =>
                 {
-                    b.HasOne("PWMSBackend.Models.SubProcurementPlan", "SubProcurementPlan")
+                    b.HasOne("PWMSBackend.Models.Item", "Item")
                         .WithMany("subProcurementPlanItems")
                         .HasForeignKey("ItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PWMSBackend.Models.Item", "Item")
+                    b.HasOne("PWMSBackend.Models.SubProcurementPlan", "SubProcurementPlan")
                         .WithMany("subProcurementPlanItems")
                         .HasForeignKey("SppId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1016,15 +1086,26 @@ namespace PWMSBackend.Migrations
                     b.Navigation("SubProcurementPlan");
                 });
 
+            modelBuilder.Entity("PWMSBackend.Models.UserNotification", b =>
+                {
+                    b.HasOne("PWMSBackend.Models.Users", "User")
+                        .WithMany("UserNotifications")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("PWMSBackend.Models.VendorhasItem", b =>
                 {
-                    b.HasOne("PWMSBackend.Models.Vendor", "Vendor")
+                    b.HasOne("PWMSBackend.Models.Item", "Item")
                         .WithMany("VendorhasItems")
                         .HasForeignKey("ItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PWMSBackend.Models.Item", "Item")
+                    b.HasOne("PWMSBackend.Models.Vendor", "Vendor")
                         .WithMany("VendorhasItems")
                         .HasForeignKey("VendorId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1037,13 +1118,13 @@ namespace PWMSBackend.Migrations
 
             modelBuilder.Entity("PWMSBackend.Models.VendorPlaceBidItem", b =>
                 {
-                    b.HasOne("PWMSBackend.Models.Vendor", "Vendor")
+                    b.HasOne("PWMSBackend.Models.ApprovedItem", "ApprovedItem")
                         .WithMany("VendorPlaceBidItems")
                         .HasForeignKey("ItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PWMSBackend.Models.ApprovedItem", "ApprovedItem")
+                    b.HasOne("PWMSBackend.Models.Vendor", "Vendor")
                         .WithMany("VendorPlaceBidItems")
                         .HasForeignKey("VendorId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1167,6 +1248,11 @@ namespace PWMSBackend.Migrations
                     b.Navigation("SubProcurementApprovedItems");
 
                     b.Navigation("subProcurementPlanItems");
+                });
+
+            modelBuilder.Entity("PWMSBackend.Models.Users", b =>
+                {
+                    b.Navigation("UserNotifications");
                 });
 
             modelBuilder.Entity("PWMSBackend.Models.Vendor", b =>
