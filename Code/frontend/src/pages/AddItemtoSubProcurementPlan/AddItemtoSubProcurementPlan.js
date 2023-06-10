@@ -13,26 +13,13 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import Styles from "./AddItemtoSubProcurementPlan.module.css";
 import TextField from "@mui/material/TextField";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import { user, list1, list2, actions, actionButtons } from '../Usermanage';
+import { Link as Routerlink } from "react-router-dom";
 
-const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
-const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
-const user = {
-  firstname: "John",
-  lastname: "Doe",
-  email: "johndoe@gmail.com",
-  designation: "Financial Division HOD",
-  department: "Finance",
-  phone: "1234567890",
-  address: "123, ABC Street, XYZ City, 123456",
-  gender: "Male",
-  profilePic: "https://www.w3schools.com/howto/img_avatar.png",
-};
 
 function AddItemtoSubProcurementPlan() {
   return (
     <div style={{ display: "flex", overflow: "hidden" }}>
-      <div className={Styles.sideNavBar}>
-      </div>
       <Container
         sx={{
           ml: { xs: "20px", sm: "20px", md: "20px", lg: "21px", xl: "22px" },
@@ -46,7 +33,6 @@ function AddItemtoSubProcurementPlan() {
               <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
             </IconButton>
             <h1 className={Styles.headTitleName}>
-              {" "}
               [ Add / Modify / Modify Rejected ] Item to Sub Procurement Plan{" "}
             </h1>
           </div>
@@ -98,10 +84,9 @@ function AddItemtoSubProcurementPlan() {
                     margin="normal"
                     required
                     fullWidth
-                    id="email"
+                    id="Quantity"
                     label="Quantity"
-                    name="email"
-                    autoComplete="email"
+                    name="Quantity"
                     autoFocus
                   />
 
@@ -109,10 +94,9 @@ function AddItemtoSubProcurementPlan() {
                     margin="normal"
                     required
                     fullWidth
-                    id="email"
+                    id="estimatedBudget"
                     label="Estimated Budget"
-                    name="email"
-                    autoComplete="email"
+                    name="estimatedBudget"
                     autoFocus
                   />
 
@@ -120,9 +104,9 @@ function AddItemtoSubProcurementPlan() {
                     margin="normal"
                     required
                     fullWidth
-                    id="email"
+                    id="recommendedVendor"
                     label="Recommended Vendor"
-                    name="email"
+                    name="recommendedVendor"
                     autoComplete="email"
                     autoFocus
                   />
@@ -131,10 +115,9 @@ function AddItemtoSubProcurementPlan() {
                     margin="normal"
                     required
                     fullWidth
-                    id="email"
+                    id="exDate"
                     label="Expected date"
-                    name="email"
-                    autoComplete="email"
+                    name="exDate"
                     autoFocus
                   />
                 </div>
@@ -145,10 +128,9 @@ function AddItemtoSubProcurementPlan() {
                     fullWidth
                     rows={8}
                     multiline
-                    id="email"
+                    id="Specification"
                     label="Specification"
-                    name="email"
-                    autoComplete="email"
+                    name="Specification"
                     autoFocus
                   />
 
@@ -159,8 +141,11 @@ function AddItemtoSubProcurementPlan() {
                 </div>
               </div>
               <div className={Styles.addButton}>
-                <Button className="butt" variant="contained">Add Item to Sub Procurement Plan</Button>
-                <Button className="butt" variant="contained">Add a new Item to system</Button>
+                <Button className={Styles.belowButton} variant="contained">Add Item to Sub Procurement Plan</Button>
+
+                <Routerlink to={'/add-new-item'}>               
+                 <Button className={Styles.belowButton}variant="contained">Add a new Item to system</Button>
+                </Routerlink>
 
               </div>
             </div>
