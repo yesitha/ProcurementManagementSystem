@@ -17,12 +17,11 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { borderRadius, display } from "@mui/system";
 import { styled } from "@mui/material/styles";
 import ReactLoading from "react-loading";
-import { Link as Routerlink } from "react-router-dom";
 
 function Dashboard() {
   const date = dayjs();
   const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
-  const list1 = ["Sub Procurment Plan", "Master Procurement Plan","Purchase Orders","Good Receive Note","Payment Voucher"];
+  const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
   const actions = [
     "Set Pre Bid Meeting Date",
     "Appoint Bid Opening Committee",
@@ -125,7 +124,6 @@ function Dashboard() {
                   <h5 className={styles.confuciusName}>-{quote.author}-</h5>
                 )}
 
-                <Routerlink to={"/Notification%Page"}>
                 <Button
                   variant="contained"
                   sx={{
@@ -139,7 +137,6 @@ function Dashboard() {
                   View New <br />
                   Notifications
                 </Button>
-                </Routerlink>
               </div>
             </Paper>
           </div>
@@ -165,7 +162,6 @@ function Dashboard() {
         </div>
         <div className={styles.middleSection}>
           {actions.map((action) => (
-            <Routerlink to={`/${action}`}>
             <Button
               variant="contained"
               sx={{
@@ -182,7 +178,6 @@ function Dashboard() {
             >
               {action}
             </Button>
-            </Routerlink>
           ))}
         </div>
         <div className={styles.lowerSection}>

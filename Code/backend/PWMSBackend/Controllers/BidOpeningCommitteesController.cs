@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PWMSBackend.Data;
 using PWMSBackend.Models;
@@ -20,10 +25,10 @@ namespace PWMSBackend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BidOpeningCommittee>>> GetBidOpeningCommittees()
         {
-            if (_context.BidOpeningCommittees == null)
-            {
-                return NotFound();
-            }
+          if (_context.BidOpeningCommittees == null)
+          {
+              return NotFound();
+          }
             return await _context.BidOpeningCommittees.ToListAsync();
         }
 
@@ -31,10 +36,10 @@ namespace PWMSBackend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<BidOpeningCommittee>> GetBidOpeningCommittee(string id)
         {
-            if (_context.BidOpeningCommittees == null)
-            {
-                return NotFound();
-            }
+          if (_context.BidOpeningCommittees == null)
+          {
+              return NotFound();
+          }
             var bidOpeningCommittee = await _context.BidOpeningCommittees.FindAsync(id);
 
             if (bidOpeningCommittee == null)
@@ -81,10 +86,10 @@ namespace PWMSBackend.Controllers
         [HttpPost]
         public async Task<ActionResult<BidOpeningCommittee>> PostBidOpeningCommittee(BidOpeningCommittee bidOpeningCommittee)
         {
-            if (_context.BidOpeningCommittees == null)
-            {
-                return Problem("Entity set 'DataContext.BidOpeningCommittees'  is null.");
-            }
+          if (_context.BidOpeningCommittees == null)
+          {
+              return Problem("Entity set 'DataContext.BidOpeningCommittees'  is null.");
+          }
             _context.BidOpeningCommittees.Add(bidOpeningCommittee);
             try
             {

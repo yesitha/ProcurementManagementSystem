@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PWMSBackend.Data;
 using PWMSBackend.Models;
@@ -20,10 +25,10 @@ namespace PWMSBackend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Division>>> GetDivisions()
         {
-            if (_context.Divisions == null)
-            {
-                return NotFound();
-            }
+          if (_context.Divisions == null)
+          {
+              return NotFound();
+          }
             return await _context.Divisions.ToListAsync();
         }
 
@@ -31,10 +36,10 @@ namespace PWMSBackend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Division>> GetDivision(string id)
         {
-            if (_context.Divisions == null)
-            {
-                return NotFound();
-            }
+          if (_context.Divisions == null)
+          {
+              return NotFound();
+          }
             var division = await _context.Divisions.FindAsync(id);
 
             if (division == null)
@@ -81,10 +86,10 @@ namespace PWMSBackend.Controllers
         [HttpPost]
         public async Task<ActionResult<Division>> PostDivision(Division division)
         {
-            if (_context.Divisions == null)
-            {
-                return Problem("Entity set 'DataContext.Divisions'  is null.");
-            }
+          if (_context.Divisions == null)
+          {
+              return Problem("Entity set 'DataContext.Divisions'  is null.");
+          }
             _context.Divisions.Add(division);
             try
             {

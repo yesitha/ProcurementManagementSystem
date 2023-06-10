@@ -48,6 +48,7 @@ import ReviseVendorSelection from "./pages/TEC Committee/Revise Vendor Selection
 
 
 
+
 import {Route , Routes} from "react-router-dom";
 import FormInputText from "./components/FormComponents/FormInputText";
 import TenderDetails from "./pages/Vendor/Tender Details/TenderDetails";
@@ -57,6 +58,10 @@ const USER_TYPES = {
 }
 
 const CURRENT_USER_TYPE=USER_TYPES.Procurement_Officer;
+
+import BidHistory from "./pages/Vendor/BidHistory/BidHistory";
+import CreateMasterProcurementPlan from "./pages/CreateMasterProcurementPlan/CreateMasterProcurementPlan"
+
 
 import BidHistory from "./pages/Vendor/BidHistory/BidHistory";
 import CreateMasterProcurementPlan from "./pages/CreateMasterProcurementPlan/CreateMasterProcurementPlan"
@@ -119,10 +124,12 @@ function App() {
 
 
 
+
       {/* <AddNewItem /> */}
       {/* <TenderDetails/> */}
       {/* <BidTender/> */}
       {/* <Login/>  */}
+
 
 
 
