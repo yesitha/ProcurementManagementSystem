@@ -17,41 +17,15 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { borderRadius, display } from "@mui/system";
 import { styled } from "@mui/material/styles";
 import ReactLoading from "react-loading";
+import { Link as Routerlink } from "react-router-dom";
+import { user, list1, list2, actions, actionButtons } from '../Usermanage';
+
 
 function Dashboard() {
+  
+  const currentUser = user.userType;
+
   const date = dayjs();
-  const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
-  const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
-  const actions = [
-    "Set Pre Bid Meeting Date",
-    "Appoint Bid Opening Committee",
-    "Evaluate Master Procurement Plan",
-    "Create Purchase Order",
-    "Create GRN",
-    "Evaluate Vendor Fianace Status",
-    "View Master Procurement Plan",
-  ];
-  const actionButtons = [
-    { name: "New Master Procurement plan for Evaluate", number: "2" },
-    { name: "Rejected Item Modified", number: "1" },
-    { name: "Auctions End", number: "1/30" },
-    { name: "Vendor Rejected", number: "1" },
-    { name: "Set Pre Bid Meeting Date" },
-    { name: "Internal Auditor Report Availble" },
-    { name: "Approved Items from DG", number: "10" },
-    { name: "New Invoices Available", number: "10" },
-  ];
-  const user = {
-    firstname: "John",
-    lastname: "Doe",
-    email: "johndoe@gmail.com",
-    designation: "Financial Division HOD",
-    department: "Finance",
-    phone: "1234567890",
-    address: "123, ABC Street, XYZ City, 123456",
-    gender: "Male",
-    profilePic: "https://www.w3schools.com/howto/img_avatar.png",
-  };
   const [quote, setQuote] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -81,8 +55,6 @@ function Dashboard() {
 
   return (
     <div style={{ display: "flex", overflow: "hidden" }}>
-      <SideNavBar list1={list1} list2={list2} user={user} />
-
       <div className={styles.DashboardContainer}>
         <div className={styles.upperSection}>
           <div className={styles.upperLeftContainer}>
@@ -124,19 +96,21 @@ function Dashboard() {
                   <h5 className={styles.confuciusName}>-{quote.author}-</h5>
                 )}
 
-                <Button
-                  variant="contained"
-                  sx={{
-                    borderRadius: 10,
-                    width: 150,
-                    mb: 2,
-                    backgroundColor: "#205295",
-                    color: "#ffffff",
-                  }}
-                >
-                  View New <br />
-                  Notifications
-                </Button>
+
+                <Routerlink to={'/view-notification'}>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      borderRadius: 10,
+                      width: 150,
+                      mb: 2,
+                      backgroundColor: "#205295",
+                      color: "#ffffff",
+                    }}>
+                    View New <br /> Notifications
+                  </Button>
+                </Routerlink>
+
               </div>
             </Paper>
           </div>
@@ -160,31 +134,38 @@ function Dashboard() {
             </Paper>
           </div>
         </div>
+
+
+
         <div className={styles.middleSection}>
-          {actions.map((action) => (
-            <Button
-              variant="contained"
-              sx={{
-                borderRadius: 3,
-                maxWidth: 150,
-                p: 1.5,
-                backgroundColor: "#205295",
-                color: "#ffffff",
-                px: 10,
-                mx: 4,
-                mt: 2,
-                mb: 0.5,
-              }}
-            >
-              {action}
-            </Button>
+          {actions.map((x) => (
+            <Routerlink to={`/${x.path}`}>
+              <Button
+                variant="contained"
+                sx={{
+                  borderRadius: 3,
+                  maxWidth: 150,
+                  p: 1.5,
+                  backgroundColor: "#205295",
+                  color: "#ffffff",
+                  px: 10,
+                  mx: 4,
+                  mt: 2,
+                  mb: 0.5,
+                }}
+              >
+                {x.displayName}
+              </Button>
+            </Routerlink>
+
           ))}
         </div>
         <div className={styles.lowerSection}>
           <div className={styles.lowerSectionHeader}>
             <h1 className={styles.lowerSectionHeaderText}>Notifications</h1>
             <div className={styles.lowerActionButtons}>
-              {actionButtons.map((action) => (
+              {actionButtons.map((y) => (
+                <Routerlink to={`/${y.path}`}>
                 <Button
                   className={styles.actionButton}
                   variant="contained"
@@ -209,16 +190,17 @@ function Dashboard() {
                         fontWeight: "400",
                       }}
                     >
-                      {action.number != null ? action.number : ""}
+                      {y.number != null ? y.number : ""}
                     </Typography>
                     <Typography
                       className={styles.actionButtonText}
                       sx={{ fontFamily: "Inter", fontSize: "14px" }}
                     >
-                      {action.name}
+                      {y.displayName}
                     </Typography>
                   </div>
                 </Button>
+                </Routerlink>
               ))}
             </div>
           </div>

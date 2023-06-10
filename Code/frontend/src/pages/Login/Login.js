@@ -12,8 +12,19 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
+import { Card, CardContent, Link as Muilink} from "@mui/material";
+import { maxWidth } from "@mui/system";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import InputAdornment from "@mui/material/InputAdornment";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import IconButton from "@mui/material/IconButton";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import { Login, NoEncryption } from "@mui/icons-material";
+import "./Login.css";
+import logo from "../../images/logo.png";
+
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 
@@ -75,14 +86,6 @@ export default function SignIn() {
                 Enter your email and password below
               </Typography>
 
-              <Box
-                component="form"
-                onSubmit={handleSubmit(onSubmit)}
-                noValidate
-                sx={{ mt: 1 }}
-              >
-                
-
                 <TextField
                   {...register("email", {
                     required: "Email Cant be Empty!",
@@ -99,6 +102,7 @@ export default function SignIn() {
                   name="email"
                 />
                 <p className="error">{errors.email?.message}</p>
+
                 <TextField
                   {...register("password", {
                     required: "Password Required",
@@ -131,7 +135,6 @@ export default function SignIn() {
                 </Button>
               </Box>
               <DevTool control={control} />
-            </Box>
           </Container>
         </CardContent>
       </Card>

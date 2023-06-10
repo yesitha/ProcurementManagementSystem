@@ -16,6 +16,9 @@ import ListItemText from "@mui/material/ListItemText";
 import logo from "../../images/logo.png";
 import { createTheme, ThemeProvider } from "@mui/system";
 import { Avatar } from "@mui/material";
+import { Link as Routerlink ,useParams} from "react-router-dom";
+
+
 
 const drawerWidth = 305;
 
@@ -136,6 +139,7 @@ export default function SideNavBar({ list1, list2, user }) {
       <List>
         {list1.map((text, index) => (
           <ListItem key={text} disablePadding sx={{ display: "block" }}>
+           <Routerlink to={`/${text.path}`}>
             <ListItemButton
               sx={{
                 minHeight: 48,
@@ -150,10 +154,10 @@ export default function SideNavBar({ list1, list2, user }) {
                   justifyContent: "center",
                 }}
               >
-                {<ListItemRawIcon content={text} />}
+                {<ListItemRawIcon content={text.displayName} />}
               </ListItemIcon>
               <ListItemText
-                primary={text}
+                primary={text.displayName}
                 sx={{ opacity: open ? 1 : 0 }}
                 primaryTypographyProps={{
                   fontFamily: "Inter",

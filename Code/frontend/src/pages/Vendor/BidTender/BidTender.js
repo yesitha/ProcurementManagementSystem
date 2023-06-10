@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./BidTender.module.css";
 import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -13,7 +13,11 @@ import TableRow from "@mui/material/TableRow";
 import SearchNoFilter from "../../../components/Search/Search";
 import { Container } from "@mui/system";
 import GavelIcon from "@mui/icons-material/Gavel";
+<<<<<<< Updated upstream
+=======
 import { Link } from "react-router-dom";
+import axios from "axios";
+>>>>>>> Stashed changes
 
 const columns = [
   { id: "ItemName", label: "Item Name", Width: 300, align: "center" },
@@ -27,7 +31,17 @@ const columns = [
 function createData(ItemName, Qty, specification, duedate, bidstatus, act) {
   return { ItemName, Qty, specification, duedate, bidstatus, act };
 }
-const itemId = "PAY35503";
+
+async function getTenderItemDetails(id) {
+  try {
+    const response = await axios.get(`https://localhost:7102/api/Items/TenderItemDetails/${id}`);
+   
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
 
 const rows = [
   createData(
@@ -36,7 +50,6 @@ const rows = [
     "GSM 80",
     "2023-01-23",
     <Typography sx={{ color: "#227C70" }}>LKR 4000</Typography>,
-    <Link to={`/TenderDetails/${itemId}`}>
     <Button
       variant="contained"
       sx={{
@@ -48,7 +61,6 @@ const rows = [
     >
       <GavelIcon style={{ fontSize: 30 }} />
     </Button>
-    </Link>
   ),
   createData(
     "Pens",
@@ -56,7 +68,6 @@ const rows = [
     "Blue",
     "2023-01-23",
     <Typography sx={{ color: "#9C254D" }}>Not Bided</Typography>,
-    <Link to={`/TenderDetails/${itemId}`}>
     <Button
       variant="contained"
       sx={{
@@ -68,13 +79,13 @@ const rows = [
     >
       <GavelIcon style={{ fontSize: 30 }} />
     </Button>
-    </Link>
   ),
 ];
 
 function BidTender() {
   const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
   const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
+  const [data, setData] = useState(null);
   const user = {
     firstname: "John",
     lastname: "Doe",
@@ -86,6 +97,19 @@ function BidTender() {
     gender: "Male",
     profilePic: "https://www.w3schools.com/howto/img_avatar.png",
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getTenderItemDetails(itemId);
+        setData(response);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  console.log(data);
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);

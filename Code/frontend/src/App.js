@@ -45,19 +45,45 @@ import UploadPaymentVoucher from "./pages/FinanceDivisionAccountant/UploadPaymen
 import AddItemstoGRN from "./pages/FinanceDivisionHOD/AddItemstoGRN/AddItemstoGRN";
 import InvoicestobePaidFin from "./pages/FinanceDivisionHOD/InvoicestobePaid/InvoicestobePaidFin";
 import ReviseVendorSelection from "./pages/TEC Committee/Revise Vendor Selection/ReviseVendorSelection";
-import FormInputText from "./components/FormComponents/FormInputText";
+
+
+
+
+import {Route , Routes} from "react-router-dom";
 import TenderDetails from "./pages/Vendor/Tender Details/TenderDetails";
-import {Routes, Route } from "react-router-dom";
+import SideNavBar from "./components/SideNavigationBar/SideNavBar";
+import { user, list1, list2 } from './pages/Usermanage';
+
 
 function App() {
   return (
     <div>
+      <SideNavBar list1={list1} list2={list2} user={user} />
+
       <Routes>
-        <Route path="/BidTender" element={<BidTender/>}></Route>
-        <Route path="/TenderDetails/:itemId" element={<TenderDetails/>}></Route>
-        
+        <Route path='/' element={<Login/>}/>
+
+        <Route path='/dashboard' element={<Dashboard/>}/>
+        <Route path='/view-notification' element={<NotificationPage/>}/>
+        <Route path='/item-rejected' element={<AddItemtoSubProcurementPlan/>}/>
+
+       
+        <Route path='/SubProcurmentPlan' element={<CreateSubProcurementPlan/>}/>
+        <Route path="*" element={<p>Page not found</p>}></Route> 
+
+
+
       </Routes>
       
+
+
+
+
+
+
+
+
+
 
       {/* <Login/> */}
       {/* <SignUp/> */}
@@ -102,10 +128,8 @@ function App() {
       {/* <ReviseVendorSelection/> */}
       {/* <Stock/> */}
       {/* <AddNewItem /> */}
-      {/* <TenderDetails/> */}
-      {/* <BidTender/> */}
-      {/* <Login/>  */}
-          </div>
-  );
-}
-export default App;
+      </div>
+  )
+  }
+  export default App;
+
