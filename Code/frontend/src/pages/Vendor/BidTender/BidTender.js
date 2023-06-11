@@ -14,8 +14,6 @@ import SearchNoFilter from "../../../components/Search/Search";
 import { Container } from "@mui/system";
 import GavelIcon from "@mui/icons-material/Gavel";
 import { Link } from "react-router-dom";
-
-import { Link } from "react-router-dom";
 import axios from "axios";
 
 
@@ -27,6 +25,7 @@ const columns = [
   { id: "bidstatus", label: "Bid Status", Width: 300, align: "center" },
   { id: "act", label: "Action", Width: 300, align: "center" },
 ];
+
 
 function createData(ItemName, Qty, specification, duedate, bidstatus, act) {
   return { ItemName, Qty, specification, duedate, bidstatus, act };

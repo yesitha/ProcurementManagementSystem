@@ -15,6 +15,7 @@ import TextField from "@mui/material/TextField";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { user, list1, list2, actions, actionButtons } from '../Usermanage';
 import { Link as Routerlink } from "react-router-dom";
+import DonePopup from "../../components/Popups/DonePopup/DonePopup";
 
 
 function AddItemtoSubProcurementPlan() {
@@ -27,11 +28,13 @@ function AddItemtoSubProcurementPlan() {
       >
         <div className="upperSection">
           <div className={Styles.headTitle}>
+            <Routerlink to={-1}>
             <IconButton
               sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
             >
               <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
             </IconButton>
+            </Routerlink>
             <h1 className={Styles.headTitleName}>
               [ Add / Modify / Modify Rejected ] Item to Sub Procurement Plan{" "}
             </h1>
@@ -141,8 +144,18 @@ function AddItemtoSubProcurementPlan() {
                 </div>
               </div>
               <div className={Styles.addButton}>
-                <Button className={Styles.belowButton} variant="contained">Add Item to Sub Procurement Plan</Button>
-
+                <DonePopup
+                text={"Successfully Added"}
+                title={"Add Item to Sub Procurement Plan"}
+                styles={{
+                  position: "absolute",
+                  right: "0",
+                  bgcolor: "#205295",
+                  borderRadius: 5,
+                  height: 60,
+                  width: 300,
+                }}
+                />
                 <Routerlink to={'/add-new-item'}>               
                  <Button className={Styles.belowButton}variant="contained">Add a new Item to system</Button>
                 </Routerlink>
