@@ -297,6 +297,10 @@ namespace PWMSBackend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("EmailAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("EmployeeName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -534,7 +538,7 @@ namespace PWMSBackend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("notificationId"), 1L, 1);
 
-                    b.Property<string>("UserId")
+                    b.Property<string>("ProcurementEmployeeEmployeeId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -554,43 +558,9 @@ namespace PWMSBackend.Migrations
 
                     b.HasKey("notificationId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("ProcurementEmployeeEmployeeId");
 
                     b.ToTable("UserNotifications");
-                });
-
-            modelBuilder.Entity("PWMSBackend.Models.Users", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Designation")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EmailAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Salutation")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("UserId");
-
-                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("PWMSBackend.Models.Vendor", b =>
@@ -1088,13 +1058,13 @@ namespace PWMSBackend.Migrations
 
             modelBuilder.Entity("PWMSBackend.Models.UserNotification", b =>
                 {
-                    b.HasOne("PWMSBackend.Models.Users", "User")
+                    b.HasOne("PWMSBackend.Models.ProcurementEmployee", "ProcurementEmployee")
                         .WithMany("UserNotifications")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("ProcurementEmployeeEmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("ProcurementEmployee");
                 });
 
             modelBuilder.Entity("PWMSBackend.Models.VendorhasItem", b =>
@@ -1231,6 +1201,11 @@ namespace PWMSBackend.Migrations
                     b.Navigation("SubProcurementPlans");
                 });
 
+            modelBuilder.Entity("PWMSBackend.Models.ProcurementEmployee", b =>
+                {
+                    b.Navigation("UserNotifications");
+                });
+
             modelBuilder.Entity("PWMSBackend.Models.PurchaseOrder", b =>
                 {
                     b.Navigation("ApprovedItemPurchaseOrders");
@@ -1248,11 +1223,6 @@ namespace PWMSBackend.Migrations
                     b.Navigation("SubProcurementApprovedItems");
 
                     b.Navigation("subProcurementPlanItems");
-                });
-
-            modelBuilder.Entity("PWMSBackend.Models.Users", b =>
-                {
-                    b.Navigation("UserNotifications");
                 });
 
             modelBuilder.Entity("PWMSBackend.Models.Vendor", b =>

@@ -34,9 +34,24 @@ import SearchNoFilter from "../../components/Search/Search";
 import SelectDropDown from "../../components/SelectDropDown/SelectDropDown";
 import { Link as Routerlink } from "react-router-dom";
 import DonePopup from "../../components/Popups/DonePopup/DonePopup";
-
+import axios from "axios";
+import { useState, useEffect } from "react";
+  ///////////////Add axios/////////////
+  async function getsppIds(id) {
+    try {
+      const response = await axios.get(`https://localhost:7102/api/DivisionHOD/sppIds`);
+     
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
 
 function CreateSubProcurementPlan() {
+
+}
+  
+
 
   const columns = [
     { id: "ItemID", label: "Item ID", Width: 300, align: "center" },
@@ -180,7 +195,7 @@ function CreateSubProcurementPlan() {
     ),
   ];
 
-  const list = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
+  const list1 = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const handleChangePage = (event, newPage) => {
@@ -191,6 +206,21 @@ function CreateSubProcurementPlan() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+  const [list, setList] = useState(null);
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getsppIds();
+        setList(response);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  console.log(data);
 
   return (
     <div style={{ overflowX: "hidden" }}>
@@ -225,7 +255,7 @@ function CreateSubProcurementPlan() {
           <div className={styles.MiddleSectionN}>
             <div className={styles.Ph3}>
               <h4 className={styles.h4m}>SUB PROCUREMENT ID*</h4>
-              <SelectDropDown list={list} />
+              <SelectDropDown list={list1} />
             </div>
 
             <SearchNoFilter className={styles.search} />
@@ -333,5 +363,7 @@ function CreateSubProcurementPlan() {
     </div>
   );
 }
+  
 
 export default CreateSubProcurementPlan;
+  

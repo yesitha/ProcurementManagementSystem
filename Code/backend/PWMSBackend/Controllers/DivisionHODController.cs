@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PWMSBackend.Data;
+using PWMSBackend.Models;
 
 namespace PWMSBackend.Controllers
 {
@@ -20,10 +21,14 @@ namespace PWMSBackend.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("sppIds")]
-        public IActionResult GetSppIds()
+        [HttpGet("sppIds/{hodId}")]
+        public IActionResult GetSppIdsByHodId(string hodId)
         {
-            List<string> sppIds = _context.SubProcurementPlans.Select(spp => spp.SppId).ToList();
+            List<string> sppIds = _context.SubProcurementPlans
+                .Where(spp => spp.HOD.EmployeeId == hodId)
+                .Select(spp => spp.SppId)
+                .ToList();
+
             return Ok(sppIds);
         }
 
@@ -58,6 +63,42 @@ namespace PWMSBackend.Controllers
                     spi.Quantity,
                     spi.ExpectedDeliveryDate,
                     spi.RecommendedVendor
+                })
+                .ToList();
+
+            return Ok(items);
+        }
+
+        [HttpDelete("{itemId}")]
+        public IActionResult DeleteItem(string itemId)
+        {
+            // Find the subprocurementplan item with the given ItemId
+            var subProcurementPlanItem = _context.SubProcurementPlanItems.FirstOrDefault(item => item.ItemId == itemId);
+
+            if (subProcurementPlanItem == null)
+            {
+                // Item not found, return an appropriate response
+                return NotFound();
+            }
+
+            // Remove the subprocurementplan item from the context
+            _context.SubProcurementPlanItems.Remove(subProcurementPlanItem);
+            _context.SaveChanges();
+
+            // Return a success response
+            return Ok();
+        }
+
+
+        [HttpGet("ItemNameList")]
+        public IActionResult GetItems()
+        {
+            var items = _context.Items
+                .Select(item => new
+                {
+                    item.ItemId,
+                    item.ItemName,
+                    item.Specification
                 })
                 .ToList();
 
