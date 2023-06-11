@@ -19,7 +19,7 @@ namespace PWMSBackend.Models
         public string Designation { get; set; }
 
 
-        [JsonIgnore]
+        //[JsonIgnore]
         public ICollection<UserNotification> UserNotifications { get; set; }
     }
 }
