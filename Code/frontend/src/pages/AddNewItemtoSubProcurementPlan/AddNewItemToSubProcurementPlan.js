@@ -13,6 +13,8 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import Styles from "./AddNewItemtoSubProcurementPlan.module.css";
 import TextField from "@mui/material/TextField";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import {Link as Routerlink} from "react-router-dom";
+import DonePopup from "../../components/Popups/DonePopup/DonePopup";
 
 function AddNewItemtoSubProcurementPlan() {
   return (
@@ -26,11 +28,13 @@ function AddNewItemtoSubProcurementPlan() {
       >
         <div className="upperSection">
           <div className={Styles.headTitle}>
+            <Routerlink to={-1}>
             <IconButton
               sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
             >
               <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
             </IconButton>
+            </Routerlink>
             <h1 className={Styles.headTitleName}> Add New Item</h1>
           </div>
         </div>
@@ -92,7 +96,18 @@ function AddNewItemtoSubProcurementPlan() {
                 </div>
               </div>
               <div className={Styles.addButton}>
-                <Button variant="contained">Add Item</Button>
+              <DonePopup
+                text={"Successfully Added New Item to System"}
+                title={"Add"}
+                styles={{
+                  position: "absolute",
+                  right: "0",
+                  bgcolor: "#205295",
+                  borderRadius: 5,
+                  height: 60,
+                  width: 300,
+                }}
+                />
               </div>
             </div>
           </Paper>

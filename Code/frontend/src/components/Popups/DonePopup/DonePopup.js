@@ -7,6 +7,8 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import DocumentDownload from "../../../images/DocumentDownload.png";
 import CloseIcon from "@mui/icons-material/Close";
 import { Button } from "@mui/material";
+import { Link as Routerlink } from "react-router-dom";
+
 
 const style = {
   position: "absolute",
@@ -75,7 +77,9 @@ export default function BasicModal({ text, title, styles }) {
               marginTop: 10,
             }}
           >
+            <Routerlink to={-1}>
             <Button
+            onClick={handleClose}
               variant="contained"
               fontFamily={"Inter"}
               sx={{
@@ -87,6 +91,7 @@ export default function BasicModal({ text, title, styles }) {
             >
               OK
             </Button>
+            </Routerlink>
           </div>
         </Box>
       </Modal>

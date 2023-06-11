@@ -32,6 +32,9 @@ import SearchFilter from "../../../src/components/SearchNoFilter/SearchNoFilter"
 import DeleteIcon from "@mui/icons-material/Delete";
 import SearchNoFilter from "../../components/Search/Search";
 import SelectDropDown from "../../components/SelectDropDown/SelectDropDown";
+import { Link as Routerlink } from "react-router-dom";
+import DonePopup from "../../components/Popups/DonePopup/DonePopup";
+
 
 function CreateSubProcurementPlan() {
 
@@ -191,8 +194,7 @@ function CreateSubProcurementPlan() {
 
   return (
     <div style={{ overflowX: "hidden" }}>
-      <div className={styles.sideNavBar}>
-      </div>
+      
 
       <Container
         className={styles.main}
@@ -204,12 +206,14 @@ function CreateSubProcurementPlan() {
       >
         <div className={styles.upperSection}>
           <div className={styles.ManageAuctionPageContainer__header}>
+
+            <Routerlink to={-1}>
             <IconButton
               sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
             >
               <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
             </IconButton>
-
+            </Routerlink>
             <h1 className={styles.Header}>Sub Procurement Plan</h1>
           </div>
         </div>
@@ -301,13 +305,28 @@ function CreateSubProcurementPlan() {
             classname="footerButton"
             style={{ display: "flex", alignContent: "flex-end", marginTop: 15 }}
           >
-            <Button variant="contained">Add Item</Button>
+            
+            <Routerlink to={'/add-item-to-subprocurement-Plan'}>
+              <Button variant="contained">Add Item</Button>
+              </Routerlink>
             <Button variant="contained" style={{ marginLeft: 40 }}>
               Modify item
             </Button>
-            <Button variant="contained" style={{ marginLeft: 40 }}>
+            {/* <Button variant="contained" style={{ marginLeft: 40 }} >
               Submit
-            </Button>
+            </Button> */}
+            <DonePopup
+            text={"Successfully Submitted"}
+            title={"Submit"}
+            styles={{
+              position: "absolute",
+              right: "0",
+              bgcolor: "#205295",
+              borderRadius: 5,
+              height: 60,
+              width: 300,
+            }}
+          />
           </div>
         </div>
       </Container>

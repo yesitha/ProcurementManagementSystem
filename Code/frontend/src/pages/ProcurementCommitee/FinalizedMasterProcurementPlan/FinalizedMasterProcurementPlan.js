@@ -262,7 +262,7 @@ function FinalizedMasterProcurementPlan() {
 
   return (
     <div>
-      <SideNavBar list1={list1} list2={list2} user={user} />
+      {/* <SideNavBar list1={list1} list2={list2} user={user} /> */}
       <div className={styles.fmpp_mainBody}>
         <div className={styles.fmpp_heading}>
           <IconButton sx={{ pl: "15px", height: "34px", width: "34px" }}>
