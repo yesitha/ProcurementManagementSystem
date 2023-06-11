@@ -14,6 +14,6 @@ namespace PWMSBackend.Models
 
         //One to many relationships
         //[JsonIgnore]
-        public Users User { get; set; }
+        public ProcurementEmployee ProcurementEmployee { get; set; }
     }
 }

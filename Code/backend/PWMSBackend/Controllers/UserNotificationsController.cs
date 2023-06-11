@@ -24,7 +24,7 @@ namespace PWMSBackend.Controllers
         public async Task<ActionResult<IEnumerable<UserNotification>>> GetUserNotificationsAsync(string userId)
         {
             var notifications = await _context.UserNotifications
-                .Where(n => n.User.UserId == userId)
+                .Where(n => n.ProcurementEmployee.EmployeeId == userId)
                 .ToListAsync();
 
             return Ok(notifications);
@@ -32,7 +32,7 @@ namespace PWMSBackend.Controllers
         [HttpPost("notifyUserNotifications/{message}/{type}/{userId}")]
         public async Task<ActionResult<UserNotification>> NotifyUserNotifications(string message, string type, string userId)
         {
-            var existingUser = await _context.Users.FindAsync(userId);
+            var existingUser = await _context.ProcurementEmployees.FindAsync(userId);
 
             if (existingUser == null)
             {
@@ -44,7 +44,7 @@ namespace PWMSBackend.Controllers
             {
                 message = message,
                 type = type,
-                User = existingUser,
+                ProcurementEmployee = existingUser,
                 isRead = false,
                 timeStamp = DateTime.Now
             };
