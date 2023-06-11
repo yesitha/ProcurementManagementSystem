@@ -13,7 +13,7 @@ namespace PWMSBackend.Models
         public DateTime timeStamp { get; set; }
 
         //One to many relationships
-        [JsonIgnore]
+        //[JsonIgnore]
         public Users User { get; set; }
     }
 }

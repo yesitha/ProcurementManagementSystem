@@ -1,6 +1,6 @@
-﻿namespace PWMSBackend.DTOs.Outgoing
+﻿namespace PWMSBackend.DTOs.outgoing
 {
-    public class TenderItemDetailsDTO
+    public class BidTenderItemDetailsDTO
     {
         public string ItemName { get; set; }
         public string Specification { get; set; }
@@ -8,5 +8,8 @@
         public DateTime expectedDeliveryDate { get; set; }
         public int Quantity { get; set; }
 
+        public string BidStatus { get; set; }
+
+        public byte[] ProofDocument { get; set; }
     }
 }

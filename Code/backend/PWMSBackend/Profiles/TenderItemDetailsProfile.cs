@@ -4,10 +4,10 @@ using PWMSBackend.Models;
 
 namespace PWMSBackend.Profiles
 {
-    public class ItemProfile : Profile
+    public class TendorItemDetailsProfile : Profile
 
     {
-        public ItemProfile()
+        public TendorItemDetailsProfile()
         {
             CreateMap<Item, TenderItemDetailsDTO>()
                 .ForMember(dest => dest.ItemName,

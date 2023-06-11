@@ -6,7 +6,9 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Packaging.Signing;
 using PWMSBackend.Data;
+using PWMSBackend.DTOs.outgoing;
 using PWMSBackend.DTOs.Outgoing;
 using PWMSBackend.Models;
 
@@ -33,6 +35,50 @@ namespace PWMSBackend.Controllers
 
             _mapper = mapper;
         }
+
+
+        //// GET: api/GetBidTenderItemDetailsDTO/5
+        [HttpGet("BidTenderItemDetails/{mppId}/{vendorId}")]
+        public async Task<ActionResult<IEnumerable<BidTenderItemDetailsDTO>>> GetBidTenderItemDetails(string mppId,string vendorId)
+
+        {
+
+            List<VendorPlaceBidItem> vendorPlaceBidItems = await _context.VendorPlaceBidItems.Where(x => x.VendorId == vendorId).ToListAsync();
+            
+         
+
+            List<Item> items=await _context.Items.ToListAsync();
+            List<SubProcurementPlanItem> subProcumentPlanItems = await _context.SubProcurementPlanItems.ToListAsync();
+            //List<SubProcurementPlan> subProurementPlans = await _context.SubProcurementPlans.ToListAsync();
+                        var subProcurementPlans = await _context.SubProcurementPlans
+                .Include(plan => plan.subProcurementPlanItems)
+                .Where(plan => plan.MasterProcurementPlan.MppId == mppId)
+                .ToListAsync();
+
+
+           var mergedList = from item in items
+                join subProcurementItem in subProcumentPlanItems on item.ItemId equals subProcurementItem.ItemId
+                join vendorBidItem in vendorPlaceBidItems on subProcurementItem.ItemId equals vendorBidItem.ItemId
+                select new {item, subProcurementItem, vendorBidItem};
+         
+
+
+            List<BidTenderItemDetailsDTO> bidTenderItemDetailsList = mergedList.Select(mergedItem => new BidTenderItemDetailsDTO
+            {
+                ItemName = mergedItem.item.ItemName,
+                Specification = mergedItem.item.Specification,
+                expectedDeliveryDate = mergedItem.subProcurementItem.ExpectedDeliveryDate,
+                Quantity = mergedItem.subProcurementItem.Quantity,
+                BidStatus = mergedItem.vendorBidItem.BidStatus,
+                ProofDocument = mergedItem.vendorBidItem?.ProofDocument ?? null
+            }).ToList();
+
+
+            return Ok(bidTenderItemDetailsList);
+
+        }
+
+
 
         //// GET: api/GetTenderItemDetailsDTO/5
         [HttpGet("TenderItemDetails/{mppId}/{itemId}")]
