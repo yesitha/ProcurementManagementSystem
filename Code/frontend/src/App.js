@@ -43,6 +43,7 @@ import SendInvoice from "./pages/Vendor/SendInvoice/SendInvoice";
 import InvoicestobePaid from "./pages/FinanceDivisionAccountant/InvoicestobePaid/InvoicestobePaid";
 import UploadPaymentVoucher from "./pages/FinanceDivisionAccountant/UploadPaymentVouncher/UploadPaymentVoucher";
 import AddItemstoGRN from "./pages/FinanceDivisionHOD/AddItemstoGRN/AddItemstoGRN";
+import CreateMasterProcurementPlan from "./pages/CreateMasterProcurementPlan/CreateMasterProcurementPlan";
 import InvoicestobePaidFin from "./pages/FinanceDivisionHOD/InvoicestobePaid/InvoicestobePaidFin";
 import ReviseVendorSelection from "./pages/TEC Committee/Revise Vendor Selection/ReviseVendorSelection";
 import {Route , Routes} from "react-router-dom";
@@ -61,16 +62,22 @@ function App() {
 
       <Routes>
         <Route path='/' element={<Login/>}/>
-
-        <Route path='/dashboard' element={<Dashboard/>}/>
         <Route path='/view-notification' element={<NotificationPage/>}/>
+
+        {/* Division HOD */}
+        <Route path='/dashboard' element={<Dashboard/>}/>
         <Route path='/item-rejected' element={<AddItemtoSubProcurementPlan/>}/>
         <Route path='/add-new-item' element={<AddNewItemtoSubProcurementPlan/>}/>
         <Route path='/add-item-to-subprocurement-Plan' element={<AddItemtoSubProcurementPlan/>}/>
-
-               
         <Route path='/SubProcurmentPlan' element={<CreateSubProcurementPlan/>}/>
-        <Route path="*" element={<p>Page not found</p>}></Route> 
+
+        {/* Purchase Division HOD */}
+        <Route path='/NewSubProcurmentPlan' element={<CreateMasterProcurementPlan/>}/>
+        <Route path='/RequesttoInitiateMasterProcurementPlan' element={<RequesttoInitiateSubProcurementPlan/>}/>
+
+
+
+        <Route path="*" element={<p>NotFound</p>}></Route> 
 
 
 
