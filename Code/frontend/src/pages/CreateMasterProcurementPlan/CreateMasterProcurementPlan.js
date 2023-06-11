@@ -18,6 +18,8 @@ import {
   Paper,
   Button,
 } from "@mui/material";
+import PreviewIcon from '@mui/icons-material/Preview';
+import {Link as Routerlink} from 'react-router-dom';
 
 const rows = users;
 
@@ -36,27 +38,10 @@ const [rightTableData, setRightTableData] = useState([]);
     setLeftTableData([...leftTableData, row]);
     setRightTableData(rightTableData.filter((data) => data.id !== row.id));
   };
-  const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
-  const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
   const masterProcurementId = "MP0001";
-  const user = {
-    firstname: "John",
-    lastname: "Doe",
-    email: "johndoe@gmail.com",
-    designation: "Financial Division HOD",
-    department: "Finance",
-    phone: "1234567890",
-    address: "123, ABC Street, XYZ City, 123456",
-    gender: "Male",
-    profilePic: "https://www.w3schools.com/howto/img_avatar.png",
-  };
-
 
   return (
     <div style={{ overflowX: "auto" }}>
-      <div className={styles.sideNavBar}>
-        <SideNavBar list1={list1} list2={list2} user={user} />
-      </div>
 
       <Container
         className={styles.main}
@@ -70,11 +55,13 @@ const [rightTableData, setRightTableData] = useState([]);
       >
         <div className={styles.upperSection}>
           <div className={styles.ManageAuctionPageContainer__header}>
+            <Routerlink to={-1}>
             <IconButton
               sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
             >
               <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
             </IconButton>
+            </Routerlink>
 
             <h1 className={styles.Header}>Create Master Procurement Plan</h1>
           </div>
@@ -126,6 +113,7 @@ const [rightTableData, setRightTableData] = useState([]);
                           {row.firstname + " " + row.lastname}
                         </TableCell>
                         <TableCell>{row.department}</TableCell>
+                        <TableCell><PreviewIcon /></TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -175,6 +163,8 @@ const [rightTableData, setRightTableData] = useState([]);
                           {row.firstname + " " + row.lastname}
                         </TableCell>
                         <TableCell>{row.department}</TableCell>
+                        <TableCell><PreviewIcon/></TableCell>
+
                       </TableRow>
                     ))}
                   </TableBody>
@@ -188,6 +178,7 @@ const [rightTableData, setRightTableData] = useState([]);
             className={styles.rightButton}
             sx={{ justifyContent: { xs: "left", sm: "center", lg: "center" } }}
           >
+            <Routerlink to={'/RequesttoInitiateMasterProcurementPlan'}>
             <Button
               className={styles.TecAppointButton}
               variant="contained"
@@ -201,6 +192,7 @@ const [rightTableData, setRightTableData] = useState([]);
             >
               Create Master Procurement Plan
             </Button>
+            </Routerlink>
           </Container>
         </div>
       </Container>

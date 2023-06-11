@@ -55,6 +55,9 @@ const theme = createTheme({
 export default function SignIn() {
   const onSubmit = (data) => {
     console.log("Form Submitted", data);
+    fetch('https://b493-103-247-51-183.ngrok-free.app/UserLogin/user1%40example.com/password1').then(data => data.json()).then(d => {
+      console.log(d);
+    })
   };
 
   const form = useForm();
@@ -128,6 +131,7 @@ export default function SignIn() {
                 <p className="error">{errors.password?.message}</p>
 
                 <Button
+                  onClick={onSubmit}
                   disabled={!isValid}
                   type="submit"
                   fullWidth

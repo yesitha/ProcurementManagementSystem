@@ -8,7 +8,7 @@ const user = {
   lastname: "Doe",
   email: "johndoe@gmail.com",
   designation: "Financial Division HOD",
-  userType: 'HOD',
+  userType: 'PurchaseDivisionHOD',
   department: "Finance",
   phone: "1234567890",
   address: "123, ABC Street, XYZ City, 123456",
@@ -38,7 +38,7 @@ switch (currentUser) {
       "Evaluate Vendor Fianace Status",
       "View Master Procurement Plan",
     ];
-    
+
     actionButtons = [
       { name: "New Master Procurement plan for Evaluate", number: "2" },
       { name: "Rejected Item Modified", number: "1" },
@@ -61,6 +61,24 @@ switch (currentUser) {
     actions = [];
     actionButtons = [
       { displayName: "Item Rejected",path:'item-rejected', number: "1" },
+    ];
+    break;
+
+    case 'PurchaseDivisionHOD':
+    list1 = [
+        {
+        displayName:"Sub Procurment Plan",
+        path:"NewSubProcurmentPlan"},
+        {
+        displayName:"Master Procurement Plan",
+        path:"RequesttoInitiateMasterProcurementPlan"}
+    ];
+    list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
+
+    actions = [];
+
+    actionButtons = [
+      { displayName: "New Sub Procurement Plans",path:"NewSubProcurmentPlan", number: "2" },
     ];
     break;
 }
