@@ -32,6 +32,7 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import "../../fonts.css";
 import { Box } from "@mui/system";
 import SearchNoFilter from "../../components/SearchNoFilter/SearchNoFilter";
+import {Link as Routerlink} from 'react-router-dom';
 
 function NotificationPage() {
   return (
@@ -39,12 +40,13 @@ function NotificationPage() {
       <div className={styles.NotificationPageContainer}>
         <div className={styles.supperSection}>
           <div className={styles.NotificationPageContainer__header}>
+            <Routerlink to={-1}>
             <IconButton
               sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
             >
               <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
             </IconButton>
-
+            </Routerlink>
             <h1 className={styles.NotificationPageHeader}> Notifications</h1>
           </div>
 

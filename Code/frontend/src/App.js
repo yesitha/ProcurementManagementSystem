@@ -45,20 +45,19 @@ import UploadPaymentVoucher from "./pages/FinanceDivisionAccountant/UploadPaymen
 import AddItemstoGRN from "./pages/FinanceDivisionHOD/AddItemstoGRN/AddItemstoGRN";
 import InvoicestobePaidFin from "./pages/FinanceDivisionHOD/InvoicestobePaid/InvoicestobePaidFin";
 import ReviseVendorSelection from "./pages/TEC Committee/Revise Vendor Selection/ReviseVendorSelection";
-
-
-
-
 import {Route , Routes} from "react-router-dom";
 import TenderDetails from "./pages/Vendor/Tender Details/TenderDetails";
 import SideNavBar from "./components/SideNavigationBar/SideNavBar";
 import { user, list1, list2 } from './pages/Usermanage';
 
 
+
 function App() {
   return (
     <div>
-      <SideNavBar list1={list1} list2={list2} user={user} />
+       <div>
+        <SideNavBar list1={list1} list2={list2} user={user} />
+      </div>
 
       <Routes>
         <Route path='/' element={<Login/>}/>
@@ -67,25 +66,18 @@ function App() {
         <Route path='/view-notification' element={<NotificationPage/>}/>
         <Route path='/item-rejected' element={<AddItemtoSubProcurementPlan/>}/>
         <Route path='/add-new-item' element={<AddNewItemtoSubProcurementPlan/>}/>
+        <Route path='/add-item-to-subprocurement-Plan' element={<AddItemtoSubProcurementPlan/>}/>
 
-
-       
+               
         <Route path='/SubProcurmentPlan' element={<CreateSubProcurementPlan/>}/>
         <Route path="*" element={<p>Page not found</p>}></Route> 
 
 
 
       </Routes>
+
+      {/* <SignUp/> */}
       
-
-
-
-
-
-
-
-
-
 
       {/* <Login/> */}
       {/* <SignUp/> */}
