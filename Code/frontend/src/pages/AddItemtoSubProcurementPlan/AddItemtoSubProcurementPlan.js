@@ -19,6 +19,18 @@ import DonePopup from "../../components/Popups/DonePopup/DonePopup";
 
 
 function AddItemtoSubProcurementPlan() {
+
+  ///////////////Add axios/////////////
+async function getTenderItemDetails(id) {
+  try {
+    const response = await axios.get(`https://localhost:7102/api/Items/TenderItemDetails/${id}`);
+   
+    return response.data;
+  } catch (error) {
+    console.log(error);np
+    throw error;
+  }
+}
   return (
     <div style={{ display: "flex", overflow: "hidden" }}>
       <Container
