@@ -13,27 +13,11 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import Styles from "./ItemDetails.module.css";
 import TextField from "@mui/material/TextField";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-
-const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
-const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
-const user = {
-  firstname: "John",
-  lastname: "Doe",
-  email: "johndoe@gmail.com",
-  designation: "Financial Division HOD",
-  department: "Finance",
-  phone: "1234567890",
-  address: "123, ABC Street, XYZ City, 123456",
-  gender: "Male",
-  profilePic: "https://www.w3schools.com/howto/img_avatar.png",
-};
+import { Link as Routerlink } from "react-router-dom";
 
 function ItemDetails() {
   return (
     <div style={{ overflowX: "hidden" }}>
-      <div className={Styles.sideNavBar}>
-        <SideNavBar list1={list1} list2={list2} user={user} />
-      </div>
       <Container
         sx={{
           ml: { xs: "40px", sm: "65px", md: "65px", lg: "68px", xl: "70px" },
@@ -41,11 +25,13 @@ function ItemDetails() {
       >
         <div className="upperSection">
           <div className={Styles.headTitle}>
+            <Routerlink to={-1}>
             <IconButton
               sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
             >
               <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
             </IconButton>
+            </Routerlink>
             <h1 className={Styles.headTitleName}> [ITEM NAME] </h1>
           </div>
         </div>
@@ -109,9 +95,11 @@ function ItemDetails() {
                 </div>
               </div>
               <div className={Styles.doneButtonOuter}>
+                <Routerlink to={-1}>
                 <Button className={Styles.doneButton} variant="contained">
                   Done
                 </Button>
+                </Routerlink>
               </div>
             </div>
           </Paper>

@@ -39,8 +39,6 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VendorDetails from "../../../components/Popups/VendorDetails/VendorDetails";
 import DonePopup from "../../../components/Popups/DonePopup/DonePopup";
 
-const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
-const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
 
 const columns = [
   {
@@ -54,17 +52,7 @@ const columns = [
   { id: "Action", label: "Action", Width: 300, align: "center" },
 ];
 
-const user = {
-  firstname: "John",
-  lastname: "Doe",
-  email: "johndoe@gmail.com",
-  designation: "Financial Division HOD",
-  department: "Finance",
-  phone: "1234567890",
-  address: "123, ABC Street, XYZ City, 123456",
-  gender: "Male",
-  profilePic: "https://www.w3schools.com/howto/img_avatar.png",
-};
+
 
 function createData(MasterProcurementPlanID, GrandTotal, CreationDate, Action) {
   return { MasterProcurementPlanID, GrandTotal, CreationDate, Action };
@@ -151,9 +139,6 @@ function MasterProcurementPlanEvalate() {
   };
   return (
     <div className={styles.outer}>
-      <div className={styles.sideNavBar}>
-        <SideNavBar list1={list1} list2={list2} user={user} />
-      </div>
 
       <Container
         sx={{

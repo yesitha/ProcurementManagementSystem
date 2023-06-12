@@ -28,23 +28,10 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import Grid from "@mui/material/Unstable_Grid2";
-
+import { Link as Routerlink } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 function CreateSubProcurementPlan() {
-  const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
-  const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
-  const user = {
-    firstname: "John",
-    lastname: "Doe",
-    email: "johndoe@gmail.com",
-    designation: "Financial Division HOD",
-    department: "Finance",
-    phone: "1234567890",
-    address: "123, ABC Street, XYZ City, 123456",
-    gender: "Male",
-    profilePic: "https://www.w3schools.com/howto/img_avatar.png",
-  };
   const columns = [
     { id: "ItemID", label: "Item ID", Width: 300, align: "center" },
     { id: "ItemName", label: "Item Name", Width: 300, align: "center" },
@@ -60,66 +47,33 @@ function CreateSubProcurementPlan() {
       "I0014",
       "A4 Papers",
       "500",
+      <Routerlink to={'/publish-papaer-ad-view-item'}>
       <Button className={styles.ViewButton} variant="contained">
         View
       </Button>
+      </Routerlink>
     ),
     createData(
       "P0023",
       "Printer Ink Cartridges",
       "100",
+      <Routerlink to={'/publish-papaer-ad-view-item'}>
       <Button className={styles.ViewButton} variant="contained">
         View
       </Button>
+      </Routerlink>
     ),
     createData(
       "C0012",
       "Computer Monitors",
       "50",
+      <Routerlink to={'/publish-papaer-ad-view-item'}>
       <Button className={styles.ViewButton} variant="contained">
         View
       </Button>
+      </Routerlink>
     ),
-    createData(
-      "S0056",
-      "Safety Gloves",
-      "1000",
-      <Button className={styles.ViewButton} variant="contained">
-        View
-      </Button>
-    ),
-    createData(
-      "M0089",
-      "Medical Supplies",
-      "500",
-      <Button className={styles.ViewButton} variant="contained">
-        View
-      </Button>
-    ),
-    createData(
-      "F0035",
-      "Furniture",
-      "20",
-      <Button className={styles.ViewButton} variant="contained">
-        View
-      </Button>
-    ),
-    createData(
-      "T0078",
-      "Telecommunication Equipment",
-      "30",
-      <Button className={styles.ViewButton} variant="contained">
-        View
-      </Button>
-    ),
-    createData(
-      "B0092",
-      "Building Materials",
-      "200",
-      <Button className={styles.ViewButton} variant="contained">
-        View
-      </Button>
-    ),
+    
   ];
 
   const list = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
@@ -136,9 +90,6 @@ function CreateSubProcurementPlan() {
 
   return (
     <div style={{ overflowX: "hidden" }}>
-      <div className={styles.sideNavBar}>
-        <SideNavBar list1={list1} list2={list2} user={user} />
-      </div>
 
       <Container
         className={styles.main}
@@ -150,12 +101,13 @@ function CreateSubProcurementPlan() {
       >
         <div className={styles.upperSection}>
           <div className={styles.ManageAuctionPageContainer__header}>
+            <Routerlink to={-1}>
             <IconButton
               sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
             >
               <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
             </IconButton>
-
+            </Routerlink>
             <h1 className={styles.Header}>Publish Paper Ad</h1>
           </div>
         </div>

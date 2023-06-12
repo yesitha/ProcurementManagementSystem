@@ -6,6 +6,7 @@ import { Container } from "@mui/system";
 import { users } from "../../users/SystemUsers";
 import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
 import DonePopup from "../../components/Popups/DonePopup/DonePopup";
+import { Link as Routerlink } from "react-router-dom";
 import {
   IconButton,
   TableRow,
@@ -42,25 +43,9 @@ function CreateModifyTECCommittee() {
     setLeftTableData([...leftTableData, row]);
     setRightTableData(rightTableData.filter((data) => data.id !== row.id));
   };
-  const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
-  const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
   const masterProcurementId = "MP0001";
-  const user = {
-    firstname: "John",
-    lastname: "Doe",
-    email: "johndoe@gmail.com",
-    designation: "Financial Division HOD",
-    department: "Finance",
-    phone: "1234567890",
-    address: "123, ABC Street, XYZ City, 123456",
-    gender: "Male",
-    profilePic: "https://www.w3schools.com/howto/img_avatar.png",
-  };
   return (
     <div style={{ overflowX: "auto" }}>
-      <div className={styles.sideNavBar}>
-        <SideNavBar list1={list1} list2={list2} user={user} />
-      </div>
 
       <Container
         className={styles.main}
@@ -74,12 +59,13 @@ function CreateModifyTECCommittee() {
       >
         <div className={styles.upperSection}>
           <div className={styles.ManageAuctionPageContainer__header}>
+            <Routerlink to={-1}>
             <IconButton
               sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
             >
               <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
             </IconButton>
-
+            </Routerlink>
             <h1 className={styles.Header}>Create TEC Committee</h1>
           </div>
         </div>
@@ -190,19 +176,18 @@ function CreateModifyTECCommittee() {
             className={styles.rightButton}
             sx={{ justifyContent: { xs: "left", sm: "center", lg: "center" } }}
           >
-            <Button
-              className={styles.TecAppointButton}
-              variant="contained"
-              sx={{
-                mt: 2,
-                ml: { xs: 14, md: 2 },
-                borderRadius: 4,
-                mb: 0.3,
-                minWidth: "150px",
-              }}
-            >
-              Create TEC Committee
-            </Button>
+            <DonePopup
+            text={"Successfully Created TEC Committee"}
+            title={"Create TEC Committee"}
+            styles={{
+              position: "absolute",
+              right: "0",
+              bgcolor: "#205295",
+              borderRadius: 5,
+              height: 60,
+              width: 300,
+            }}
+          />
           </Container>
         </div>
       </Container>

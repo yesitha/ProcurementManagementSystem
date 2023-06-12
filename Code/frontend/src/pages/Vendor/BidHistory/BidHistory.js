@@ -6,7 +6,7 @@ import {
   Paper,
 } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { Box } from "@mui/system";
+import { Box ,Button,Typography} from "@mui/material";
 import SearchNoFilter from "../../../components/Search/Search";
 import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import "../../../fonts.css";
@@ -17,35 +17,42 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-
-const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
-const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
+import { Link as Routerlink } from 'react-router-dom';
 
 const columns = [
-  {id: "Item Name",label: "Item Name",Width: 300,align: "center",},
+  {id: "ItemName",label: "Item Name",Width: 300,align: "center",},
   { id: "Quantity", label: "Quantity", Width: 300, align: "center" },
   { id: "Specification", label: "Specification", Width: 300, align: "center" },
-  { id: "Bid Value", label: "Bid Value", Width: 300, align: "center" },
-  { id: "Bid Status", label: "Bid Status", Width: 300, align: "center" },
+  { id: "BidValue", label: "Bid Value", Width: 300, align: "center" },
+  { id: "BidStatus", label: "Bid Status", Width: 300, align: "center" },
   { id: "Verification", label: "Verification", Width: 300, align: "center" },
-  { id: "Verification Status", label: "Verification Status", Width: 300, align: "center" },
+  { id: "VerificationStatus", label: "Verification Status", Width: 300, align: "center" },
 ];
-
-const user = {
-  firstname: "John",
-  lastname: "Doe",
-  email: "johndoe@gmail.com",
-  designation: "Financial Division HOD",
-  department: "Finance",
-  phone: "1234567890",
-  address: "123, ABC Street, XYZ City, 123456",
-  gender: "Male",
-  profilePic: "https://www.w3schools.com/howto/img_avatar.png",
-};
-
+function createData(ItemName, Quantity, Specification, BidValue, BidStatus, Verification,VerificationStatus) {
+  return {ItemName, Quantity, Specification, BidValue, BidStatus, Verification,VerificationStatus};
+}
 
 const rows = [
-  
+  createData(
+    "A4 Papers",
+    "45",
+    "GSM 80",
+    <Typography sx={{ color: "#227C70" }}>LKR 4000</Typography>,
+    <Typography sx={{ color: "#227C70" }}>Selected</Typography>,
+    <Routerlink to={'/'}>
+    <Button
+      variant="contained"
+      sx={{
+        width: 70,
+        height: 30,
+        borderRadius: "20px",
+      }}
+    >
+      Submit
+    </Button>
+    </Routerlink>,
+    <Typography sx={{ color: "#227C70" }}>Approveed</Typography>
+  ),
 ];
 
 function BidHistory() {
@@ -62,10 +69,6 @@ const handleChangePage = (event, newPage) => {
   };
   return (
     <div className={styles.outer}>
-    <div className={styles.sideNavBar}>
-      <SideNavBar list1={list1} list2={list2} user={user} />
-    </div>
-
     <Container
       sx={{
         ml: { xs: "60px", sm: "65px", md: "65px", lg: "68px", xl: "70px" },
@@ -76,12 +79,13 @@ const handleChangePage = (event, newPage) => {
     >
       <div className={styles.upperSection}>
         <div className={styles.PageContainer__header}>
+          <Routerlink to={-1}>
           <IconButton
             sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
           >
             <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
           </IconButton>
-
+          </Routerlink>
           <h1 className={styles.Header}>Bid History</h1>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./sendInvoice.module.css";
+import styles from "./Invoices(vendorside).module.css";
 import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { Button, IconButton, Paper, Typography } from "@mui/material";
@@ -10,7 +10,6 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import DonePopup from "../../../components/Popups/DonePopup/DonePopup";
 import { Link as Routerlink } from "react-router-dom";
 
 const columns = [
@@ -36,11 +35,10 @@ const rows = [
   createData("I0014", "A4 Papers", "500", "GSm 80", "5", "400", "5000"),
 ];
 
-function Invoice() {
+function Invoicesvendorside() {
+
   return (
     <div style={{ overflowX: "hidden" }}>
-      <div className={styles.sideNavBar}>
-      </div>
 
       <Container
         className={styles.main}
@@ -183,24 +181,10 @@ function Invoice() {
           </center>
           <div className={styles.btn}>
             <Button variant="contained">PRINT</Button>
-            <DonePopup
-            text={"Successfully Sent Invoice to Procurement Officer"}
-            title={"SEND INVOICE"}
-            styles={{
-              position: "absolute",
-              right: "0",
-              bgcolor: "#205295",
-              borderRadius: 5,
-              height: 40,
-              width: 200,
-              marginLeft: 10,
-              marginRight:3
-            }}
-          />
           </div>
         </div>
       </Container>
     </div>
   );
 }
-export default Invoice;
+export default Invoicesvendorside;
