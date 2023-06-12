@@ -106,6 +106,18 @@ namespace PWMSBackend.Controllers
             return Ok(items);
         }
 
+        [HttpGet("VendorNameList")]
+        public ActionResult<IEnumerable<object>> GetVendorNameList()
+        {
+            var vendors = _context.Vendors.Select(vendor => new
+            {
+                vendor.FirstName,
+                vendor.LastName
+            }).ToList();
+
+            return Ok(vendors);
+        }
+
 
         [HttpPost("AddItemToSubProcurementPlan")]
         public IActionResult CreateSubProcurementPlanItem(CreateSubProcurementPlanItemDTO itemDto)
@@ -143,7 +155,7 @@ namespace PWMSBackend.Controllers
             return Ok(categoryList);
         }
 
-        [HttpPost]
+        [HttpPost("AddItem")]
         public IActionResult AddItem(string itemName, string specification, string categoryId)
         {
             // Create a new instance of the Item class
