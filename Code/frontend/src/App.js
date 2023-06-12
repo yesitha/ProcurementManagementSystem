@@ -74,7 +74,7 @@ function App() {
         <Route path='/dashboard' element={<Dashboard/>}/>
         <Route path='/item-rejected' element={<AddItemtoSubProcurementPlan/>}/>
         <Route path='/add-new-item' element={<AddNewItemtoSubProcurementPlan/>}/>
-        <Route path='/add-item-to-subprocurement-Plan' element={<AddItemtoSubProcurementPlan/>}/>
+        <Route path="/add-item-to-subprocurement-Plan/:division/:selectedSubId" element={<AddItemtoSubProcurementPlan/>}/>
         <Route path='/SubProcurmentPlan' element={<CreateSubProcurementPlan/>}/>
 
         {/* Purchase Division HOD */}
@@ -190,6 +190,53 @@ function App() {
 
 
       </Routes>
+
+
+      {/* <Login/> */}
+      {/* <SignUp/> */}
+      {/* <Dashboard/> */}
+      {/* <ManageAuction/> */}
+      {/* <NotificationPage/> */}
+      {/* <CreateSubProcurementPlan/> */}
+      {/* <PublishPaperAd/> */}
+      {/* <FinalizedMasterProcurementPlan/> */}
+      {/* <MasterProcurementPlanStatus/> */}
+      {/* <ViewMasterProcurementPlan/> */}
+      {/* <ApprovedItemList/> */}
+      {/* <CreateModifyTECCommittee/> */}
+      {/* <MasterProcurementPlanEvalate/> */}
+      {/* <AddItemtoSubProcurementPlan/>  */}
+      {/* <ItemDetails/> */}
+      {/* <ApprovalForMasterProcurementPlan/> */}
+      {/*ViewItem*/}
+      {/* <CreateModifyBidOpeningCommittee/> */}
+      {/* <ViewFinalizedMasterProcurementPlans/> */}
+      {/* <AuditFinalizedMasterProcurementPlan/> */}
+      {/* <BidTender/> */}
+      {/* <BidDetails/> */}
+      {/* <BidDetailsView/> */}
+      {/* <VendorSelection/> */}
+      {/* <MasterProcurementPlan/> */}
+      {/* <Stock/> */}
+      {/* <DGViewFinalizedMasterProcurementPlans/> */}
+      {/* <EvaluateFinalizedMasterProcurementPlan/> */}
+      {/*EvaluateFinalizedMasterProcurementPlan*/}
+      {/*AddNewItem*/}
+      {/* <CreateInvoice/> */}
+      {/* <GoodsReceivedNote/> */}
+      {/* <ViewGRN/> */}
+      {/* <Invoice/> */}
+      {/* <CreateInvoice2/> */}
+      {/* <SendInvoice/> */}
+      {/* <InvoicestobePaid/> */}
+      {/* <UploadPaymentVoucher/> */}
+      {/* <AddItemstoGRN/> */}
+      {/* <InvoicestobePaidFin/> */}
+      {/* <ReviseVendorSelection/> */}
+      {/* <Stock/> */}
+      {/* <AddNewItem /> */}
+      {/* <ViewMasterProcurementPlanProc/> */}
+      {/* <PurchaseOrder/> */}
 
       </div>
     </div>
