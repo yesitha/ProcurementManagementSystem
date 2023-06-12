@@ -45,7 +45,6 @@ namespace PWMSBackend.Data
         public DbSet<Vendor> Vendors { get; set; } = null!;
         public DbSet<VendorhasItem> VendorhasItems { get; set; } = null!;
         public DbSet<VendorPlaceBidItem> VendorPlaceBidItems { get; set; } = null!;
-        public DbSet<Users> Users { get; set; } = null!;
 
         public DbSet<UserNotification> UserNotifications { get; set; } = null!;
 
@@ -233,8 +232,6 @@ namespace PWMSBackend.Data
             //    .HasKey(t => t.CommitteeId);
             modelBuilder.Entity<Vendor>()
                 .HasKey(v => v.VendorId);
-            modelBuilder.Entity<Users>()
-                .HasKey(v => v.UserId);
             modelBuilder.Entity<UserNotification>()
                 .HasKey(v => v.notificationId);
         }

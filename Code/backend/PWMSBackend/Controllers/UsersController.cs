@@ -15,9 +15,9 @@ namespace PWMSBackend.Controllers
             _context = context;
         }
         [HttpGet("UserLogin/{email}/{password}")]
-        public async Task<ActionResult<Users>> UserLogin(string email, string password)
+        public async Task<ActionResult<ProcurementEmployee>> UserLogin(string email, string password)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.EmailAddress == email);
+            var user = await _context.ProcurementEmployees.FirstOrDefaultAsync(u => u.EmailAddress == email);
 
             if (user == null)
             {
