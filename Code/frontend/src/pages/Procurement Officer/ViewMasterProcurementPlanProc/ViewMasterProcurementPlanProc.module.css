@@ -1,0 +1,42 @@
+.NotificationPageContainer__header {
+    padding-right: 10px;
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+    margin-left: 75px;
+  }
+
+  .NotificationPageHeader {
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    color: #ffffff;
+    font-size: 36px;
+    position: relative;
+    margin-right: 10vw;
+  }
+
+  .table{
+    margin-top: 30px;
+    margin-left: 70px;
+  }
+
+  .TableHeaders{
+    font-family: "Inter", sans-serif;
+    position: sticky !important;
+    margin-bottom: 40px;
+    z-index: 3;
+  
+    
+  }
+
+  .MiddleSection {
+    padding-right: 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-left: 75px;
+    
+  
+  }
+
+  

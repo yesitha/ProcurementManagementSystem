@@ -137,6 +137,7 @@ namespace PWMSBackend.Migrations
                 {
                     EmployeeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     EmployeeName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Salutation = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -271,6 +272,29 @@ namespace PWMSBackend.Migrations
                     table.ForeignKey(
                         name: "FK_CommitteeMemberCommittees_ProcurementEmployees_EmployeeId",
                         column: x => x.EmployeeId,
+                        principalTable: "ProcurementEmployees",
+                        principalColumn: "EmployeeId",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserNotifications",
+                columns: table => new
+                {
+                    notificationId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    message = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    isRead = table.Column<bool>(type: "bit", nullable: false),
+                    timeStamp = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ProcurementEmployeeEmployeeId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserNotifications", x => x.notificationId);
+                    table.ForeignKey(
+                        name: "FK_UserNotifications_ProcurementEmployees_ProcurementEmployeeEmployeeId",
+                        column: x => x.ProcurementEmployeeEmployeeId,
                         principalTable: "ProcurementEmployees",
                         principalColumn: "EmployeeId",
                         onDelete: ReferentialAction.NoAction);
@@ -534,21 +558,21 @@ namespace PWMSBackend.Migrations
                 {
                     SppId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ItemId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RecommendedVendor = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RecommendedVendor = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EvidenceOfAuthorization = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
-                    ProcuremnetCommitteeStatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProcurementCommitteeComment = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProcuremnetCommitteeStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProcurementCommitteeComment = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     ExpectedDeliveryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TecCommitteeStatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TecCommitteeComment = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DGStatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DGComment = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RejectedVendor = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TecCommitteeStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TecCommitteeComment = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DGStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DGComment = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RejectedVendor = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EstimatedBudget = table.Column<double>(type: "float", nullable: false),
-                    SelectedVendor = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    InternalAuditorComment = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    InternalAuditorStatus = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    SelectedVendor = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    InternalAuditorComment = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    InternalAuditorStatus = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -690,6 +714,11 @@ namespace PWMSBackend.Migrations
                 column: "MasterProcurementPlanMppId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_UserNotifications_ProcurementEmployeeEmployeeId",
+                table: "UserNotifications",
+                column: "ProcurementEmployeeEmployeeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_VendorhasItems_ItemId",
                 table: "VendorhasItems",
                 column: "ItemId");
@@ -725,6 +754,9 @@ namespace PWMSBackend.Migrations
 
             migrationBuilder.DropTable(
                 name: "SubProcurementPlanItems");
+
+            migrationBuilder.DropTable(
+                name: "UserNotifications");
 
             migrationBuilder.DropTable(
                 name: "VendorhasItems");

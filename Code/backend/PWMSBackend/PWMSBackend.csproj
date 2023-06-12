@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\Incoming\" />
+    <None Remove="DTOs\outgoing\NewFile.txt" />
   </ItemGroup>
 
 </Project>

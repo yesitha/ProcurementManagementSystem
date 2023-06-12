@@ -50,7 +50,10 @@ import {Route , Routes} from "react-router-dom";
 import TenderDetails from "./pages/Vendor/Tender Details/TenderDetails";
 import SideNavBar from "./components/SideNavigationBar/SideNavBar";
 import { user, list1, list2 } from './pages/Usermanage';
+import ViewMasterProcurementPlanProc from "./pages/Procurement Officer/ViewMasterProcurementPlanProc/ViewMasterProcurementPlanProc";
+import PurchaseOrder from "./pages/Procurement Officer/PurchaseOrder/PurchaseOrder";
 import Signup from "./pages/SignUp/SignUp";
+
 
 
 
@@ -86,14 +89,10 @@ function App() {
         <Route path='/rejected-item-modified' element={<CreateMasterProcurementPlan/>}/>
         <Route path='/auction-end' element={<Dashboard/>}/>
         <Route path='/vendor-rejected' element={<ViewItem/>}/>
-
-
         <Route path="*" element={<p>NotFound</p>}></Route> 
-        </Routes>
+        </Routes>      
       </div>
     </div>
-
-    
     )
   }
   export default App;
