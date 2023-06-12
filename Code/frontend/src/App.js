@@ -18,9 +18,9 @@ import MasterProcurementPlanEvalate from "./pages/TEC Committee/MasterProcuremen
 import Stock from "./pages/Stock/Stock";
 import DGViewFinalizedMasterProcurementPlans from "./pages/Director General/DGViewFinalizedMasterProcurementPlans/DGViewFinalizedMasterProcurementPlans";
 import EvaluateFinalizedMasterProcurementPlan from "./pages/Director General/EvaluateFinalizedMasterProcurementPlan/EvaluateFinalizedMasterProcurementPlan";
-import ViewItem from "./pages/ProcurementCommitee/ViewItem/ViewItem";
+import ViewItem from "./pages/ViewItem/ViewItem";
 import ApprovalForMasterProcurementPlan from "./pages/TEC Committee/ApprovalForMasterProcurementPlan/ApprovalForMasterProcurementPlan";
-import ViewItemN from "./pages/ViewItem/ViewItem";
+import ViewItemN from "./pages/TEC Committee/ViewItem/ViewItem";
 import CreateModifyBidOpeningCommittee from "./pages/Procurement Officer/CreateModifyBidOpeningCommittee/CreateModifyBidOpeningCommittee";
 import MasterProcurementPlan from "./pages/ProcurementCommitee/MasterProcurementPlan/MasterProcurementPlan";
 import BidTender from "./pages/Vendor/BidTender/BidTender";

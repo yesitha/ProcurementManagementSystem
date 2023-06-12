@@ -32,12 +32,12 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import EvidenceOfAthorization from "../../../components/Popups/EvidenceOfAuthorization/EvidenceOfAuthorization";
-import ApprovePopup from "../../../components/Popups/DonePopup/ApprovePopup";
-import RejectPopup from "../../../components/Popups/DonePopup/RejectPopup";
-import ViewRecomandedVendors from "../../../components/Popups/ViewRecomandedVendors/ViewRecomandedVendors";
-import { vendors } from "../../../users/vendors.js";
-import StatusBulb from "../../../components/StatusBulb/StatusBulb";
+import EvidenceOfAthorization from "../../components/Popups/EvidenceOfAuthorization/EvidenceOfAuthorization";
+import ApprovePopup from "../../components/Popups/DonePopup/ApprovePopup";
+import RejectPopup from "../../components/Popups/DonePopup/RejectPopup";
+import ViewRecomandedVendors from "../../components/Popups/ViewRecomandedVendors/ViewRecomandedVendors";
+import { vendors } from "../../users/vendors.js";
+import StatusBulb from "../../components/StatusBulb/StatusBulb";
 import { Link as Routerlink } from "react-router-dom";
 
 const item = {
