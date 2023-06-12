@@ -9,6 +9,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+import { Link as Routerlink } from "react-router-dom";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 const columns = [
   { id: "Date", label: "Date", Width: 300, align: "center" },
@@ -177,21 +179,6 @@ const rows = [
     "Rs.54000"
   ),
 ];
-
-const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
-const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
-const user = {
-  firstname: "John",
-  lastname: "Doe",
-  email: "johndoe@gmail.com",
-  designation: "Financial Division HOD",
-  department: "Finance",
-  phone: "1234567890",
-  address: "123, ABC Street, XYZ City, 123456",
-  gender: "Male",
-  profilePic: "https://www.w3schools.com/howto/img_avatar.png",
-};
-
 export default function Stock() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -206,7 +193,6 @@ export default function Stock() {
 
   return (
     <div>
-      <SideNavBar list1={list1} list2={list2} user={user} />
       <div
         style={{
           marginLeft: "100px",
@@ -215,11 +201,18 @@ export default function Stock() {
           fontFamily: "inter",
         }}
       >
+          <Routerlink to={-1}>
+          <IconButton
+            sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}>
+            <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
+          </IconButton>
+          </Routerlink>
         <h1>Stock</h1>
       </div>
       <div style={{ display: "flex", flexDirection: "horizontal" }}>
         <div>
           <div>
+            <Routerlink to={'/add-new-item'}>
             <Button
               sx={{
                 backgroundColor: "#205295",
@@ -234,8 +227,10 @@ export default function Stock() {
             >
               ADD NEW ITEM
             </Button>
+            </Routerlink>
           </div>
           <div>
+          <Routerlink to={'/add-new-item'}>
             <Button
               sx={{
                 backgroundColor: "#205295",
@@ -251,6 +246,7 @@ export default function Stock() {
             >
               ISSUE ITEM
             </Button>
+            </Routerlink>
           </div>
         </div>
         <div className={styles.note2}>

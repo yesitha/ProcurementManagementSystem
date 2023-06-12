@@ -17,22 +17,9 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+import { Link as Routerlink } from "react-router-dom";
 
 const list = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
-
-const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
-const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
-const user = {
-  firstname: "John",
-  lastname: "Doe",
-  email: "johndoe@gmail.com",
-  designation: "Financial Division HOD",
-  department: "Finance",
-  phone: "1234567890",
-  address: "123, ABC Street, XYZ City, 123456",
-  gender: "Male",
-  profilePic: "https://www.w3schools.com/howto/img_avatar.png",
-};
 
 const columns = [
   { id: "ItemID", label: "Item ID", Width: 100, align: "center" },
@@ -81,12 +68,13 @@ export default function CreateInvoice2() {
 
   return (
     <div style={{ overflowX: "hidden" }}>
-      <SideNavBar list1={list1} list2={list2} user={user} />
       <div className={styles.afmpp_mainBody}>
         <div className={styles.afmpp_heading}>
+          <Routerlink to={-1}>
           <IconButton sx={{ pl: "15px", height: "34px", width: "34px" }}>
             <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
           </IconButton>
+          </Routerlink>
           INVOICE
         </div>
         <div className={styles.POID}>
@@ -169,6 +157,7 @@ export default function CreateInvoice2() {
         </div>
 
         <div style={{ display: "flex", justifyContent: "right" }}>
+          <Routerlink to={'/send-invoice'}>
           <Button
             variant="contained"
             style={{
@@ -181,6 +170,7 @@ export default function CreateInvoice2() {
           >
             Create Invoice
           </Button>
+          </Routerlink>
         </div>
       </div>
     </div>

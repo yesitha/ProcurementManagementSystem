@@ -20,6 +20,7 @@ import Approve from "../../../images/Approve.png";
 import Reject from "../../../images/Reject.png";
 import ApprovePopup from "../../../components/Popups/DonePopup/ApprovePopup";
 import RejectPopup from "../../../components/Popups/DonePopup/RejectPopup";
+import { Link as Routerlink } from "react-router-dom";
 //===============Applicable for table data===================================
 
 const columns = [
@@ -85,195 +86,9 @@ const rows = [
       <RejectPopup />
     </div>
   ),
-  createData(
-    "I0015",
-    "Stapler",
-    "50",
-    "loerm",
-    "IT Department",
-    <VendorDetails />,
-    "2023/01/01",
-    <div className={styles.afmpp_ActionButonsContainer}>
-      <ApprovePopup />
-      <RejectPopup />
-    </div>
-  ),
-  createData(
-    "I0016",
-    "Pens",
-    "100",
-    "loerm",
-    "Engineering Department",
-    <VendorDetails />,
-    "2023/01/01",
-    <div className={styles.afmpp_ActionButonsContainer}>
-      <ApprovePopup />
-      <RejectPopup />
-    </div>
-  ),
-  createData(
-    "I0017",
-    "Notebooks",
-    "25",
-    "loerm",
-    "Engineering Department",
-    <VendorDetails />,
-    "2023/01/01",
-    <div className={styles.afmpp_ActionButonsContainer}>
-      <ApprovePopup />
-      <RejectPopup />
-    </div>
-  ),
-  createData(
-    "I0018",
-    "Printer Ink",
-    "10",
-    "loerm",
-    "Engineering Department",
-    <VendorDetails />,
-    "2023/01/01",
-    <div className={styles.afmpp_ActionButonsContainer}>
-      <ApprovePopup />
-      <RejectPopup />
-    </div>
-  ),
-  createData(
-    "I0019",
-    "Paper Clips",
-    "200",
-    "loerm",
-    "Engineering Department",
-    <VendorDetails />,
-    "2023/01/01",
-    <div className={styles.afmpp_ActionButonsContainer}>
-      <ApprovePopup />
-      <RejectPopup />
-    </div>
-  ),
-  createData(
-    "I0020",
-    "Tape",
-    "15",
-    "loerm",
-    "Finance Department",
-    <VendorDetails />,
-    "2023/01/01",
-    <div className={styles.afmpp_ActionButonsContainer}>
-      <ApprovePopup />
-      <RejectPopup />
-    </div>
-  ),
-  createData(
-    "I0021",
-    "Envelopes",
-    "75",
-    "loerm",
-    "Finance Department",
-    <VendorDetails />,
-    "2023/01/01",
-    <div className={styles.afmpp_ActionButonsContainer}>
-      <ApprovePopup />
-      <RejectPopup />
-    </div>
-  ),
-  createData(
-    "I0022",
-    "File Folders",
-    "50",
-    "loerm",
-    "Finance Department",
-    <VendorDetails />,
-    "2023/01/01",
-    <div className={styles.afmpp_ActionButonsContainer}>
-      <ApprovePopup />
-      <RejectPopup />
-    </div>
-  ),
-  createData(
-    "I0023",
-    "Scissors",
-    "20",
-    "loerm",
-    "Finance Department",
-    <VendorDetails />,
-    "2023/01/01",
-    <div className={styles.afmpp_ActionButonsContainer}>
-      <ApprovePopup />
-      <RejectPopup />
-    </div>
-  ),
-  createData(
-    "I0024",
-    "Whiteboard Markers",
-    "30",
-    "loerm",
-    "Finance Department",
-    <VendorDetails />,
-    "2023/01/01",
-    <div className={styles.afmpp_ActionButonsContainer}>
-      <ApprovePopup />
-      <RejectPopup />
-    </div>
-  ),
-  createData(
-    "I0025",
-    "Calculator",
-    "5",
-    "loerm",
-    "Finance Department",
-    <VendorDetails />,
-    "2023/01/01",
-    <div className={styles.afmpp_ActionButonsContainer}>
-      <ApprovePopup />
-      <RejectPopup />
-    </div>
-  ),
-  createData(
-    "I0026",
-    "Post-it Notes",
-    "100",
-    "loerm",
-    "Technical Department",
-    <VendorDetails />,
-    "2023/01/01",
-    <div className={styles.afmpp_ActionButonsContainer}>
-      <ApprovePopup />
-      <RejectPopup />
-    </div>
-  ),
-  createData(
-    "I0027",
-    "Highlighters",
-    "20",
-    "loerm",
-    "Technical Department",
-    <VendorDetails />,
-    "2023/01/01",
-    <div className={styles.afmpp_ActionButonsContainer}>
-      <ApprovePopup />
-      <RejectPopup />
-    </div>
-  ),
 ];
 
-//===========================================================================
-
-// Here in class names, afmmp=AuditFinalizedMasterProcurementPlan
-
 function AuditFinalizedMasterProcurementPlan() {
-  const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
-  const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
-  const user = {
-    firstname: "John",
-    lastname: "Doe",
-    email: "johndoe@gmail.com",
-    designation: "Financial Division HOD",
-    department: "Finance",
-    phone: "1234567890",
-    address: "123, ABC Street, XYZ City, 123456",
-    gender: "Male",
-    profilePic: "https://www.w3schools.com/howto/img_avatar.png",
-  };
 
   //=======values for 'SelectDropDown.js' as an array=======
 
@@ -294,12 +109,13 @@ function AuditFinalizedMasterProcurementPlan() {
 
   return (
     <div>
-      <SideNavBar list1={list1} list2={list2} user={user} />
       <div className={styles.afmpp_mainBody}>
         <div className={styles.afmpp_heading}>
+          <Routerlink to={-1}>
           <IconButton sx={{ pl: "15px", height: "34px", width: "34px" }}>
             <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
           </IconButton>
+          </Routerlink>
           Audit Finalized Master Procurement Plan
         </div>
         <div className={styles.afmpp_title_search}>

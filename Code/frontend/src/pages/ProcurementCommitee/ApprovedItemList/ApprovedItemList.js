@@ -26,24 +26,10 @@ import styles from "./ApprovedItemList.module.css";
 import SelectDropDown from "../../../components/SelectDropDown/SelectDropDown";
 import ViewVendors from "../../../components/Popups/ViewVendors/ViewVendors";
 import { vendors } from "../../../users/vendors.js";
+import { Link as Routerlink } from "react-router-dom";
 
 function ViewMasterProcurementPlan() {
   const Recomandedvendors1 = vendors;
-
-  const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
-  const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
-  const user = {
-    firstname: "John",
-    lastname: "Doe",
-    email: "johndoe@gmail.com",
-    designation: "Financial Division HOD",
-    department: "Finance",
-    phone: "1234567890",
-    address: "123, ABC Street, XYZ City, 123456",
-    gender: "Male",
-    profilePic: "https://www.w3schools.com/howto/img_avatar.png",
-  };
-
   const columns = [
     { id: "ItemID", label: "Item ID", Width: 300, align: "center" },
     { id: "ItemName", label: "Item Name", Width: 300, align: "center" },
@@ -82,26 +68,6 @@ function ViewMasterProcurementPlan() {
 
   const rows = [
     createData(
-      "I0014",
-      "A4 Papers",
-      "500",
-
-      <ViewVendors vendors={Recomandedvendors1} />,
-      <Button variant="contained" className={styles.NotifyVendors}>
-        Notify Vendors
-      </Button>
-    ),
-    createData(
-      "I0028",
-      "Ruler",
-      "10",
-
-      <ViewVendors vendors={Recomandedvendors1} />,
-      <Button variant="contained" className={styles.NotifyVendors}>
-        Notify Vendors
-      </Button>
-    ),
-    createData(
       "I0015",
       "Stapler",
       "50",
@@ -131,36 +97,6 @@ function ViewMasterProcurementPlan() {
         Notify Vendors
       </Button>
     ),
-    createData(
-      "I0018",
-      "Printer Ink",
-      "10",
-
-      <ViewVendors vendors={Recomandedvendors1} />,
-      <Button variant="contained" className={styles.NotifyVendors}>
-        Notify Vendors
-      </Button>
-    ),
-    createData(
-      "I0019",
-      "Paper Clips",
-      "200",
-
-      <ViewVendors vendors={Recomandedvendors1} />,
-      <Button variant="contained" className={styles.NotifyVendors}>
-        Notify Vendors
-      </Button>
-    ),
-    createData(
-      "I0020",
-      "Tape",
-      "15",
-
-      <ViewVendors vendors={Recomandedvendors1} />,
-      <Button variant="contained" className={styles.NotifyVendors}>
-        Notify Vendors
-      </Button>
-    ),
   ];
 
   const [page, setPage] = React.useState(0);
@@ -176,10 +112,6 @@ function ViewMasterProcurementPlan() {
 
   return (
     <div className={styles.outer} style={{ overflowX: "hidden" }}>
-      <div className={styles.sideNavBar}>
-        <SideNavBar list1={list1} list2={list2} user={user} />
-      </div>
-
       <Container
         sx={{
           ml: { xs: "60px", sm: "65px", md: "65px", lg: "68px", xl: "70px" },
@@ -189,12 +121,13 @@ function ViewMasterProcurementPlan() {
       >
         <div className={styles.upperSection}>
           <div className={styles.ManageAuctionPageContainer__header}>
+            <Routerlink to={-1}>
             <IconButton
               sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
             >
               <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
             </IconButton>
-
+            </Routerlink>
             <h1 className={styles.Header}>Approved Item List</h1>
           </div>
         </div>

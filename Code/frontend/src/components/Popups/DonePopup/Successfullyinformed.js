@@ -7,6 +7,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import DocumentDownload from "../../../images/DocumentDownload.png";
 import CloseIcon from "@mui/icons-material/Close";
 import { Button } from "@mui/material";
+import { Link as Routerlink } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -75,6 +76,7 @@ export default function Sucessfullyinformed({ name, title, styles }) {
               marginTop: 10,
             }}
           >
+            <Routerlink to={-1}>
             <Button
               variant="contained"
               fontFamily={"Inter"}
@@ -87,6 +89,7 @@ export default function Sucessfullyinformed({ name, title, styles }) {
             >
               OK
             </Button>
+            </Routerlink>
           </div>
         </Box>
       </Modal>

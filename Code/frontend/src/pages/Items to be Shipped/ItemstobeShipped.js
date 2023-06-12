@@ -12,21 +12,9 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { Button, IconButton, Paper, Stack, TextField } from "@mui/material";
 import Successfullyinformed from "../../components/Popups/DonePopup/Successfullyinformed";
-import Sucessfullyinformed from "../../components/Popups/DonePopup/Successfullyinformed";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import { Link as Routerlink } from "react-router-dom";
 
-const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
-const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
-const user = {
-  firstname: "John",
-  lastname: "Doe",
-  email: "johndoe@gmail.com",
-  designation: "Financial Division HOD",
-  department: "Finance",
-  phone: "1234567890",
-  address: "123, ABC Street, XYZ City, 123456",
-  gender: "Male",
-  profilePic: "https://www.w3schools.com/howto/img_avatar.png",
-};
 
 const list0 = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
 const list3 = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
@@ -75,9 +63,15 @@ export default function ItemstobeShipped() {
 
   return (
     <div>
-      <SideNavBar list1={list1} list2={list2} user={user} />
 
-      <div className={styles.Title}>Items to be Shipped</div>
+      <div className={styles.afmpp_heading}>
+        <Routerlink to={-1}>
+        <IconButton sx={{ pl: "15px", height: "34px", width: "34px" }}>
+          <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
+        </IconButton>
+        </Routerlink>
+        Items to be Shipped
+      </div>
 
       <div style={{ marginTop: "30px" }}>
         <h1 style={{ marginLeft: "100px", fontSize: "16px", color: "white" }}>
@@ -166,7 +160,7 @@ export default function ItemstobeShipped() {
 
       <div classname={styles.Button}>
         <div>
-          <Sucessfullyinformed
+          <Successfullyinformed
             styles={{
               position: "absolute",
               right: "5%",

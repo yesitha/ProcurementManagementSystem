@@ -20,20 +20,9 @@ import GavelIcon from "@mui/icons-material/Gavel";
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
+import { Link as Routerlink } from "react-router-dom";
 
 ///////////////Add axios/////////////
-async function getTenderItemDetails(id) {
-  try {
-    const response = await axios.get(`https://localhost:7102/api/Items/TenderItemDetails/${id}`);
-   
-    return response.data;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-}
-
-
 
 const columns = [
   { id: "DOC", Width: 200, align: "center" },
@@ -69,46 +58,11 @@ const rows = [
 
 function TenderDetails() {
 
-  
-  
   const { itemId } = useParams();
-  const [data, setData] = useState(null);
-  
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getTenderItemDetails(itemId);
-        setData(response);
-      } catch (error) {
-        console.log(error);
-      }
-    };
 
-    fetchData();
-  }, []);
-  console.log(data);
-   
-  
-  const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
-  const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
-  const user = {
-    firstname: "John",
-    lastname: "Doe",
-    email: "johndoe@gmail.com",
-    designation: "Financial Division HOD",
-    department: "Finance",
-    phone: "1234567890",
-    address: "123, ABC Street, XYZ City, 123456",
-    gender: "Male",
-    profilePic: "https://www.w3schools.com/howto/img_avatar.png",
-  };
-if(data!=null){
   return (
     <div style={{ overflowX: "hidden" }}>
-      <div className={styles.sideNavBar}>
-        <SideNavBar list1={list1} list2={list2} user={user} />
-      </div>
-
+     
       <Container
         className={styles.main}
         sx={{
@@ -119,12 +73,14 @@ if(data!=null){
       >
         <div className={styles.upperSection}>
           <div className={styles.TenderDetailsPageContainer__header}>
+          <Routerlink to={-1}>
             <IconButton
               sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
             >
               <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
             </IconButton>
-            <h1 className={styles.Header}> {data.itemName} </h1>
+            </Routerlink>
+            <h1 className={styles.Header}> </h1>
           </div>
         </div>
 
@@ -151,7 +107,6 @@ if(data!=null){
               multiline
               rows={4}
               sx={{ width: 500 }}
-              value={data.specification}
             />
             DUE DATE
             <TextField
@@ -259,6 +214,7 @@ if(data!=null){
                 </Table>
               </TableContainer>
             </Paper>
+            <Routerlink to={-1}>
             <Button
               variant="contained"
               sx={{
@@ -274,12 +230,13 @@ if(data!=null){
                 <Typography>Place BID</Typography>
               </Container>
             </Button>
+            </Routerlink>
           </div>
         </div>
       </Container>
     </div>
   );
-            }
+            
 }
 
 export default TenderDetails;

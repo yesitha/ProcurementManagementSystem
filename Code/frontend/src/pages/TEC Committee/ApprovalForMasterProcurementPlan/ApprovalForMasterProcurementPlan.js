@@ -35,6 +35,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+import { Link as Routerlink } from "react-router-dom";
 
 
 const columns = [
@@ -44,7 +45,6 @@ const columns = [
   {id: "estimatedBudget",label: "Estimated Budget",Width: 300,align: "center",},
   {id: "action", label: "Action", Width: 300, align: "center"},
 ];
-
 
 function createData(itemID, itemName, quentity, estimatedBudget, action) {
   return { itemID, itemName, quentity, estimatedBudget, action };
@@ -56,6 +56,7 @@ const rows = [
     "A4 Bundle",
     "400",
     "Rs. 1000000",
+    <Routerlink to={'/PCviewitem'}>
     <Button
       className={styles.ViewButton}
       variant="contained"
@@ -64,12 +65,14 @@ const rows = [
       {" "}
       View{" "}
     </Button>
+    </Routerlink>
   ),
   createData(
     "IT-0002",
     "Pen",
     "2000",
     "Rs. 2000000",
+    <Routerlink to={'/PCviewitem'}>
     <Button
       className={styles.ViewButton}
       variant="contained"
@@ -78,48 +81,7 @@ const rows = [
       {" "}
       View{" "}
     </Button>
-  ),
-  createData(
-    "IT-0003",
-    "240 GSM File Bundle",
-    "1000",
-    "Rs. 3000000",
-    <Button
-      className={styles.ViewButton}
-      variant="contained"
-      sx={{ borderRadius: 8, px: { xs: 2, md: 5 } }}
-    >
-      {" "}
-      View{" "}
-    </Button>
-  ),
-  createData(
-    "IT-0004",
-    "991Es Plus Calculators",
-    "100",
-    "Rs. 4000000",
-    <Button
-      className={styles.ViewButton}
-      variant="contained"
-      sx={{ borderRadius: 8, px: { xs: 2, md: 5 } }}
-    >
-      {" "}
-      View{" "}
-    </Button>
-  ),
-  createData(
-    "IT-0005",
-    "Havit Mouse",
-    "50",
-    "Rs. 4000000",
-    <Button
-      className={styles.ViewButton}
-      variant="contained"
-      sx={{ borderRadius: 8, px: { xs: 2, md: 5 } }}
-    >
-      {" "}
-      View{" "}
-    </Button>
+    </Routerlink>
   ),
 ];
 
@@ -152,12 +114,13 @@ function ApprovalForMasterProcurementPlan() {
       >
         <div className={styles.upperSection}>
           <div className={styles.PageContainer__header}>
+            <Routerlink to={-1}>
             <IconButton
               sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
             >
               <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
             </IconButton>
-
+            </Routerlink>
             <h1 className={styles.Header}>
               Approval for Master Procurement Plan
             </h1>
