@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PWMSBackend.Data;
+using PWMSBackend.DTOs.Incoming;
 using PWMSBackend.Models;
 
 namespace PWMSBackend.Controllers
@@ -104,6 +105,66 @@ namespace PWMSBackend.Controllers
 
             return Ok(items);
         }
+
+
+        [HttpPost("AddItemToSubProcurementPlan")]
+        public IActionResult CreateSubProcurementPlanItem(CreateSubProcurementPlanItemDTO itemDto)
+        {
+            // Create a new SubProcurementPlanItem instance
+            var newItem = new SubProcurementPlanItem
+            {
+                SppId = itemDto.SppId,
+                ItemId = itemDto.ItemId,
+                RecommendedVendor = itemDto.RecommendedVendor,
+                EvidenceOfAuthorization = itemDto.EvidenceOfAuthorization,
+                ExpectedDeliveryDate = itemDto.ExpectedDeliveryDate,
+                EstimatedBudget = itemDto.EstimatedBudget,
+                Quantity = itemDto.Quantity
+            };
+
+            // Add the new item to the context
+            _context.SubProcurementPlanItems.Add(newItem);
+
+            // Save changes to the database
+            _context.SaveChanges();
+
+            return Ok(newItem);
+        }
+
+
+        [HttpGet("CategoryNameList")]
+        public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
+        {
+            var categories = await _context.Categories
+                .ToListAsync();
+
+            var categoryList = categories.Select(c => new { CategoryId = c.CategoryId, CategoryName = c.CategoryName }).ToList();
+
+            return Ok(categoryList);
+        }
+
+        [HttpPost]
+        public IActionResult AddItem(string itemName, string specification, string categoryId)
+        {
+            // Create a new instance of the Item class
+            var newItem = new Item
+            {
+                ItemName = itemName,
+                Specification = specification
+            };
+
+            // Set the Category reference using the provided categoryId
+            Category category = _context.Categories.FirstOrDefault(c => c.CategoryId == categoryId);
+            newItem.Category = category;
+
+            // Add the new item to the database
+            _context.Items.Add(newItem);
+            _context.SaveChanges();
+
+            // Return a response indicating success and the newly generated ItemId
+            return Ok(newItem.ItemId);
+        }
+
 
     }
 }

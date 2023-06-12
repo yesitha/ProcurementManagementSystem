@@ -33,8 +33,4 @@
     <None Remove="DTOs\outgoing\NewFile.txt" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="DTOs\Incoming\" />
-  </ItemGroup>
-
 </Project>
