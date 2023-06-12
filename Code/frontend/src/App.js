@@ -19,7 +19,7 @@ import Stock from "./pages/Stock/Stock";
 import DGViewFinalizedMasterProcurementPlans from "./pages/Director General/DGViewFinalizedMasterProcurementPlans/DGViewFinalizedMasterProcurementPlans";
 import EvaluateFinalizedMasterProcurementPlan from "./pages/Director General/EvaluateFinalizedMasterProcurementPlan/EvaluateFinalizedMasterProcurementPlan";
 import ApprovalForMasterProcurementPlan from "./pages/TEC Committee/ApprovalForMasterProcurementPlan/ApprovalForMasterProcurementPlan";
-import ViewItem from "./pages/ProcurementCommitee/ViewItem/ViewItem";
+import ViewItem from "./pages/ViewItem/ViewItem";
 import CreateModifyBidOpeningCommittee from "./pages/Procurement Officer/CreateModifyBidOpeningCommittee/CreateModifyBidOpeningCommittee";
 import MasterProcurementPlan from "./pages/ProcurementCommitee/MasterProcurementPlan/MasterProcurementPlan";
 import BidTender from "./pages/Vendor/BidTender/BidTender";
@@ -52,18 +52,20 @@ import SideNavBar from "./components/SideNavigationBar/SideNavBar";
 import { user, list1, list2 } from './pages/Usermanage';
 import ViewMasterProcurementPlanProc from "./pages/Procurement Officer/ViewMasterProcurementPlanProc/ViewMasterProcurementPlanProc";
 import PurchaseOrder from "./pages/Procurement Officer/PurchaseOrder/PurchaseOrder";
+import Signup from "./pages/SignUp/SignUp";
 
 
 
 
 function App() {
   return (
-    <div>
-       <div>
-        <SideNavBar list1={list1} list2={list2} user={user} />
-      </div>
 
-      <Routes>
+
+<div className="app-container">
+  
+      <SideNavBar list1={list1} list2={list2} user={user} />
+      <div className="app-content">
+       <Routes>
         <Route path='/' element={<Login/>}/>
         <Route path='/view-notification' element={<NotificationPage/>}/>
 
@@ -79,62 +81,19 @@ function App() {
         <Route path='/RequesttoInitiateMasterProcurementPlan' element={<RequesttoInitiateSubProcurementPlan/>}/>
 
 
-
+        {/*Tec Committee Member */}
+        <Route path='/view-master-procurement-plan' element={<MasterProcurementPlanEvalate/>}/>
+        <Route path='/vendor-selection' element={<VendorSelection/>}/>
+        <Route path='/revise-vendor-selection' element={<ReviseVendorSelection/>}/>
+        <Route path='/new-master-procurement-plan-for-evaluate' element={<MasterProcurementPlanEvalate/>}/>
+        <Route path='/rejected-item-modified' element={<CreateMasterProcurementPlan/>}/>
+        <Route path='/auction-end' element={<Dashboard/>}/>
+        <Route path='/vendor-rejected' element={<ViewItem/>}/>
         <Route path="*" element={<p>NotFound</p>}></Route> 
-
-
-
-      </Routes>
-
-      {/* <SignUp/> */}
-      
-
-      {/* <Login/> */}
-      {/* <SignUp/> */}
-      {/* <Dashboard/> */}
-      {/* <ManageAuction/> */}
-      {/* <NotificationPage/> */}
-      <CreateSubProcurementPlan/>
-      {/* <PublishPaperAd/> */}
-      {/* <FinalizedMasterProcurementPlan/> */}
-      {/* <MasterProcurementPlanStatus/> */}
-      {/* <ViewMasterProcurementPlan/> */}
-      {/* <ApprovedItemList/> */}
-      {/* <CreateModifyTECCommittee/> */}
-      {/* <MasterProcurementPlanEvalate/> */}
-      {/* <AddItemtoSubProcurementPlan/>  */}
-      {/* <ItemDetails/> */}
-      {/* <ApprovalForMasterProcurementPlan/> */}
-      {/*ViewItem*/}
-      {/* <CreateModifyBidOpeningCommittee/> */}
-      {/* <ViewFinalizedMasterProcurementPlans/> */}
-      {/* <AuditFinalizedMasterProcurementPlan/> */}
-      {/* <BidTender/> */}
-      {/* <BidDetails/> */}
-      {/* <BidDetailsView/> */}
-      {/* <VendorSelection/> */}
-      {/* <MasterProcurementPlan/> */}
-      {/* <Stock/> */}
-      {/* <DGViewFinalizedMasterProcurementPlans/> */}
-      {/* <EvaluateFinalizedMasterProcurementPlan/> */}
-      {/*EvaluateFinalizedMasterProcurementPlan*/}
-      {/*AddNewItem*/}
-      {/* <CreateInvoice/> */}
-      {/* <GoodsReceivedNote/> */}
-      {/* <ViewGRN/> */}
-      {/* <Invoice/> */}
-      {/* <CreateInvoice2/> */}
-      {/* <SendInvoice/> */}
-      {/* <InvoicestobePaid/> */}
-      {/* <UploadPaymentVoucher/> */}
-      {/* <AddItemstoGRN/> */}
-      {/* <InvoicestobePaidFin/> */}
-      {/* <ReviseVendorSelection/> */}
-      {/* <Stock/> */}
-      {/* <AddNewItem /> */}
-      {/* <ViewMasterProcurementPlanProc/> */}
-      <PurchaseOrder/>
+        </Routes>      
       </div>
-  )
+    </div>
+    )
   }
   export default App;
+  

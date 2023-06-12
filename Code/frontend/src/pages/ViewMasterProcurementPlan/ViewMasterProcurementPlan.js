@@ -30,20 +30,6 @@ import { vendors } from "../../users/vendors.js";
 function ViewMasterProcurementPlan() {
   const Recomandedvendors1 = vendors;
 
-  const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
-  const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
-  const user = {
-    firstname: "John",
-    lastname: "Doe",
-    email: "johndoe@gmail.com",
-    designation: "Financial Division HOD",
-    department: "Finance",
-    phone: "1234567890",
-    address: "123, ABC Street, XYZ City, 123456",
-    gender: "Male",
-    profilePic: "https://www.w3schools.com/howto/img_avatar.png",
-  };
-
   const columns = [
     { id: "ItemID", label: "Item ID", Width: 300, align: "center" },
     { id: "ItemName", label: "Item Name", Width: 300, align: "center" },
@@ -194,10 +180,6 @@ function ViewMasterProcurementPlan() {
 
   return (
     <div className={styles.outer}>
-      <div className={styles.sideNavBar}>
-        <SideNavBar list1={list1} list2={list2} user={user} />
-      </div>
-
       <Container
         sx={{
           ml: { xs: "60px", sm: "65px", md: "65px", lg: "68px", xl: "70px" },
