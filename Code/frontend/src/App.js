@@ -50,6 +50,9 @@ import {Route , Routes} from "react-router-dom";
 import TenderDetails from "./pages/Vendor/Tender Details/TenderDetails";
 import SideNavBar from "./components/SideNavigationBar/SideNavBar";
 import { user, list1, list2 } from './pages/Usermanage';
+import ViewMasterProcurementPlanProc from "./pages/Procurement Officer/ViewMasterProcurementPlanProc/ViewMasterProcurementPlanProc";
+import PurchaseOrder from "./pages/Procurement Officer/PurchaseOrder/PurchaseOrder";
+
 
 
 
@@ -91,7 +94,7 @@ function App() {
       {/* <Dashboard/> */}
       {/* <ManageAuction/> */}
       {/* <NotificationPage/> */}
-      {/* <CreateSubProcurementPlan/> */}
+      <CreateSubProcurementPlan/>
       {/* <PublishPaperAd/> */}
       {/* <FinalizedMasterProcurementPlan/> */}
       {/* <MasterProcurementPlanStatus/> */}
@@ -129,6 +132,8 @@ function App() {
       {/* <ReviseVendorSelection/> */}
       {/* <Stock/> */}
       {/* <AddNewItem /> */}
+      {/* <ViewMasterProcurementPlanProc/> */}
+      <PurchaseOrder/>
       </div>
   )
   }
