@@ -7,8 +7,8 @@ const user = {
   firstname: "John",
   lastname: "Doe",
   email: "johndoe@gmail.com",
-  designation: "Financial Division HOD",
-  userType: 'InventoryManager',
+  designation: "Tec Committee Member",
+  userType: 'TecCommitteeMember',
   department: "Finance",
   phone: "1234567890",
   address: "123, ABC Street, XYZ City, 123456",
@@ -93,6 +93,7 @@ switch (currentUser) {
       { displayName: "New Sub Procurement Plans",path:"NewSubProcurmentPlan", number: "2" },
     ];
     break;
+
     case 'ProcurementCommittee':
     list1 = [
       {displayName: "Master Procurement Plan",
@@ -246,7 +247,32 @@ switch (currentUser) {
     ];
     break;
 
-    default:
+    case 'TecCommitteeMember':
+        list1 = [
+            {
+                displayName:"Master Procurement Plan",
+                path:"view-master-procurement-plan"
+            }
+        ];
+        list2 = ["Vendors and Items", "Committee Members", "Inventory", "Settings"];
+    
+        actions = [
+            {displayName:"View Master Procurement Plan",
+            path:"view-master-procurement-plan"},
+            {displayName:"Vendor Selection",
+            path:"vendor-selection"}, 
+            {displayName:"Revise Vendor Selection",
+            path:"revise-vendor-selection"}
+        ];
+    
+        actionButtons = [
+          { displayName: "New Master Procurement plan for Evaluate",path:"new-master-procurement-plan-for-evaluate", number: "2" },
+          { displayName: "Rejected Item Modified",path:"rejected-item-modified", number: "2" },
+          { displayName: "Auction End",path:"auction-end", number: "2" },
+          { displayName: "Vendor Rejected",path:"vendor-rejected", number: "2" }
+        ];
+        break;
+        default:
 }
 
 export { user, list1, list2, actions, actionButtons };

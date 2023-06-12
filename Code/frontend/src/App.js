@@ -19,6 +19,8 @@ import Stock from "./pages/Stock/Stock";
 import DGViewFinalizedMasterProcurementPlans from "./pages/Director General/DGViewFinalizedMasterProcurementPlans/DGViewFinalizedMasterProcurementPlans";
 import EvaluateFinalizedMasterProcurementPlan from "./pages/Director General/EvaluateFinalizedMasterProcurementPlan/EvaluateFinalizedMasterProcurementPlan";
 import ViewItem from "./pages/ProcurementCommitee/ViewItem/ViewItem";
+import ApprovalForMasterProcurementPlan from "./pages/TEC Committee/ApprovalForMasterProcurementPlan/ApprovalForMasterProcurementPlan";
+import ViewItemN from "./pages/ViewItem/ViewItem";
 import CreateModifyBidOpeningCommittee from "./pages/Procurement Officer/CreateModifyBidOpeningCommittee/CreateModifyBidOpeningCommittee";
 import MasterProcurementPlan from "./pages/ProcurementCommitee/MasterProcurementPlan/MasterProcurementPlan";
 import BidTender from "./pages/Vendor/BidTender/BidTender";
@@ -50,18 +52,21 @@ import TenderDetails from "./pages/Vendor/Tender Details/TenderDetails";
 import BidHistory from "./pages/Vendor/BidHistory/BidHistory";
 import SideNavBar from "./components/SideNavigationBar/SideNavBar";
 import { user, list1, list2 } from './pages/Usermanage';
-import ApprovalForMasterProcurementPlan from "./pages/TEC Committee/ApprovalForMasterProcurementPlan/ApprovalForMasterProcurementPlan";
 import Invoicesvendorside from "./pages/Vendor/Invoices(vendorside)/Invoices(vendorside)";
 import InvoicesneedtobePaid from "./pages/FinanceDivisionAccountant/InvoicesneedtobePaid/InvoicesneedtobePaid";
+import ViewMasterProcurementPlanProc from "./pages/Procurement Officer/ViewMasterProcurementPlanProc/ViewMasterProcurementPlanProc";
+import PurchaseOrder from "./pages/Procurement Officer/PurchaseOrder/PurchaseOrder";
+import Signup from "./pages/SignUp/SignUp";
 
 function App() {
   return (
-    <div>
-       <div>
-        <SideNavBar list1={list1} list2={list2} user={user} />
-      </div>
 
-      <Routes>
+
+<div className="app-container">
+  
+      <SideNavBar list1={list1} list2={list2} user={user} />
+      <div className="app-content">
+       <Routes>
         <Route path='/' element={<Login/>}/>
         <Route path='/view-notification' element={<NotificationPage/>}/>
 
@@ -98,6 +103,17 @@ function App() {
         {/* <Route path='/approved-items-from-dg' element={</>}/> */}
         <Route path='/item-rejected-by-vendors' element={<AddItemstoGRN/>}/>
         <Route path='/new-invoices-available' element={<InvoicestobePaid/>}/>
+
+
+        {/*Tec Committee Member */}
+        <Route path='/view-master-procurement-plan' element={<MasterProcurementPlanEvalate/>}/>
+        <Route path='/vendor-selection' element={<VendorSelection/>}/>
+        <Route path='/revise-vendor-selection' element={<ReviseVendorSelection/>}/>
+        <Route path='/new-master-procurement-plan-for-evaluate' element={<MasterProcurementPlanEvalate/>}/>
+        <Route path='/rejected-item-modified' element={<CreateMasterProcurementPlan/>}/>
+        <Route path='/auction-end' element={<Dashboard/>}/>
+        <Route path='/vendor-rejected' element={<ViewItemN/>}/>
+        <Route path="*" element={<p>NotFound</p>}></Route> 
 
 
       {/* Procurement Committee */}
@@ -174,7 +190,10 @@ function App() {
 
 
       </Routes>
+
       </div>
-  )
+    </div>
+    )
   }
   export default App;
+  

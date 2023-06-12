@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import {Link as Routerlink} from "react-router-dom";
+import { Link as Routerlink } from "react-router-dom";
 import Checkbox from "@mui/material/Checkbox";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -12,7 +12,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Card, CardContent, Link as Muilink} from "@mui/material";
+import { Card, CardContent, Link as Muilink } from "@mui/material";
 import { maxWidth } from "@mui/system";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
@@ -21,13 +21,12 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import IconButton from "@mui/material/IconButton";
 import OutlinedInput from "@mui/material/OutlinedInput";
-import { Login, NoEncryption } from "@mui/icons-material";
+import { Mode, NoEncryption } from "@mui/icons-material";
 import "./Login.css";
 import logo from "../../images/logo.png";
 
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
-
 
 const theme = createTheme({
   typography: {
@@ -52,99 +51,98 @@ const theme = createTheme({
   },
 });
 
-export default function SignIn() {
+export default function Login() {
   const onSubmit = (data) => {
     console.log("Form Submitted", data);
-    fetch('https://b493-103-247-51-183.ngrok-free.app/UserLogin/user1%40example.com/password1').then(data => data.json()).then(d => {
-      console.log(d);
-    })
   };
-
-  const form = useForm();
+  const form = useForm({
+    mode: "onTouched",
+  });
   const { register, handleSubmit, control, formState } = form;
-  const { errors,isValid } = formState;
+  const { errors, isValid } = formState;
 
   return (
     <ThemeProvider theme={theme}>
-      <div style={{ display: 'flex', justifyContent: 'center' ,padding:75}}>
-      <Card sx={{ minWidth: 275,maxWidth:500}}>
-        <CardContent>
-          <Container component="main" maxWidth="xs">
-            <CssBaseline />
-            <Box
-              sx={{
-                marginTop: 8,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-                <LockOutlinedIcon />
-              </Avatar>
-              <Typography variant="h6">
-                Procurement Management System
-              </Typography>
-              <Typography variant="h6">Sign In</Typography>
+      <div style={{ display: "flex", justifyContent: "center", padding: 75 }}>
+        <Card sx={{ minWidth: 275, maxWidth: 500 }}>
+          <CardContent>
+            <Container component="main" maxWidth="xs">
+              <CssBaseline />
+              <Box
+                onSubmit={handleSubmit(onSubmit)}
+                component="form"
+                sx={{
+                  marginTop: 8,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+                  <LockOutlinedIcon />
+                </Avatar>
+                <Typography variant="h6">
+                  Procurement Management System
+                </Typography>
+                <Typography variant="h6">Sign In</Typography>
 
-              <Typography variant="h3">
-                Enter your email and password below
-              </Typography>
+                <Typography variant="h3">
+                  Enter your email and password below
+                </Typography>
+                  <TextField
+                    {...register("email", {
+                      required: "Email Cant be Empty!",
+                      pattern: {
+                        value:
+                          /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                        message: "Email format Error!",
+                      },
+                    })}
+                    margin="normal"
+                    fullWidth
+                    id="email"
+                    label="Email Address"
+                    name="email"
+                  />
+                  <p className="error">{errors.email?.message}</p>
 
-                <TextField
-                  {...register("email", {
-                    required: "Email Cant be Empty!",
-                    pattern: {
-                      value:
-                        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-                      message: "Email format Error!",
-                    },
-                  })}
-                  margin="normal"
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                />
-                <p className="error">{errors.email?.message}</p>
+                  <TextField
+                    {...register("password", {
+                      required: "Password Required",
+                      pattern: {
+                        value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                        message:
+                          "Password must contain Minimum eight characters, at least one letter and one number",
+                      },
+                      minLength: {
+                        value: 8,
+                        message: "Password not long Enough!",
+                      },
+                    })}
+                    margin="normal"
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                  />
+                  <p className="error">{errors.password?.message}</p>
 
-                <TextField
-                  {...register("password", {
-                    required: "Password Required",
-                    pattern: {
-                      value:
-                      /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-                      message: "Password must contain Minimum eight characters, at least one letter and one number",
-                    },
-                    minLength: {
-                      value: 8,
-                      message: "Password not long Enough!",
-                    },
-                  })}
-                  margin="normal"
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                />
-                <p className="error">{errors.password?.message}</p>
-
-                <Button
-                  onClick={onSubmit}
-                  disabled={!isValid}
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                >
-                  Sign In
-                </Button>
+                  <Button
+                    onClick={onSubmit}
+                    disabled={!isValid}
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                  >
+                    Sign In
+                  </Button>
               </Box>
               <DevTool control={control} />
-          </Container>
-        </CardContent>
-      </Card>
+            </Container>
+          </CardContent>
+        </Card>
       </div>
     </ThemeProvider>
   );

@@ -12,7 +12,7 @@ using PWMSBackend.Data;
 namespace PWMSBackend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230609121346_InitialCreate")]
+    [Migration("20230612075109_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -299,6 +299,10 @@ namespace PWMSBackend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("EmailAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("EmployeeName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -465,11 +469,9 @@ namespace PWMSBackend.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("DGComment")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DGStatus")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("EstimatedBudget")
@@ -483,42 +485,33 @@ namespace PWMSBackend.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("InternalAuditorComment")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("InternalAuditorStatus")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProcurementCommitteeComment")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProcuremnetCommitteeStatus")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
                     b.Property<string>("RecommendedVendor")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RejectedVendor")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SelectedVendor")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TecCommitteeComment")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TecCommitteeStatus")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("SppId", "ItemId");
@@ -526,6 +519,39 @@ namespace PWMSBackend.Migrations
                     b.HasIndex("ItemId");
 
                     b.ToTable("SubProcurementPlanItems");
+                });
+
+            modelBuilder.Entity("PWMSBackend.Models.UserNotification", b =>
+                {
+                    b.Property<int>("notificationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("notificationId"), 1L, 1);
+
+                    b.Property<string>("ProcurementEmployeeEmployeeId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("isRead")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("timeStamp")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("notificationId");
+
+                    b.HasIndex("ProcurementEmployeeEmployeeId");
+
+                    b.ToTable("UserNotifications");
                 });
 
             modelBuilder.Entity("PWMSBackend.Models.Vendor", b =>
@@ -1021,6 +1047,17 @@ namespace PWMSBackend.Migrations
                     b.Navigation("SubProcurementPlan");
                 });
 
+            modelBuilder.Entity("PWMSBackend.Models.UserNotification", b =>
+                {
+                    b.HasOne("PWMSBackend.Models.ProcurementEmployee", "ProcurementEmployee")
+                        .WithMany("UserNotifications")
+                        .HasForeignKey("ProcurementEmployeeEmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProcurementEmployee");
+                });
+
             modelBuilder.Entity("PWMSBackend.Models.VendorhasItem", b =>
                 {
                     b.HasOne("PWMSBackend.Models.Item", "Item")
@@ -1153,6 +1190,11 @@ namespace PWMSBackend.Migrations
                     b.Navigation("MasterProcurementPlanStatuses");
 
                     b.Navigation("SubProcurementPlans");
+                });
+
+            modelBuilder.Entity("PWMSBackend.Models.ProcurementEmployee", b =>
+                {
+                    b.Navigation("UserNotifications");
                 });
 
             modelBuilder.Entity("PWMSBackend.Models.PurchaseOrder", b =>

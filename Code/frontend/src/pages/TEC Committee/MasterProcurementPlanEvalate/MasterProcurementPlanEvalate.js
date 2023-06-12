@@ -41,18 +41,11 @@ import DonePopup from "../../../components/Popups/DonePopup/DonePopup";
 
 
 const columns = [
-  {
-    id: "MasterProcurementPlanID",
-    label: "Master Procurement Plan ID",
-    Width: 300,
-    align: "center",
-  },
+  {id: "MasterProcurementPlanID",label: "Master Procurement Plan ID",Width: 300,align: "center",},
   { id: "GrandTotal", label: "Grand Total", Width: 300, align: "center" },
   { id: "CreationDate", label: "Creation Date", Width: 300, align: "center" },
   { id: "Action", label: "Action", Width: 300, align: "center" },
 ];
-
-
 
 function createData(MasterProcurementPlanID, GrandTotal, CreationDate, Action) {
   return { MasterProcurementPlanID, GrandTotal, CreationDate, Action };
@@ -89,14 +82,6 @@ const rows = [
     "MP-0003",
     "Rs. 3000000",
     "2021-09-03",
-    <Button
-      className={styles.ViewButton}
-      variant="contained"
-      sx={{ borderRadius: 8, px: { xs: 2, md: 5 } }}
-    >
-      {" "}
-      View{" "}
-    </Button>
   ),
   createData(
     "MP-0004",
@@ -139,7 +124,6 @@ function MasterProcurementPlanEvalate() {
   };
   return (
     <div className={styles.outer}>
-
       <Container
         sx={{
           ml: { xs: "60px", sm: "65px", md: "65px", lg: "68px", xl: "70px" },

@@ -31,7 +31,6 @@ import { Link as Routerlink } from "react-router-dom";
 function ViewMasterProcurementPlan() {
   const Recomandedvendors1 = vendors;
 
-  
   const columns = [
     { id: "ItemID", label: "Item ID", Width: 300, align: "center" },
     { id: "ItemName", label: "Item Name", Width: 300, align: "center" },
@@ -182,7 +181,6 @@ function ViewMasterProcurementPlan() {
 
   return (
     <div className={styles.outer}>
-
       <Container
         sx={{
           ml: { xs: "60px", sm: "65px", md: "65px", lg: "68px", xl: "70px" },

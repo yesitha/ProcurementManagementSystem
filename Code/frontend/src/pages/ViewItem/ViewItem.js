@@ -12,9 +12,6 @@ import {
   FormControlLabel,
   IconButton,
   InputLabel,
-  List,
-  ListItem,
-  ListItemText,
   MenuItem,
   Paper,
   Select,
@@ -26,8 +23,7 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import DoneIcon from "@mui/icons-material/Done";
 import CloseIcon from "@mui/icons-material/Close";
 
-import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
-import "../../../fonts.css";
+import "../../fonts.css";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -43,6 +39,7 @@ import ViewRecomandedVendors from "../../../components/Popups/ViewRecomandedVend
 import { vendors } from "../../../users/vendors.js";
 import StatusBulb from "../../../components/StatusBulb/StatusBulb";
 import { Link as Routerlink } from "react-router-dom";
+
 const item = {
   "Sub Procurement ID": "SP-001",
   "Master Procurement ID": "MP-001",
