@@ -1,17 +1,9 @@
-import * as React from "react";
-import InputLabel from "@mui/material/InputLabel";
+import React from "react";
 import MenuItem from "@mui/material/MenuItem";
-import FormHelperText from "@mui/material/FormHelperText";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
-export default function SelectDropDown({ list }) {
-  const [SelectorValue, setSelectorValue] = React.useState("");
-
-  const handleChange = (event) => {
-    setSelectorValue(event.target.value);
-  };
-
+export default function SelectDropDown({ list, value, onChange, defaultValue }) {
   return (
     <div>
       <FormControl
@@ -25,17 +17,17 @@ export default function SelectDropDown({ list }) {
       >
         <Select
           label="Age"
-          value={SelectorValue}
-          onChange={handleChange}
+          value={value}
+          onChange={onChange}
+          
           displayEmpty
           sx={{ bgcolor: "#fff", borderRadius: 2, maxHeight: 35 }}
         >
-          {/* <MenuItem value="">
-            <em>default</em>
-          </MenuItem> */}
-          {list.map((course, index) => {
-            return <MenuItem value={index}>{course}</MenuItem>;
-          })}
+          {list.map((course, index) => (
+            <MenuItem key={index} value={course}>
+              {course}
+            </MenuItem>
+          ))}
         </Select>
       </FormControl>
     </div>

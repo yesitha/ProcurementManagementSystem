@@ -71,7 +71,7 @@ function App() {
         <Route path='/dashboard' element={<Dashboard/>}/>
         <Route path='/item-rejected' element={<AddItemtoSubProcurementPlan/>}/>
         <Route path='/add-new-item' element={<AddNewItemtoSubProcurementPlan/>}/>
-        <Route path='/add-item-to-subprocurement-Plan' element={<AddItemtoSubProcurementPlan/>}/>
+        <Route path="/add-item-to-subprocurement-Plan/:division/:selectedSubId" element={<AddItemtoSubProcurementPlan/>}/>
         <Route path='/SubProcurmentPlan' element={<CreateSubProcurementPlan/>}/>
 
         {/* Purchase Division HOD */}
@@ -94,7 +94,7 @@ function App() {
       {/* <Dashboard/> */}
       {/* <ManageAuction/> */}
       {/* <NotificationPage/> */}
-      <CreateSubProcurementPlan/>
+      {/* <CreateSubProcurementPlan/> */}
       {/* <PublishPaperAd/> */}
       {/* <FinalizedMasterProcurementPlan/> */}
       {/* <MasterProcurementPlanStatus/> */}
@@ -133,7 +133,7 @@ function App() {
       {/* <Stock/> */}
       {/* <AddNewItem /> */}
       {/* <ViewMasterProcurementPlanProc/> */}
-      <PurchaseOrder/>
+      {/* <PurchaseOrder/> */}
       </div>
   )
   }
