@@ -1,0 +1,44 @@
+.NotificationPageContainer__header {
+    padding-right: 10px;
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+    margin-left: 75px;
+  }
+
+  .NotificationPageHeader {
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    color: #ffffff;
+    font-size: 36px;
+    position: relative;
+    margin-right: 10vw;
+  }
+
+  .dropdown1{
+    margin-left: 75px;
+  }
+  .divide{
+    display:flex;
+    flex-direction: row;
+  }
+
+.block{
+    margin-left: 75px;
+    color: white;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    background-color: #205295;
+    border-radius: 8px;
+    width:200px;
+    height:100px;
+    
+
+}
+
+.table{
+    margin-top: 20px;
+    margin-left: 75px;
+}
