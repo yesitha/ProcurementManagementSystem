@@ -7,26 +7,11 @@ import SelectDropDown from "../../../components/SelectDropDown/SelectDropDown";
 
 import { Button, IconButton, Typography } from "@mui/material";
 
-const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
-const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
-const user = {
-  firstname: "John",
-  lastname: "Doe",
-  email: "johndoe@gmail.com",
-  designation: "Financial Division HOD",
-  department: "Finance",
-  phone: "1234567890",
-  address: "123, ABC Street, XYZ City, 123456",
-  gender: "Male",
-  profilePic: "https://www.w3schools.com/howto/img_avatar.png",
-};
-
 export default function AddNewItem() {
   const list = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
 
   return (
     <div>
-      <SideNavBar list1={list1} list2={list2} user={user} />
       <div
         style={{
           color: "white",

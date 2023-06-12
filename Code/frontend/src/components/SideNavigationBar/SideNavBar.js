@@ -90,7 +90,8 @@ export default function SideNavBar({ list1, list2, user }) {
   };
 
   return (
-    <Drawer className={styles.Drawer} variant="permanent" open={open}>
+    <Drawer style={{ width: '40px', zIndex: 999 }}
+    className={styles.Drawer} variant="permanent" open={open}>
       <DrawerHeader>
         <Toolbar
           sx={{

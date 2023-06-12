@@ -5,6 +5,7 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { Container } from "@mui/system";
 import { users } from "../../../users/SystemUsers";
 import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
+import {Link as Routerlink} from 'react-router-dom'
 import DonePopup from "../../../components/Popups/DonePopup/DonePopup";
 import {
   IconButton,
@@ -43,27 +44,13 @@ function AddItemstoGRN() {
     setLeftTableData([...leftTableData, row]);
     setRightTableData(rightTableData.filter((data) => data.id !== row.id));
   };
-  const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
-  const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
   const masterProcurementId = "MP0001";
-  const user = {
-    firstname: "John",
-    lastname: "Doe",
-    email: "johndoe@gmail.com",
-    designation: "Financial Division HOD",
-    department: "Finance",
-    phone: "1234567890",
-    address: "123, ABC Street, XYZ City, 123456",
-    gender: "Male",
-    profilePic: "https://www.w3schools.com/howto/img_avatar.png",
-  };
-
+ 
   const list = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
   const list3 = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
   return (
     <div style={{ overflowX: "auto" }}>
       <div className={styles.sideNavBar}>
-        <SideNavBar list1={list1} list2={list2} user={user} />
       </div>
 
       <Container
@@ -78,12 +65,13 @@ function AddItemstoGRN() {
       >
         <div className={styles.upperSection}>
           <div className={styles.ManageAuctionPageContainer__header}>
+            <Routerlink to={-1}>
             <IconButton
               sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
             >
               <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
             </IconButton>
-
+            </Routerlink>
             <h1 className={styles.Header}>Goods Received Note</h1>
           </div>
         </div>
@@ -207,6 +195,7 @@ function AddItemstoGRN() {
             className={styles.rightButton}
             sx={{ justifyContent: { xs: "left", sm: "center", lg: "center" } }}
           >
+            <Routerlink to={'/grn-view'}>
             <Button
               className={styles.TecAppointButton}
               variant="contained"
@@ -220,6 +209,7 @@ function AddItemstoGRN() {
             >
               Next
             </Button>
+            </Routerlink>
           </Container>
         </div>
       </Container>

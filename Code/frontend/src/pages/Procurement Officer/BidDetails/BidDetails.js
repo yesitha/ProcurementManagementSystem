@@ -12,6 +12,7 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import SearchNoFilter from "../../../components/Search/Search";
 import { Container } from "@mui/system";
+import { Link as Routerlink } from "react-router-dom";
 
 const columns = [
   { id: "ItemID", label: "Item ID", Width: 300, align: "center" },
@@ -43,7 +44,7 @@ const rows = [
     "GSM 80",
     "4000",
     "05",
-    <Button variant="contained">View</Button>
+    <Routerlink to={'/bid-details-view'}><Button variant="contained">View</Button></Routerlink>
   ),
   createData(
     "I0016",
@@ -52,25 +53,11 @@ const rows = [
     "Blue",
     "5000",
     "10",
-    <Button variant="contained">View</Button>
+    <Routerlink to={'/bid-details-view'}><Button variant="contained">View</Button></Routerlink>
   ),
 ];
 
 function BidDetails() {
-  const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
-  const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
-  const user = {
-    firstname: "John",
-    lastname: "Doe",
-    email: "johndoe@gmail.com",
-    designation: "Financial Division HOD",
-    department: "Finance",
-    phone: "1234567890",
-    address: "123, ABC Street, XYZ City, 123456",
-    gender: "Male",
-    profilePic: "https://www.w3schools.com/howto/img_avatar.png",
-  };
-
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const handleChangePage = (event, newPage) => {
@@ -83,9 +70,6 @@ function BidDetails() {
   };
   return (
     <div style={{ overflowX: "hidden" }}>
-      <div className={styles.sideNavBar}>
-        <SideNavBar list1={list1} list2={list2} user={user} />
-      </div>
 
       <Container
         className={styles.main}
@@ -97,12 +81,13 @@ function BidDetails() {
       >
         <div className={styles.upperSection}>
           <div className={styles.ManageAuctionPageContainer__header}>
+            <Routerlink to={-1}>
             <IconButton
               sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
             >
               <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
             </IconButton>
-
+            </Routerlink>
             <h1 className={styles.Header}> Bid Details</h1>
           </div>
         </div>

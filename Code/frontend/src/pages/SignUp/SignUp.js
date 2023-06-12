@@ -35,12 +35,14 @@ const theme = createTheme({
   },
 });
 
-export default function SignIn() {
+export default function Signup() {
   const onSubmit = (data) => {
     console.log("Form Submitted", data);
   };
 
-  const form = useForm();
+  const form = useForm({
+    mode:"onTouched"
+  });
   const { register, handleSubmit, control, formState } = form;
   const { errors,isValid } = formState;
 
@@ -86,6 +88,7 @@ export default function SignIn() {
 
                 <Box
                   component="form"
+                  noValidate
                   onSubmit={handleSubmit(onSubmit)}
                   noValidate
                   sx={{ mt: 1 }}
@@ -300,6 +303,8 @@ export default function SignIn() {
                       />
                     </Grid>
                   </Grid>
+                  <Divider />
+
                   <Grid container>
                     <Grid item md={12}>
                       <Typography variant="h7" sx={{ alignSelf: "start" }}>
@@ -351,12 +356,7 @@ export default function SignIn() {
                     </Grid>
                   </Grid>
                   <Divider />
-                  <div>
-                    <FormControlLabel
-                      control={<Checkbox name="antoine" />}
-                      label="I have read and agreed to the Terms of use and Privacy Policy"
-                    />
-                  </div>
+                
                   <div id="outerButton">
                     <Button
                       disabled={!isValid}

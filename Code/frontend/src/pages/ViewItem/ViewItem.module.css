@@ -1,4 +1,4 @@
-@import "../../../fonts.css";
+@import "../../fonts.css";
 .outer {
   overflow-x: hidden;
 }
@@ -173,27 +173,4 @@
 .rejectButton:hover {
   background-color: #b23e65 !important;
   color: #ffffff !important;
-}
-
-.rightButton {
-  display: flex !important;
-}
-
-.TecAppointButton {
-  margin-bottom: 10px;
-  width: 200px;
-
-  border-radius: 10px;
-
-  font-family: "Inter", sans-serif;
-  font-weight: 500;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.TecAppointButton {
-  background-color: #205295 !important;
-}
-.TecAppointButton:hover {
-  background-color: #2c74b3 !important;
 }

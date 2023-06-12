@@ -12,9 +12,6 @@ import {
   FormControlLabel,
   IconButton,
   InputLabel,
-  List,
-  ListItem,
-  ListItemText,
   MenuItem,
   Paper,
   Select,
@@ -26,8 +23,7 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import DoneIcon from "@mui/icons-material/Done";
 import CloseIcon from "@mui/icons-material/Close";
 
-import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
-import "../../../fonts.css";
+import "../../fonts.css";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -36,12 +32,14 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import EvidenceOfAthorization from "../../../components/Popups/EvidenceOfAuthorization/EvidenceOfAuthorization";
-import ApprovePopup from "../../../components/Popups/DonePopup/ApprovePopup";
-import RejectPopup from "../../../components/Popups/DonePopup/RejectPopup";
-import ViewRecomandedVendors from "../../../components/Popups/ViewRecomandedVendors/ViewRecomandedVendors";
-import { vendors } from "../../../users/vendors.js";
-import StatusBulb from "../../../components/StatusBulb/StatusBulb";
+import EvidenceOfAthorization from "../../components/Popups/EvidenceOfAuthorization/EvidenceOfAuthorization";
+import ApprovePopup from "../../components/Popups/DonePopup/ApprovePopup";
+import RejectPopup from "../../components/Popups/DonePopup/RejectPopup";
+import ViewRecomandedVendors from "../../components/Popups/ViewRecomandedVendors/ViewRecomandedVendors";
+import { vendors } from "../../users/vendors.js";
+import StatusBulb from "../../components/StatusBulb/StatusBulb";
+import { Link as Routerlink } from "react-router-dom";
+
 const item = {
   "Sub Procurement ID": "SP-001",
   "Master Procurement ID": "MP-001",
@@ -54,8 +52,6 @@ const item = {
   "Expected Delivery Date": "2023-03-15",
 };
 const Recomandedvendors1 = vendors;
-const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
-const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
 
 const columns = [
   { id: "SubProID", label: "Sub Procurement ID", Width: 300, align: "center" },
@@ -78,18 +74,6 @@ const columns = [
   { id: "Evidence", label: "Evidence", Width: 200, align: "center" },
   { id: "Action", label: "Action", Width: 300, align: "center" },
 ];
-
-const user = {
-  firstname: "John",
-  lastname: "Doe",
-  email: "johndoe@gmail.com",
-  designation: "Financial Division HOD",
-  department: "Finance",
-  phone: "1234567890",
-  address: "123, ABC Street, XYZ City, 123456",
-  gender: "Male",
-  profilePic: "https://www.w3schools.com/howto/img_avatar.png",
-};
 
 function createData(
   SubProID,
@@ -158,34 +142,6 @@ const rows = [
       <RejectPopup />
     </div>
   ),
-  createData(
-    "SP-004",
-    "IT",
-    "20",
-    "Comfortable, Adjustable, Ergonomic",
-    <ViewRecomandedVendors vendors={Recomandedvendors1} />,
-    "2023-05-07",
-    <StatusBulb status="Pending" />,
-    <EvidenceOfAthorization />,
-    <div className={styles.ActionButonsContainer}>
-      <ApprovePopup />
-      <RejectPopup />
-    </div>
-  ),
-  createData(
-    "SP-003",
-    "HR",
-    "20",
-    "Comfortable, Adjustable, Ergonomic",
-    <ViewRecomandedVendors vendors={Recomandedvendors1} />,
-    "2023-05-07",
-    <StatusBulb status="Rejected" />,
-    <EvidenceOfAthorization />,
-    <div className={styles.ActionButonsContainer}>
-      <ApprovePopup />
-      <RejectPopup />
-    </div>
-  ),
 ];
 
 const creationDate = "2021-09-01";
@@ -203,10 +159,6 @@ function ViewItem() {
   };
   return (
     <div className={styles.outer}>
-      <div className={styles.sideNavBar}>
-        <SideNavBar list1={list1} list2={list2} user={user} />
-      </div>
-
       <Container
         sx={{
           ml: { xs: "60px", sm: "65px", md: "65px", lg: "68px", xl: "70px" },
@@ -218,12 +170,13 @@ function ViewItem() {
       >
         <div className={styles.upperSection}>
           <div className={styles.PageContainer__header}>
+            <Routerlink to={-1}>
             <IconButton
               sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
             >
               <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
             </IconButton>
-
+            </Routerlink>
             <h1 className={styles.Header}>{item["Item Name"]}</h1>
           </div>
         </div>
@@ -340,6 +293,7 @@ function ViewItem() {
             className={styles.rightButton}
             sx={{ justifyContent: { xs: "center", md: "right" } }}
           >
+            <Routerlink to={'/ApprovedItemList'}>
             <Button
               className={styles.TecAppointButton}
               variant="contained"
@@ -353,6 +307,7 @@ function ViewItem() {
             >
               View All Approved Items
             </Button>
+            </Routerlink>
           </Container>
         </div>
       </Container>

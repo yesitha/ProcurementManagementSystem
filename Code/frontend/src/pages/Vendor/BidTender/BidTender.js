@@ -13,7 +13,7 @@ import TableRow from "@mui/material/TableRow";
 import SearchNoFilter from "../../../components/Search/Search";
 import { Container } from "@mui/system";
 import GavelIcon from "@mui/icons-material/Gavel";
-import { Link } from "react-router-dom";
+import { Link as Routerlink} from "react-router-dom";
 import axios from "axios";
 
 
@@ -35,7 +35,7 @@ const itemId = "PAY35503";
 
 async function getTenderItemDetails(id) {
   try {
-    const response = await axios.get(`https://localhost:7102/api/Items/TenderItemDetails/${id}`);
+    const response = await axios.get(`https://localhost:7102/api/Items/tender-details/${id}`);
    
     return response.data;
   } catch (error) {
@@ -52,7 +52,8 @@ const rows = [
     "GSM 80",
     "2023-01-23",
     <Typography sx={{ color: "#227C70" }}>LKR 4000</Typography>,
-    <Link to={`/TenderDetails/${itemId}`}>
+    // <Routerlink to={`/tender-details/${itemId}`}>
+    <Routerlink to={'/tender-details'}>
     <Button
       variant="contained"
       sx={{
@@ -64,7 +65,7 @@ const rows = [
     >
       <GavelIcon style={{ fontSize: 30 }} />
     </Button>
-    </Link>
+    </Routerlink>
   ),
   createData(
     "Pens",
@@ -72,7 +73,8 @@ const rows = [
     "Blue",
     "2023-01-23",
     <Typography sx={{ color: "#9C254D" }}>Not Bided</Typography>,
-    <Link to={`/TenderDetails/${itemId}`}>
+    // <Routerlink to={`/tender-details/${itemId}`}>
+    <Routerlink to={'/tender-details'}>
     <Button
       variant="contained"
       sx={{
@@ -84,25 +86,12 @@ const rows = [
     >
       <GavelIcon style={{ fontSize: 30 }} />
     </Button>
-    </Link>
+    </Routerlink>
   ),
 ];
 
 function BidTender() {
-  const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
-  const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
   const [data, setData] = useState(null);
-  const user = {
-    firstname: "John",
-    lastname: "Doe",
-    email: "johndoe@gmail.com",
-    designation: "Financial Division HOD",
-    department: "Finance",
-    phone: "1234567890",
-    address: "123, ABC Street, XYZ City, 123456",
-    gender: "Male",
-    profilePic: "https://www.w3schools.com/howto/img_avatar.png",
-  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -129,9 +118,6 @@ function BidTender() {
   };
   return (
     <div style={{ overflowX: "hidden" }}>
-      <div className={styles.sideNavBar}>
-        <SideNavBar list1={list1} list2={list2} user={user} />
-      </div>
 
       <Container
         className={styles.main}
@@ -143,12 +129,13 @@ function BidTender() {
       >
         <div className={styles.upperSection}>
           <div className={styles.ManageAuctionPageContainer__header}>
+            <Routerlink to={-1}>
             <IconButton
               sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
             >
               <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
             </IconButton>
-
+            </Routerlink>
             <h1 className={styles.Header}> Bid Tender</h1>
           </div>
         </div>

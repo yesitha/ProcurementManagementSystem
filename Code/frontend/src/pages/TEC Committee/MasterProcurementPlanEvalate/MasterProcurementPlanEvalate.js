@@ -39,32 +39,13 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VendorDetails from "../../../components/Popups/VendorDetails/VendorDetails";
 import DonePopup from "../../../components/Popups/DonePopup/DonePopup";
 
-const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
-const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
 
 const columns = [
-  {
-    id: "MasterProcurementPlanID",
-    label: "Master Procurement Plan ID",
-    Width: 300,
-    align: "center",
-  },
+  {id: "MasterProcurementPlanID",label: "Master Procurement Plan ID",Width: 300,align: "center",},
   { id: "GrandTotal", label: "Grand Total", Width: 300, align: "center" },
   { id: "CreationDate", label: "Creation Date", Width: 300, align: "center" },
   { id: "Action", label: "Action", Width: 300, align: "center" },
 ];
-
-const user = {
-  firstname: "John",
-  lastname: "Doe",
-  email: "johndoe@gmail.com",
-  designation: "Financial Division HOD",
-  department: "Finance",
-  phone: "1234567890",
-  address: "123, ABC Street, XYZ City, 123456",
-  gender: "Male",
-  profilePic: "https://www.w3schools.com/howto/img_avatar.png",
-};
 
 function createData(MasterProcurementPlanID, GrandTotal, CreationDate, Action) {
   return { MasterProcurementPlanID, GrandTotal, CreationDate, Action };
@@ -101,14 +82,6 @@ const rows = [
     "MP-0003",
     "Rs. 3000000",
     "2021-09-03",
-    <Button
-      className={styles.ViewButton}
-      variant="contained"
-      sx={{ borderRadius: 8, px: { xs: 2, md: 5 } }}
-    >
-      {" "}
-      View{" "}
-    </Button>
   ),
   createData(
     "MP-0004",
@@ -151,10 +124,6 @@ function MasterProcurementPlanEvalate() {
   };
   return (
     <div className={styles.outer}>
-      <div className={styles.sideNavBar}>
-        <SideNavBar list1={list1} list2={list2} user={user} />
-      </div>
-
       <Container
         sx={{
           ml: { xs: "60px", sm: "65px", md: "65px", lg: "68px", xl: "70px" },
