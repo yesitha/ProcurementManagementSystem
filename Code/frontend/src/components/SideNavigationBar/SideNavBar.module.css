@@ -19,3 +19,8 @@
   position: absolute;
   bottom: 1px;
 }
+
+.Drawer{
+   width: '240px'; 
+   z-index: 999 ;
+}

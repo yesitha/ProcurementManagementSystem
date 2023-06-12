@@ -36,33 +36,15 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 
-const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
-const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
 
 const columns = [
-  { id: "itemID", label: "Item ID", Width: 300, align: "center" },
-  { id: "itemName", label: "Item Name", Width: 300, align: "center" },
-  { id: "quentity", label: "Quentity", Width: 300, align: "center" },
-  {
-    id: "estimatedBudget",
-    label: "Estimated Budget",
-    Width: 300,
-    align: "center",
-  },
-  { id: "action", label: "Action", Width: 300, align: "center" },
+  {id: "itemID", label: "Item ID", Width: 300, align: "center"},
+  {id: "itemName", label: "Item Name", Width: 300, align: "center"},
+  {id: "quentity", label: "Quentity", Width: 300, align: "center"},
+  {id: "estimatedBudget",label: "Estimated Budget",Width: 300,align: "center",},
+  {id: "action", label: "Action", Width: 300, align: "center"},
 ];
 
-const user = {
-  firstname: "John",
-  lastname: "Doe",
-  email: "johndoe@gmail.com",
-  designation: "Financial Division HOD",
-  department: "Finance",
-  phone: "1234567890",
-  address: "123, ABC Street, XYZ City, 123456",
-  gender: "Male",
-  profilePic: "https://www.w3schools.com/howto/img_avatar.png",
-};
 
 function createData(itemID, itemName, quentity, estimatedBudget, action) {
   return { itemID, itemName, quentity, estimatedBudget, action };
@@ -145,7 +127,7 @@ const procurementId = "MP-0001";
 const grandTotal = "Rs. 1000000";
 const creationDate = "2021-09-01";
 
-function MasterProcurementPlanEvalate() {
+function ApprovalForMasterProcurementPlan() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const handleChangePage = (event, newPage) => {
@@ -158,9 +140,6 @@ function MasterProcurementPlanEvalate() {
   };
   return (
     <div className={styles.outer}>
-      <div className={styles.sideNavBar}>
-        <SideNavBar list1={list1} list2={list2} user={user} />
-      </div>
 
       <Container
         sx={{
@@ -299,4 +278,4 @@ function MasterProcurementPlanEvalate() {
   );
 }
 
-export default MasterProcurementPlanEvalate;
+export default ApprovalForMasterProcurementPlan;
