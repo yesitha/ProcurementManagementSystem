@@ -12,7 +12,7 @@ using PWMSBackend.Data;
 namespace PWMSBackend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230611155234_InitialCreate")]
+    [Migration("20230612075109_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -469,11 +469,9 @@ namespace PWMSBackend.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("DGComment")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DGStatus")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("EstimatedBudget")
@@ -487,42 +485,33 @@ namespace PWMSBackend.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("InternalAuditorComment")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("InternalAuditorStatus")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProcurementCommitteeComment")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProcuremnetCommitteeStatus")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
                     b.Property<string>("RecommendedVendor")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RejectedVendor")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SelectedVendor")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TecCommitteeComment")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TecCommitteeStatus")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("SppId", "ItemId");
