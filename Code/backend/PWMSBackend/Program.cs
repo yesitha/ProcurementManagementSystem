@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using PWMSBackend.Data;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http.Json;
+using PWMSBackend.CustomIdGenerator;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,8 @@ builder.Services.Configure<JsonOptions>(options =>
 
 // Add services to the container.
 
+
+
 builder.Services.AddControllers();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -25,6 +28,10 @@ builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DataContext"));
 });
+
+builder.Services.AddScoped<SppIdGenerator>();
+builder.Services.AddScoped<MppIdGenerator>();
+builder.Services.AddScoped<ItemIdGenerator>();
 
 var app = builder.Build();
 

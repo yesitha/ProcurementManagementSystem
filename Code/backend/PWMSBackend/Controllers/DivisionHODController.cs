@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PWMSBackend.CustomIdGenerator;
 using PWMSBackend.Data;
 using PWMSBackend.DTOs.Incoming;
 using PWMSBackend.Models;
@@ -14,12 +15,15 @@ namespace PWMSBackend.Controllers
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
+        private SppIdGenerator _sppIdGenerator;
+        private ItemIdGenerator _itemIdGenerator;
 
-        public DivisionHODController(DataContext context, IMapper mapper)
+        public DivisionHODController(DataContext context, IMapper mapper, SppIdGenerator sppIdGenerator,ItemIdGenerator itemIdGenerator)
         {
             _context = context;
-
             _mapper = mapper;
+            _sppIdGenerator = sppIdGenerator;
+            _itemIdGenerator = itemIdGenerator;
         }
 
 
@@ -55,9 +59,12 @@ namespace PWMSBackend.Controllers
                 return BadRequest("Invalid HODId. HOD not found.");
             }
 
+            string sppId = _sppIdGenerator.GenerateSppId();
+
             // Create a new SubProcurementPlan instance
             var subProcurementPlan = new SubProcurementPlan
             {
+                SppId = sppId,
                 EstimatedTotal = 0, // Set the initial estimated total to 0 or any desired value
                 HOD = hod
             };
@@ -103,7 +110,7 @@ namespace PWMSBackend.Controllers
             return Ok(items);
         }
 
-        [HttpDelete("{itemId}")]
+        [HttpDelete("{itemId}/{sppId}")]
         public IActionResult DeleteItem(string itemId, string sppId)
         {
 
@@ -209,9 +216,12 @@ namespace PWMSBackend.Controllers
         [HttpPost("AddItem")]
         public IActionResult AddItem(string itemName, string specification, string categoryId)
         {
+            string itemId = _itemIdGenerator.GenerateItemId();
+
             // Create a new instance of the Item class
             var newItem = new Item
             {
+                ItemId = itemId,
                 ItemName = itemName,
                 Specification = specification
             };

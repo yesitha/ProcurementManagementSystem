@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PWMSBackend.Data;
 
@@ -11,9 +12,10 @@ using PWMSBackend.Data;
 namespace PWMSBackend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230613182808_fix2")]
+    partial class fix2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +36,7 @@ namespace PWMSBackend.Migrations
 
                     b.HasIndex("PoId");
 
-                    b.ToTable("ApprovedItemPurchaseOrders", (string)null);
+                    b.ToTable("ApprovedItemPurchaseOrders");
                 });
 
             modelBuilder.Entity("PWMSBackend.Models.Category", b =>
@@ -48,7 +50,7 @@ namespace PWMSBackend.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("PWMSBackend.Models.Committee", b =>
@@ -62,7 +64,7 @@ namespace PWMSBackend.Migrations
 
                     b.HasKey("CommitteeId");
 
-                    b.ToTable("Committees", (string)null);
+                    b.ToTable("Committees");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("Committee");
                 });
@@ -79,7 +81,7 @@ namespace PWMSBackend.Migrations
 
                     b.HasIndex("CommitteeId");
 
-                    b.ToTable("CommitteeMemberCommittees", (string)null);
+                    b.ToTable("CommitteeMemberCommittees");
                 });
 
             modelBuilder.Entity("PWMSBackend.Models.Division", b =>
@@ -92,7 +94,7 @@ namespace PWMSBackend.Migrations
 
                     b.HasKey("DivisionId");
 
-                    b.ToTable("Divisions", (string)null);
+                    b.ToTable("Divisions");
                 });
 
             modelBuilder.Entity("PWMSBackend.Models.FinalizedMasterProcurementPlan", b =>
@@ -112,7 +114,7 @@ namespace PWMSBackend.Migrations
                     b.HasIndex("MppId")
                         .IsUnique();
 
-                    b.ToTable("FinalizedMasterProcurementPlans", (string)null);
+                    b.ToTable("FinalizedMasterProcurementPlans");
                 });
 
             modelBuilder.Entity("PWMSBackend.Models.GRN", b =>
@@ -129,7 +131,7 @@ namespace PWMSBackend.Migrations
 
                     b.HasKey("GrnId");
 
-                    b.ToTable("GRNs", (string)null);
+                    b.ToTable("GRNs");
                 });
 
             modelBuilder.Entity("PWMSBackend.Models.GRNItemTobeShipped", b =>
@@ -154,7 +156,7 @@ namespace PWMSBackend.Migrations
 
                     b.HasIndex("ItemId");
 
-                    b.ToTable("GRNItemsToBeShipped", (string)null);
+                    b.ToTable("GRNItemsToBeShipped");
                 });
 
             modelBuilder.Entity("PWMSBackend.Models.Invoice", b =>
@@ -181,7 +183,7 @@ namespace PWMSBackend.Migrations
                     b.HasIndex("GrnId")
                         .IsUnique();
 
-                    b.ToTable("Invoices", (string)null);
+                    b.ToTable("Invoices");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("Invoice");
                 });
@@ -205,7 +207,7 @@ namespace PWMSBackend.Migrations
 
                     b.HasKey("ItemId");
 
-                    b.ToTable("Items", (string)null);
+                    b.ToTable("Items");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("Item");
                 });
@@ -242,7 +244,7 @@ namespace PWMSBackend.Migrations
                         .IsUnique()
                         .HasFilter("[TecCommitteeId] IS NOT NULL");
 
-                    b.ToTable("MasterProcurementPlans", (string)null);
+                    b.ToTable("MasterProcurementPlans");
                 });
 
             modelBuilder.Entity("PWMSBackend.Models.MasterProcurementPlanStatus", b =>
@@ -260,7 +262,7 @@ namespace PWMSBackend.Migrations
 
                     b.HasIndex("StatusId");
 
-                    b.ToTable("MasterProcurementPlanStatuses", (string)null);
+                    b.ToTable("MasterProcurementPlanStatuses");
                 });
 
             modelBuilder.Entity("PWMSBackend.Models.PaymentVoucher", b =>
@@ -281,7 +283,7 @@ namespace PWMSBackend.Migrations
                     b.HasIndex("InvoiceTobePayId")
                         .IsUnique();
 
-                    b.ToTable("PaymentVouchers", (string)null);
+                    b.ToTable("PaymentVouchers");
                 });
 
             modelBuilder.Entity("PWMSBackend.Models.ProcurementEmployee", b =>
@@ -321,7 +323,7 @@ namespace PWMSBackend.Migrations
 
                     b.HasIndex("DivisionId1");
 
-                    b.ToTable("ProcurementEmployees", (string)null);
+                    b.ToTable("ProcurementEmployees");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("ProcurementEmployee");
                 });
@@ -368,7 +370,7 @@ namespace PWMSBackend.Migrations
 
                     b.HasIndex("VendorId");
 
-                    b.ToTable("PurchaseOrders", (string)null);
+                    b.ToTable("PurchaseOrders");
                 });
 
             modelBuilder.Entity("PWMSBackend.Models.PurchaseOrder_ItemTobeShipped", b =>
@@ -386,7 +388,7 @@ namespace PWMSBackend.Migrations
 
                     b.HasIndex("ItemId");
 
-                    b.ToTable("PurchaseOrder_ItemTobeShippeds", (string)null);
+                    b.ToTable("PurchaseOrder_ItemTobeShippeds");
                 });
 
             modelBuilder.Entity("PWMSBackend.Models.Status", b =>
@@ -400,7 +402,7 @@ namespace PWMSBackend.Migrations
 
                     b.HasKey("StatusId");
 
-                    b.ToTable("Statuses", (string)null);
+                    b.ToTable("Statuses");
                 });
 
             modelBuilder.Entity("PWMSBackend.Models.SubProcurementApprovedItems", b =>
@@ -424,7 +426,7 @@ namespace PWMSBackend.Migrations
 
                     b.HasIndex("ItemId");
 
-                    b.ToTable("SubProcurementApprovedItems", (string)null);
+                    b.ToTable("SubProcurementApprovedItems");
                 });
 
             modelBuilder.Entity("PWMSBackend.Models.SubProcurementPlan", b =>
@@ -453,7 +455,7 @@ namespace PWMSBackend.Migrations
 
                     b.HasIndex("MasterProcurementPlanMppId");
 
-                    b.ToTable("SubProcurementPlans", (string)null);
+                    b.ToTable("SubProcurementPlans");
                 });
 
             modelBuilder.Entity("PWMSBackend.Models.SubProcurementPlanItem", b =>
@@ -514,7 +516,7 @@ namespace PWMSBackend.Migrations
 
                     b.HasIndex("ItemId");
 
-                    b.ToTable("SubProcurementPlanItems", (string)null);
+                    b.ToTable("SubProcurementPlanItems");
                 });
 
             modelBuilder.Entity("PWMSBackend.Models.UserNotification", b =>
@@ -547,7 +549,7 @@ namespace PWMSBackend.Migrations
 
                     b.HasIndex("ProcurementEmployeeEmployeeId");
 
-                    b.ToTable("UserNotifications", (string)null);
+                    b.ToTable("UserNotifications");
                 });
 
             modelBuilder.Entity("PWMSBackend.Models.Vendor", b =>
@@ -625,7 +627,7 @@ namespace PWMSBackend.Migrations
 
                     b.HasKey("VendorId");
 
-                    b.ToTable("Vendors", (string)null);
+                    b.ToTable("Vendors");
                 });
 
             modelBuilder.Entity("PWMSBackend.Models.VendorhasItem", b =>
@@ -640,7 +642,7 @@ namespace PWMSBackend.Migrations
 
                     b.HasIndex("ItemId");
 
-                    b.ToTable("VendorhasItems", (string)null);
+                    b.ToTable("VendorhasItems");
                 });
 
             modelBuilder.Entity("PWMSBackend.Models.VendorPlaceBidItem", b =>
@@ -669,7 +671,7 @@ namespace PWMSBackend.Migrations
 
                     b.HasIndex("ItemId");
 
-                    b.ToTable("VendorPlaceBidItems", (string)null);
+                    b.ToTable("VendorPlaceBidItems");
                 });
 
             modelBuilder.Entity("PWMSBackend.Models.ApprovedItem", b =>

@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PWMSBackend.CustomIdGenerator;
 using PWMSBackend.Data;
+using PWMSBackend.Models;
 
 namespace PWMSBackend.Controllers
 {
@@ -12,12 +14,13 @@ namespace PWMSBackend.Controllers
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
+        private MppIdGenerator _mppIdGenerator;
 
-        public PurchasingDivisionHODController(DataContext context, IMapper mapper)
+        public PurchasingDivisionHODController(DataContext context, IMapper mapper, MppIdGenerator mppIdGenerator)
         {
             _context = context;
-
             _mapper = mapper;
+            _mppIdGenerator = mppIdGenerator;
         }
 
         //Master Procurement Plan page Controllers (1-GET 1-POST)
@@ -40,6 +43,24 @@ namespace PWMSBackend.Controllers
                 .ToList();
 
             return Ok(plans);
+        }
+
+        [HttpPost("CreateNewMasterProcurementPlanID")]
+
+        public IActionResult CreateNewMasterProcurementPlan()
+        {
+            string mppId = _mppIdGenerator.GenerateMppId();
+            var mpp = new MasterProcurementPlan
+            {
+                MppId = mppId,
+                CreationDate = DateTime.Now,
+                EstimatedGrandTotal = 0,
+            };
+
+            _context.MasterProcurementPlans.Add(mpp);
+            _context.SaveChanges();
+
+            return Ok(mpp.MppId);
         }
 
 
