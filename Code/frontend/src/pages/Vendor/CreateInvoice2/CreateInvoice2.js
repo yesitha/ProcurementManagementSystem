@@ -21,7 +21,6 @@ import { Link as Routerlink } from "react-router-dom";
 
 const list = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
 
-
 const columns = [
   { id: "ItemID", label: "Item ID", Width: 100, align: "center" },
   { id: "ItemName", label: "Item Name", Width: 150, align: "center" },
