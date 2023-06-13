@@ -21,7 +21,7 @@ namespace PWMSBackend.Controllers
             _mapper = mapper;
         }
 
-        //Master Procurement Plan page Controllers
+        //Master Procurement Plan page Controllers (1-GET)
 
         [HttpGet("GetMasterProcurementPlans")]
         public IActionResult GetMasterProcurementPlans()
@@ -37,6 +37,9 @@ namespace PWMSBackend.Controllers
 
             return Ok(plans);
         }
+
+        // View Master Procurement Plan page Controllers
+
 
 
     }

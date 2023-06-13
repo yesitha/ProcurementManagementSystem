@@ -19,6 +19,9 @@ namespace PWMSBackend.Controllers
 
             _mapper = mapper;
         }
+
+        //Master Procurement Plan page Controllers (1-GET 1-POST)
+
         [HttpGet("GetMasterProcurementPlans")]
         public IActionResult GetMasterProcurementPlans()
         {
@@ -38,6 +41,9 @@ namespace PWMSBackend.Controllers
 
             return Ok(plans);
         }
+
+
+        // Create a new MasterProcurementPlan page Controllers (2-GET 2-POST)
 
         [HttpGet("GetMasterProcurementPlansIDList")]
         public IActionResult GetMasterProcurementPlansIDList()
@@ -123,6 +129,8 @@ namespace PWMSBackend.Controllers
 
             return NoContent();
         }
+
+        // Sub Procurement Plan page Controllers (can get from Division HOD )
 
     }
 }

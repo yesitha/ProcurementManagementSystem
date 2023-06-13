@@ -104,8 +104,19 @@ namespace PWMSBackend.Controllers
         }
 
         [HttpDelete("{itemId}")]
-        public IActionResult DeleteItem(string itemId)
+        public IActionResult DeleteItem(string itemId, string sppId)
         {
+
+            // Find the subprocurementplan with the given sppId
+            var subProcurementPlan = _context.SubProcurementPlans.FirstOrDefault(s => s.SppId == sppId);
+
+            if (subProcurementPlan == null)
+            {
+                // Subprocurement plan not found, return an appropriate response
+                return NotFound();
+            }
+
+
             // Find the subprocurementplan item with the given ItemId
             var subProcurementPlanItem = _context.SubProcurementPlanItems.FirstOrDefault(item => item.ItemId == itemId);
 
