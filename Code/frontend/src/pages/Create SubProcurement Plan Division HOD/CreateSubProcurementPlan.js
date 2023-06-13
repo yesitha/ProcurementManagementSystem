@@ -1,3 +1,4 @@
+
 import React from "react";
 import SideNavBar from "../../components/SideNavigationBar/SideNavBar";
 import styles from "./CreateSubProcurementPlan.module.css";
@@ -300,20 +301,20 @@ function CreateSubProcurementPlan() {
   }, [selectedSubId]);
   
 
-  return (
-    <div style={{ overflowX: "hidden" }}>
+//   return (
+//     <div style={{ overflowX: "hidden" }}>
       
 
-      <Container
-        className={styles.main}
-        sx={{
-          ml: { xs: "60px", sm: "65px", md: "65px", lg: "68px", xl: "70px" },
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        <div className={styles.upperSection}>
-          <div className={styles.ManageAuctionPageContainer__header}>
+//       <Container
+//         className={styles.main}
+//         sx={{
+//           ml: { xs: "60px", sm: "65px", md: "65px", lg: "68px", xl: "70px" },
+//           display: "flex",
+//           flexDirection: "column",
+//         }}
+//       >
+//         <div className={styles.upperSection}>
+//           <div className={styles.ManageAuctionPageContainer__header}>
 
             <Routerlink to={-1}>
             <IconButton
@@ -440,6 +441,6 @@ function CreateSubProcurementPlan() {
   );
 }
   
-
-export default CreateSubProcurementPlan;
-  
+// }
+//   }
+// export default CreateSubProcurementPlan;
