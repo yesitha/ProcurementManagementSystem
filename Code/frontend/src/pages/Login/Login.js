@@ -24,9 +24,13 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import { Mode, NoEncryption } from "@mui/icons-material";
 import "./Login.css";
 import logo from "../../images/logo.png";
+import {LoginService} from "../../services/authentication"
 
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
+import { useDispatch, useSelector } from "react-redux";
+import { UPDATE_USER } from "../../reducers/authReducer";
+import { SET_LOADER } from "../../reducers/baseReducer";
 
 const theme = createTheme({
   typography: {
@@ -52,9 +56,36 @@ const theme = createTheme({
 });
 
 export default function Login() {
+  const dispatch = useDispatch();
+  const authStore = useSelector((state) => state.auth);
+
   const onSubmit = (data) => {
     console.log("Form Submitted", data);
+    dispatch({
+      type: SET_LOADER,
+      payload: true,
+    });
+    LoginService().then((doc) => {
+      dispatch({
+        type: UPDATE_USER,
+        payload: {
+          userName: "Test name",
+          role: "",
+        },
+      });
+    dispatch({
+      type: SET_LOADER,
+      payload: false,
+    });
+    }).catch((err) => {
+      console.error(err);
+      dispatch({
+        type: SET_LOADER,
+        payload: false,
+      });
+    });
   };
+
   const form = useForm({
     mode: "onTouched",
   });
@@ -89,55 +120,54 @@ export default function Login() {
                 <Typography variant="h3">
                   Enter your email and password below
                 </Typography>
-                  <TextField
-                    {...register("email", {
-                      required: "Email Cant be Empty!",
-                      pattern: {
-                        value:
-                          /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-                        message: "Email format Error!",
-                      },
-                    })}
-                    margin="normal"
-                    fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                  />
-                  <p className="error">{errors.email?.message}</p>
+                <TextField
+                  {...register("email", {
+                    required: "Email Cant be Empty!",
+                    pattern: {
+                      value:
+                        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                      message: "Email format Error!",
+                    },
+                  })}
+                  margin="normal"
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                />
+                <p className="error">{errors.email?.message}</p>
 
-                  <TextField
-                    {...register("password", {
-                      required: "Password Required",
-                      pattern: {
-                        value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-                        message:
-                          "Password must contain Minimum eight characters, at least one letter and one number",
-                      },
-                      minLength: {
-                        value: 8,
-                        message: "Password not long Enough!",
-                      },
-                    })}
-                    margin="normal"
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                  />
-                  <p className="error">{errors.password?.message}</p>
+                <TextField
+                  {...register("password", {
+                    required: "Password Required",
+                    pattern: {
+                      value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                      message:
+                        "Password must contain Minimum eight characters, at least one letter and one number",
+                    },
+                    minLength: {
+                      value: 8,
+                      message: "Password not long Enough!",
+                    },
+                  })}
+                  margin="normal"
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                />
+                <p className="error">{errors.password?.message}</p>
 
-                  <Button
-                    onClick={onSubmit}
-                    disabled={!isValid}
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
-                  >
-                    Sign In
-                  </Button>
+                <Button
+                  disabled={!isValid}
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Sign In
+                </Button>
               </Box>
               <DevTool control={control} />
             </Container>
