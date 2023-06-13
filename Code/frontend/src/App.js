@@ -2,7 +2,7 @@ import "./App.css";
 import ManageAuction from "./pages/BidOpeningCommitee/ManageAuction/ManageAuction";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import NotificationPage from "./pages/NotificationPage/NotificationPage";
-import CreateSubProcurementPlan from "./pages/Create SubProcurement Plan Division HOD/CreateSubProcurementPlan";
+// import CreateSubProcurementPlan from "./pages/Create SubProcurement Plan Division HOD/CreateSubProcurementPlan";
 import SignUp from "./pages/SignUp/SignUp";
 import FinalizedMasterProcurementPlan from "./pages/ProcurementCommitee/FinalizedMasterProcurementPlan/FinalizedMasterProcurementPlan";
 import MasterProcurementPlanStatus from "./pages/MasterProcurementPlanStatus/MasterProcurementPlanStatus";
@@ -52,16 +52,18 @@ import SideNavBar from "./components/SideNavigationBar/SideNavBar";
 import { user, list1, list2 } from './pages/Usermanage';
 import ViewMasterProcurementPlanProc from "./pages/Procurement Officer/ViewMasterProcurementPlanProc/ViewMasterProcurementPlanProc";
 import PurchaseOrder from "./pages/Procurement Officer/PurchaseOrder/PurchaseOrder";
-
+import AddItemstoPO from "./pages/Procurement Officer/AddItemstoPO/AddItemstoPO";
+import AuditReport from "./pages/Procurement Officer/AuditReport/AuditReport";
+import PurchseOrdersVendor from "./pages/Vendor/PurchaseOrdersVendor/PurchseOrdersVendor";
+import PurchaseOrderPreview from "./pages/Vendor/PurchaseOrderPreview/PurchaseOrderPreview";
+import SendPurchaseOrder from "./pages/Procurement Officer/SendPurchaseOrder/SendPurchaseOrder";
 
 
 
 function App() {
   return (
     <div>
-       <div>
-        <SideNavBar list1={list1} list2={list2} user={user} />
-      </div>
+       
 
       <Routes>
         <Route path='/' element={<Login/>}/>
@@ -94,7 +96,7 @@ function App() {
       {/* <Dashboard/> */}
       {/* <ManageAuction/> */}
       {/* <NotificationPage/> */}
-      <CreateSubProcurementPlan/>
+      {/* <CreateSubProcurementPlan/> */}
       {/* <PublishPaperAd/> */}
       {/* <FinalizedMasterProcurementPlan/> */}
       {/* <MasterProcurementPlanStatus/> */}
@@ -133,7 +135,12 @@ function App() {
       {/* <Stock/> */}
       {/* <AddNewItem /> */}
       {/* <ViewMasterProcurementPlanProc/> */}
-      <PurchaseOrder/>
+      {/* <PurchaseOrder/> */}
+      <AddItemstoPO/>
+      <AuditReport/>
+      {/* <PurchseOrdersVendor/> */}
+      {/* <PurchaseOrderPreview/> */}
+      <SendPurchaseOrder/>
       </div>
   )
   }

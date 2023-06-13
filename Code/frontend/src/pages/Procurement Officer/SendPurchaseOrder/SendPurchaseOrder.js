@@ -1,8 +1,8 @@
 import React from "react";
-import styles from "./sendInvoice.module.css";
+import styles from "./SendPurchaseOrder.module.css";
 import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { Button, IconButton, Paper, Typography } from "@mui/material";
+import { Button, IconButton, Paper, TextField, Typography } from "@mui/material";
 import { Container } from "@mui/system";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -10,31 +10,30 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import DonePopup from "../../../components/Popups/DonePopup/DonePopup";
 
 const columns = [
   { id: "ItemID", label: "Item ID", Width: 300, align: "center" },
   { id: "ItemName", label: "Item Name", Width: 300, align: "center" },
-  { id: "DQty", label: "Delivered QTY", Width: 300, align: "center" },
   { id: "Desc", label: "Description", Width: 300, align: "center" },
+  { id: "Qty", label: "Quantity", Width: 300, align: "center" },
+  
   { id: "Uprice", label: "Unit Price", Width: 300, align: "center" },
-  { id: "Taxed", label: "Taxed", Width: 300, align: "center" },
-  { id: "amt", label: "Amount", Width: 300, align: "center" },
+  { id: "Total", label: "Total", Width: 300, align: "center" },
+  
 ];
-function createData(ItemID, ItemName, DQty, Desc, Uprice, Taxed, amt) {
-  return { ItemID, ItemName, DQty, Desc, Uprice, Taxed, amt };
+function createData(ItemID, ItemName,Desc, Qty, Uprice, Total) {
+  return { ItemID, ItemName,Desc, Qty, Uprice, Total };
 }
 const rows = [
-  createData("I0014", "A4 Papers", "500", "GSm 80", "5", "400", "5000"),
-  createData("I0014", "A4 Papers", "500", "GSm 80", "5", "400", "5000"),
-  createData("I0014", "A4 Papers", "500", "GSm 80", "5", "400", "5000"),
-  createData("I0014", "A4 Papers", "500", "GSm 80", "5", "400", "5000"),
-  createData("I0014", "A4 Papers", "500", "GSm 80", "5", "400", "5000"),
-  createData("I0014", "A4 Papers", "500", "GSm 80", "5", "400", "5000"),
-  createData("I0014", "A4 Papers", "500", "GSm 80", "5", "400", "5000"),
-  createData("I0014", "A4 Papers", "500", "GSm 80", "5", "400", "5000"),
+    createData("I0014", "A4 Papers", "GSm 80", "500", "400", 200000),
+    createData("I0023", "Pen Set", "Blue ink", "100", "10", 1000),
+    createData("I0031", "Notebooks", "Spiral bound", "200", "50", 10000),
+    createData("I0042", "Markers", "Assorted colors", "50", "5", 250),
+    createData("I0055", "Sticky Notes", "Yellow", "300", "2", 600),
 ];
 
-function Invoice() {
+function SendPurchaseOrder() {
  
 
   return (
@@ -58,27 +57,62 @@ function Invoice() {
                 >
                   <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
                 </IconButton>
-                <h1 className={styles.Header}>PUCSL</h1>
+                <h1 className={styles.Header}>Purchase Order</h1>
               </div>
               <Typography style={{ marginLeft: "35px" }}>
-                6TH FLOOR,<br></br>
+               Date:[17/12/2023]<br/>
+               PO# :[2314]
+              </Typography>
+            </div>
+            <Typography className={styles.tag}>
+              <h1 className={styles.Header}>PUCSL</h1>
+              6TH FLOOR,<br></br>
                 BOC MERCHANT TOWER,<br></br>
                 ST.MICHAEL'S ROAD,<br></br>
                 COLOMBO 03,<br></br>
                 SRI LANKA
-              </Typography>
-            </div>
-            <Typography className={styles.tag}>
-              <h1 className={styles.Header}>Invoice</h1>
-              Date - [2023-05-10]<br></br>
+              {/* Date - [2023-05-10]<br></br>
               Invoice - #00012<br></br>
               Customer ID - <br></br>
-              Due Date -
+              Due Date - */}
             </Typography>
           </div>
+          <div className={styles.uppercontainer}>
+            <div className={styles.tag}>
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                <IconButton
+                  sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
+                >
+                  <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
+                </IconButton>
+                <h1 className={styles.Header}>Vendor</h1>
+              </div>
+              <Typography style={{ marginLeft: "35px" }}>
+              [Company Name]<br></br>
+              [Contact or Department]<br></br>
+              [Street Address]<br></br>
+              [City, ZIP Code]<br></br>
+              [Phone]<br></br>
+              [Tax]
+              </Typography>
+            </div>
+            <Typography className={styles.tag} style={{marginRight:"50px"}}>
+              <h1 className={styles.Header}>SHIP TO</h1>
+              6[Name]<br></br>
+              [Company Name]<br></br>
+              [Street Address]<br></br>
+              [City, ZIP Code]<br></br>
+              [Phone]<br></br>
+              {/* Date - [2023-05-10]<br></br>
+              Invoice - #00012<br></br>
+              Customer ID - <br></br>
+              Due Date - */}
+            </Typography>
+          </div>
+          {/* <div className={styles.divide}>
           <div style={{ marginLeft: "35px" }}>
             <Typography className={styles.tag}>
-              <h1 className={styles.Header}>Bill To</h1>
+              <h1 className={styles.Header}>VENDOR</h1>
               [Company Name]<br></br>
               [Contact or Department]<br></br>
               [Street Address]<br></br>
@@ -87,6 +121,17 @@ function Invoice() {
               [Tax]
             </Typography>
           </div>
+          <div >
+          <Typography className={styles.tag}>
+              <h1 className={styles.Header}>SHIP TO</h1>
+              [Name]<br></br>
+              [Company Name]<br></br>
+              [Street Address]<br></br>
+              [City, ZIP Code]<br></br>
+              [Phone]<br></br>
+            </Typography>
+          </div>
+          </div> */}
         </div>
 
         <div className={styles.midSection}>
@@ -155,17 +200,18 @@ function Invoice() {
           }}
         >
           <div className={styles.downcontainer}>
+            <div>
             <Typography>
-              <h4>Other Comment</h4>
-              1.Total payment due in 30 days.<br></br>
-              2.Please include the invoice number on your check.
+              <h4>Comments on Special Instructions</h4>
             </Typography>
+            <TextField sx={{backgroundColor:"white",borderRadius:"10px",width:"300px"}}/> 
+            </div>
             <Typography>
+                
               <h4>
                 Sub total<br></br>
-                Taxable<br></br>
-                Tax Rate<br></br>
-                Tax Due<br></br>
+                Tax<br></br>
+                Shipping<br></br>
                 Other<br></br>
                 Total
               </h4>
@@ -173,20 +219,40 @@ function Invoice() {
           </div>
           <center>
             <Typography>
-              if you have any concern of this invoice, please contact<br></br>
+              if you have any concern of this PO, please contact<br></br>
               [Name, Phone, Email]<br></br>
-              <b>Thank you for your Bussiness!</b>
             </Typography>
           </center>
           <div className={styles.btn}>
-            <Button variant="contained">PRINT</Button>
-            <Button variant="contained" style={{ marginLeft: 40 }}>
-              SEND INVOICE
-            </Button>
+          <Button
+      variant="contained"
+      fontFamily={"Inter"}
+      sx={{ bgcolor: "#205295", borderRadius: 5, height: 50, width: 200 }}
+    >
+     PRINT
+    </Button>
+            {/* <Button variant="contained" style={{ marginLeft: 40 }}>
+             SEND TO VENDOR
+            </Button> */}
+             <div className={styles.afmpp_button}>
+          <DonePopup
+            text={"Successfully sent PO to Vendor"}
+            title={"SEND TO VENDOR"}
+            styles={{
+              position: "absolute",
+              right: "0",
+              bgcolor: "#205295",
+              borderRadius: 5,
+              height: 50,
+              width: 200,
+              marginRight:"20px"
+            }}
+          />
+        </div>
           </div>
         </div>
       </Container>
     </div>
   );
 }
-export default Invoice;
+export default SendPurchaseOrder;
