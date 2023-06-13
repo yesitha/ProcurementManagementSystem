@@ -11,6 +11,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+import { Link as Routerlink } from "react-router-dom";
 
 const columns = [
   {
@@ -33,6 +34,7 @@ const rows = [
     "MPPID1000",
     "Rs.650000",
     "2021/01/01",
+    <Routerlink to={'/PCApprovalforMasterProcurmentPlan'}>
     <Button
       variant="contained"
       fontFamily={"Inter"}
@@ -40,11 +42,13 @@ const rows = [
     >
       View
     </Button>
+    </Routerlink>
   ),
   createData(
     "MPPID1001",
     "Rs.400000",
     "2021/06/02",
+    <Routerlink to={'/PCApprovalforMasterProcurmentPlan'}>
     <Button
       variant="contained"
       fontFamily={"Inter"}
@@ -52,99 +56,13 @@ const rows = [
     >
       View
     </Button>
-  ),
-  createData(
-    "MPPID1002",
-    "Rs.800000",
-    "2022/01/01",
-    <Button
-      variant="contained"
-      fontFamily={"Inter"}
-      sx={{ bgcolor: "#205295", borderRadius: 5, height: 50, width: 100 }}
-    >
-      View
-    </Button>
-  ),
-  createData(
-    "MPPID1003",
-    "Rs.350000",
-    "2022/04/04",
-    <Button
-      variant="contained"
-      fontFamily={"Inter"}
-      sx={{ bgcolor: "#205295", borderRadius: 5, height: 50, width: 100 }}
-    >
-      View
-    </Button>
-  ),
-  createData(
-    "MPPID1004",
-    "Rs.500000",
-    "2022/08/05",
-    <Button
-      variant="contained"
-      fontFamily={"Inter"}
-      sx={{ bgcolor: "#205295", borderRadius: 5, height: 50, width: 100 }}
-    >
-      View
-    </Button>
-  ),
-  createData(
-    "MPPID1005",
-    "Rs.600000",
-    "2022/10/06",
-    <Button
-      variant="contained"
-      fontFamily={"Inter"}
-      sx={{ bgcolor: "#205295", borderRadius: 5, height: 50, width: 100 }}
-    >
-      View
-    </Button>
-  ),
-  createData(
-    "MPPID1006",
-    "Rs.450000",
-    "2023/01/01",
-    <Button
-      variant="contained"
-      fontFamily={"Inter"}
-      sx={{ bgcolor: "#205295", borderRadius: 5, height: 50, width: 100 }}
-    >
-      View
-    </Button>
-  ),
-  createData(
-    "MPPID1007",
-    "Rs.700000",
-    "2023/03/01",
-    <Button
-      variant="contained"
-      fontFamily={"Inter"}
-      sx={{ bgcolor: "#205295", borderRadius: 5, height: 50, width: 100 }}
-    >
-      View
-    </Button>
+    </Routerlink>
   ),
 ];
 
 function MasterProcurementPlans() {
-  // const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
-  // const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
-  // const user = {
-  //   firstname: "John",
-  //   lastname: "Doe",
-  //   email: "johndoe@gmail.com",
-  //   designation: "Financial Division HOD",
-  //   department: "Finance",
-  //   phone: "1234567890",
-  //   address: "123, ABC Street, XYZ City, 123456",
-  //   gender: "Male",
-  //   profilePic: "https://www.w3schools.com/howto/img_avatar.png",
-  // };
 
   const list = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
-
-  //========================================================
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -159,12 +77,13 @@ function MasterProcurementPlans() {
 
   return (
     <div>
-      {/* <SideNavBar list1={list1} list2={list2} user={user} /> */}
       <div className={styles.vfmpp_mainBody}>
         <div className={styles.vfmpp_heading}>
+          <Routerlink to={-1}>
           <IconButton sx={{ pl: "15px", height: "34px", width: "34px" }}>
             <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
           </IconButton>
+          </Routerlink>
           Master Procurement Plan
         </div>
 

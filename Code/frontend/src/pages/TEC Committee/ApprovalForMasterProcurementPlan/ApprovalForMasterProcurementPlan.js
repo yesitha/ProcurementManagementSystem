@@ -35,34 +35,16 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+import { Link as Routerlink } from "react-router-dom";
 
-const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
-const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
 
 const columns = [
-  { id: "itemID", label: "Item ID", Width: 300, align: "center" },
-  { id: "itemName", label: "Item Name", Width: 300, align: "center" },
-  { id: "quentity", label: "Quentity", Width: 300, align: "center" },
-  {
-    id: "estimatedBudget",
-    label: "Estimated Budget",
-    Width: 300,
-    align: "center",
-  },
-  { id: "action", label: "Action", Width: 300, align: "center" },
+  {id: "itemID", label: "Item ID", Width: 300, align: "center"},
+  {id: "itemName", label: "Item Name", Width: 300, align: "center"},
+  {id: "quentity", label: "Quentity", Width: 300, align: "center"},
+  {id: "estimatedBudget",label: "Estimated Budget",Width: 300,align: "center",},
+  {id: "action", label: "Action", Width: 300, align: "center"},
 ];
-
-const user = {
-  firstname: "John",
-  lastname: "Doe",
-  email: "johndoe@gmail.com",
-  designation: "Financial Division HOD",
-  department: "Finance",
-  phone: "1234567890",
-  address: "123, ABC Street, XYZ City, 123456",
-  gender: "Male",
-  profilePic: "https://www.w3schools.com/howto/img_avatar.png",
-};
 
 function createData(itemID, itemName, quentity, estimatedBudget, action) {
   return { itemID, itemName, quentity, estimatedBudget, action };
@@ -74,6 +56,7 @@ const rows = [
     "A4 Bundle",
     "400",
     "Rs. 1000000",
+    <Routerlink to={'/PCviewitem'}>
     <Button
       className={styles.ViewButton}
       variant="contained"
@@ -82,12 +65,14 @@ const rows = [
       {" "}
       View{" "}
     </Button>
+    </Routerlink>
   ),
   createData(
     "IT-0002",
     "Pen",
     "2000",
     "Rs. 2000000",
+    <Routerlink to={'/PCviewitem'}>
     <Button
       className={styles.ViewButton}
       variant="contained"
@@ -96,48 +81,7 @@ const rows = [
       {" "}
       View{" "}
     </Button>
-  ),
-  createData(
-    "IT-0003",
-    "240 GSM File Bundle",
-    "1000",
-    "Rs. 3000000",
-    <Button
-      className={styles.ViewButton}
-      variant="contained"
-      sx={{ borderRadius: 8, px: { xs: 2, md: 5 } }}
-    >
-      {" "}
-      View{" "}
-    </Button>
-  ),
-  createData(
-    "IT-0004",
-    "991Es Plus Calculators",
-    "100",
-    "Rs. 4000000",
-    <Button
-      className={styles.ViewButton}
-      variant="contained"
-      sx={{ borderRadius: 8, px: { xs: 2, md: 5 } }}
-    >
-      {" "}
-      View{" "}
-    </Button>
-  ),
-  createData(
-    "IT-0005",
-    "Havit Mouse",
-    "50",
-    "Rs. 4000000",
-    <Button
-      className={styles.ViewButton}
-      variant="contained"
-      sx={{ borderRadius: 8, px: { xs: 2, md: 5 } }}
-    >
-      {" "}
-      View{" "}
-    </Button>
+    </Routerlink>
   ),
 ];
 
@@ -145,7 +89,7 @@ const procurementId = "MP-0001";
 const grandTotal = "Rs. 1000000";
 const creationDate = "2021-09-01";
 
-function MasterProcurementPlanEvalate() {
+function ApprovalForMasterProcurementPlan() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const handleChangePage = (event, newPage) => {
@@ -158,9 +102,6 @@ function MasterProcurementPlanEvalate() {
   };
   return (
     <div className={styles.outer}>
-      <div className={styles.sideNavBar}>
-        <SideNavBar list1={list1} list2={list2} user={user} />
-      </div>
 
       <Container
         sx={{
@@ -173,12 +114,13 @@ function MasterProcurementPlanEvalate() {
       >
         <div className={styles.upperSection}>
           <div className={styles.PageContainer__header}>
+            <Routerlink to={-1}>
             <IconButton
               sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
             >
               <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
             </IconButton>
-
+            </Routerlink>
             <h1 className={styles.Header}>
               Approval for Master Procurement Plan
             </h1>
@@ -299,4 +241,4 @@ function MasterProcurementPlanEvalate() {
   );
 }
 
-export default MasterProcurementPlanEvalate;
+export default ApprovalForMasterProcurementPlan;

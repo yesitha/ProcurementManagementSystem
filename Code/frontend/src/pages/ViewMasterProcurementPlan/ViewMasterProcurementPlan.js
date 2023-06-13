@@ -26,23 +26,10 @@ import styles from "./ViewMasterProcurementPlan.module.css";
 import SelectDropDown from "../../components/SelectDropDown/SelectDropDown";
 import ViewRecomandedVendors from "../../components/Popups/ViewRecomandedVendors/ViewRecomandedVendors";
 import { vendors } from "../../users/vendors.js";
+import { Link as Routerlink } from "react-router-dom";
 
 function ViewMasterProcurementPlan() {
   const Recomandedvendors1 = vendors;
-
-  const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
-  const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
-  const user = {
-    firstname: "John",
-    lastname: "Doe",
-    email: "johndoe@gmail.com",
-    designation: "Financial Division HOD",
-    department: "Finance",
-    phone: "1234567890",
-    address: "123, ABC Street, XYZ City, 123456",
-    gender: "Male",
-    profilePic: "https://www.w3schools.com/howto/img_avatar.png",
-  };
 
   const columns = [
     { id: "ItemID", label: "Item ID", Width: 300, align: "center" },
@@ -194,10 +181,6 @@ function ViewMasterProcurementPlan() {
 
   return (
     <div className={styles.outer}>
-      <div className={styles.sideNavBar}>
-        <SideNavBar list1={list1} list2={list2} user={user} />
-      </div>
-
       <Container
         sx={{
           ml: { xs: "60px", sm: "65px", md: "65px", lg: "68px", xl: "70px" },
@@ -207,12 +190,13 @@ function ViewMasterProcurementPlan() {
       >
         <div className={styles.upperSection}>
           <div className={styles.ManageAuctionPageContainer__header}>
+            <Routerlink to={-1}>
             <IconButton
               sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
             >
               <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
             </IconButton>
-
+            </Routerlink>
             <h1 className={styles.Header}>Master Procurement Plan</h1>
           </div>
         </div>
@@ -308,6 +292,7 @@ function ViewMasterProcurementPlan() {
             className={styles.rightButton}
             sx={{ justifyContent: { xs: "center", md: "right" } }}
           >
+            <Routerlink to={'/create-modify-teccommittee'}>
             <Button
               className={styles.TecAppointButton}
               variant="contained"
@@ -320,6 +305,7 @@ function ViewMasterProcurementPlan() {
             >
               Appoint TEC Committee
             </Button>
+            </Routerlink>
           </Container>
         </div>
       </Container>

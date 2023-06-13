@@ -20,6 +20,7 @@ import {
 } from "@mui/material";
 import { Rotate90DegreesCcw } from "@mui/icons-material";
 import SelectDropDown from "../../../components/SelectDropDown/SelectDropDown";
+import { Link as Routerlink } from "react-router-dom";
 
 // const useStyles = makeStyles({
 //   table: {
@@ -29,7 +30,7 @@ import SelectDropDown from "../../../components/SelectDropDown/SelectDropDown";
 
 const rows = users;
 
-function CreateModifyTECCommittee() {
+function InvoicestobePaid() {
   //   const classes = useStyles();
   const [leftTableData, setLeftTableData] = useState(rows);
   const [rightTableData, setRightTableData] = useState([]);
@@ -43,28 +44,13 @@ function CreateModifyTECCommittee() {
     setLeftTableData([...leftTableData, row]);
     setRightTableData(rightTableData.filter((data) => data.id !== row.id));
   };
-  const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
-  const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
   const masterProcurementId = "MP0001";
-  const user = {
-    firstname: "John",
-    lastname: "Doe",
-    email: "johndoe@gmail.com",
-    designation: "Financial Division HOD",
-    department: "Finance",
-    phone: "1234567890",
-    address: "123, ABC Street, XYZ City, 123456",
-    gender: "Male",
-    profilePic: "https://www.w3schools.com/howto/img_avatar.png",
-  };
+  
 
   const list = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
   const list3 = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
   return (
     <div style={{ overflowX: "auto" }}>
-      <div className={styles.sideNavBar}>
-        <SideNavBar list1={list1} list2={list2} user={user} />
-      </div>
 
       <Container
         className={styles.main}
@@ -78,12 +64,13 @@ function CreateModifyTECCommittee() {
       >
         <div className={styles.upperSection}>
           <div className={styles.ManageAuctionPageContainer__header}>
+            <Routerlink to={-1}>
             <IconButton
               sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
             >
               <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
             </IconButton>
-
+            </Routerlink>
             <h1 className={styles.Header}>Invoices to be Paid</h1>
           </div>
         </div>
@@ -191,4 +178,4 @@ function CreateModifyTECCommittee() {
   );
 }
 
-export default CreateModifyTECCommittee;
+export default InvoicestobePaid;

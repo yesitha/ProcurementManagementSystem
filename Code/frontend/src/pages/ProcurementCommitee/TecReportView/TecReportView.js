@@ -12,6 +12,7 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import SearchNoFilter from "../../../components/Search/Search";
 import { Container } from "@mui/system";
+import { Link as Routerlink } from "react-router-dom";
 
 const columns = [
   { id: "VenName", label: "Vendor Name", Width: 300, align: "center" },
@@ -29,20 +30,6 @@ const rows = [
 ];
 
 function TecReportView() {
-  const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
-  const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
-  const user = {
-    firstname: "John",
-    lastname: "Doe",
-    email: "johndoe@gmail.com",
-    designation: "Financial Division HOD",
-    department: "Finance",
-    phone: "1234567890",
-    address: "123, ABC Street, XYZ City, 123456",
-    gender: "Male",
-    profilePic: "https://www.w3schools.com/howto/img_avatar.png",
-  };
-
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const handleChangePage = (event, newPage) => {
@@ -55,10 +42,6 @@ function TecReportView() {
   };
   return (
     <div style={{ overflowX: "hidden" }}>
-      <div className={styles.sideNavBar}>
-        <SideNavBar list1={list1} list2={list2} user={user} />
-      </div>
-
       <Container
         className={styles.main}
         sx={{
@@ -69,12 +52,13 @@ function TecReportView() {
       >
         <div className={styles.upperSection}>
           <div className={styles.ManageAuctionPageContainer__header}>
+            <Routerlink to={-1}>
             <IconButton
               sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
             >
               <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
             </IconButton>
-
+            </Routerlink>
             <h1 className={styles.Header}>[Item Name]</h1>
           </div>
         </div>

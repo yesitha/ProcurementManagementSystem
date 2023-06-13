@@ -141,7 +141,7 @@ namespace PWMSBackend.Migrations
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Salutation = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    //DivisionId1 = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    DivisionId1 = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DivisionId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
@@ -154,12 +154,12 @@ namespace PWMSBackend.Migrations
                         principalTable: "Divisions",
                         principalColumn: "DivisionId",
                         onDelete: ReferentialAction.NoAction);
-                    //table.ForeignKey(
-                    //    name: "FK_ProcurementEmployees_Divisions_DivisionId1",
-                    //    column: x => x.DivisionId1,
-                    //    principalTable: "Divisions",
-                    //    principalColumn: "DivisionId",
-                    //    onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_ProcurementEmployees_Divisions_DivisionId1",
+                        column: x => x.DivisionId1,
+                        principalTable: "Divisions",
+                        principalColumn: "DivisionId",
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -558,21 +558,21 @@ namespace PWMSBackend.Migrations
                 {
                     SppId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ItemId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RecommendedVendor = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RecommendedVendor = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EvidenceOfAuthorization = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
-                    ProcuremnetCommitteeStatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProcurementCommitteeComment = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProcuremnetCommitteeStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProcurementCommitteeComment = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     ExpectedDeliveryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TecCommitteeStatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TecCommitteeComment = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DGStatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DGComment = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RejectedVendor = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TecCommitteeStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TecCommitteeComment = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DGStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DGComment = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RejectedVendor = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EstimatedBudget = table.Column<double>(type: "float", nullable: false),
-                    SelectedVendor = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    InternalAuditorComment = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    InternalAuditorStatus = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    SelectedVendor = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    InternalAuditorComment = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    InternalAuditorStatus = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -673,10 +673,10 @@ namespace PWMSBackend.Migrations
                 unique: true,
                 filter: "[DivisionId] IS NOT NULL");
 
-            //migrationBuilder.CreateIndex(
-            //    name: "IX_ProcurementEmployees_DivisionId1",
-            //    table: "ProcurementEmployees",
-            //    column: "DivisionId1");
+            migrationBuilder.CreateIndex(
+                name: "IX_ProcurementEmployees_DivisionId1",
+                table: "ProcurementEmployees",
+                column: "DivisionId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PurchaseOrder_ItemTobeShippeds_ItemId",

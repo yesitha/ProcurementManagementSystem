@@ -28,6 +28,7 @@ import ViewRecomandedVendors from "../../components/Popups/ViewRecomandedVendors
 import { vendors } from "../../users/vendors.js";
 import SearchFilter from "../../components/Search/Search"
 import DeleteIcon from "@mui/icons-material/Delete";
+import {Link as Routerlink} from 'react-router-dom';
 
 
 function ViewSubProcurementPlan() {
@@ -189,22 +190,8 @@ function ViewSubProcurementPlan() {
 
 
   const list = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
-  const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
-  const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
-  const user = {
-    firstname: "John",
-    lastname: "Doe",
-    email: "johndoe@gmail.com",
-    designation: "Financial Division HOD",
-    department: "Finance",
-    phone: "1234567890",
-    address: "123, ABC Street, XYZ City, 123456",
-    gender: "Male",
-    profilePic: "https://www.w3schools.com/howto/img_avatar.png",
-  };
   return (
     <div>
-      <SideNavBar list1={list1} list2={list2} user={user} />
 
       <Container
         sx={{
@@ -215,12 +202,13 @@ function ViewSubProcurementPlan() {
       >
         <div className={Styles.upperSection}>
           <div className={Styles.ManageAuctionPageContainer__header}>
+            <Routerlink to={-1}>
             <IconButton
               sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
             >
               <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
             </IconButton>
-
+            </Routerlink>
             <h1 className={Styles.Header}>Sub Procurement Plan</h1>
           </div>
        

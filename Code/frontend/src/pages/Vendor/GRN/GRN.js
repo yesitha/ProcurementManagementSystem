@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./createInvoice.module.css";
+import styles from "./GRN.module.css";
 import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import { ButtonBase, Typography } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -17,6 +17,7 @@ import "../../../users/vendors.js";
 import EnterNotePopup from "../../../components/Popups/DonePopup/EnterNotePopup";
 import { vendors } from "../../../users/vendors.js";
 import ViewNote from "../../../components/Popups/DonePopup/ViewNote";
+import { Link as Routerlink } from "react-router-dom";
 
 const columns = [
   { id: "ItemID", label: "Item ID", Width: 150, align: "center" },
@@ -44,21 +45,7 @@ const rows = [
   createData("I0014", "A4 Papers", "loerm", "100 ", "50", "50", <ViewNote />),
 ];
 
-const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
-const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
-const user = {
-  firstname: "John",
-  lastname: "Doe",
-  email: "johndoe@gmail.com",
-  designation: "Financial Division HOD",
-  department: "Finance",
-  phone: "1234567890",
-  address: "123, ABC Street, XYZ City, 123456",
-  gender: "Male",
-  profilePic: "https://www.w3schools.com/howto/img_avatar.png",
-};
-
-export default function CreateInvoice() {
+export default function GRN() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const handleChangePage = (event, newPage) => {
@@ -75,12 +62,13 @@ export default function CreateInvoice() {
 
   return (
     <div style={{ overflowX: "hidden" }}>
-      <SideNavBar list1={list1} list2={list2} user={user} />
       <div className={styles.afmpp_mainBody}>
         <div className={styles.afmpp_heading}>
+          <Routerlink to={-1}>
           <IconButton sx={{ pl: "15px", height: "34px", width: "34px" }}>
             <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
           </IconButton>
+          </Routerlink>
           [GRN NO]
         </div>
         <div className={styles.GRNno}>
@@ -194,6 +182,7 @@ export default function CreateInvoice() {
               </Button>
             </div>
             <div>
+              <Routerlink to={'/create-invoice'}>
               <Button
                 variant="contained"
                 style={{
@@ -205,6 +194,7 @@ export default function CreateInvoice() {
               >
                 Create Invoice
               </Button>
+              </Routerlink>
             </div>
           </div>
         </div>

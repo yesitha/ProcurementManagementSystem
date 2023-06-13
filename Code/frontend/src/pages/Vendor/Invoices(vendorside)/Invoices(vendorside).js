@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./uploadPaymentVoucher.module.css";
+import styles from "./Invoices(vendorside).module.css";
 import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { Button, IconButton, Paper, Typography } from "@mui/material";
@@ -10,7 +10,6 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import { Link as Routerlink } from "react-router-dom";
 
 const columns = [
@@ -36,12 +35,10 @@ const rows = [
   createData("I0014", "A4 Papers", "500", "GSm 80", "5", "400", "5000"),
 ];
 
-function UploadPaymentVoucher() {
+function Invoicesvendorside() {
 
   return (
     <div style={{ overflowX: "hidden" }}>
-      <div className={styles.sideNavBar}>
-      </div>
 
       <Container
         className={styles.main}
@@ -80,32 +77,16 @@ function UploadPaymentVoucher() {
               Due Date -
             </Typography>
           </div>
-          <div className={styles.flex}>
-            <div style={{ marginLeft: "35px" }}>
-              <Typography className={styles.tag}>
-                <h1 className={styles.Header}>Bill To</h1>
-                [Company Name]<br></br>
-                [Contact or Department]<br></br>
-                [Street Address]<br></br>
-                [City, ZIP Code]<br></br>
-                [Phone]<br></br>
-                [Tax]
-              </Typography>
-            </div>
-            <div className={styles.payment}>
-              <div>
-                <Typography sx={{ fontSize: 24, color: "#0A2647" }}>
-                  Upload Payment Voucher
-                </Typography>
-              </div>
-              <div>
-                <IconButton sx={{ marginLeft: "60px", width: "60px" }}>
-                  <ControlPointIcon
-                    sx={{ marginLeft: "5px", fontSize: 40, color: "#0A2647" }}
-                  />
-                </IconButton>
-              </div>
-            </div>
+          <div style={{ marginLeft: "35px" }}>
+            <Typography className={styles.tag}>
+              <h1 className={styles.Header}>Bill To</h1>
+              [Company Name]<br></br>
+              [Contact or Department]<br></br>
+              [Street Address]<br></br>
+              [City, ZIP Code]<br></br>
+              [Phone]<br></br>
+              [Tax]
+            </Typography>
           </div>
         </div>
 
@@ -200,13 +181,10 @@ function UploadPaymentVoucher() {
           </center>
           <div className={styles.btn}>
             <Button variant="contained">PRINT</Button>
-            <Button variant="contained" style={{ marginLeft: 40 }}>
-              Mark as Paid
-            </Button>
           </div>
         </div>
       </Container>
     </div>
   );
 }
-export default UploadPaymentVoucher;
+export default Invoicesvendorside;

@@ -12,6 +12,8 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import SearchNoFilter from "../../../components/Search/Search";
 import { Container } from "@mui/system";
+import VendorDetails from "../../../components/Popups/VendorDetails/VendorDetails";
+import { Link as Routerlink } from "react-router-dom";
 
 const columns = [
   { id: "ItemID", label: "Item ID", Width: 300, align: "center" },
@@ -56,134 +58,16 @@ const rows = [
     "I0014",
     "A4 Papers",
     "500",
-    <Button variant="contained">View</Button>,
+    <VendorDetails />,
     Setdate(),
     Setdate(),
     <Button variant="contained">Schedule</Button>
   ),
-
   createData(
     "I0028",
     "Ruler",
     "10",
-    <Button variant="contained">View</Button>,
-    Setdate(),
-    Setdate(),
-    <Button variant="contained">Schedule</Button>
-  ),
-  createData(
-    "I0015",
-    "Stapler",
-    "50",
-    <Button variant="contained">View</Button>,
-    Setdate(),
-    Setdate(),
-    <Button variant="contained">Schedule</Button>
-  ),
-  createData(
-    "I0016",
-    "Pens",
-    "100",
-    <Button variant="contained">View</Button>,
-    Setdate(),
-    Setdate(),
-    <Button variant="contained">Schedule</Button>
-  ),
-  createData(
-    "I0017",
-    "Notebooks",
-    "25",
-    <Button variant="contained">View</Button>,
-    Setdate(),
-    Setdate(),
-    <Button variant="contained">Schedule</Button>
-  ),
-  createData(
-    "I0018",
-    "Printer Ink",
-    "10",
-    <Button variant="contained">View</Button>,
-    Setdate(),
-    Setdate(),
-    <Button variant="contained">Schedule</Button>
-  ),
-  createData(
-    "I0019",
-    "Paper Clips",
-    "200",
-    <Button variant="contained">View</Button>,
-    Setdate(),
-    Setdate(),
-    <Button variant="contained">Schedule</Button>
-  ),
-  createData(
-    "I0020",
-    "Tape",
-    "15",
-    <Button variant="contained">View</Button>,
-    Setdate(),
-    Setdate(),
-    <Button variant="contained">Schedule</Button>
-  ),
-  createData(
-    "I0021",
-    "Envelopes",
-    "75",
-    <Button variant="contained">View</Button>,
-    Setdate(),
-    Setdate(),
-    <Button variant="contained">Schedule</Button>
-  ),
-  createData(
-    "I0022",
-    "File Folders",
-    "50",
-    <Button variant="contained">View</Button>,
-    Setdate(),
-    Setdate(),
-    <Button variant="contained">Schedule</Button>
-  ),
-  createData(
-    "I0023",
-    "Scissors",
-    "20",
-    <Button variant="contained">View</Button>,
-    Setdate(),
-    Setdate(),
-    <Button variant="contained">Schedule</Button>
-  ),
-  createData(
-    "I0024",
-    "Whiteboard Markers",
-    "30",
-    <Button variant="contained">View</Button>,
-    Setdate(),
-    Setdate(),
-    <Button variant="contained">Schedule</Button>
-  ),
-  createData(
-    "I0025",
-    "Calculator",
-    "5",
-    <Button variant="contained">View</Button>,
-    Setdate(),
-    Setdate(),
-    <Button variant="contained">Schedule</Button>
-  ),
-  createData(
-    "I0026",
-    "Post-it Notes",
-    "100",
-    <Button variant="contained">View</Button>,
-    Setdate(),
-    Setdate(),
-    <Button variant="contained">Schedule</Button>
-  ),
-  createData(
-    "I0027",
-    "Highlighters",
-    "20",
-    <Button variant="contained">View</Button>,
+    <VendorDetails />,
     Setdate(),
     Setdate(),
     <Button variant="contained">Schedule</Button>
@@ -191,19 +75,6 @@ const rows = [
 ];
 
 function ManageAuction() {
-  const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
-  const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
-  const user = {
-    firstname: "John",
-    lastname: "Doe",
-    email: "johndoe@gmail.com",
-    designation: "Financial Division HOD",
-    department: "Finance",
-    phone: "1234567890",
-    address: "123, ABC Street, XYZ City, 123456",
-    gender: "Male",
-    profilePic: "https://www.w3schools.com/howto/img_avatar.png",
-  };
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -217,10 +88,6 @@ function ManageAuction() {
   };
   return (
     <div style={{ overflowX: "hidden" }}>
-      <div className={styles.sideNavBar}>
-        <SideNavBar list1={list1} list2={list2} user={user} />
-      </div>
-
       <Container
         className={styles.main}
         sx={{
@@ -231,12 +98,13 @@ function ManageAuction() {
       >
         <div className={styles.upperSection}>
           <div className={styles.ManageAuctionPageContainer__header}>
+            <Routerlink to={-1}>
             <IconButton
               sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
             >
               <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
             </IconButton>
-
+            </Routerlink>
             <h1 className={styles.Header}> Manage Auctions</h1>
           </div>
         </div>

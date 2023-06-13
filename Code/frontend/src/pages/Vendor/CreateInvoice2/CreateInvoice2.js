@@ -17,6 +17,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+import { Link as Routerlink } from "react-router-dom";
 
 const list = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
 
@@ -70,9 +71,11 @@ export default function CreateInvoice2() {
     <div style={{ overflowX: "hidden" }}>
       <div className={styles.afmpp_mainBody}>
         <div className={styles.afmpp_heading}>
+          <Routerlink to={-1}>
           <IconButton sx={{ pl: "15px", height: "34px", width: "34px" }}>
             <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
           </IconButton>
+          </Routerlink>
           INVOICE
         </div>
         <div className={styles.POID}>
@@ -155,6 +158,7 @@ export default function CreateInvoice2() {
         </div>
 
         <div style={{ display: "flex", justifyContent: "right" }}>
+          <Routerlink to={'/send-invoice'}>
           <Button
             variant="contained"
             style={{
@@ -167,6 +171,7 @@ export default function CreateInvoice2() {
           >
             Create Invoice
           </Button>
+          </Routerlink>
         </div>
       </div>
     </div>

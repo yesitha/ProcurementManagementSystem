@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./ViewItem.module.css";
+import styles from "./../../ViewItem/ViewItem.module.css";
 import {
   Button,
   Container,
@@ -53,8 +53,6 @@ const item = {
   "Expected Delivery Date": "2023-03-15",
 };
 const Recomandedvendors1 = vendors;
-const list2 = ["Vendors and Items", "Budgets", "Inventory", "Settings"];
-const list1 = ["Sub Procurment Plan", "Master Procurement Plan"];
 
 const columns = [
   { id: "SubProID", label: "Sub Procurement ID", Width: 300, align: "center" },
@@ -76,18 +74,6 @@ const columns = [
   { id: "Evidence", label: "Evidence", Width: 200, align: "center" },
   { id: "Action", label: "Action", Width: 300, align: "center" },
 ];
-
-const user = {
-  firstname: "John",
-  lastname: "Doe",
-  email: "johndoe@gmail.com",
-  designation: "Financial Division HOD",
-  department: "Finance",
-  phone: "1234567890",
-  address: "123, ABC Street, XYZ City, 123456",
-  gender: "Male",
-  profilePic: "https://www.w3schools.com/howto/img_avatar.png",
-};
 
 function createData(
   SubProID,
@@ -194,10 +180,6 @@ function ViewItem() {
   };
   return (
     <div className={styles.outer}>
-      <div className={styles.sideNavBar}>
-        <SideNavBar list1={list1} list2={list2} user={user} />
-      </div>
-
       <Container
         sx={{
           ml: { xs: "60px", sm: "65px", md: "65px", lg: "68px", xl: "70px" },

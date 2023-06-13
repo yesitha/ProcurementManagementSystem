@@ -10,6 +10,8 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import DonePopup from "../../../components/Popups/DonePopup/DonePopup";
+import { Link as Routerlink } from "react-router-dom";
 
 const columns = [
   { id: "ItemID", label: "Item ID", Width: 300, align: "center" },
@@ -35,11 +37,9 @@ const rows = [
 ];
 
 function Invoice() {
- 
-
   return (
     <div style={{ overflowX: "hidden" }}>
-      
+
 
       <Container
         className={styles.main}
@@ -53,11 +53,13 @@ function Invoice() {
           <div className={styles.uppercontainer}>
             <div className={styles.tag}>
               <div style={{ display: "flex", flexDirection: "row" }}>
+                <Routerlink to={-1}>
                 <IconButton
                   sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
                 >
                   <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
                 </IconButton>
+                </Routerlink>
                 <h1 className={styles.Header}>PUCSL</h1>
               </div>
               <Typography style={{ marginLeft: "35px" }}>
@@ -180,9 +182,20 @@ function Invoice() {
           </center>
           <div className={styles.btn}>
             <Button variant="contained">PRINT</Button>
-            <Button variant="contained" style={{ marginLeft: 40 }}>
-              SEND INVOICE
-            </Button>
+            <DonePopup
+            text={"Successfully Sent Invoice to Procurement Officer"}
+            title={"SEND INVOICE"}
+            styles={{
+              position: "absolute",
+              right: "0",
+              bgcolor: "#205295",
+              borderRadius: 5,
+              height: 40,
+              width: 200,
+              marginLeft: 10,
+              marginRight:3
+            }}
+          />
           </div>
         </div>
       </Container>

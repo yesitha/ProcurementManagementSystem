@@ -9,3 +9,12 @@
   text-align: left;
   margin-top: 1px;
 }
+.app-container {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+}
+
+.app-content {
+  padding-left: 1px; 
+}
