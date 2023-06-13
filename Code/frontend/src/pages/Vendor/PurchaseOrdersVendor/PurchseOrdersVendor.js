@@ -1,8 +1,7 @@
 import React from "react";
-import styles from "./FinalizedMasterProcurementPlan.module.css";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import styles from "./PurchaseOrdersVendor.module.css";
 import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
-import SelectDropDown from "../../../components/SelectDropDown/SelectDropDown";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import SearchNoFilter from "../../../components/Search/Search";
 import { Button, IconButton, Paper, Stack, TextField } from "@mui/material";
 import Table from "@mui/material/Table";
@@ -12,107 +11,131 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VendorDetails from "../../../components/Popups/VendorDetails/VendorDetails";
-import DonePopup from "../../../components/Popups/DonePopup/DonePopup";
-import SetPreBidMeetingDate from "../../../components/Popups/SetPreBidMeetingDate/SetPreBidMeetingDate";
-import { Link as Routerlink } from "react-router-dom";
-
-//===============Applicable for table data===================================
 
 const columns = [
-  { id: "ItemID", label: "Item ID", Width: 300, align: "center" },
-  { id: "ItemName", label: "Item Name", Width: 300, align: "center" },
-  { id: "Qty", label: "Quantity", Width: 300, align: "center" },
-  { id: "Spe", label: "Specification", Width: 300, align: "center" },
   {
-    id: "SppID",
-    label: "Sub Procurement Plan ID",
+    id: "POID",
+    label: "Purchase Order ID",
     Width: 300,
     align: "center",
   },
-  { id: "Division", label: "Division", Width: 300, align: "center" },
-  {
-    id: "EDdate",
-    label: "Expected Delivery date",
-    Width: 300,
-    align: "center",
-  },
-  { id: "Vendor", label: "Vendor", Width: 300, align: "center" },
+  { id: "Date", label: "'Date'", Width: 300, align: "center" },
+  { id: "TotalValue", label: "Total Value", Width: 300, align: "center" },
+  { id: "Action", label: "Action", Width: 300, align: "center" },
 ];
 
-function Setdate() {
-  return (
-    <Stack component="form" noValidate spacing={3}>
-      <TextField
-        id="date"
-        label="Set Date"
-        type="date"
-        align="center"
-        defaultValue={new Date().toISOString().substr(0, 10)}
-        sx={{ width: 200, height: 50 }}
-        InputLabelProps={{
-          shrink: true,
-        }}
-      />
-    </Stack>
-  );
-}
-
-function createData(
-  ItemID,
-  ItemName,
-  Qty,
-  Spe,
-  SppID,
-  Division,
-  EDdate,
-  Vendor
-) {
-  return { ItemID, ItemName, Qty, Spe, SppID, Division, EDdate, Vendor };
+function createData(POID, Date, TotalValue, Action) {
+  return { POID, Date, TotalValue, Action };
 }
 
 const rows = [
   createData(
-    "I0014",
-    "A4 Papers",
-    "500",
-    "loerm",
-    "SPPID1000",
-    "IT Department",
-    Setdate(),
-    <VendorDetails />
+    "MPPID1000",
+    "2021/01/01",
+    "50000",
+    <Button
+      variant="contained"
+      fontFamily={"Inter"}
+      sx={{ bgcolor: "#205295", borderRadius: 5, height: 50, width: 100 }}
+    >
+      View
+    </Button>
   ),
   createData(
-    "I0028",
-    "Ruler",
-    "10",
-    "loerm",
-    "SPPID1000",
-    "IT Department",
-    Setdate(),
-    <VendorDetails />
+    "MPPID1001",
+    
+    "2021/06/02",
+    "Rs.400000",
+    <Button
+      variant="contained"
+      fontFamily={"Inter"}
+      sx={{ bgcolor: "#205295", borderRadius: 5, height: 50, width: 100 }}
+    >
+      View
+    </Button>
   ),
   createData(
-    "I0015",
-    "Stapler",
-    "50",
-    "loerm",
-    "SPPID1000",
-    "IT Department",
-    Setdate(),
-    <VendorDetails />
+    "MPPID1002",
+    
+    "2022/01/01",
+    "Rs.800000",
+    <Button
+      variant="contained"
+      fontFamily={"Inter"}
+      sx={{ bgcolor: "#205295", borderRadius: 5, height: 50, width: 100 }}
+    >
+      View
+    </Button>
+  ),
+  createData(
+    "MPPID1003",
+    
+    "2022/04/04",
+    "Rs.350000",
+    <Button
+      variant="contained"
+      fontFamily={"Inter"}
+      sx={{ bgcolor: "#205295", borderRadius: 5, height: 50, width: 100 }}
+    >
+      View
+    </Button>
+  ),
+  createData(
+    "MPPID1004",
+    
+    "2022/08/05",
+    "Rs.500000",
+    <Button
+      variant="contained"
+      fontFamily={"Inter"}
+      sx={{ bgcolor: "#205295", borderRadius: 5, height: 50, width: 100 }}
+    >
+      View
+    </Button>
+  ),
+  createData(
+    "MPPID1005",
+    
+    "2022/10/06",
+    "Rs.600000",
+    <Button
+      variant="contained"
+      fontFamily={"Inter"}
+      sx={{ bgcolor: "#205295", borderRadius: 5, height: 50, width: 100 }}
+    >
+      View
+    </Button>
+  ),
+  createData(
+    "MPPID1006",
+    
+    "2023/01/01",
+    "Rs.450000",
+    <Button
+      variant="contained"
+      fontFamily={"Inter"}
+      sx={{ bgcolor: "#205295", borderRadius: 5, height: 50, width: 100 }}
+    >
+      View
+    </Button>
+  ),
+  createData(
+    "MPPID1007",
+   
+    "2023/03/01",
+    "Rs.700000",
+    <Button
+      variant="contained"
+      fontFamily={"Inter"}
+      sx={{ bgcolor: "#205295", borderRadius: 5, height: 50, width: 100 }}
+    >
+      View
+    </Button>
   ),
 ];
 
-//===========================================================================
+function PurchaseOrdersVendor() {
 
-// Here in class names, fmmp=FinalizedMasterProcurementPlan
-
-function FinalizedMasterProcurementPlan() {
-
-
-  //=======values for 'SelectDropDown.js' as an array=======
 
   const list = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
 
@@ -131,31 +154,25 @@ function FinalizedMasterProcurementPlan() {
 
   return (
     <div>
-      <div className={styles.fmpp_mainBody}>
-        <div className={styles.fmpp_heading}>
-        <Routerlink to={-1}>
+      {/* <SideNavBar list1={list1} list2={list2} user={user} /> */}
+      <div className={styles.vfmpp_mainBody}>
+        <div className={styles.vfmpp_heading}>
           <IconButton sx={{ pl: "15px", height: "34px", width: "34px" }}>
             <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
           </IconButton>
-          </Routerlink>
-          Finalized Master Procurement Plan
+          PURCHASE ORDERS
         </div>
-        <div className={styles.fmpp_title_search}>
-          <div className={styles.fmpp_title}>
-            <label>MASTER PROCUREMENT PLAN ID*</label>
-            <SelectDropDown list={list} />
-          </div>
-          <div className={styles.fmpp_search}>
-            <SearchNoFilter />
-          </div>
+
+        <div className={styles.vfmpp_search}>
+          <SearchNoFilter />
         </div>
 
         {/* Add table data */}
 
-        <div className={styles.fmpp_table}>
+        <div className={styles.vfmpp_table}>
           <Paper
             sx={{
-              width: "100%",
+              width: "75%",
               overflow: "hidden",
               borderRadius: 5,
               scrollBehavior: "smooth",
@@ -214,24 +231,9 @@ function FinalizedMasterProcurementPlan() {
             />
           </Paper>
         </div>
-        <div className={styles.fmpp_button}>
-          {/* <SetPreBidMeetingDate title={"Send to Internal Auditor"} styles={{position: 'absolute', right:'0', bgcolor: '#205295', borderRadius: 5, height: 60, width: 300}}/> */}
-          <DonePopup
-            text={"Successfully Sent to Internal Auditor"}
-            title={"Send to Internal Auditor"}
-            styles={{
-              position: "absolute",
-              right: "0",
-              bgcolor: "#205295",
-              borderRadius: 5,
-              height: 60,
-              width: 300,
-            }}
-          />
-        </div>
       </div>
     </div>
   );
 }
 
-export default FinalizedMasterProcurementPlan;
+export default PurchaseOrdersVendor;
