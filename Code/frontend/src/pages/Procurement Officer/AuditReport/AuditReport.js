@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./FinalizedMasterProcurementPlan.module.css";
+import styles from "./AuditReport.module.css";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import SelectDropDown from "../../../components/SelectDropDown/SelectDropDown";
@@ -16,101 +16,106 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VendorDetails from "../../../components/Popups/VendorDetails/VendorDetails";
 import DonePopup from "../../../components/Popups/DonePopup/DonePopup";
 import SetPreBidMeetingDate from "../../../components/Popups/SetPreBidMeetingDate/SetPreBidMeetingDate";
-import { Link as Routerlink } from "react-router-dom";
-
+import Approve from "../../../images/Approve.png";
+import Reject from "../../../images/Reject.png";
+import ApprovePopup from "../../../components/Popups/DonePopup/ApprovePopup";
+import RejectPopup from "../../../components/Popups/DonePopup/RejectPopup";
+import Visibility from "../../FinanceDivisionAccountant/InvoicestobePaid/Visibility";
 //===============Applicable for table data===================================
 
 const columns = [
   { id: "ItemID", label: "Item ID", Width: 300, align: "center" },
   { id: "ItemName", label: "Item Name", Width: 300, align: "center" },
   { id: "Qty", label: "Quantity", Width: 300, align: "center" },
-  { id: "Spe", label: "Specification", Width: 300, align: "center" },
-  {
-    id: "SppID",
-    label: "Sub Procurement Plan ID",
-    Width: 300,
-    align: "center",
-  },
   { id: "Division", label: "Division", Width: 300, align: "center" },
+  { id: "Spec", label: "Specification", Width: 300, align: "center" },
+  { id: "Vendor", label: "Vendor", Width: 300, align: "center" },
   {
     id: "EDdate",
     label: "Expected Delivery date",
     Width: 300,
     align: "center",
   },
-  { id: "Vendor", label: "Vendor", Width: 300, align: "center" },
+  { id: "AudStatus", label: "Auditor's Status", Width: 300, align: "center" },
+  { id: "Action", label: "Action", Width: 300, align: "center" },
 ];
-
-function Setdate() {
-  return (
-    <Stack component="form" noValidate spacing={3}>
-      <TextField
-        id="date"
-        label="Set Date"
-        type="date"
-        align="center"
-        defaultValue={new Date().toISOString().substr(0, 10)}
-        sx={{ width: 200, height: 50 }}
-        InputLabelProps={{
-          shrink: true,
-        }}
-      />
-    </Stack>
-  );
-}
 
 function createData(
   ItemID,
   ItemName,
   Qty,
-  Spe,
-  SppID,
   Division,
+  Spec,
+  Vendor,
   EDdate,
-  Vendor
+  AudStatus,
+  Action
 ) {
-  return { ItemID, ItemName, Qty, Spe, SppID, Division, EDdate, Vendor };
+  return {  ItemID,
+    ItemName,
+    Qty,
+    Division,
+    Spec,
+    Vendor,
+    EDdate,
+    AudStatus,
+    Action};
 }
+
+//   const ApproveRejctButton = (
+//     <>
+//       <IconButton><img src={Approve}/></IconButton>
+//       <IconButton><img src={Reject}/></IconButton>
+//     </>
+//   )
 
 const rows = [
   createData(
     "I0014",
     "A4 Papers",
     "500",
-    "loerm",
-    "SPPID1000",
     "IT Department",
-    Setdate(),
-    <VendorDetails />
+    "Good Papers",
+    <Visibility/>,
+    "2023/01/01",
+    <ApprovePopup />,
+    <Visibility />
+    
+   
   ),
   createData(
     "I0028",
     "Ruler",
     "10",
-    "loerm",
-    "SPPID1000",
     "IT Department",
-    Setdate(),
-    <VendorDetails />
+    "15cm rulers",
+    <Visibility />,
+    "2023/01/01",
+   
+      <ApprovePopup />,
+      <Visibility />
+    
   ),
   createData(
     "I0015",
     "Stapler",
     "50",
-    "loerm",
-    "SPPID1000",
     "IT Department",
-    Setdate(),
-    <VendorDetails />
+    "steel",
+    <Visibility />,
+    "2023/01/01",
+      <ApprovePopup />,
+      <Visibility/>
   ),
+  
 ];
 
 //===========================================================================
 
-// Here in class names, fmmp=FinalizedMasterProcurementPlan
+// Here in class names, afmmp=AuditFinalizedMasterProcurementPlan
 
-function FinalizedMasterProcurementPlan() {
-
+function AuditReport() {
+  
 
   //=======values for 'SelectDropDown.js' as an array=======
 
@@ -131,28 +136,27 @@ function FinalizedMasterProcurementPlan() {
 
   return (
     <div>
-      <div className={styles.fmpp_mainBody}>
-        <div className={styles.fmpp_heading}>
-        <Routerlink to={-1}>
+      
+      <div className={styles.afmpp_mainBody}>
+        <div className={styles.afmpp_heading}>
           <IconButton sx={{ pl: "15px", height: "34px", width: "34px" }}>
             <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
           </IconButton>
-          </Routerlink>
-          Finalized Master Procurement Plan
+          Audit Finalized Master Procurement Plan
         </div>
-        <div className={styles.fmpp_title_search}>
-          <div className={styles.fmpp_title}>
+        <div className={styles.afmpp_title_search}>
+          <div className={styles.afmpp_title}>
             <label>MASTER PROCUREMENT PLAN ID*</label>
             <SelectDropDown list={list} />
           </div>
-          <div className={styles.fmpp_search}>
+          <div className={styles.afmpp_search}>
             <SearchNoFilter />
           </div>
         </div>
 
         {/* Add table data */}
 
-        <div className={styles.fmpp_table}>
+        <div className={styles.afmpp_table}>
           <Paper
             sx={{
               width: "100%",
@@ -214,18 +218,17 @@ function FinalizedMasterProcurementPlan() {
             />
           </Paper>
         </div>
-        <div className={styles.fmpp_button}>
-          {/* <SetPreBidMeetingDate title={"Send to Internal Auditor"} styles={{position: 'absolute', right:'0', bgcolor: '#205295', borderRadius: 5, height: 60, width: 300}}/> */}
+        <div className={styles.afmpp_button}>
           <DonePopup
-            text={"Successfully Sent to Internal Auditor"}
-            title={"Send to Internal Auditor"}
+            text={"Successfully fowarded to Director General"}
+            title={"Submit to DG"}
             styles={{
               position: "absolute",
               right: "0",
               bgcolor: "#205295",
               borderRadius: 5,
               height: 60,
-              width: 300,
+              width: 200,
             }}
           />
         </div>
@@ -233,5 +236,4 @@ function FinalizedMasterProcurementPlan() {
     </div>
   );
 }
-
-export default FinalizedMasterProcurementPlan;
+export default AuditReport;

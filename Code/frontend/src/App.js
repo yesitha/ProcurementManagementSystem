@@ -2,7 +2,7 @@ import "./App.css";
 import ManageAuction from "./pages/BidOpeningCommitee/ManageAuction/ManageAuction";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import NotificationPage from "./pages/NotificationPage/NotificationPage";
-import CreateSubProcurementPlan from "./pages/Create SubProcurement Plan Division HOD/CreateSubProcurementPlan";
+// import CreateSubProcurementPlan from "./pages/Create SubProcurement Plan Division HOD/CreateSubProcurementPlan";
 import SignUp from "./pages/SignUp/SignUp";
 import FinalizedMasterProcurementPlan from "./pages/ProcurementCommitee/FinalizedMasterProcurementPlan/FinalizedMasterProcurementPlan";
 import MasterProcurementPlanStatus from "./pages/MasterProcurementPlanStatus/MasterProcurementPlanStatus";
@@ -61,7 +61,15 @@ import { useSelector } from "react-redux";
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 
+import AddItemstoPO from "./pages/Procurement Officer/AddItemstoPO/AddItemstoPO";
+import AuditReport from "./pages/Procurement Officer/AuditReport/AuditReport";
+import PurchseOrdersVendor from "./pages/Vendor/PurchaseOrdersVendor/PurchseOrdersVendor";
+import PurchaseOrderPreview from "./pages/Vendor/PurchaseOrderPreview/PurchaseOrderPreview";
+import SendPurchaseOrder from "./pages/Procurement Officer/SendPurchaseOrder/SendPurchaseOrder";
+
+
 function App() {
+
   const baseState = useSelector(store => store.base);
 
   return (
@@ -325,6 +333,7 @@ function App() {
         {/* <AddNewItem /> */}
         {/* <ViewMasterProcurementPlanProc/> */}
         {/* <PurchaseOrder/> */}
+
       </div>
       <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
