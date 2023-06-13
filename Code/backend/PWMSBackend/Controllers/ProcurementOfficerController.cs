@@ -39,6 +39,9 @@ namespace PWMSBackend.Controllers
             return Ok(plans);
         }
 
+
+        // View Master Procurement Plan page Controllers (2-GET)
+
         [HttpGet("GetMasterProcurementPlansIDList")]
 
         public IActionResult GetMasterProcurementPlansIDList()
@@ -51,7 +54,7 @@ namespace PWMSBackend.Controllers
         }
 
 
-        [HttpGet("GetSubProcurementPlanItemsByMppId")]
+        [HttpGet("GetSubProcurementPlanItemsByMppId/{mppId}")]
         public IActionResult GetSubProcurementPlanItemsByMppId(string mppId)
         {
             var subProcurementPlanItems = _context.SubProcurementPlanItems
@@ -75,8 +78,23 @@ namespace PWMSBackend.Controllers
             return Ok(subProcurementPlanItems);
         }
 
+        // Create TEC Committee page controllers (1-GET -POST)
 
-        // View Master Procurement Plan page Controllers
+        [HttpGet("ProcurementEmployeeList")]
+        public IActionResult GetProcurementEmployees()
+        {
+            var employees = _context.ProcurementEmployees
+                .Include(e => e.Division)
+                .Select(e => new
+                {
+                    e.EmployeeId,
+                    e.EmployeeName,
+                    DivisionName = e.Division.DivisionName
+                })
+                .ToList();
+
+            return Ok(employees);
+        }
 
 
 
