@@ -39,14 +39,26 @@ namespace PWMSBackend.Controllers
             return Ok(plans);
         }
 
+        [HttpGet("GetMasterProcurementPlansIDList")]
+        public IActionResult GetMasterProcurementPlansIDList()
+        {
+            var masterProcurementPlans = _context.MasterProcurementPlans
+                .Select(mpp => mpp.MppId)
+                .ToList();
+
+            return Ok(masterProcurementPlans);
+        }
+
+
         [HttpGet("GetSubProcurementPlans")]
-        public IActionResult GetSubProcurementPlans()
+        public IActionResult GetSubProcurementPlans(string mppId)
         {
             var plans = _context.SubProcurementPlans
                 .Include(spp => spp.HOD)
                     .ThenInclude(hod => hod.Division)
                 .Include(spp => spp.subProcurementPlanItems)
                     .ThenInclude(item => item.Item)
+                .Where(spp => spp.MasterProcurementPlan.MppId == mppId) // Filter by MppId
                 .Select(spp => new
                 {
                     spp.SppId,
@@ -57,5 +69,60 @@ namespace PWMSBackend.Controllers
 
             return Ok(plans);
         }
+
+
+        [HttpPut("UpdateSubProcurementPlan")]
+        public IActionResult UpdateSubProcurementPlan(string sppId, string mppId, double estimatedTotal)
+        {
+            // Find the SubProcurementPlan by SppId
+            var subProcurementPlan = _context.SubProcurementPlans.FirstOrDefault(s => s.SppId == sppId);
+            if (subProcurementPlan == null)
+            {
+                return NotFound();
+            }
+
+            // Find the associated MasterProcurementPlan by MppId
+            var masterProcurementPlan = _context.MasterProcurementPlans.FirstOrDefault(m => m.MppId == mppId);
+            if (masterProcurementPlan == null)
+            {
+                return NotFound("MasterProcurementPlan not found.");
+            }
+
+            // Update the properties
+            subProcurementPlan.MasterProcurementPlan = masterProcurementPlan;
+            subProcurementPlan.EstimatedTotal = estimatedTotal;
+
+            // Save the changes
+            _context.SaveChanges();
+
+            return NoContent();
+        }
+
+        [HttpPut("RevertSubProcurementPlan")]
+        public IActionResult RevertSubProcurementPlan(string sppId,string mppId)
+        {
+            // Find the SubProcurementPlan by SppId
+            var subProcurementPlan = _context.SubProcurementPlans.FirstOrDefault(s => s.SppId == sppId);
+            if (subProcurementPlan == null)
+            {
+                return NotFound();
+            }
+            // Find the associated MasterProcurementPlan by MppId
+            var masterProcurementPlan = _context.MasterProcurementPlans.FirstOrDefault(m => m.MppId == mppId);
+            if (masterProcurementPlan == null)
+            {
+                return NotFound("MasterProcurementPlan not found.");
+            }
+
+            // Revert the properties
+            subProcurementPlan.MasterProcurementPlan = null;
+            subProcurementPlan.EstimatedTotal = 0;
+
+            // Save the changes
+            _context.SaveChanges();
+
+            return NoContent();
+        }
+
     }
 }
