@@ -78,14 +78,14 @@ namespace PWMSBackend.Controllers
 
 
         [HttpGet("GetSubProcurementPlans")]
-        public IActionResult GetSubProcurementPlans(string mppId)
+        public IActionResult GetSubProcurementPlans()
         {
             var plans = _context.SubProcurementPlans
                 .Include(spp => spp.HOD)
                     .ThenInclude(hod => hod.Division)
                 .Include(spp => spp.subProcurementPlanItems)
                     .ThenInclude(item => item.Item)
-                .Where(spp => spp.MasterProcurementPlan.MppId == mppId) // Filter by MppId
+                .Where(spp => spp.MasterProcurementPlan.MppId == null) // Filter by MppId
                 .Select(spp => new
                 {
                     spp.SppId,
