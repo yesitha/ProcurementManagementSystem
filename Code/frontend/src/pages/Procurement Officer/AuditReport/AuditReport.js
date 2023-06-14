@@ -20,7 +20,7 @@ import Approve from "../../../images/Approve.png";
 import Reject from "../../../images/Reject.png";
 import ApprovePopup from "../../../components/Popups/DonePopup/ApprovePopup";
 import RejectPopup from "../../../components/Popups/DonePopup/RejectPopup";
-import Visibility from "../../FinanceDivisionAccountant/InvoicestobePaid/Visibility";
+import Visibility from "../../FinanceDivisionAccountant/InvoicesneedtobePaid/Visibility";
 //===============Applicable for table data===================================
 
 const columns = [

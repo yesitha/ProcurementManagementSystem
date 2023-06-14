@@ -102,19 +102,26 @@ const [rightTableData, setRightTableData] = useState([]);
                   <TableBody>
                     {leftTableData.map((row) => (
                       <TableRow
-                        className={styles.TableRow}
-                        key={row.id}
-                        onClick={() => handleClickLeftToRight(row)}
-                      >
-                        <TableCell component="th" scope="row">
-                          {row.id}
-                        </TableCell>
-                        <TableCell>
-                          {row.firstname + " " + row.lastname}
-                        </TableCell>
-                        <TableCell>{row.department}</TableCell>
-                        <TableCell><PreviewIcon /></TableCell>
-                      </TableRow>
+                      className={styles.TableRow}
+                      key={row.id}
+                      onClick={() => handleClickLeftToRight(row)}
+                    >
+                      <TableCell component="th" scope="row">
+                        {row.id}
+                      </TableCell>
+                      <TableCell>
+                        {row.firstname + " " + row.lastname}
+                      </TableCell>
+                      <TableCell>{row.department}</TableCell>
+                      <TableCell>
+                        <Routerlink to={`/new`}>
+                        <PreviewIcon onClick={(event) => {
+                          event.stopPropagation();
+                          console.log("Preview Clicked");
+                        }} />
+                        </Routerlink>
+                      </TableCell>
+                    </TableRow>
                     ))}
                   </TableBody>
                 </Table>
@@ -163,7 +170,12 @@ const [rightTableData, setRightTableData] = useState([]);
                           {row.firstname + " " + row.lastname}
                         </TableCell>
                         <TableCell>{row.department}</TableCell>
-                        <TableCell><PreviewIcon/></TableCell>
+                        <TableCell><Routerlink to={`/new`}>
+                        <PreviewIcon onClick={(event) => {
+                          event.stopPropagation();
+                          console.log("Preview Clicked");
+                        }} />
+                        </Routerlink></TableCell>
 
                       </TableRow>
                     ))}

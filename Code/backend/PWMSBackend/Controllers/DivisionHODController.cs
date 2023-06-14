@@ -103,7 +103,7 @@ namespace PWMSBackend.Controllers
             return Ok(items);
         }
 
-        [HttpDelete("{itemId}")]
+        [HttpDelete("{itemId}/{sppId}")]
         public IActionResult DeleteItem(string itemId, string sppId)
         {
 

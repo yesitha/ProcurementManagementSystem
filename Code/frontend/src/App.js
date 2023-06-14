@@ -44,7 +44,7 @@ import CreateInvoice2 from "./pages/Vendor/CreateInvoice2/CreateInvoice2";
 import SendInvoice from "./pages/Vendor/SendInvoice/SendInvoice";
 import UploadPaymentVoucher from "./pages/FinanceDivisionAccountant/UploadPaymentVouncher/UploadPaymentVoucher";
 import AddItemstoGRN from "./pages/FinanceDivisionHOD/AddItemstoGRN/AddItemstoGRN";
-import CreateMasterProcurementPlan from "./pages/CreateMasterProcurementPlan/CreateMasterProcurementPlan";
+
 import InvoicestobePaid from "./pages/FinanceDivisionHOD/InvoicestobePaid/InvoicestobePaidFin";
 import ReviseVendorSelection from "./pages/TEC Committee/Revise Vendor Selection/ReviseVendorSelection";
 import { Route, Routes } from "react-router-dom";
@@ -66,7 +66,8 @@ import AuditReport from "./pages/Procurement Officer/AuditReport/AuditReport";
 import PurchseOrdersVendor from "./pages/Vendor/PurchaseOrdersVendor/PurchseOrdersVendor";
 import PurchaseOrderPreview from "./pages/Vendor/PurchaseOrderPreview/PurchaseOrderPreview";
 import SendPurchaseOrder from "./pages/Procurement Officer/SendPurchaseOrder/SendPurchaseOrder";
-
+import CreateSubProcurementPlan from "./pages/Create SubProcurement Plan Division HOD/CreateSubProcurementPlan";
+import CreateMasterProcurementPlan from "./pages/CreateMasterProcurementPlan/CreateMasterProcurementPlan";
 
 function App() {
 
@@ -95,14 +96,18 @@ function App() {
             element={<AddItemtoSubProcurementPlan />}
           />
           <Route
-            path="/SubProcurmentPlan"
-            element={<CreateSubProcurementPlan />}
+            path="/SubProcurmentPlan/"
+            element={<CreateSubProcurementPlan/>}
+          />
+          <Route
+            path="/SubProcurmentPlan/:selectedSubIdfomNextPage"
+            element={<CreateSubProcurementPlan/>}
           />
 
           {/* Purchase Division HOD */}
           <Route
             path="/NewSubProcurmentPlan"
-            element={<CreateMasterProcurementPlan />}
+            element={<CreateMasterProcurementPlan/>}
           />
           <Route
             path="/RequesttoInitiateMasterProcurementPlan"
@@ -166,7 +171,7 @@ function App() {
           />
           <Route
             path="/rejected-item-modified"
-            element={<CreateMasterProcurementPlan />}
+            element={<CreateMasterProcurementPlan/>}
           />
           <Route path="/auction-end" element={<Dashboard />} />
           <Route path="/vendor-rejected" element={<ViewItemN />} />
