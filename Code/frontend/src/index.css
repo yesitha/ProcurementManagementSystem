@@ -7,3 +7,12 @@ body {
 .titleHead {
   color: rgb(255, 255, 255);
 }
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+.link {
+  text-decoration: none;
+  color: inherit;
+}
