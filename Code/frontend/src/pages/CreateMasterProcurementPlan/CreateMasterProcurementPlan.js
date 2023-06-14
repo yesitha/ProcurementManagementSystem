@@ -64,7 +64,7 @@ fetchData();
   
 
   return (
-    <div style={{ overflowX: "auto" }}>
+    <div>
 
       <Container
         className={styles.main}
@@ -73,7 +73,7 @@ fetchData();
           display: "flex",
 
           flexDirection: "column",
-          //   overflowY: "hidden",
+          //   ]overflowY: "hidden",
         }}
       >
         <div className={styles.upperSection}>
