@@ -18,9 +18,11 @@ import {
   Paper,
   Button,
 } from "@mui/material";
-import PreviewIcon from '@mui/icons-material/Preview';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import {Link as Routerlink} from 'react-router-dom';
-
+import { useEffect } from "react";
+import{fetchSppDataFromDb} from '../../services/PurchasingDivisionHOD/PurchasingDivisionHOD.js';
+import {createNewMPP} from '../../services/PurchasingDivisionHOD/PurchasingDivisionHOD.js';
 const rows = users;
 
 
@@ -29,16 +31,37 @@ function CreateMasterProcurementPlan() {
 const [leftTableData, setLeftTableData] = useState(rows);
 const [rightTableData, setRightTableData] = useState([]);
 
+useEffect(() => {
+
+const fetchData = async () => {
+
+try {
+
+  const response = await fetchSppDataFromDb();
+  
+  const data = response;
+  setLeftTableData(data);
+  console.log(data);
+
+}catch (error) {
+  console.log(error);
+}
+
+}
+fetchData();
+
+}, []);
+
   const handleClickLeftToRight = (row) => {
     setRightTableData([...rightTableData, row]);
-    setLeftTableData(leftTableData.filter((data) => data.id !== row.id));
+    setLeftTableData(leftTableData.filter((data) => data.sppId !== row.sppId));
   };
 
   const handleClickRightToLeft = (row) => {
     setLeftTableData([...leftTableData, row]);
-    setRightTableData(rightTableData.filter((data) => data.id !== row.id));
+    setRightTableData(rightTableData.filter((data) => data.sppId!== row.sppId));
   };
-  const masterProcurementId = "MP0001";
+  
 
   return (
     <div>
@@ -67,9 +90,7 @@ const [rightTableData, setRightTableData] = useState([]);
           </div>
         </div>
         <div className={styles.OuterMiddle}>
-          <div className={styles.Ph2}>
-            <h4>Master Procurement Id : {masterProcurementId}</h4>
-          </div>
+          
 
           <Container
             className={styles.MiddleSection}
@@ -94,8 +115,9 @@ const [rightTableData, setRightTableData] = useState([]);
                     <TableRow>
                       <TableCell>SubProc ID</TableCell>
                       <TableCell>Department</TableCell>
-                      <TableCell>Total</TableCell>
-                      <TableCell></TableCell>
+                      <TableCell>Grand Total</TableCell>
+                      <TableCell>Action</TableCell>
+                    
 
                     </TableRow>
                   </TableHead>
@@ -103,19 +125,19 @@ const [rightTableData, setRightTableData] = useState([]);
                     {leftTableData.map((row) => (
                       <TableRow
                       className={styles.TableRow}
-                      key={row.id}
+                      key={row.sppId}
                       onClick={() => handleClickLeftToRight(row)}
                     >
                       <TableCell component="th" scope="row">
-                        {row.id}
+                        {row.sppId}
                       </TableCell>
                       <TableCell>
-                        {row.firstname + " " + row.lastname}
+                        {row.divisionName}
                       </TableCell>
-                      <TableCell>{row.department}</TableCell>
+                      <TableCell>{row.totalEstimatedBudget}</TableCell>
                       <TableCell>
                         <Routerlink to={`/pd-view-sub-procurement-plan`}>
-                        <PreviewIcon onClick={(event) => {
+                        <VisibilityIcon sx={{color:'#205295'}} onClick={(event) => {
                           event.stopPropagation();
                           console.log("Preview Clicked");
                         }} />
@@ -153,25 +175,27 @@ const [rightTableData, setRightTableData] = useState([]);
                     <TableRow>
                       <TableCell>SubProc ID</TableCell>
                       <TableCell>Department</TableCell>
-                      <TableCell>Total</TableCell>
+                      <TableCell>Grand Total</TableCell>
+                      <TableCell>Action</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {rightTableData.map((row) => (
                       <TableRow
                         className={styles.TableRow}
-                        key={row.id}
+                        key={row.sppId}
                         onClick={() => handleClickRightToLeft(row)}
                       >
                         <TableCell component="th" scope="row">
-                          {row.id}
-                        </TableCell>
-                        <TableCell>
-                          {row.firstname + " " + row.lastname}
-                        </TableCell>
-                        <TableCell>{row.department}</TableCell>
+                        {row.id}
+                      </TableCell>
+                      <TableCell>
+                        {row.divisionName}
+                      </TableCell>
+                      <TableCell>{row.totalEstimatedBudget}</TableCell>
+                      
                         <TableCell><Routerlink to={`/pd-view-sub-procurement-plan`}>
-                        <PreviewIcon onClick={(event) => {
+                        <VisibilityIcon  sx={{color:'#205295'}} onClick={(event) => {
                           event.stopPropagation();
                           console.log("Preview Clicked");
                         }} />
@@ -192,6 +216,7 @@ const [rightTableData, setRightTableData] = useState([]);
           >
             <Routerlink to={'/RequesttoInitiateMasterProcurementPlan'}>
             <Button
+              onClick={() => createNewMPP(rightTableData.map((data) => data.sppId))}
               className={styles.TecAppointButton}
               variant="contained"
               sx={{
