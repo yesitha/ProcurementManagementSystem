@@ -22,16 +22,9 @@ namespace PWMSBackend.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("sppIds/{hodId}")]
-        public IActionResult GetSppIdsByHodId(string hodId)
-        {
-            List<string> sppIds = _context.SubProcurementPlans
-                .Where(spp => spp.HOD.EmployeeId == hodId)
-                .Select(spp => spp.SppId)
-                .ToList();
 
-            return Ok(sppIds);
-        }
+        // Sub Procurement Plan page Controllers (3-GET 1-POST 1-DELETE)
+
 
         [HttpGet("divisionName/{hodId}")]
         public IActionResult GetDivisionName(string hodId)
@@ -50,6 +43,46 @@ namespace PWMSBackend.Controllers
                 return NotFound();
             }
         }
+
+
+        [HttpPost("CreateNewSubProcurementPlan")]
+        public IActionResult CreateNewSubProcurementPlan(string HODId)
+        {
+            // Check if the HOD with the given ID exists
+            var hod = _context.HODs.FirstOrDefault(h => h.EmployeeId == HODId);
+            if (hod == null)
+            {
+                return BadRequest("Invalid HODId. HOD not found.");
+            }
+
+            // Create a new SubProcurementPlan instance
+            var subProcurementPlan = new SubProcurementPlan
+            {
+                EstimatedTotal = 0, // Set the initial estimated total to 0 or any desired value
+                HOD = hod
+            };
+
+            // Add the SubProcurementPlan to the context and save changes
+            _context.SubProcurementPlans.Add(subProcurementPlan);
+            _context.SaveChanges();
+
+            // Return the auto-generated SppId
+            return Ok(subProcurementPlan.SppId);
+        }
+
+
+
+        [HttpGet("sppIds/{hodId}")]
+        public IActionResult GetSppIdsByHodId(string hodId)
+        {
+            List<string> sppIds = _context.SubProcurementPlans
+                .Where(spp => spp.HOD.EmployeeId == hodId)
+                .Select(spp => spp.SppId)
+                .ToList();
+
+            return Ok(sppIds);
+        }
+
 
         [HttpGet("SubProcurementPlanItems/{sppId}")]
         public IActionResult GetSubProcurementPlanItem(string sppId)
@@ -71,8 +104,19 @@ namespace PWMSBackend.Controllers
         }
 
         [HttpDelete("{itemId}")]
-        public IActionResult DeleteItem(string itemId)
+        public IActionResult DeleteItem(string itemId, string sppId)
         {
+
+            // Find the subprocurementplan with the given sppId
+            var subProcurementPlan = _context.SubProcurementPlans.FirstOrDefault(s => s.SppId == sppId);
+
+            if (subProcurementPlan == null)
+            {
+                // Subprocurement plan not found, return an appropriate response
+                return NotFound();
+            }
+
+
             // Find the subprocurementplan item with the given ItemId
             var subProcurementPlanItem = _context.SubProcurementPlanItems.FirstOrDefault(item => item.ItemId == itemId);
 
@@ -89,6 +133,9 @@ namespace PWMSBackend.Controllers
             // Return a success response
             return Ok();
         }
+
+
+        // Add Item to Sub Procurement Plan page Controllers (4-GET(2 from SubProcurementPlan page) 1-POST)
 
 
         [HttpGet("ItemNameList")]
@@ -144,6 +191,8 @@ namespace PWMSBackend.Controllers
         }
 
 
+        // Add new Item page Controllers (2-GET(1 from AddItemToSubProcurementPlan page) 1-POST)
+
         [HttpGet("CategoryNameList")]
         public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
         {
@@ -154,6 +203,8 @@ namespace PWMSBackend.Controllers
 
             return Ok(categoryList);
         }
+
+
 
         [HttpPost("AddItem")]
         public IActionResult AddItem(string itemName, string specification, string categoryId)

@@ -2,7 +2,7 @@ import "./App.css";
 import ManageAuction from "./pages/BidOpeningCommitee/ManageAuction/ManageAuction";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import NotificationPage from "./pages/NotificationPage/NotificationPage";
-import CreateSubProcurementPlan from "./pages/Create SubProcurement Plan Division HOD/CreateSubProcurementPlan";
+// import CreateSubProcurementPlan from "./pages/Create SubProcurement Plan Division HOD/CreateSubProcurementPlan";
 import SignUp from "./pages/SignUp/SignUp";
 import FinalizedMasterProcurementPlan from "./pages/ProcurementCommitee/FinalizedMasterProcurementPlan/FinalizedMasterProcurementPlan";
 import MasterProcurementPlanStatus from "./pages/MasterProcurementPlanStatus/MasterProcurementPlanStatus";
@@ -72,6 +72,7 @@ import BidVerificationSubmit from "./pages/Vendor/Bid Verification Submit/BidVer
 import IssueItem from "./pages/InventoryManager/IssueItem/IssueItem";
 import AssetRegistry from "./pages/Assets Registry/AssetRegistry";
 import LetterofAcceptance from "./pages/Vendor/Letter of Acceptance/LetterofAcceptance";
+import CreateSubProcurementPlan from "./pages/Create SubProcurement Plan Division HOD/CreateSubProcurementPlan";
 
 function App() {
   const baseState = useSelector((store) => store.base);
@@ -100,7 +101,7 @@ function App() {
           />
           <Route
             path="/SubProcurmentPlan"
-            element={<CreateSubProcurementPlan />}
+            element={<CreateSubProcurementPlan/>}
           />
 
           {/* Purchase Division HOD */}
