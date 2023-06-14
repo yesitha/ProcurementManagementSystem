@@ -7,7 +7,7 @@ namespace PWMSBackend.Models
         public string MppId { get; set; }
 
         public DateTime CreationDate { get; set; }
-        public int EstimatedGrandTotal { get; set; }
+        public double EstimatedGrandTotal { get; set; }
 
         //One to one relationships
         public TecCommittee? TecCommittee { get; set; }
