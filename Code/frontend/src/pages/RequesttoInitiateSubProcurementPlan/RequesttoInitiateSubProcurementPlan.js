@@ -21,14 +21,34 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import SearchNoFilter from "../../components/Search/Search";
-import { Container} from "@mui/system";
+import { Container } from "@mui/system";
 import Styles from "../RequesttoInitiateSubProcurementPlan/RequesttoInitiateSubProcurementPlan.module.css";
 import SelectDropDown from "../../components/SelectDropDown/SelectDropDown";
 import ViewRecomandedVendors from "../../components/Popups/ViewRecomandedVendors/ViewRecomandedVendors";
 import { vendors } from "../../users/vendors.js";
-import {Link as Routerlink} from 'react-router-dom';
+import { Link as Routerlink } from "react-router-dom";
+import { fetchDatafromDB } from "../../services/PurchasingDivisionHOD/PurchasingDivisionHOD.js";
+import { useEffect } from "react";
+
 
 function RequesttoInitiateSubProcurementPlan() {
+  const [tableData, setTableData] = React.useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchDatafromDB();
+        setTableData(data);
+        
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+    console.log(tableData);
+  }, []);
+
   const Recomandedvendors1 = vendors;
   const columns = [
     {
@@ -148,11 +168,9 @@ function RequesttoInitiateSubProcurementPlan() {
   const handleChange = (event) => {
     setAge(event.target.value);
   };
-  const list = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
 
   return (
     <div>
-
       <Container
         sx={{
           ml: { xs: "60px", sm: "65px", md: "65px", lg: "68px", xl: "70px" },
@@ -162,22 +180,22 @@ function RequesttoInitiateSubProcurementPlan() {
       >
         <div className={Styles.upperSection}>
           <div className={Styles.Page__Header}>
-            <Routerlink to={-1}>
-            <IconButton
-              sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
-            >
-              <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
-            </IconButton>
+            <Routerlink to={'/dashboard'}>
+              <IconButton
+                sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
+              >
+                <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
+              </IconButton>
             </Routerlink>
             <h1 className={Styles.Header}>Master Procurement Plan</h1>
-            <Routerlink to={'/NewSubProcurmentPlan'}>
-            <Button
-            type="submit"
-            variant="contained"
-            sx={{ mt: 2, mb: 2, borderRadius: 4 }}
-            > 
-            Create New
-            </Button>
+            <Routerlink to={"/NewSubProcurmentPlan"}>
+              <Button
+                type="submit"
+                variant="contained"
+                sx={{ mt: "27px", mb: 2, borderRadius: 4 }}
+              >
+                Create New
+              </Button>
             </Routerlink>
           </div>
         </div>
@@ -219,29 +237,30 @@ function RequesttoInitiateSubProcurementPlan() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => {
-                    return (
-                      <TableRow
-                        hover
-                        role="checkbox"
-                        tabIndex={-1}
-                        key={row.code}
-                      >
-                        {columns.map((column) => {
-                          const value = row[column.id];
-                          return (
-                            <TableCell key={column.id} align={column.align}>
-                              {column.format && typeof value === "number"
-                                ? column.format(value)
-                                : value}
-                            </TableCell>
-                          );
-                        })}
+                {tableData &&
+                  tableData
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row, index) => (
+                      <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                        <TableCell align="center">{row.mppId}</TableCell>
+                        <TableCell align="center">
+                          {row.estimatedGrandTotal}
+                        </TableCell>
+                        <TableCell align="center">
+                          {new Date(row.creationDate).toLocaleDateString()}
+                        </TableCell>
+                        <TableCell align="center">{row.statusName}</TableCell>
+                        <TableCell align="center">
+                          <Button
+                            type="submit"
+                            variant="contained"
+                            sx={{ mt: 2, mb: 2, borderRadius: 4 }}
+                          >
+                            Request to Initiate
+                          </Button>
+                        </TableCell>
                       </TableRow>
-                    );
-                  })}
+                    ))}
               </TableBody>
             </Table>
           </TableContainer>

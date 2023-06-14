@@ -4,7 +4,7 @@ import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import TextField from "@mui/material/TextField";
 import { Paper } from "@mui/material";
 import SelectDropDown from "../../../components/SelectDropDown/SelectDropDown";
-
+import { Link as Routerlink } from "react-router-dom";
 import { Button, IconButton, Typography } from "@mui/material";
 
 export default function AddNewItem() {
@@ -71,6 +71,7 @@ export default function AddNewItem() {
       <button type="button" className={styles.addbutton}><h1 styles={{textAlign:"center",fontSize:20}}>Add</h1></button>
       </div>*/}
       <div className={styles.addbutton}>
+        <Routerlink to={-1}>
         <Button
           variant="contained"
           style={{
@@ -82,6 +83,7 @@ export default function AddNewItem() {
         >
           Add
         </Button>
+        </Routerlink>
       </div>
     </div>
   );

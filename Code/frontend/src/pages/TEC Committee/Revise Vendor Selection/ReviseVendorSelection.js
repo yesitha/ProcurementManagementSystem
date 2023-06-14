@@ -12,6 +12,8 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { Container } from "@mui/system";
 import VendorDetails from "../../../components/Popups/VendorDetails/VendorDetails";
+import DonePopup from "../../../components/Popups/DonePopup/DonePopup";
+import { Link as Routerlink } from "react-router-dom";
 
 const columns = [
   { id: "vendorID", label: "Vendor ID", Width: 300, align: "center" },
@@ -55,13 +57,14 @@ const rows = [
     "GSM 80",
     "4000",
     <VendorDetails />,
-    <Button
-      variant="contained"
-      fontFamily={"Inter"}
-      sx={{ bgcolor: "#205295", borderRadius: 5, height: 50, width: 100 }}
-    >
-      Select
-    </Button>
+    <DonePopup
+            text={"Rejected {name} vendor Successfully revised by {name} vendor for {item}"}
+            title={"Select"}
+            styles={{
+              mb: "10px",
+              ml: "10px",
+            }}
+          />
   ),
   createData(
     "V0016",
@@ -71,13 +74,14 @@ const rows = [
     "GSM 80",
     "4000",
     <VendorDetails />,
-    <Button
-      variant="contained"
-      fontFamily={"Inter"}
-      sx={{ bgcolor: "#205295", borderRadius: 5, height: 50, width: 100 }}
-    >
-      Select
-    </Button>
+    <DonePopup
+    text={"Rejected {name} vendor Successfully revised by {name} vendor for {item}"}
+    title={"Select"}
+    styles={{
+      mb: "10px",
+      ml: "10px",
+    }}
+  />
   ),
 ];
 
@@ -105,12 +109,13 @@ function ReviseVendorSelection() {
       >
         <div className={styles.upperSection}>
           <div className={styles.ManageAuctionPageContainer__header}>
+            <Routerlink to={-1}>
             <IconButton
               sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
             >
               <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
             </IconButton>
-
+            </Routerlink>
             <h1 className={styles.Header}>Revise Vendor Selection</h1>
           </div>
         </div>

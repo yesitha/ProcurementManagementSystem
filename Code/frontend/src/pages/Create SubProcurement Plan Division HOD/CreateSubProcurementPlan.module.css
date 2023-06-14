@@ -34,6 +34,7 @@
 .h4m {
   margin-bottom: 0px;
   margin-left: 5px;
+  padding-left:50px;
 }
 
 .TableHeaders {
@@ -112,4 +113,20 @@
 .OuterMiddle {
   display: flex;
   flex-direction: column;
+}
+
+.dropDownIconContainer{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  
+}
+
+.addButton{
+  margin-top: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
+  cursor: pointer;
+  
+  ;
 }

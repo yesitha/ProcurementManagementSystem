@@ -11,6 +11,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+import { Link as Routerlink } from "react-router-dom";
 
 const columns = [
   {
@@ -33,6 +34,7 @@ const rows = [
     "MPPID1000",
     "2021/01/01",
     "50000",
+    <Routerlink to={'/PurchaseOrder-vendor-view'}>
     <Button
       variant="contained"
       fontFamily={"Inter"}
@@ -40,12 +42,14 @@ const rows = [
     >
       View
     </Button>
+    </Routerlink>
   ),
   createData(
     "MPPID1001",
     
     "2021/06/02",
     "Rs.400000",
+    <Routerlink to={'/PurchaseOrder-vendor-view'}>
     <Button
       variant="contained"
       fontFamily={"Inter"}
@@ -53,84 +57,7 @@ const rows = [
     >
       View
     </Button>
-  ),
-  createData(
-    "MPPID1002",
-    
-    "2022/01/01",
-    "Rs.800000",
-    <Button
-      variant="contained"
-      fontFamily={"Inter"}
-      sx={{ bgcolor: "#205295", borderRadius: 5, height: 50, width: 100 }}
-    >
-      View
-    </Button>
-  ),
-  createData(
-    "MPPID1003",
-    
-    "2022/04/04",
-    "Rs.350000",
-    <Button
-      variant="contained"
-      fontFamily={"Inter"}
-      sx={{ bgcolor: "#205295", borderRadius: 5, height: 50, width: 100 }}
-    >
-      View
-    </Button>
-  ),
-  createData(
-    "MPPID1004",
-    
-    "2022/08/05",
-    "Rs.500000",
-    <Button
-      variant="contained"
-      fontFamily={"Inter"}
-      sx={{ bgcolor: "#205295", borderRadius: 5, height: 50, width: 100 }}
-    >
-      View
-    </Button>
-  ),
-  createData(
-    "MPPID1005",
-    
-    "2022/10/06",
-    "Rs.600000",
-    <Button
-      variant="contained"
-      fontFamily={"Inter"}
-      sx={{ bgcolor: "#205295", borderRadius: 5, height: 50, width: 100 }}
-    >
-      View
-    </Button>
-  ),
-  createData(
-    "MPPID1006",
-    
-    "2023/01/01",
-    "Rs.450000",
-    <Button
-      variant="contained"
-      fontFamily={"Inter"}
-      sx={{ bgcolor: "#205295", borderRadius: 5, height: 50, width: 100 }}
-    >
-      View
-    </Button>
-  ),
-  createData(
-    "MPPID1007",
-   
-    "2023/03/01",
-    "Rs.700000",
-    <Button
-      variant="contained"
-      fontFamily={"Inter"}
-      sx={{ bgcolor: "#205295", borderRadius: 5, height: 50, width: 100 }}
-    >
-      View
-    </Button>
+    </Routerlink>
   ),
 ];
 
@@ -157,9 +84,11 @@ function PurchaseOrdersVendor() {
       {/* <SideNavBar list1={list1} list2={list2} user={user} /> */}
       <div className={styles.vfmpp_mainBody}>
         <div className={styles.vfmpp_heading}>
+          <Routerlink to={-1}>
           <IconButton sx={{ pl: "15px", height: "34px", width: "34px" }}>
             <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
           </IconButton>
+          </Routerlink>
           PURCHASE ORDERS
         </div>
 

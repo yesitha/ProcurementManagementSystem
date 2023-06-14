@@ -11,6 +11,9 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { Container } from "@mui/system";
+import VendorDetails from "../../../components/Popups/VendorDetails/VendorDetails";
+import { Link as Routerlink } from "react-router-dom";
+import TecReportCreated from "../../../components/Popups/DonePopup/TecReportCreated";
 
 const columns = [
   { id: "vendorID", label: "Vendor ID", Width: 300, align: "center" },
@@ -53,8 +56,15 @@ const rows = [
     "40",
     "GSM 80",
     "4000",
-    <Button variant="contained">View</Button>,
-    <Button variant="contained">Select</Button>
+    <VendorDetails/>,
+    <TecReportCreated
+            text={"Vendor Selection Successfully"}
+            title={"Select"}
+            styles={{
+              mb: "10px",
+              ml: "10px",
+            }}
+          />
   ),
   createData(
     "V0016",
@@ -63,8 +73,15 @@ const rows = [
     "40",
     "GSM 80",
     "4000",
-    <Button variant="contained">View</Button>,
-    <Button variant="contained">Select</Button>
+    <VendorDetails/>,
+    <TecReportCreated
+            text={"Vendor Selection Successfully"}
+            title={"Select"}
+            styles={{
+              mb: "10px",
+              ml: "10px",
+            }}
+          />
   ),
 ];
 
@@ -93,12 +110,13 @@ function VendorSelection() {
       >
         <div className={styles.upperSection}>
           <div className={styles.ManageAuctionPageContainer__header}>
+            <Routerlink to={-1}>
             <IconButton
               sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
             >
               <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
             </IconButton>
-
+            </Routerlink>
             <h1 className={styles.Header}>Vendor Selection</h1>
           </div>
         </div>

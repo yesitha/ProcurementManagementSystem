@@ -34,34 +34,29 @@ import Grid from "@mui/material/Unstable_Grid2";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SearchFilter from "../../components/Search/Search";
 import SelectDropDown from "../../components/SelectDropDown/SelectDropDown";
-import { Link as Routerlink } from "react-router-dom";
+import { Link as Routerlink, useParams } from "react-router-dom";
 import DonePopup from "../../components/Popups/DonePopup/DonePopup";
 import axios from "axios";
 import { useState, useEffect } from "react";
-
+import { getDivision } from "../../services/DivisionHOD/deivisionHODServices";
+import { getSubProcurmentPlanPerDivision } from "../../services/DivisionHOD/deivisionHODServices";
+import { fetchDataForSubId } from "../../services/DivisionHOD/deivisionHODServices";
+import { deleteItemFromdb } from "../../services/DivisionHOD/deivisionHODServices";
+import { createNewSubProcurementPlan } from "../../services/DivisionHOD/deivisionHODServices";
 const hodId='HIP05185';//get from login user(HOD)
+
+
+
+  
+
+
+
 function CreateSubProcurementPlan() {
 
-  ///////////////Add axios/////////////
-  async function getDivision(hodId) {
-    try {
-      const response = await axios.get(`https://localhost:7102/api/DivisionHOD/divisionName/${hodId}`);
-      return response.data;
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
-  }
+  
+  const {selectedSubIdfomNextPage} = useParams();
 
-  async function getSubProcurmentPlanPerDivision(hodId) {
-    try {
-      const response2 = await axios.get(`https://localhost:7102/api/DivisionHOD/sppIds/${hodId}`);
-      return response2.data;
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
-  }
+
 
 
   const columns = [
@@ -78,133 +73,7 @@ function CreateSubProcurementPlan() {
     { id: "EDD", label: "Expected Delivery Date", Width: 300, align: "center" },
     { id: "Del", Width: 300, align: "center" },
   ];
-  // function createData(ItemID, ItemName, Qty, Specification, RV, EDD, Del) {
-  //   return { ItemID, ItemName, Qty, Specification, RV, EDD, Del };
-  // }
-
-  // const rows = [
-  //   createData(
-  //     "I0014",
-  //     "A4 Papers",
-  //     "500",
-  //     "GSM 80",
-  //     "ABC Bookshop",
-  //     "2023-10-05",
-  //     <IconButton aria-label="delete" sx={{ color: "#205295" }}>
-  //       <DeleteIcon />
-  //     </IconButton>
-  //   ),
-  //   createData(
-  //     "P0023",
-  //     "Printer Ink Cartridges",
-  //     "100",
-  //     "Epson Compatible",
-  //     "XYZ Office Supplies",
-  //     "2022-03-15",
-  //     <IconButton aria-label="delete" sx={{ color: "#205295" }}>
-  //       <DeleteIcon />
-  //     </IconButton>
-  //   ),
-  //   createData(
-  //     "C0012",
-  //     "Computer Monitors",
-  //     "50",
-  //     "27 inch, 1080p",
-  //     "DEF Electronics",
-  //     "2022-05-20",
-  //     <IconButton aria-label="delete" sx={{ color: "#205295" }}>
-  //       <DeleteIcon />
-  //     </IconButton>
-  //   ),
-  //   createData(
-  //     "S0056",
-  //     "Safety Gloves",
-  //     "1000",
-  //     "Latex-free, Medium Size",
-  //     "GHI Workwear",
-  //     "2022-07-10",
-  //     <IconButton aria-label="delete" sx={{ color: "#205295" }}>
-  //       <DeleteIcon />
-  //     </IconButton>
-  //   ),
-  //   createData(
-  //     "M0089",
-  //     "Medical Supplies",
-  //     "500",
-  //     "Sterilized, Disposable",
-  //     "JKL Healthcare",
-  //     "2022-09-15",
-  //     <IconButton aria-label="delete" sx={{ color: "#205295" }}>
-  //       <DeleteIcon />
-  //     </IconButton>
-  //   ),
-  //   createData(
-  //     "F0035",
-  //     "Furniture",
-  //     "20",
-  //     "Leather, Executive office chair",
-  //     "MNO Interior Design",
-  //     "2022-11-25",
-  //     <IconButton aria-label="delete" sx={{ color: "#205295" }}>
-  //       <DeleteIcon />
-  //     </IconButton>
-  //   ),
-  //   createData(
-  //     "T0078",
-  //     "Telecommunication Equipment",
-  //     "30",
-  //     "5G compatible, Router",
-  //     "PQR Technology",
-  //     "2023-01-15",
-  //     <IconButton aria-label="delete" sx={{ color: "#205295" }}>
-  //       <DeleteIcon />
-  //     </IconButton>
-  //   ),
-  //   createData(
-  //     "B0092",
-  //     "Building Materials",
-  //     "200",
-  //     "Galvanized steel, 2x4",
-  //     "STU Construction",
-  //     "2023-03-10",
-  //     <IconButton aria-label="delete" sx={{ color: "#205295" }}>
-  //       <DeleteIcon />
-  //     </IconButton>
-  //   ),
-  //   createData(
-  //     "L0101",
-  //     "Lab Equipment",
-  //     "50",
-  //     "Digital, pH meter",
-  //     "VWX Science",
-  //     "2023-05-20",
-  //     <IconButton aria-label="delete" sx={{ color: "#205295" }}>
-  //       <DeleteIcon />
-  //     </IconButton>
-  //   ),
-  //   createData(
-  //     "G0049",
-  //     "Gardening Equipment",
-  //     "100",
-  //     "Gas-powered, Lawnmower",
-  //     "YZ Landscaping",
-  //     "2023-07-15",
-  //     <IconButton aria-label="delete" sx={{ color: "#205295" }}>
-  //       <DeleteIcon />
-  //     </IconButton>
-  //   ),
-  //   createData(
-  //     "D0123",
-  //     "Janitorial Supplies",
-  //     "300",
-  //     "Eco-friendly, All-purpose cleaner",
-  //     "ABC Cleaning",
-  //     "2023-09-10",
-  //     <IconButton aria-label="delete" sx={{ color: "#205295" }}>
-  //       <DeleteIcon />
-  //     </IconButton>
-  //   ),
-  // ];
+  
 
  
   const [page, setPage] = React.useState(0);
@@ -223,6 +92,40 @@ function CreateSubProcurementPlan() {
   const [data, setData] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredData, setFilteredData] = useState([]);
+  const deleteItem =   (itemId,sppId) => {
+    try {
+       deleteItemFromdb(itemId,sppId);
+      console.log("Item deleted");
+      const updatedData = data.filter(item => item.itemId !== itemId);
+      setData(updatedData);
+       
+      
+    } catch (error) {
+      console.log(error);
+      // Handle error if needed
+    }
+  };
+  const CreateNewSubProcurementPlan = (event) => {
+    
+    const fetchData = async () => {
+        
+  
+      try {
+        const data = await createNewSubProcurementPlan(hodId);
+        setSubIds(prevArray => [...prevArray,data]);
+        setSelectedSubId(data);
+        
+       
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  
+    fetchData();
+  
+  
+  };
+  
 
   
   const handleSearchQueryChange = (event) => {
@@ -255,14 +158,7 @@ function CreateSubProcurementPlan() {
     setSelectedSubId(event.target.value);
   };
 
-  const fetchDataForSubId = async () => {
-    try {
-      const response = await axios.get(`https://localhost:7102/api/DivisionHOD/SubProcurementPlanItems/${selectedSubId}`);
-      setData(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -281,22 +177,30 @@ function CreateSubProcurementPlan() {
     };
 
     fetchData();
+    if(selectedSubIdfomNextPage){
+      setSelectedSubId(selectedSubIdfomNextPage);
+    }
   }, []);
 
   useEffect(() => {
-    const fetchDataForSubId = async () => {
+    const fetchData = async () => {
+      
+
       try {
-        const response = await axios.get(`https://localhost:7102/api/DivisionHOD/SubProcurementPlanItems/${selectedSubId}`);
-        
-        setData(response.data);
-        
+        const data = await fetchDataForSubId(selectedSubId);
+     
+        setData(data);
+       
       } catch (error) {
         console.log(error);
       }
     };
 
+    fetchData();
+
     
-      fetchDataForSubId();
+   
+     
     
   }, [selectedSubId]);
   
@@ -334,7 +238,11 @@ function CreateSubProcurementPlan() {
           <div className={styles.MiddleSectionN}>
             <div className={styles.Ph3}>
               <h4 className={styles.h4m}>SUB PROCUREMENT ID</h4>
-              <SelectDropDown list={subIds} value={selectedSubId} onChange={handleSubIdChange} /> <AddCircleOutlineIcon />
+              <div className={styles.dropDownIconContainer}>
+              <AddCircleOutlineIcon className={styles.addButton} onClick={CreateNewSubProcurementPlan}/>
+              <SelectDropDown list={subIds} value={selectedSubId} onChange={handleSubIdChange} /> 
+              
+              </div>
             </div>
 
             <SearchFilter  value={searchQuery}
@@ -392,9 +300,10 @@ function CreateSubProcurementPlan() {
                   <TableCell align="center">{new Date(row.expectedDeliveryDate).toLocaleDateString()}</TableCell>
                   
                   <TableCell align="center"><IconButton aria-label="delete" sx={{ color: "#205295" }}>
-                <DeleteIcon />
+                <DeleteIcon onClick={()=>deleteItem(row.itemId,selectedSubId)}/>
               </IconButton></TableCell>
                 </TableRow>
+                
                 
               ))}
           </TableBody>

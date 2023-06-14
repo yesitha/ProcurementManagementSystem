@@ -56,7 +56,7 @@ const rows = [
     "A4 Bundle",
     "400",
     "Rs. 1000000",
-    <Routerlink to={'/PCviewitem'}>
+    <Routerlink to={'/view-item-tec'}>
     <Button
       className={styles.ViewButton}
       variant="contained"
@@ -72,7 +72,7 @@ const rows = [
     "Pen",
     "2000",
     "Rs. 2000000",
-    <Routerlink to={'/PCviewitem'}>
+    <Routerlink to={'/view-item-tec'}>
     <Button
       className={styles.ViewButton}
       variant="contained"

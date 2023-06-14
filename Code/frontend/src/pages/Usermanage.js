@@ -8,7 +8,7 @@ const user = {
   lastname: "Doe",
   email: "johndoe@gmail.com",
   designation: "Tec Committee Member",
-  userType: "HOD",
+  userType: "Vendor",
   department: "Finance",
   phone: "1234567890",
   address: "123, ABC Street, XYZ City, 123456",
@@ -33,7 +33,6 @@ switch (currentUser) {
     actions = [
       {
         displayName: "Set Pre Bid Meeting Date",
-        path: "set-prebid-meeting-date",
       },
       {
         displayName: "Appoint Bid Opening Committee",
@@ -62,8 +61,7 @@ switch (currentUser) {
         number: "2",
       },
       {
-        displayName: "Set Pre Bid Meeting Date",
-        path: "set-pre-bid-meeting-date",
+        displayName: "Set Pre Bid Meeting Date"
       },
       { displayName: "Auctions End", path: "auctions-end", number: "1/30" },
       {
@@ -165,12 +163,12 @@ switch (currentUser) {
     actionButtons = [
       {
         displayName: "New Master Procurement plan for Evaluate",
-        path: "new-master-procurement-plan-for-evaluate",
+        path: "new-master-procurement-plan-for-evaluate-PC",
         number: "2",
       },
       {
         displayName: "New Finalized Master Procurement plan",
-        path: "new-finalized-master-procurement-plan",
+        path: "new-finalized-master-procurement-plan-PC",
         number: "3",
       },
     ];
@@ -193,7 +191,7 @@ switch (currentUser) {
     list1 = [
       { displayName: "Bid Tender", path: "BidTender" },
       { displayName: "Bid History", path: "BidHistory" },
-      { displayName: "Purchase Orders", path: "VPurchaseOrder" },
+      { displayName: "Purchase Orders", path: "PurchaseOrder-vendor" },
       { displayName: "Good Receive Note", path: "VGoodReceiveNote" },
     ];
 
@@ -228,8 +226,8 @@ switch (currentUser) {
     break;
   case "BidOpeningCommittee":
     list1 = [
-      { displayName: "Auctions", path: "Auctions" },
-      { displayName: "Bid History", path: "BidHistory" },
+      { displayName: "Auctions", path: "Auctions-BOC" },
+      { displayName: "Bid History", path: "BidHistory-BOC" },
     ];
 
     list2 = ["Settings"];
@@ -314,7 +312,7 @@ switch (currentUser) {
     list1 = [
       {
         displayName: "Master Procurement Plan",
-        path: "view-master-procurement-plan",
+        path: "view-master-procurement-plan-tec",
       },
     ];
     list2 = ["Vendors and Items", "Committee Members", "Inventory", "Settings"];
@@ -322,7 +320,7 @@ switch (currentUser) {
     actions = [
       {
         displayName: "View Master Procurement Plan",
-        path: "view-master-procurement-plan",
+        path: "view-master-procurement-plan-tec",
       },
       { displayName: "Vendor Selection", path: "vendor-selection" },
       {
@@ -334,16 +332,16 @@ switch (currentUser) {
     actionButtons = [
       {
         displayName: "New Master Procurement plan for Evaluate",
-        path: "new-master-procurement-plan-for-evaluate",
+        path: "new-master-procurement-plan-for-evaluate-tec",
         number: "2",
       },
       {
         displayName: "Rejected Item Modified",
-        path: "rejected-item-modified",
+        path: "rejected-item-modified-tec",
         number: "2",
       },
-      { displayName: "Auction End", path: "auction-end", number: "2" },
-      { displayName: "Vendor Rejected", path: "vendor-rejected", number: "2" },
+      { displayName: "Auction End", path: "auction-end=tec", number: "2" },
+      { displayName: "Vendor Rejected", path: "vendor-rejected-tec", number: "2" },
     ];
     break;
   default:

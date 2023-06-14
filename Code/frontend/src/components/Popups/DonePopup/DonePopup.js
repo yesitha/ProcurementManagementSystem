@@ -23,9 +23,11 @@ const style = {
   p: 3,
 };
 
-export default function BasicModal({ text, title, styles }) {
+export default function BasicModal({ text, title, styles, }) {
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => {
+    
+    setOpen(true);}
   const handleClose = () => setOpen(false);
 
   return (
@@ -77,7 +79,7 @@ export default function BasicModal({ text, title, styles }) {
               marginTop: 10,
             }}
           >
-            <Routerlink to={-1}>
+            
             <Button
             onClick={handleClose}
               variant="contained"
@@ -91,7 +93,7 @@ export default function BasicModal({ text, title, styles }) {
             >
               OK
             </Button>
-            </Routerlink>
+            
           </div>
         </Box>
       </Modal>
