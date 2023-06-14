@@ -14,9 +14,6 @@ builder.Services.Configure<JsonOptions>(options =>
 
 
 // Add services to the container.
-
-
-
 builder.Services.AddControllers();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -32,6 +29,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 builder.Services.AddScoped<SppIdGenerator>();
 builder.Services.AddScoped<MppIdGenerator>();
 builder.Services.AddScoped<ItemIdGenerator>();
+builder.Services.AddScoped<CommitteeIdGenerator>();
 
 var app = builder.Build();
 
