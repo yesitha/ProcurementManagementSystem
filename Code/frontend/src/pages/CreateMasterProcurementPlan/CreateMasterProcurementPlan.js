@@ -41,7 +41,7 @@ const [rightTableData, setRightTableData] = useState([]);
   const masterProcurementId = "MP0001";
 
   return (
-    <div style={{ overflowX: "auto" }}>
+    <div>
 
       <Container
         className={styles.main}
@@ -50,7 +50,7 @@ const [rightTableData, setRightTableData] = useState([]);
           display: "flex",
 
           flexDirection: "column",
-          //   overflowY: "hidden",
+          //   ]overflowY: "hidden",
         }}
       >
         <div className={styles.upperSection}>
