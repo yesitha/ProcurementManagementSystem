@@ -188,6 +188,7 @@ namespace PWMSBackend.Controllers
 
 
         // Create Bid opening Committee page controllers (1-GET(can get from TEC committee page) 1-POST)
+
         [HttpPost("AppointBidOpeningCommitteeMembers")]
         public IActionResult AppointBidOpeningCommitteeMembers(string mppId, List<string> employeeIds)
         {
@@ -220,6 +221,9 @@ namespace PWMSBackend.Controllers
             return Ok("BidOpeningCommittee members added successfully.");
         }
 
+        //Modify TEC Committee page controllers (1-GET 1-POST)
+
+        //[HttpGet("GetTECCommitteeMembers/{mppId}")]
 
     }
 }

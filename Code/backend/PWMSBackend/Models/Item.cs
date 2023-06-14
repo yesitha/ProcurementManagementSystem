@@ -12,7 +12,10 @@ namespace PWMSBackend.Models
         public ICollection<VendorhasItem> VendorhasItems { get; set; }
 
         //One to many Relationships
-        public Category Category { get; set; }
+        public Category? Category { get; set; }
+
+        [ForeignKey("Category")]
+        public string CategoryId { get; set; }
 
         //Many to many Relationships
         public ICollection<SubProcurementPlanItem> subProcurementPlanItems { get; set; }

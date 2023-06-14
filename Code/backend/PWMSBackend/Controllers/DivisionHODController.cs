@@ -218,17 +218,22 @@ namespace PWMSBackend.Controllers
         {
             string itemId = _itemIdGenerator.GenerateItemId();
 
+            // Find the category with the provided categoryId
+            var category = _context.Categories.FirstOrDefault(c => c.CategoryId == categoryId);
+
+            if (category == null)
+            {
+                return BadRequest("Invalid CategoryId. Category not found.");
+            }
+
             // Create a new instance of the Item class
             var newItem = new Item
             {
                 ItemId = itemId,
                 ItemName = itemName,
-                Specification = specification
+                Specification = specification,
+                Category = category
             };
-
-            // Set the Category reference using the provided categoryId
-            Category category = _context.Categories.FirstOrDefault(c => c.CategoryId == categoryId);
-            newItem.Category = category;
 
             // Add the new item to the database
             _context.Items.Add(newItem);
@@ -237,6 +242,7 @@ namespace PWMSBackend.Controllers
             // Return a response indicating success and the newly generated ItemId
             return Ok(newItem.ItemId);
         }
+
 
 
     }
