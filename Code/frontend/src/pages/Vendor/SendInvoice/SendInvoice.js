@@ -39,8 +39,7 @@ const rows = [
 function Invoice() {
   return (
     <div style={{ overflowX: "hidden" }}>
-      <div className={styles.sideNavBar}>
-      </div>
+
 
       <Container
         className={styles.main}

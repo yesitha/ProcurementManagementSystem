@@ -212,7 +212,7 @@ export default function Stock() {
       <div style={{ display: "flex", flexDirection: "horizontal" }}>
         <div>
           <div>
-            <Routerlink to={'/add-new-item'}>
+            <Routerlink to={'/add-new-item=im'}>
             <Button
               sx={{
                 backgroundColor: "#205295",
@@ -230,7 +230,7 @@ export default function Stock() {
             </Routerlink>
           </div>
           <div>
-          <Routerlink to={'/add-new-item'}>
+          <Routerlink to={'/issue-item'}>
             <Button
               sx={{
                 backgroundColor: "#205295",

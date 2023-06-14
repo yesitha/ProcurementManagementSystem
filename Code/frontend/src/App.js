@@ -14,13 +14,10 @@ import CreateModifyTECCommittee from "./pages/CreateModifyTECCommittee/CreateMod
 import ViewFinalizedMasterProcurementPlans from "./pages/Internal Auditor/ViewFinalizedMasterProcurementPlans/ViewFinalizedMasterProcurementPlans";
 import AuditFinalizedMasterProcurementPlan from "./pages/Internal Auditor/AuditFinalizedMasterProcurementPlan/AuditFinalizedMasterProcurementPlan";
 import ItemstobeShipped from "./pages/Items to be Shipped/ItemstobeShipped";
-import MasterProcurementPlanEvalate from "./pages/TEC Committee/MasterProcurementPlanEvalate/MasterProcurementPlanEvalate";
 import Stock from "./pages/Stock/Stock";
 import DGViewFinalizedMasterProcurementPlans from "./pages/Director General/DGViewFinalizedMasterProcurementPlans/DGViewFinalizedMasterProcurementPlans";
 import EvaluateFinalizedMasterProcurementPlan from "./pages/Director General/EvaluateFinalizedMasterProcurementPlan/EvaluateFinalizedMasterProcurementPlan";
-import ViewItem from "./pages/ViewItem/ViewItem";
 import ApprovalForMasterProcurementPlan from "./pages/TEC Committee/ApprovalForMasterProcurementPlan/ApprovalForMasterProcurementPlan";
-import ViewItemN from "./pages/TEC Committee/ViewItem/ViewItem";
 import CreateModifyBidOpeningCommittee from "./pages/Procurement Officer/CreateModifyBidOpeningCommittee/CreateModifyBidOpeningCommittee";
 import MasterProcurementPlan from "./pages/ProcurementCommitee/MasterProcurementPlan/MasterProcurementPlan";
 import BidTender from "./pages/Vendor/BidTender/BidTender";
@@ -47,153 +44,302 @@ import AddItemstoGRN from "./pages/FinanceDivisionHOD/AddItemstoGRN/AddItemstoGR
 import CreateMasterProcurementPlan from "./pages/CreateMasterProcurementPlan/CreateMasterProcurementPlan";
 import InvoicestobePaid from "./pages/FinanceDivisionHOD/InvoicestobePaid/InvoicestobePaidFin";
 import ReviseVendorSelection from "./pages/TEC Committee/Revise Vendor Selection/ReviseVendorSelection";
-import {Route , Routes} from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import TenderDetails from "./pages/Vendor/Tender Details/TenderDetails";
 import BidHistory from "./pages/Vendor/BidHistory/BidHistory";
 import SideNavBar from "./components/SideNavigationBar/SideNavBar";
-import { user, list1, list2 } from './pages/Usermanage';
+import { user, list1, list2 } from "./pages/Usermanage";
 import Invoicesvendorside from "./pages/Vendor/Invoices(vendorside)/Invoices(vendorside)";
 import InvoicesneedtobePaid from "./pages/FinanceDivisionAccountant/InvoicesneedtobePaid/InvoicesneedtobePaid";
 import ViewMasterProcurementPlanProc from "./pages/Procurement Officer/ViewMasterProcurementPlanProc/ViewMasterProcurementPlanProc";
 import PurchaseOrder from "./pages/Procurement Officer/PurchaseOrder/PurchaseOrder";
 import Signup from "./pages/SignUp/SignUp";
+import { useSelector } from "react-redux";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+
+import AddItemstoPO from "./pages/Procurement Officer/AddItemstoPO/AddItemstoPO";
+import AuditReport from "./pages/Procurement Officer/AuditReport/AuditReport";
+import PurchseOrdersVendor from "./pages/Vendor/PurchaseOrdersVendor/PurchseOrdersVendor";
+import PurchaseOrderPreview from "./pages/Vendor/PurchaseOrderPreview/PurchaseOrderPreview";
+import SendPurchaseOrder from "./pages/Procurement Officer/SendPurchaseOrder/SendPurchaseOrder";
+import EvaluateVendorFinanceStatus from "./pages/Procurement Officer/Evaluate Vendor Finance Status/EvaluateVendorFinanceStatus";
+import MasterProcurementPlanTEC from "./pages/TEC Committee/MasterProcurementPlanTEC/MasterProcurementPlanTEC";
+import ViewItemTEC from "./pages/TEC Committee/ViewItemTEC/ViewItemTEC";
+import ViewItemPC from "./pages/ProcurementCommitee/ViewItemPC/ViewItemPC";
+import ApprovalForMasterProcurementPlanPC from "./pages/ProcurementCommitee/ApprovalForMasterProcurementPlanPC/ApprovalForMasterProcurementPlanPC";
+import BidVerificationSubmit from "./pages/Vendor/Bid Verification Submit/BidVerificationSubmit";
+import IssueItem from "./pages/InventoryManager/IssueItem/IssueItem";
+import AssetRegistry from "./pages/Assets Registry/AssetRegistry";
+import LetterofAcceptance from "./pages/Vendor/Letter of Acceptance/LetterofAcceptance";
 
 function App() {
+  const baseState = useSelector((store) => store.base);
+
   return (
-
-
-<div className="app-container">
-  
+    <div className="app-container">
       <SideNavBar list1={list1} list2={list2} user={user} />
       <div className="app-content">
-       <Routes>
-        <Route path='/' element={<Login/>}/>
-        <Route path='/view-notification' element={<NotificationPage/>}/>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/view-notification" element={<NotificationPage />} />
 
-        {/* Division HOD */}
-        <Route path='/dashboard' element={<Dashboard/>}/>
-        <Route path='/item-rejected' element={<AddItemtoSubProcurementPlan/>}/>
-        <Route path='/add-new-item' element={<AddNewItemtoSubProcurementPlan/>}/>
-        <Route path='/add-item-to-subprocurement-Plan' element={<AddItemtoSubProcurementPlan/>}/>
-        <Route path='/SubProcurmentPlan' element={<CreateSubProcurementPlan/>}/>
+          {/* Division HOD */}
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route
+            path="/item-rejected"
+            element={<AddItemtoSubProcurementPlan />}
+          />
+          <Route
+            path="/add-new-item"
+            element={<AddNewItemtoSubProcurementPlan />}
+          />
+          <Route
+            path="/add-item-to-subprocurement-Plan/:division/:selectedSubId"
+            element={<AddItemtoSubProcurementPlan />}
+          />
+          <Route
+            path="/SubProcurmentPlan"
+            element={<CreateSubProcurementPlan />}
+          />
 
-        {/* Purchase Division HOD */}
-        <Route path='/NewSubProcurmentPlan' element={<CreateMasterProcurementPlan/>}/>
-        <Route path='/RequesttoInitiateMasterProcurementPlan' element={<RequesttoInitiateSubProcurementPlan/>}/>
+          {/* Purchase Division HOD */}
+          <Route
+            path="/NewSubProcurmentPlan"
+            element={<CreateMasterProcurementPlan />}
+          />
+          <Route
+            path="/RequesttoInitiateMasterProcurementPlan"
+            element={<RequesttoInitiateSubProcurementPlan />}
+          />
 
-        {/* ProcurementOfficer */}
-        <Route path='/ViewSubProcurementPlan' element={<ViewSubProcurementPlan/>}/>
-        {/* <Route path='/MasterProcurmentPlan' element={</>}/> */}
-        {/* <Route path='/PurchaseOrder' element={</>}/> */}
-        <Route path='/GoodReceiveNote' element={<AddItemstoGRN/>}/>
-                <Route path='/grn-view' element={<GoodsReceivedNote/>}/>
-        <Route path='/PaymentVouchar' element={<InvoicestobePaid/>}/>
-        {/* <Route path='/set-prebid-meeting-date' element={<Done Popup should be added/>}/> */}
-        <Route path='/appoint-bidopening-committee' element={<CreateModifyBidOpeningCommittee/>}/>        
-        <Route path='/evaluate-master-procurementplan' element={<MasterProcurementPlanStatus/>}/>
-        {/* <Route path='/create-purchase-order' element={</>}/> */}
-        <Route path='/create-grn' element={<AddItemstoGRN/>}/>
-        {/* <Route path='/evaluate-vendor-fianace-status' element={</>}/> */}
-        <Route path='/view-masterprocurement-plan' element={<ViewMasterProcurementPlan/>}/>
-                <Route path='/create-modify-teccommittee' element={<CreateModifyTECCommittee/>}/>
-        {/* <Route path='/new-master-procurement-plan-for-evaluate' element={</>}/> */}
-        <Route path='/auctions-end' element={<BidDetails/>}/>
-                <Route path='/bid-details-view' element={<BidDetailsView/>}/>
-        {/* <Route path='/internal-auditor-report-availble' element={</>}/> */}
-        {/* <Route path='/approved-items-from-dg' element={</>}/> */}
-        <Route path='/item-rejected-by-vendors' element={<AddItemstoGRN/>}/>
-        <Route path='/new-invoices-available' element={<InvoicestobePaid/>}/>
+          {/* ProcurementOfficer */}
+          <Route
+            path="/ViewSubProcurementPlan"
+            element={<ViewSubProcurementPlan />}
+          />
+          <Route
+            path="/MasterProcurmentPlan"
+            element={<ViewMasterProcurementPlanProc />}
+          />
+          <Route
+            path="/master-procurement-plan-status"
+            element={<MasterProcurementPlanStatus />}
+          />
+          <Route
+            path="/view-master-procurement-plan"
+            element={<ViewMasterProcurementPlan />}
+          />
+          <Route path="/PurchaseOrder" element={<PurchaseOrder />} />
+          <Route path="/add-item-to-PO" element={<AddItemstoPO />} />
+          <Route path="/send-purchase-order" element={<SendPurchaseOrder />} />
+          <Route path="/GoodReceiveNote" element={<AddItemstoGRN />} />
+          <Route path="/grn-view" element={<GoodsReceivedNote />} />
+          <Route
+            path="/appoint-bidopening-committee"
+            element={<ViewMasterProcurementPlanProc />}
+          />
+          <Route
+            path="/create-modify-bidopeningC"
+            element={<CreateModifyBidOpeningCommittee/>}
+          />
+          <Route
+            path="/evaluate-master-procurementplan"
+            element={<MasterProcurementPlanStatus />}
+          />
+          <Route path="/create-purchase-order" element={<PurchaseOrder />} />
 
+          <Route path="/create-grn" element={<AddItemstoGRN />} />
+          <Route
+            path="/evaluate-vendor-fianace-status"
+            element={<EvaluateVendorFinanceStatus />}
+          />
 
-        {/*Tec Committee Member */}
-        <Route path='/view-master-procurement-plan' element={<MasterProcurementPlanEvalate/>}/>
-        <Route path='/vendor-selection' element={<VendorSelection/>}/>
-        <Route path='/revise-vendor-selection' element={<ReviseVendorSelection/>}/>
-        <Route path='/new-master-procurement-plan-for-evaluate' element={<MasterProcurementPlanEvalate/>}/>
-        <Route path='/rejected-item-modified' element={<CreateMasterProcurementPlan/>}/>
-        <Route path='/auction-end' element={<Dashboard/>}/>
-        <Route path='/vendor-rejected' element={<ViewItemN/>}/>
-        <Route path="*" element={<p>NotFound</p>}></Route> 
+          <Route
+            path="/view-masterprocurement-plan"
+            element={<ViewMasterProcurementPlan />}
+          />
+          <Route
+            path="/create-modify-teccommittee"
+            element={<CreateModifyTECCommittee />}
+          />
+          <Route
+            path="/new-master-procurement-plan-for-evaluate"
+            element={<ViewMasterProcurementPlanProc />}
+          />
+          <Route path="/auctions-end" element={<BidDetails />} />
+          <Route path="/bid-details-view" element={<BidDetailsView />} />
+          <Route
+            path="/internal-auditor-report-availble"
+            element={<AuditReport />}
+          />
+          <Route path="/approved-items-from-dg" element={<AddItemstoPO />} />
+          <Route path="/item-rejected-by-vendors" element={<AddItemstoGRN />} />
+          <Route
+            path="/new-invoices-available"
+            element={<InvoicestobePaid />}
+          />
 
+          {/*Tec Committee Member */}
+          <Route
+            path="/view-master-procurement-plan-tec"
+            element={<MasterProcurementPlanTEC />}
+          />
+          <Route
+            path="/approval-for-master-procurement-plan-tec"
+            element={<ApprovalForMasterProcurementPlan />}
+          />
+          <Route path="/view-item-tec" element={<ViewItemTEC />} />
+          <Route path="/vendor-selection" element={<VendorSelection />} />
+          <Route
+            path="/revise-vendor-selection"
+            element={<ReviseVendorSelection />}
+          />
+          <Route
+            path="/new-master-procurement-plan-for-evaluate-tec"
+            element={<MasterProcurementPlanTEC />}
+          />
+          <Route
+            path="/vendor-rejected-tec"
+            element={<ReviseVendorSelection />}
+          />
 
-      {/* Procurement Committee */}
-      <Route path='/PCMasterProcurmentPlan' element={<MasterProcurementPlan/>}/>
-        <Route path='/PCApprovalforMasterProcurmentPlan' element={<ApprovalForMasterProcurementPlan/>}/>
-          <Route path='/PCviewitem' element={<ViewItem/>}/>
-            <Route path='/ApprovedItemList' element={<ApprovedItemList/>}/>
-      <Route path='/FinalizedMasterProcurementPlan' element={<FinalizedMasterProcurementPlan/>}/>
-      <Route path='/evaluate-master-procurement-plan' element={<MasterProcurementPlan/>}/>
-      <Route path='/view-tec-report' element={<TecReport/>}/>
-                <Route path='/tec-report-view' element={<TecReportView/>}/>
-      <Route path='/new-master-procurement-plan-for-evaluate' element={<MasterProcurementPlan/>}/>
-      <Route path='/new-finalized-master-procurement-plan' element={<FinalizedMasterProcurementPlan/>}/>
+          {/* Procurement Committee */}
+          <Route
+            path="/PCMasterProcurmentPlan"
+            element={<MasterProcurementPlan />}
+          />
+          <Route
+            path="/PCApprovalforMasterProcurmentPlan"
+            element={<ApprovalForMasterProcurementPlanPC />}
+          />
+          <Route path="/PCviewitem" element={<ViewItemPC />} />
+          <Route path="/ApprovedItemList" element={<ApprovedItemList />} />
+          <Route
+            path="/FinalizedMasterProcurementPlan"
+            element={<FinalizedMasterProcurementPlan />}
+          />
+          <Route
+            path="/evaluate-master-procurement-plan"
+            element={<MasterProcurementPlan />}
+          />
+          <Route path="/view-tec-report" element={<TecReport />} />
+          <Route path="/tec-report-view" element={<TecReportView />} />
+          <Route
+            path="/new-master-procurement-plan-for-evaluate-PC"
+            element={<MasterProcurementPlan />}
+          />
+          <Route
+            path="/new-finalized-master-procurement-plan-PC"
+            element={<FinalizedMasterProcurementPlan />}
+          />
 
+          {/* CoparateCommunicationDivision */}
+          <Route path="/publish-papaer-ad" element={<PublishPaperAd />} />
+          <Route
+            path="/publish-papaer-ad-view-item"
+            element={<ItemDetails />}
+          />
 
-      {/* CoparateCommunicationDivision */}
-      <Route path='/publish-papaer-ad' element={<PublishPaperAd/>}/>
-      <Route path='/publish-papaer-ad-view-item' element={<ItemDetails/>}/>
+          {/* Vendor */}
+          <Route path="/BidTender" element={<BidTender />} />
+          <Route path="/tender-details" element={<TenderDetails />} />
+          <Route path="/BidHistory" element={<BidHistory />} />
+          <Route
+            path="/bid-verification-submit"
+            element={<BidVerificationSubmit />}
+          />
+          <Route path='/letter-of-acceptance' element={<LetterofAcceptance/>}/>
+          <Route
+            path="/PurchaseOrder-vendor"
+            element={<PurchseOrdersVendor />}
+          />
+          <Route
+            path="/PurchaseOrder-vendor-view"
+            element={<PurchaseOrderPreview />}
+          />
+          <Route path="/VGoodReceiveNote" element={<ViewGRN />} />
+          <Route path="/grn" element={<GRN />} />
+          <Route path="/create-invoice" element={<CreateInvoice2 />} />
+          <Route path="/send-invoice" element={<SendInvoice />} />
+          <Route path="/bid-tender" element={<BidTender />} />
+          <Route path="/bid-history" element={<BidHistory />} />
+          <Route path="/view-invoice" element={<ViewInvoices />} />
+          <Route path="/invoice" element={<Invoicesvendorside />} />
+          <Route path="/items-to-be-shipped" element={<ItemstobeShipped />} />
+          <Route path="/bid-approved" element={<BidHistory />} />
+          <Route
+            path="/verification-statuses-evaluated"
+            element={<BidHistory />}
+          />
+          <Route path="/new-purchase-order" element={<PurchseOrdersVendor />} />
+          <Route path="/new-grn" element={<ViewGRN />} />
+          <Route path="/payment-received" element={<ViewInvoices />} />
 
+          {/* BidOpeningCommitee */}
+          <Route path="/manage-auction" element={<ManageAuction />} />
 
-      {/* Vendor */}
-      <Route path='/BidTender' element={<BidTender/>}/>
-                <Route path='/tender-details' element={<TenderDetails/>}/>
-      <Route path='/BidHistory' element={<BidHistory/>}/>
-                {/* <Route path='/bid-verification-submit' element={</>}/> */}
-      {/* <Route path='/PurchaseOrder' element={</>}/> */}
-      <Route path='/VGoodReceiveNote' element={<ViewGRN/>}/>
-                <Route path='/grn' element={<GRN/>}/>
-                    <Route path='/create-invoice' element={<CreateInvoice2/>}/>
-                        <Route path='/send-invoice' element={<SendInvoice/>}/>
-      <Route path='/bid-tender' element={<BidTender/>}/>
-      <Route path='/bid-history' element={<BidHistory/>}/>
-      <Route path='/view-invoice' element={<ViewInvoices/>}/>
-                <Route path='/invoice' element={<Invoicesvendorside/>}/>
-      <Route path='/items-to-be-shipped' element={<ItemstobeShipped/>}/>
-      <Route path='/bid-approved' element={<BidHistory/>}/>
-      <Route path='/verification-statuses-evaluated' element={<BidHistory/>}/>
-      {/* <Route path='/new-purchase-order' element={</>}/> */}
-      <Route path='/new-grn' element={<ViewGRN/>}/>
-      <Route path='/payment-received' element={<ViewInvoices/>}/>
+          {/* InternalAuditor */}
+          <Route
+            path="/IAFinalizedMasterProcurementPlan"
+            element={<ViewFinalizedMasterProcurementPlans />}
+          />
+          <Route
+            path="/audit-finalized-master-procurementplan"
+            element={<AuditFinalizedMasterProcurementPlan />}
+          />
+          <Route
+            path="/ia-new-master-procurement-plan-for-evaluate"
+            element={<ViewFinalizedMasterProcurementPlans />}
+          />
 
+          {/* DirectorGeneral */}
+          <Route
+            path="/DGMasterProcurementPlan"
+            element={<DGViewFinalizedMasterProcurementPlans />}
+          />
+          <Route
+            path="/view-finalized-master-procurement-plan"
+            element={<DGViewFinalizedMasterProcurementPlans />}
+          />
+          <Route
+            path="/new-items-to-evaluate"
+            element={<DGViewFinalizedMasterProcurementPlans />}
+          />
+          <Route
+            path="/evaluate-f-master-procurement-plan"
+            element={<EvaluateFinalizedMasterProcurementPlan />}
+          />
 
-      {/* BidOpeningCommitee */}
-      <Route path='/manage-auction' element={<ManageAuction/>}/>
+          {/* FinanceDivisionAccountant */}
+          <Route path="/view-invoices" element={<InvoicesneedtobePaid />} />
+          <Route
+            path="/invoice-need-to-pay"
+            element={<InvoicesneedtobePaid />}
+          />
+          <Route
+            path="/upload-payment-vouchar"
+            element={<UploadPaymentVoucher />}
+          />
 
-      {/* InternalAuditor */}
-      <Route path='/IAFinalizedMasterProcurementPlan' element={<ViewFinalizedMasterProcurementPlans/>}/>
-                <Route path='/audit-finalized-master-procurementplan' element={<AuditFinalizedMasterProcurementPlan/>}/>
-      <Route path='/ia-new-master-procurement-plan-for-evaluate' element={<ViewFinalizedMasterProcurementPlans/>}/>
+          {/* InventoryManager */}
+          <Route path="/view-stock" element={<Stock />} />
+          <Route path="/add-new-item=im" element={<AddNewItem />} />
+          <Route path="/issue-item" element={<IssueItem />} />
+          <Route path="/view-assets-registry" element={<AssetRegistry />} />
 
+          <Route path="*" element={<p>NotFound</p>}></Route>
+        </Routes>
 
-      {/* DirectorGeneral */}
-      <Route path='/DGMasterProcurementPlan' element={<DGViewFinalizedMasterProcurementPlans/>}/>
-      <Route path='/view-finalized-master-procurement-plan' element={<DGViewFinalizedMasterProcurementPlans/>}/>
-      <Route path='/new-items-to-evaluate' element={<DGViewFinalizedMasterProcurementPlans/>}/>
-      <Route path='/evaluate-f-master-procurement-plan' element={<EvaluateFinalizedMasterProcurementPlan/>}/>
-
-      
-      {/* FinanceDivisionAccountant */}
-      <Route path='/view-invoices' element={<InvoicesneedtobePaid/>}/>
-      <Route path='/invoice-need-to-pay' element={<InvoicesneedtobePaid/>}/>
-      <Route path='/upload-payment-vouchar' element={<UploadPaymentVoucher/>}/>
-
-
-      {/* InventoryManager */}
-      <Route path='/view-stock' element={<Stock/>}/>
-                <Route path='/add-new-item' element={<AddNewItem/>}/>
-                {/* <Route path='/issue-item' element={</>}/> */}
-      {/* <Route path='/view-assets-registry' element={<Stock/>}/> */}
-
-
-
-      <Route path="*" element={<p>NotFound</p>}></Route> 
-
-
-      </Routes>
-
+        
       </div>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={baseState.isLoading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </div>
-    )
-  }
-  export default App;
-  
+  );
+}
+export default App;

@@ -21,8 +21,8 @@ import {
     Switch,
     Typography,
   } from "@mui/material";
-  import SelectDropDown from "../../../components/SelectDropDown/SelectDropDown";
-  import Table from "@mui/material/Table";
+import SelectDropDown from "../../../components/SelectDropDown/SelectDropDown";
+import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
@@ -30,7 +30,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import DeleteIcon from "@mui/icons-material/Delete";
-
+import { Link as Routerlink } from 'react-router-dom';
 
 
 const columns = [
@@ -48,8 +48,7 @@ const columns = [
   }
 
   const rows = [
-    createData("M002", "Pen", 30, "Black ink, ballpoint pen", 15, 450, 
-    <Button> <DeleteIcon /></Button>),
+    createData("M002", "Pen", 30, "Black ink, ballpoint pen", 15, 450, <Button> <DeleteIcon /></Button>),
     createData("M003", "Notebook", 10, "A5 size, ruled pages", 25, 250,<Button> <DeleteIcon /></Button>),
     createData("M004", "Eraser", 100, "Soft and smudge-free", 5, 500, <Button> <DeleteIcon /></Button>),
     createData("M005", "Highlighter", 20, "Assorted colors", 10, 200, <Button> <DeleteIcon /></Button>),
@@ -77,13 +76,13 @@ function PurchaseOrder() {
   return (
     <div>
     <div className={styles.NotificationPageContainer__header}>
-    
+    <Routerlink to={-1}>
     <IconButton
       sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
     >
       <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
     </IconButton>
-    
+    </Routerlink>
     <h1 className={styles.NotificationPageHeader}> Purchase Order</h1>
   </div>
   <div className={styles.divide}>
@@ -185,6 +184,7 @@ function PurchaseOrder() {
             />
           </Paper>
           </div>
+          <Routerlink to={'/add-item-to-PO'}>
           <Button
       variant="contained"
       fontFamily={"Inter"}
@@ -192,14 +192,16 @@ function PurchaseOrder() {
     >
      ADD ITEM
     </Button>
+    </Routerlink>
+    <Routerlink to={'/send-purchase-order'}>
     <Button
       variant="contained"
       fontFamily={"Inter"}
       sx={{ bgcolor: "#205295", borderRadius: 5, height: 50, width: 200,marginLeft:"900px",marginTop:"20px" }}
     >
-     PRINT REVIEW
+     PRINT PREVIEW
     </Button>
-   
+    </Routerlink>
   </div>
   )
 }
