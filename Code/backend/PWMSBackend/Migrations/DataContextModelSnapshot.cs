@@ -191,6 +191,10 @@ namespace PWMSBackend.Migrations
                     b.Property<string>("ItemId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("CategoryId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Discriminator")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -205,6 +209,8 @@ namespace PWMSBackend.Migrations
 
                     b.HasKey("ItemId");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("Items");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("Item");
@@ -216,7 +222,6 @@ namespace PWMSBackend.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("BidOpeningCommitteeId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreationDate")
@@ -229,18 +234,19 @@ namespace PWMSBackend.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("TecCommitteeId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("MppId");
 
                     b.HasIndex("BidOpeningCommitteeId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[BidOpeningCommitteeId] IS NOT NULL");
 
                     b.HasIndex("ProcurementCommitteeCommitteeId");
 
                     b.HasIndex("TecCommitteeId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[TecCommitteeId] IS NOT NULL");
 
                     b.ToTable("MasterProcurementPlans");
                 });
@@ -676,14 +682,9 @@ namespace PWMSBackend.Migrations
                 {
                     b.HasBaseType("PWMSBackend.Models.Item");
 
-                    b.Property<string>("CategoryId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("FinalizedMasterProcurementPlanFmppId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
-
-                    b.HasIndex("CategoryId");
 
                     b.HasIndex("FinalizedMasterProcurementPlanFmppId");
 
@@ -755,11 +756,6 @@ namespace PWMSBackend.Migrations
                 {
                     b.HasBaseType("PWMSBackend.Models.Item");
 
-                    b.Property<string>("CategoryId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("ItemInStock_CategoryId");
-
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
@@ -769,8 +765,6 @@ namespace PWMSBackend.Migrations
                     b.Property<double>("UnitPrice")
                         .HasColumnType("float");
 
-                    b.HasIndex("CategoryId");
-
                     b.HasDiscriminator().HasValue("ItemInStock");
                 });
 
@@ -778,15 +772,8 @@ namespace PWMSBackend.Migrations
                 {
                     b.HasBaseType("PWMSBackend.Models.Item");
 
-                    b.Property<string>("CategoryId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("ItemTobeShipped_CategoryId");
-
                     b.Property<DateTime>("ShippingDate")
                         .HasColumnType("datetime2");
-
-                    b.HasIndex("CategoryId");
 
                     b.HasDiscriminator().HasValue("ItemTobeShipped");
                 });
@@ -884,13 +871,22 @@ namespace PWMSBackend.Migrations
                     b.Navigation("GRN");
                 });
 
+            modelBuilder.Entity("PWMSBackend.Models.Item", b =>
+                {
+                    b.HasOne("PWMSBackend.Models.Category", "Category")
+                        .WithMany("Items")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("PWMSBackend.Models.MasterProcurementPlan", b =>
                 {
                     b.HasOne("PWMSBackend.Models.BidOpeningCommittee", "BidOpeningCommittee")
                         .WithOne("MasterProcurementPlan")
-                        .HasForeignKey("PWMSBackend.Models.MasterProcurementPlan", "BidOpeningCommitteeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PWMSBackend.Models.MasterProcurementPlan", "BidOpeningCommitteeId");
 
                     b.HasOne("PWMSBackend.Models.ProcurementCommittee", "ProcurementCommittee")
                         .WithMany("MasterProcurementPlans")
@@ -898,9 +894,7 @@ namespace PWMSBackend.Migrations
 
                     b.HasOne("PWMSBackend.Models.TecCommittee", "TecCommittee")
                         .WithOne("MasterProcurementPlan")
-                        .HasForeignKey("PWMSBackend.Models.MasterProcurementPlan", "TecCommitteeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PWMSBackend.Models.MasterProcurementPlan", "TecCommitteeId");
 
                     b.Navigation("BidOpeningCommittee");
 
@@ -1090,17 +1084,11 @@ namespace PWMSBackend.Migrations
 
             modelBuilder.Entity("PWMSBackend.Models.ApprovedItem", b =>
                 {
-                    b.HasOne("PWMSBackend.Models.Category", "Category")
-                        .WithMany("ApprovedItems")
-                        .HasForeignKey("CategoryId");
-
                     b.HasOne("PWMSBackend.Models.FinalizedMasterProcurementPlan", "FinalizedMasterProcurementPlan")
                         .WithMany("ApprovedItems")
                         .HasForeignKey("FinalizedMasterProcurementPlanFmppId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Category");
 
                     b.Navigation("FinalizedMasterProcurementPlan");
                 });
@@ -1114,31 +1102,9 @@ namespace PWMSBackend.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PWMSBackend.Models.ItemInStock", b =>
-                {
-                    b.HasOne("PWMSBackend.Models.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("PWMSBackend.Models.ItemTobeShipped", b =>
-                {
-                    b.HasOne("PWMSBackend.Models.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-                });
-
             modelBuilder.Entity("PWMSBackend.Models.Category", b =>
                 {
-                    b.Navigation("ApprovedItems");
+                    b.Navigation("Items");
                 });
 
             modelBuilder.Entity("PWMSBackend.Models.Committee", b =>

@@ -26,6 +26,7 @@ import styles from "./ApprovedItemList.module.css";
 import SelectDropDown from "../../../components/SelectDropDown/SelectDropDown";
 import ViewVendors from "../../../components/Popups/ViewVendors/ViewVendors";
 import { vendors } from "../../../users/vendors.js";
+import Sucessfullyinformed from "../../../components/Popups/DonePopup/Successfullyinformed";
 import { Link as Routerlink } from "react-router-dom";
 
 function ViewMasterProcurementPlan() {
@@ -73,9 +74,7 @@ function ViewMasterProcurementPlan() {
       "50",
 
       <ViewVendors vendors={Recomandedvendors1} />,
-      <Button variant="contained" className={styles.NotifyVendors}>
-        Notify Vendors
-      </Button>
+    <Sucessfullyinformed name="Vendor" title="Notify Vendor"/>
     ),
     createData(
       "I0016",
@@ -83,9 +82,7 @@ function ViewMasterProcurementPlan() {
       "100",
 
       <ViewVendors vendors={Recomandedvendors1} />,
-      <Button variant="contained" className={styles.NotifyVendors}>
-        Notify Vendors
-      </Button>
+      <Sucessfullyinformed name="Vendor" title="Notify Vendor"/>
     ),
     createData(
       "I0017",
@@ -93,9 +90,7 @@ function ViewMasterProcurementPlan() {
       "25",
 
       <ViewVendors vendors={Recomandedvendors1} />,
-      <Button variant="contained" className={styles.NotifyVendors}>
-        Notify Vendors
-      </Button>
+      <Sucessfullyinformed name="Vendor" title="Notify Vendor"/>
     ),
   ];
 

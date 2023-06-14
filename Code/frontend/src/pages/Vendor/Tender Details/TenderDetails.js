@@ -80,12 +80,11 @@ function TenderDetails() {
               <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
             </IconButton>
             </Routerlink>
-            <h1 className={styles.Header}> </h1>
+            <h1 className={styles.Header}>Tender Details</h1>
           </div>
         </div>
 
         <div className={styles.MiddleSection}>
-          <h3 className={styles.header2}>Tender Details</h3>
           <Paper
             className={styles.UpperContainer}
             elevation={6}
@@ -99,6 +98,7 @@ function TenderDetails() {
               },
               alignItems: "left",
               borderRadius: "20px",
+              width:700,
             }}
           >
             SPECIFICATION
@@ -223,20 +223,18 @@ function TenderDetails() {
                 height: 150,
                 borderRadius: "20px",
               }}
-              
             >
               <Container display="flex" flexDirection="column">
-                <GavelIcon style={{ fontSize: 40 }} />
+                <GavelIcon style={{ fontSize: 40 }}/>
                 <Typography>Place BID</Typography>
               </Container>
-            </Button>
+             </Button>
             </Routerlink>
           </div>
         </div>
       </Container>
     </div>
   );
-            
 }
 
 export default TenderDetails;

@@ -1,0 +1,40 @@
+.note1 {
+  background-color: rgb(255, 255, 255);
+  border-radius: 25px;
+  margin-top: 25px;
+  margin-left: 100px;
+  margin-right: 25px;
+  padding: 30px;
+  width: 720px;
+}
+
+.bodyMid {
+  display: flex;
+  flex-direction: column;
+}
+
+.bodyContent {
+  margin-top: 15px;
+  flex-direction: column;
+}
+
+.dropdown {
+  margin-top: 15px;
+}
+
+.flex {
+  display: flex;
+  flex-direction: row;
+}
+
+.addbutton {
+  margin-left: 900px;
+  margin-top: 200px;
+
+  color: white;
+
+  border: none;
+
+  display: flex;
+  align-content: flex-end;
+}

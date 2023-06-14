@@ -10,6 +10,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { Link as Routerlink } from "react-router-dom";
 
 const columns = [
   { id: "ItemID", label: "Item ID", Width: 300, align: "center" },
@@ -51,11 +52,13 @@ function PurchaseOrderPreview() {
           <div className={styles.uppercontainer}>
             <div className={styles.tag}>
               <div style={{ display: "flex", flexDirection: "row" }}>
+                <Routerlink to={-1}>
                 <IconButton
                   sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
                 >
                   <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
                 </IconButton>
+                </Routerlink>
                 <h1 className={styles.Header}>Purchase Order</h1>
               </div>
               <Typography style={{ marginLeft: "35px" }}>
@@ -180,9 +183,11 @@ function PurchaseOrderPreview() {
           </center>
           <div className={styles.btn}>
             <Button variant="contained">PRINT</Button>
+            <Routerlink to={'/bid-verification-submit'}>
             <Button variant="contained" style={{ marginLeft: 40 }}>
              NEXT
             </Button>
+            </Routerlink>
           </div>
         </div>
       </Container>

@@ -20,6 +20,7 @@ const style = {
   borderRadius: 5,
   boxShadow: 24,
   p: 3,
+
 };
 
 export default function Sucessfullyinformed({ name, title, styles }) {

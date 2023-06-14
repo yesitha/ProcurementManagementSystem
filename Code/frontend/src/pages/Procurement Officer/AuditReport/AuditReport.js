@@ -21,6 +21,8 @@ import Reject from "../../../images/Reject.png";
 import ApprovePopup from "../../../components/Popups/DonePopup/ApprovePopup";
 import RejectPopup from "../../../components/Popups/DonePopup/RejectPopup";
 import Visibility from "../../FinanceDivisionAccountant/InvoicesneedtobePaid/Visibility";
+import ViewNote from "../../../components/Popups/DonePopup/ViewNote";
+import { Link as Routerlink } from "react-router-dom";
 //===============Applicable for table data===================================
 
 const columns = [
@@ -76,12 +78,10 @@ const rows = [
     "500",
     "IT Department",
     "Good Papers",
-    <Visibility/>,
+    <VendorDetails/>,
     "2023/01/01",
     <ApprovePopup />,
-    <Visibility />
-    
-   
+    <ViewNote/>
   ),
   createData(
     "I0028",
@@ -89,12 +89,11 @@ const rows = [
     "10",
     "IT Department",
     "15cm rulers",
-    <Visibility />,
+    <VendorDetails/>,
     "2023/01/01",
    
       <ApprovePopup />,
-      <Visibility />
-    
+      <ViewNote/>
   ),
   createData(
     "I0015",
@@ -102,10 +101,10 @@ const rows = [
     "50",
     "IT Department",
     "steel",
-    <Visibility />,
+    <VendorDetails/>,
     "2023/01/01",
       <ApprovePopup />,
-      <Visibility/>
+      <ViewNote/>
   ),
   
 ];
@@ -139,10 +138,12 @@ function AuditReport() {
       
       <div className={styles.afmpp_mainBody}>
         <div className={styles.afmpp_heading}>
+          <Routerlink to={-1}>
           <IconButton sx={{ pl: "15px", height: "34px", width: "34px" }}>
             <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
           </IconButton>
-          Audit Finalized Master Procurement Plan
+          </Routerlink>
+          Audit Report
         </div>
         <div className={styles.afmpp_title_search}>
           <div className={styles.afmpp_title}>
@@ -221,7 +222,7 @@ function AuditReport() {
         <div className={styles.afmpp_button}>
           <DonePopup
             text={"Successfully fowarded to Director General"}
-            title={"Submit to DG"}
+            title={"Forward to DG"}
             styles={{
               position: "absolute",
               right: "0",
