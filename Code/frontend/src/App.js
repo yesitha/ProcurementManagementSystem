@@ -40,7 +40,7 @@ import CreateInvoice2 from "./pages/Vendor/CreateInvoice2/CreateInvoice2";
 import SendInvoice from "./pages/Vendor/SendInvoice/SendInvoice";
 import UploadPaymentVoucher from "./pages/FinanceDivisionAccountant/UploadPaymentVouncher/UploadPaymentVoucher";
 import AddItemstoGRN from "./pages/FinanceDivisionHOD/AddItemstoGRN/AddItemstoGRN";
-import CreateMasterProcurementPlan from "./pages/CreateMasterProcurementPlan/CreateMasterProcurementPlan";
+
 import InvoicestobePaid from "./pages/FinanceDivisionHOD/InvoicestobePaid/InvoicestobePaidFin";
 import ReviseVendorSelection from "./pages/TEC Committee/Revise Vendor Selection/ReviseVendorSelection";
 import { Route, Routes } from "react-router-dom";
@@ -61,6 +61,11 @@ import AuditReport from "./pages/Procurement Officer/AuditReport/AuditReport";
 import PurchseOrdersVendor from "./pages/Vendor/PurchaseOrdersVendor/PurchseOrdersVendor";
 import PurchaseOrderPreview from "./pages/Vendor/PurchaseOrderPreview/PurchaseOrderPreview";
 import SendPurchaseOrder from "./pages/Procurement Officer/SendPurchaseOrder/SendPurchaseOrder";
+
+import CreateSubProcurementPlan from "./pages/Create SubProcurement Plan Division HOD/CreateSubProcurementPlan";
+import CreateMasterProcurementPlan from "./pages/CreateMasterProcurementPlan/CreateMasterProcurementPlan";
+
+
 import EvaluateVendorFinanceStatus from "./pages/Procurement Officer/Evaluate Vendor Finance Status/EvaluateVendorFinanceStatus";
 import MasterProcurementPlanTEC from "./pages/TEC Committee/MasterProcurementPlanTEC/MasterProcurementPlanTEC";
 import ViewItemTEC from "./pages/TEC Committee/ViewItemTEC/ViewItemTEC";
@@ -70,8 +75,9 @@ import BidVerificationSubmit from "./pages/Vendor/Bid Verification Submit/BidVer
 import IssueItem from "./pages/InventoryManager/IssueItem/IssueItem";
 import AssetRegistry from "./pages/Assets Registry/AssetRegistry";
 import LetterofAcceptance from "./pages/Vendor/Letter of Acceptance/LetterofAcceptance";
-import CreateSubProcurementPlan from "./pages/Create SubProcurement Plan Division HOD/CreateSubProcurementPlan";
+
 import PDViewSubProcurementPlan from "./pages/Dicvision HOD/PDViewSubProcurementPlan/PDViewSubProcurementPlan"
+
 function App() {
   const baseState = useSelector((store) => store.base);
 
@@ -98,14 +104,18 @@ function App() {
             element={<AddItemtoSubProcurementPlan />}
           />
           <Route
-            path="/SubProcurmentPlan"
+            path="/SubProcurmentPlan/"
+            element={<CreateSubProcurementPlan/>}
+          />
+          <Route
+            path="/SubProcurmentPlan/:selectedSubIdfomNextPage"
             element={<CreateSubProcurementPlan/>}
           />
 
           {/* Purchase Division HOD */}
           <Route
             path="/NewSubProcurmentPlan"
-            element={<CreateMasterProcurementPlan />}
+            element={<CreateMasterProcurementPlan/>}
           />
           <Route
             path="/RequesttoInitiateMasterProcurementPlan"
@@ -199,8 +209,15 @@ function App() {
             element={<MasterProcurementPlanTEC />}
           />
           <Route
+
+            path="/rejected-item-modified"
+            element={<CreateMasterProcurementPlan/>}
+            />
+            <Route
+
             path="/vendor-rejected-tec"
             element={<ReviseVendorSelection />}
+
           />
 
           {/* Procurement Committee */}
