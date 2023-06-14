@@ -39,7 +39,7 @@ const rows = [
     "GSM 80",
     <Typography sx={{ color: "#227C70" }}>LKR 4000</Typography>,
     <Typography sx={{ color: "#227C70" }}>Selected</Typography>,
-    <Routerlink to={'/'}>
+    <Routerlink to={'/bid-verification-submit'}>
     <Button
       variant="contained"
       sx={{

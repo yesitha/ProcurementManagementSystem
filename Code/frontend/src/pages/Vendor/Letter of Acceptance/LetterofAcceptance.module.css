@@ -27,14 +27,13 @@
 }
 .MiddleSection {
   padding-right: 10px;
-  display: flex;
-  flex-direction: column;
+  width:700px;
+  
 }
 .downSection {
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
-  width: 100%;
 }
 .TenderDetailsPageContainer__header {
   padding-right: 10px;
@@ -65,5 +64,20 @@
 .tableNbutton {
   display: flex;
   flex-direction: row;
-  width: fit-content;
+  flex-wrap: wrap;
+}
+
+.color{
+    color:white;
+    font-family: Inter;
+}
+.divide{
+    display:flex;
+    flex-direction: row;
+
+   
+}
+
+.rightside{
+ 
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./AddNewItem.module.css";
+import styles from "./IssueItem.module.css";
 import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import TextField from "@mui/material/TextField";
 import { Paper } from "@mui/material";
@@ -7,7 +7,7 @@ import SelectDropDown from "../../../components/SelectDropDown/SelectDropDown";
 import { Link as Routerlink } from "react-router-dom";
 import { Button, IconButton, Typography } from "@mui/material";
 
-export default function AddNewItem() {
+export default function IssueItem() {
   const list = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
 
   return (
@@ -21,7 +21,7 @@ export default function AddNewItem() {
           marginTop: "20px",
         }}
       >
-        Add New Item
+        Issue Item
       </div>
 
       <Paper elevation={6} className={styles.note1}>
@@ -55,6 +55,16 @@ export default function AddNewItem() {
             </div>
           </div>
           <div className={styles.bodyContent}>
+              <TextField
+                width="306px"
+                id="email"
+                label="QUANTITY"
+                name="email"
+                autoComplete="email"
+                autoFocus
+              />
+            </div>
+          <div className={styles.bodyContent}>
             <TextField
               width="10px"
               height="210px"
@@ -81,7 +91,7 @@ export default function AddNewItem() {
             height: "48px",
           }}
         >
-          Add
+          Issue
         </Button>
         </Routerlink>
       </div>

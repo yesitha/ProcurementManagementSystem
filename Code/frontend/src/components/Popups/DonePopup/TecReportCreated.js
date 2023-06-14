@@ -9,6 +9,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { Button } from "@mui/material";
 import { Link as Routerlink } from "react-router-dom";
 
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -20,10 +21,9 @@ const style = {
   borderRadius: 5,
   boxShadow: 24,
   p: 3,
-
 };
 
-export default function Sucessfullyinformed({ name, title, styles }) {
+export default function BasicModal({ text, title, styles }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -59,7 +59,7 @@ export default function Sucessfullyinformed({ name, title, styles }) {
             fontFamily={"Inter"}
             sx={{ mt: -2 }}
           >
-            DONE!
+            TEC REPORT CREATED!
           </Typography>
           <Typography
             id="modal-modal-description"
@@ -67,7 +67,7 @@ export default function Sucessfullyinformed({ name, title, styles }) {
             sx={{ mt: 1, color: "#A3A3A3" }}
             align="center"
           >
-            Successfully informed {name}
+            {text}
           </Typography>
           <div
             style={{
@@ -79,6 +79,7 @@ export default function Sucessfullyinformed({ name, title, styles }) {
           >
             <Routerlink to={-1}>
             <Button
+            onClick={handleClose}
               variant="contained"
               fontFamily={"Inter"}
               sx={{

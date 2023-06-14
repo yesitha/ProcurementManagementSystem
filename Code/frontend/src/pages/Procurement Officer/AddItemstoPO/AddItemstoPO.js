@@ -31,6 +31,8 @@ import {
   import TablePagination from "@mui/material/TablePagination";
   import TableRow from "@mui/material/TableRow";
   import DeleteIcon from "@mui/icons-material/Delete";
+  import DonePopup from "../../../components/Popups/DonePopup/DonePopup";
+  import { Link as Routerlink } from 'react-router-dom';
 
   const columns = [
     
@@ -70,13 +72,13 @@ function AddItemstoPO() {
     <div>
         <div className={styles.divide}>
     <div className={styles.NotificationPageContainer__header}>
-    
+    <Routerlink to={-1}>
     <IconButton
       sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
     >
       <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
     </IconButton>
-    
+    </Routerlink>
     <h1 className={styles.NotificationPageHeader}> Add Items to PO</h1>
   </div>
   <div>
@@ -167,13 +169,14 @@ function AddItemstoPO() {
             />
           </Paper>
           </div>
-          <Button
-      variant="contained"
-      fontFamily={"Inter"}
-      sx={{ bgcolor: "#205295", borderRadius: 5, height: 50, width: 200,marginLeft:"1200px",marginTop:"20px" }}
-    >
-     ADD TO PO
-    </Button>
+    <DonePopup
+            text={"Successfully Added Item to PO"}
+            title={"ADD TO PO"}
+            fontFamily={"Inter"}
+            styles={{
+              bgcolor: "#205295", borderRadius: 5, height: 50, width: 200,marginLeft:"1200px",marginTop:"20px" 
+            }}
+          />
   </div>
   )
 }

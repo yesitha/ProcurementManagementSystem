@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./TenderDetails.module.css";
+import styles from "./BidVerificationSubmit.module.css";
 import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import { useParams } from "react-router-dom";
 import {
@@ -37,28 +37,26 @@ function createData(DOC, view, upld, del) {
 
 const rows = [
   createData(
-    "DOC 1",
+    "Agreement",
     <Button variant="contained">View</Button>,
     <Button variant="contained">Upload</Button>,
     <Button variant="contained">Delete</Button>
   ),
   createData(
-    "DOC 2",
+    "Bank Garantee",
     <Button variant="contained">View</Button>,
     <Button variant="contained">Upload</Button>,
     <Button variant="contained">Delete</Button>
   ),
   createData(
-    "DOC 3",
+    "Bond",
     <Button variant="contained">View</Button>,
     <Button variant="contained">Upload</Button>,
     <Button variant="contained">Delete</Button>
   ),
 ];
 
-function TenderDetails() {
-
-  const { itemId } = useParams();
+function BidVerificationSubmit() {
 
   return (
     <div style={{ overflowX: "hidden" }}>
@@ -80,7 +78,7 @@ function TenderDetails() {
               <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
             </IconButton>
             </Routerlink>
-            <h1 className={styles.Header}>Tender Details</h1>
+            <h1 className={styles.Header}>Bid Verification Submit</h1>
           </div>
         </div>
 
@@ -108,7 +106,7 @@ function TenderDetails() {
               rows={4}
               sx={{ width: 500 }}
             />
-            DUE DATE
+            ITEM NAME
             <TextField
               margin="normal"
               required
@@ -135,16 +133,6 @@ function TenderDetails() {
               fullWidth
               id="bidvalue"
               name="bidvalue"
-              size="small"
-              sx={{ width: 300 }}
-            />
-            TENDER VALUE
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="tendervalue"
-              name="tendervalue"
               size="small"
               sx={{ width: 300 }}
             />
@@ -214,22 +202,11 @@ function TenderDetails() {
                 </Table>
               </TableContainer>
             </Paper>
-            <Routerlink to={-1}>
-            <Button
-              variant="contained"
-              sx={{
-                backgroundColor: "#227C70",
-                width: 150,
-                height: 150,
-                borderRadius: "20px",
-              }}
-            >
-              <Container display="flex" flexDirection="column">
-                <GavelIcon style={{ fontSize: 40 }}/>
-                <Typography>Place BID</Typography>
-              </Container>
+            <Routerlink to={'/letter-of-acceptance'}>
+            <Button variant="contained" sx={{height:50}}>
+               Next
              </Button>
-            </Routerlink>
+             </Routerlink>
           </div>
         </div>
       </Container>
@@ -237,4 +214,4 @@ function TenderDetails() {
   );
 }
 
-export default TenderDetails;
+export default BidVerificationSubmit;

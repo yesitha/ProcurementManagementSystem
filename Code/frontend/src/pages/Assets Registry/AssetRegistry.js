@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./styles.module.css";
+import styles from "./AssetRegistry.module.css";
 import SideNavBar from "../../components/SideNavigationBar/SideNavBar";
 import { Button, IconButton, Paper, Stack, TextField } from "@mui/material";
 import Table from "@mui/material/Table";
@@ -97,89 +97,10 @@ const rows = [
     "Rs.110",
     "Rs.27000"
   ),
-  createData(
-    "2023/01/08",
-    "4500",
-    "stapler",
-    "William",
-    "900",
-    "Rs.120",
-    "Rs.30000"
-  ),
-  createData(
-    "2023/01/09",
-    "5000",
-    "glue",
-    "Ashley",
-    "1000",
-    "Rs.130",
-    "Rs.33000"
-  ),
-  createData(
-    "2023/01/10",
-    "5500",
-    "paper clip",
-    "Jacob",
-    "1100",
-    "Rs.140",
-    "Rs.36000"
-  ),
-  createData(
-    "2023/01/11",
-    "6000",
-    "tape",
-    "Isabella",
-    "1200",
-    "Rs.150",
-    "Rs.39000"
-  ),
-  createData(
-    "2023/01/12",
-    "6500",
-    "highlighter",
-    "Ethan",
-    "1300",
-    "Rs.160",
-    "Rs.42000"
-  ),
-  createData(
-    "2023/01/13",
-    "7000",
-    "folder",
-    "Ava",
-    "1400",
-    "Rs.170",
-    "Rs.45000"
-  ),
-  createData(
-    "2023/01/14",
-    "7500",
-    "file",
-    "Alexander",
-    "1500",
-    "Rs.180",
-    "Rs.48000"
-  ),
-  createData(
-    "2023/01/15",
-    "8000",
-    "envelope",
-    "Charlotte",
-    "1600",
-    "Rs.190",
-    "Rs.51000"
-  ),
-  createData(
-    "2023/01/16",
-    "8500",
-    "notebook",
-    "Oliver",
-    "1700",
-    "Rs.200",
-    "Rs.54000"
-  ),
+ 
+
 ];
-export default function Stock() {
+export default function AssetRegistry() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const handleChangePage = (event, newPage) => {
@@ -207,7 +128,7 @@ export default function Stock() {
             <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
           </IconButton>
           </Routerlink>
-        <h1>Stock</h1>
+        <h1>Asset Registry</h1>
       </div>
       <div style={{ display: "flex", flexDirection: "horizontal" }}>
         <div>
@@ -229,29 +150,11 @@ export default function Stock() {
             </Button>
             </Routerlink>
           </div>
-          <div>
-          <Routerlink to={'/issue-item'}>
-            <Button
-              sx={{
-                backgroundColor: "#205295",
-                width: 188,
-                marginLeft: 15,
-                marginTop: 5,
-                borderRadius: 90,
-                fontSize: 20,
-                height: 35,
-                color: "white",
-                border: "none",
-              }}
-            >
-              ISSUE ITEM
-            </Button>
-            </Routerlink>
-          </div>
+          
         </div>
         <div className={styles.note2}>
           <h1 style={{ color: "#205295", fontSize: 24, textAlign: "center" }}>
-            Stock Summary
+            Assets Registry Summary
           </h1>
           <h1 style={{ fontSize: 16, textAlign: "center", color: "#0A2647" }}>
             Total Items
@@ -265,12 +168,6 @@ export default function Stock() {
           </h1>
           <h1 style={{ fontSize: 24, textAlign: "center" }}>LKR 10000</h1>
         </div>
-        <div className={styles.note3}>
-          <h1 style={{ color: "#205295", fontSize: 24, textAlign: "center" }}>
-            Issue <br /> Summary
-          </h1>
-          <h1 style={{ fontSize: 24, textAlign: "center" }}>LKR 10000</h1>
-        </div>
       </div>
       <h1
         style={{
@@ -281,7 +178,7 @@ export default function Stock() {
           marginTop: "100px",
         }}
       >
-        Items in Stock
+        Items in Asset Registry
       </h1>
 
       <div style={{ marginLeft: 100 }} className={styles.downSection}>

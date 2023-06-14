@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./ApprovalForMasterProcurementPlan.module.css";
+import styles from "./ViewItemTEC.module.css";
 import {
   Button,
   Container,
@@ -21,10 +21,11 @@ import {
   Switch,
   Typography,
 } from "@mui/material";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import DoneIcon from "@mui/icons-material/Done";
+import CloseIcon from "@mui/icons-material/Close";
 
-import { Box } from "@mui/system";
-import SearchNoFilter from "../../../components/Search/Search";
 import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import "../../../fonts.css";
 
@@ -35,61 +36,100 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+import EvidenceOfAthorization from "../../../components/Popups/EvidenceOfAuthorization/EvidenceOfAuthorization";
+import ApprovePopup from "../../../components/Popups/DonePopup/ApprovePopup";
+import RejectPopup from "../../../components/Popups/DonePopup/RejectPopup";
+import ViewRecomandedVendors from "../../../components/Popups/ViewRecomandedVendors/ViewRecomandedVendors";
+import { vendors } from "../../../users/vendors.js";
 import { Link as Routerlink } from "react-router-dom";
-
+const item = {
+  "Sub Procurement ID": "SP-001",
+  "Master Procurement ID": "MP-001",
+  "Item ID": "IT-1001",
+  "Item Name": "Office Chairs",
+  Department: "Furniture",
+  Quantity: 20,
+  Specifications: "Comfortable, Adjustable, Ergonomic",
+  "Recommended Vendors": ["Vendor A", "Vendor B"],
+  "Expected Delivery Date": "2023-03-15",
+};
+const Recomandedvendors1 = vendors;
 
 const columns = [
-  {id: "itemID", label: "Item ID", Width: 300, align: "center"},
-  {id: "itemName", label: "Item Name", Width: 300, align: "center"},
-  {id: "quentity", label: "Quentity", Width: 300, align: "center"},
-  {id: "estimatedBudget",label: "Estimated Budget",Width: 300,align: "center",},
-  {id: "action", label: "Action", Width: 300, align: "center"},
+  { id: "SubProID", label: "Sub Procurement ID", Width: 300, align: "center" },
+  { id: "Department", label: "Department", Width: 300, align: "center" },
+  { id: "quentity", label: "Quentity", Width: 300, align: "center" },
+  { id: "Specs", label: "Specifications", Width: 300, align: "center" },
+  {
+    id: "RecVendors",
+    label: "Recommended Vendors",
+    Width: 200,
+    align: "center",
+  },
+  {
+    id: "ExpDelDate",
+    label: "Expected Delivery Date",
+    Width: 350,
+    align: "center",
+  },
+  { id: "Evidence", label: "Evidence", Width: 200, align: "center" },
+  { id: "Action", label: "Action", Width: 300, align: "center" },
 ];
 
-function createData(itemID, itemName, quentity, estimatedBudget, action) {
-  return { itemID, itemName, quentity, estimatedBudget, action };
+function createData(
+  SubProID,
+  Department,
+  quentity,
+  Specs,
+  RecVendors,
+  ExpDelDate,
+  Evidence,
+  Action
+) {
+  return {
+    SubProID,
+    Department,
+    quentity,
+    Specs,
+    RecVendors,
+    ExpDelDate,
+    Evidence,
+    Action,
+  };
 }
 
 const rows = [
   createData(
-    "IT-0001",
-    "A4 Bundle",
-    "400",
-    "Rs. 1000000",
-    <Routerlink to={'/view-item-tec'}>
-    <Button
-      className={styles.ViewButton}
-      variant="contained"
-      sx={{ borderRadius: 8, px: { xs: 2, md: 5 } }}
-    >
-      {" "}
-      View{" "}
-    </Button>
-    </Routerlink>
+    "SP-001",
+    "IT",
+    "20",
+    "Comfortable, Adjustable, Ergonomic",
+    <ViewRecomandedVendors vendors={Recomandedvendors1} />,
+    "2023-05-07",
+    <EvidenceOfAthorization />,
+    <div className={styles.ActionButonsContainer}>
+      <ApprovePopup />
+      <RejectPopup />
+    </div>
   ),
   createData(
-    "IT-0002",
-    "Pen",
-    "2000",
-    "Rs. 2000000",
-    <Routerlink to={'/view-item-tec'}>
-    <Button
-      className={styles.ViewButton}
-      variant="contained"
-      sx={{ borderRadius: 8, px: { xs: 2, md: 5 } }}
-    >
-      {" "}
-      View{" "}
-    </Button>
-    </Routerlink>
+    "SP-001",
+    "Finace",
+    "20",
+    "Comfortable, Adjustable, Ergonomic",
+    <ViewRecomandedVendors vendors={Recomandedvendors1} />,
+    "2023-05-07",
+    <EvidenceOfAthorization />,
+    <div className={styles.ActionButonsContainer}>
+      <ApprovePopup />
+      <RejectPopup />
+    </div>
   ),
 ];
 
-const procurementId = "MP-0001";
-const grandTotal = "Rs. 1000000";
 const creationDate = "2021-09-01";
 
-function ApprovalForMasterProcurementPlan() {
+function ViewItemTEC() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const handleChangePage = (event, newPage) => {
@@ -102,7 +142,6 @@ function ApprovalForMasterProcurementPlan() {
   };
   return (
     <div className={styles.outer}>
-
       <Container
         sx={{
           ml: { xs: "60px", sm: "65px", md: "65px", lg: "68px", xl: "70px" },
@@ -121,9 +160,7 @@ function ApprovalForMasterProcurementPlan() {
               <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
             </IconButton>
             </Routerlink>
-            <h1 className={styles.Header}>
-              Approval for Master Procurement Plan
-            </h1>
+            <h1 className={styles.Header}>{item["Item Name"]}</h1>
           </div>
         </div>
 
@@ -140,7 +177,7 @@ function ApprovalForMasterProcurementPlan() {
                   color: "#ffffff",
                 }}
               >
-                MASTER PROCUREMENT ID : {procurementId}
+                MASTER PROCUREMENT ID : {item["Master Procurement ID"]}
               </Typography>
               <Typography
                 sx={{
@@ -158,7 +195,7 @@ function ApprovalForMasterProcurementPlan() {
                   color: "#ffffff",
                 }}
               >
-                GRAND TOTAL : {grandTotal}
+                ITEM ID : {item["Item ID"]}
               </Typography>
             </Container>
           </div>
@@ -241,4 +278,4 @@ function ApprovalForMasterProcurementPlan() {
   );
 }
 
-export default ApprovalForMasterProcurementPlan;
+export default ViewItemTEC;

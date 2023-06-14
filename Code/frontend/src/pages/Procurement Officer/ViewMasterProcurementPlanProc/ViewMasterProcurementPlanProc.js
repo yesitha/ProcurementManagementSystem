@@ -30,6 +30,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import Visibility from "../../FinanceDivisionAccountant/InvoicesneedtobePaid/Visibility";
+import { Link as Routerlink } from 'react-router-dom';
 
 const columns = [
   {
@@ -43,9 +44,10 @@ const columns = [
   { id: "Status", label: "Status", Width: 200, align: "center" },
   { id: "Action1", label: "Action", Width: 200, align: "center" },
   { id: "Action2", label: "Action", Width: 200, align: "center" },
+  { id: "Action3", label: "Action", Width: 200, align: "center" },
 ];
-function createData(MasterProcurementPlanID, GrandTotal, CreationDate, Status,Action1,Action2) {
-  return { MasterProcurementPlanID, GrandTotal, CreationDate, Status,Action1,Action2 };
+function createData(MasterProcurementPlanID, GrandTotal, CreationDate, Status,Action1,Action2,Action3) {
+  return { MasterProcurementPlanID, GrandTotal, CreationDate, Status,Action1,Action2,Action3 };
 }
 
 const rows = [
@@ -53,7 +55,8 @@ const rows = [
     "MP-0001",
     "Rs. 1000000",
     "2021-09-01",
-    <Visibility />,
+    <Routerlink to={'/master-procurement-plan-status'}><Visibility /></Routerlink>,
+    <Routerlink to={'/view-master-procurement-plan'}>
     <Button
       className={styles.ViewButton}
       variant="contained"
@@ -61,7 +64,8 @@ const rows = [
     >
       {" "}
       View{" "}
-    </Button>,
+    </Button></Routerlink>,
+    <Routerlink to={'/create-modify-teccommittee'}>
     <Button
     className={styles.ViewButton}
     variant="contained"
@@ -69,13 +73,23 @@ const rows = [
   >
     {" "}
     Appoint Tec <br/>Committee{" "}
-  </Button>
+  </Button></Routerlink>,
+  <Routerlink to={'/create-modify-bidopeningC'}>
+    <Button
+    className={styles.ViewButton}
+    variant="contained"
+    sx={{ borderRadius: 8, px: { xs: 2, md: 5 } }}
+  >
+    {" "}
+    Appoint BidOpening <br/>Committee{" "}
+  </Button></Routerlink>
   ),
   createData(
     "MP-0002",
     "Rs. 2000000",
     "2021-09-02",
-    <Visibility />,
+    <Routerlink to={'/master-procurement-plan-status'}><Visibility /></Routerlink>,
+    <Routerlink to={'/view-master-procurement-plan'}>
     <Button
       className={styles.ViewButton}
       variant="contained"
@@ -83,7 +97,8 @@ const rows = [
     >
       {" "}
       View{" "}
-    </Button>,
+    </Button></Routerlink>,
+     <Routerlink to={'/create-modify-teccommittee'}>
      <Button
      className={styles.ViewButton}
      variant="contained"
@@ -91,72 +106,16 @@ const rows = [
    >
      {" "}
      Appoint Tec <br/>Committee{" "}
-   </Button>
-  ),
-  createData(
-    "MP-0003",
-    "Rs. 3000000",
-    "2021-09-03",
-    <Visibility />,
-    <Button
-      className={styles.ViewButton}
-      variant="contained"
-      sx={{ borderRadius: 8, px: { xs: 2, md: 5 } }}
-    >
-      {" "}
-      view{" "}
-    </Button>,
-     <Button
-     className={styles.ViewButton}
-     variant="contained"
-     sx={{ borderRadius: 8, px: { xs: 2, md: 5 } }}
-   >
-     {" "}
-     Appoint Tec <br/>Committee{" "}
-   </Button>
-  ),
-  createData(
-    "MP-0004",
-    "Rs. 4000000",
-    "2021-09-04",
-    <Visibility />,
-    <Button
-      className={styles.ViewButton}
-      variant="contained"
-      sx={{ borderRadius: 8, px: { xs: 2, md: 5 } }}
-    >
-      {" "}
-      View{" "}
-    </Button>,
-     <Button
-     className={styles.ViewButton}
-     variant="contained"
-     sx={{ borderRadius: 8, px: { xs: 2, md: 5 } }}
-   >
-     {" "}
-     Appoint Tec <br/>Committee{" "}
-   </Button>
-  ),
-  createData(
-    "MP-0005",
-    "Rs. 5000000",
-    "2021-09-05",
-    <Visibility />,
-    <Button
-      className={styles.ViewButton}
-      variant="contained"
-      sx={{ borderRadius: 8, px: { xs: 2, md: 5 } }}
-    >
-      View
-    </Button>,
-     <Button
-     className={styles.ViewButton}
-     variant="contained"
-     sx={{ borderRadius: 8, px: { xs: 2, md: 5 } }}
-   >
-     {" "}
-     Appoint Tec <br/>Committee{" "}
-   </Button>
+   </Button></Routerlink>,
+   <Routerlink to={'/create-modify-bidopeningC'}>
+   <Button
+   className={styles.ViewButton}
+   variant="contained"
+   sx={{ borderRadius: 8, px: { xs: 2, md: 5 } }}
+ >
+   {" "}
+   Appoint BidOpening <br/>Committee{" "}
+ </Button></Routerlink>
   ),
 ];
 
@@ -177,13 +136,13 @@ function ViewMasterProcurementPlanProc() {
   return (
     <div >
     <div className={styles.NotificationPageContainer__header}>
-    
+    <Routerlink to={-1}>
     <IconButton
       sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
     >
       <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
     </IconButton>
-    
+    </Routerlink>
     <h1 className={styles.NotificationPageHeader}> Master Procurement Plan</h1>
   </div>
   <div className={styles.MiddleSection}>

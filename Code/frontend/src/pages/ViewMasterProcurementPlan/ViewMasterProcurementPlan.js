@@ -1,14 +1,9 @@
 import React from "react";
-import SideNavBar from "../../components/SideNavigationBar/SideNavBar";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import {
   Button,
-  FormControl,
   IconButton,
-  InputLabel,
-  MenuItem,
   Paper,
-  Select,
   Stack,
   TextField,
   Typography,
@@ -96,69 +91,7 @@ function ViewMasterProcurementPlan() {
       <ViewRecomandedVendors vendors={Recomandedvendors1} />,
       Setdate("2022.12.12")
     ),
-    createData(
-      "I0016",
-      "Pens",
-      "100",
-      "Finance",
-      "24 BOX",
-      <ViewRecomandedVendors vendors={Recomandedvendors1} />,
-      Setdate("2022.12.12")
-    ),
-    createData(
-      "I0017",
-      "Notebooks",
-      "25",
-      "Finance",
-      "240 GSM",
-      <ViewRecomandedVendors vendors={Recomandedvendors1} />,
-      Setdate("2022.12.12")
-    ),
-    createData(
-      "I0018",
-      "Printer Ink",
-      "10",
-      "Finance",
-      "Black",
-      <ViewRecomandedVendors vendors={Recomandedvendors1} />,
-      Setdate("2022.12.12")
-    ),
-    createData(
-      "I0019",
-      "Paper Clips",
-      "200",
-      "Finance",
-      "Aluminium",
-      <ViewRecomandedVendors vendors={Recomandedvendors1} />,
-      Setdate("2022.12.12")
-    ),
-    createData(
-      "I0020",
-      "Tape",
-      "15",
-      "Finance",
-      "240 GSM",
-      <ViewRecomandedVendors vendors={Recomandedvendors1} />,
-      Setdate("2022.12.12")
-    ),
-    createData(
-      "I0021",
-      "Envelopes",
-      "75",
-      "Finance",
-      "240 GSM",
-      <ViewRecomandedVendors vendors={Recomandedvendors1} />,
-      Setdate("2022.12.12")
-    ),
-    createData(
-      "I0022",
-      "File Folders",
-      "50",
-      "Finance",
-      "240 GSM",
-      <ViewRecomandedVendors vendors={Recomandedvendors1} />,
-      Setdate("2022.12.12")
-    ),
+    
   ];
 
   const [page, setPage] = React.useState(0);
