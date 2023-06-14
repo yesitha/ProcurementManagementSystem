@@ -114,7 +114,7 @@ const [rightTableData, setRightTableData] = useState([]);
                       </TableCell>
                       <TableCell>{row.department}</TableCell>
                       <TableCell>
-                        <Routerlink to={`/new`}>
+                        <Routerlink to={`/pd-view-sub-procurement-plan`}>
                         <PreviewIcon onClick={(event) => {
                           event.stopPropagation();
                           console.log("Preview Clicked");
@@ -170,7 +170,7 @@ const [rightTableData, setRightTableData] = useState([]);
                           {row.firstname + " " + row.lastname}
                         </TableCell>
                         <TableCell>{row.department}</TableCell>
-                        <TableCell><Routerlink to={`/new`}>
+                        <TableCell><Routerlink to={`/pd-view-sub-procurement-plan`}>
                         <PreviewIcon onClick={(event) => {
                           event.stopPropagation();
                           console.log("Preview Clicked");
