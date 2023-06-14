@@ -121,6 +121,10 @@ function App() {
             path="/RequesttoInitiateMasterProcurementPlan"
             element={<RequesttoInitiateSubProcurementPlan />}
           />
+           <Route
+            path="/pd-view-sub-procurement-plan"
+            element={<PDViewSubProcurementPlan />}
+          />
 
           {/* ProcurementOfficer */}
           <Route
