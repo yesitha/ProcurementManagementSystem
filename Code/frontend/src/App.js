@@ -2,7 +2,6 @@ import "./App.css";
 import ManageAuction from "./pages/BidOpeningCommitee/ManageAuction/ManageAuction";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import NotificationPage from "./pages/NotificationPage/NotificationPage";
-// import CreateSubProcurementPlan from "./pages/Create SubProcurement Plan Division HOD/CreateSubProcurementPlan";
 import SignUp from "./pages/SignUp/SignUp";
 import FinalizedMasterProcurementPlan from "./pages/ProcurementCommitee/FinalizedMasterProcurementPlan/FinalizedMasterProcurementPlan";
 import MasterProcurementPlanStatus from "./pages/MasterProcurementPlanStatus/MasterProcurementPlanStatus";
@@ -53,7 +52,6 @@ import Invoicesvendorside from "./pages/Vendor/Invoices(vendorside)/Invoices(ven
 import InvoicesneedtobePaid from "./pages/FinanceDivisionAccountant/InvoicesneedtobePaid/InvoicesneedtobePaid";
 import ViewMasterProcurementPlanProc from "./pages/Procurement Officer/ViewMasterProcurementPlanProc/ViewMasterProcurementPlanProc";
 import PurchaseOrder from "./pages/Procurement Officer/PurchaseOrder/PurchaseOrder";
-import Signup from "./pages/SignUp/SignUp";
 import { useSelector } from "react-redux";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -73,7 +71,7 @@ import IssueItem from "./pages/InventoryManager/IssueItem/IssueItem";
 import AssetRegistry from "./pages/Assets Registry/AssetRegistry";
 import LetterofAcceptance from "./pages/Vendor/Letter of Acceptance/LetterofAcceptance";
 import CreateSubProcurementPlan from "./pages/Create SubProcurement Plan Division HOD/CreateSubProcurementPlan";
-
+import PDViewSubProcurementPlan from "./pages/Dicvision HOD/PDViewSubProcurementPlan/PDViewSubProcurementPlan"
 function App() {
   const baseState = useSelector((store) => store.base);
 
