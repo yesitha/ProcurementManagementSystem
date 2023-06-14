@@ -6,6 +6,6 @@
         public string CategoryName { get; set; }
 
         //One to many Relationships
-        public ICollection<ApprovedItem> ApprovedItems { get; set; }
+        public ICollection<Item> Items { get; set; }
     }
 }
