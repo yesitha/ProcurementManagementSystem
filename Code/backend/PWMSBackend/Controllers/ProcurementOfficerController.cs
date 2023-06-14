@@ -223,7 +223,218 @@ namespace PWMSBackend.Controllers
 
         //Modify TEC Committee page controllers (1-GET 1-POST)
 
-        //[HttpGet("GetTECCommitteeMembers/{mppId}")]
+        [HttpGet("GetEmployeesInTECCommittee/{mppId}")]
+        public IActionResult GetEmployeesInTECCommittee(string mppId)
+        {
+            // Retrieve the TecCommitteeId from the MasterProcurementPlan
+            var tecCommitteeId = _context.MasterProcurementPlans
+                .Where(m => m.MppId == mppId)
+                .Select(m => m.TecCommitteeId)
+                .FirstOrDefault();
 
+            if (tecCommitteeId == null)
+            {
+                // TecCommitteeId for the provided MppId does not exist
+                return NotFound();
+            }
+
+            // Retrieve the list of employee IDs in the TEC Committee
+            var tecCommitteeEmployeeIds = _context.CommitteeMemberCommittees
+                .Where(c => c.CommitteeId == tecCommitteeId)
+                .Select(c => c.EmployeeId)
+                .ToList();
+
+            // Retrieve the employees in the TEC Committee and their division information
+            var employeesInTECCommittee = _context.ProcurementEmployees
+                .Where(e => tecCommitteeEmployeeIds.Contains(e.EmployeeId))
+                .Select(e => new
+                {
+                    e.EmployeeId,
+                    e.EmployeeName,
+                    DivisionName = e.Division.DivisionName
+                })
+                .ToList();
+
+            // Retrieve all employees and their division information
+            var allEmployees = _context.ProcurementEmployees
+                .Include(e => e.Division)
+                .Select(e => new
+                {
+                    e.EmployeeId,
+                    e.EmployeeName,
+                    DivisionName = e.Division.DivisionName
+                })
+                .ToList();
+
+            // Determine the other employees (not in the TEC Committee)
+            var otherEmployees = allEmployees
+                .Where(e => !tecCommitteeEmployeeIds.Contains(e.EmployeeId))
+                .ToList();
+
+            // Prepare the response data
+            var response = new
+            {
+                EmployeesInTECCommittee = employeesInTECCommittee,
+                OtherEmployees = otherEmployees
+            };
+
+            return Ok(response);
+        }
+
+
+        [HttpPost("ModifyTECCommitteeMembers/{mppId}")]
+        public IActionResult ModifyTECCommitteeMembers(string mppId, List<string> employeeIds)
+        {
+            // Find the TecCommitteeId from the provided MppId
+            var masterProcurementPlan = _context.MasterProcurementPlans
+                .FirstOrDefault(m => m.MppId == mppId);
+
+            if (masterProcurementPlan == null || masterProcurementPlan.TecCommitteeId == null)
+            {
+                return BadRequest("Invalid MppId. MasterProcurementPlan or TecCommittee not found.");
+            }
+
+            // Get the TecCommitteeId
+            string tecCommitteeId = masterProcurementPlan.TecCommitteeId;
+
+            // Retrieve the existing employeeIds in the TecCommittee
+            var existingEmployeeIds = _context.CommitteeMemberCommittees
+                .Where(c => c.CommitteeId == tecCommitteeId)
+                .Select(c => c.EmployeeId)
+                .ToList();
+
+            // Remove employees who are not in the new list from the TecCommittee
+            var employeesToRemove = existingEmployeeIds.Except(employeeIds).ToList();
+            var committeeMembersToRemove = _context.CommitteeMemberCommittees
+                .Where(c => c.CommitteeId == tecCommitteeId && employeesToRemove.Contains(c.EmployeeId))
+                .ToList();
+
+            _context.CommitteeMemberCommittees.RemoveRange(committeeMembersToRemove);
+
+            // Add employees who are not in the existing list to the TecCommittee
+            var employeesToAdd = employeeIds.Except(existingEmployeeIds).ToList();
+            foreach (var employeeId in employeesToAdd)
+            {
+                var committeeMemberCommittee = new CommitteeMemberCommittee
+                {
+                    EmployeeId = employeeId,
+                    CommitteeId = tecCommitteeId
+                };
+
+                _context.CommitteeMemberCommittees.Add(committeeMemberCommittee);
+            }
+
+            _context.SaveChanges();
+
+            return Ok("TECCommittee members updated successfully.");
+        }
+
+        //Modify BidOpening Committee page controllers (1-GET 1-POST)
+
+        [HttpGet("GetEmployeesInBidOpeningCommittee/{mppId}")]
+        public IActionResult GetEmployeesInBidOpeningCommittee(string mppId)
+        {
+            // Retrieve the BidOpeningCommitteeId from the MasterProcurementPlan
+            var bidOpeningCommitteeId = _context.MasterProcurementPlans
+                .Where(m => m.MppId == mppId)
+                .Select(m => m.BidOpeningCommitteeId)
+                .FirstOrDefault();
+
+            if (bidOpeningCommitteeId == null)
+            {
+                // BidOpeningCommitteeId for the provided MppId does not exist
+                return NotFound();
+            }
+
+            // Retrieve the list of employee IDs in the TEC Committee
+            var bidOpeningCommitteeEmployeeIds = _context.CommitteeMemberCommittees
+                .Where(c => c.CommitteeId == bidOpeningCommitteeId)
+                .Select(c => c.EmployeeId)
+                .ToList();
+
+            // Retrieve the employees in the BidOpening Committee and their division information
+            var employeesInBidOpeningCommittee = _context.ProcurementEmployees
+                .Where(e => bidOpeningCommitteeEmployeeIds.Contains(e.EmployeeId))
+                .Select(e => new
+                {
+                    e.EmployeeId,
+                    e.EmployeeName,
+                    DivisionName = e.Division.DivisionName
+                })
+                .ToList();
+
+            // Retrieve all employees and their division information
+            var allEmployees = _context.ProcurementEmployees
+                .Include(e => e.Division)
+                .Select(e => new
+                {
+                    e.EmployeeId,
+                    e.EmployeeName,
+                    DivisionName = e.Division.DivisionName
+                })
+                .ToList();
+
+            // Determine the other employees (not in the TEC Committee)
+            var otherEmployees = allEmployees
+                .Where(e => !bidOpeningCommitteeEmployeeIds.Contains(e.EmployeeId))
+                .ToList();
+
+            // Prepare the response data
+            var response = new
+            {
+                EmployeesInBidOpeningCommittee = employeesInBidOpeningCommittee,
+                OtherEmployees = otherEmployees
+            };
+
+            return Ok(response);
+        }
+
+
+        [HttpPost("ModifyBidOpeningCommitteeMembers/{mppId}")]
+        public IActionResult ModifyBidOpeningCommitteeMembers(string mppId, List<string> employeeIds)
+        {
+            // Find the BidOpeningCommitteeId from the provided MppId
+            var masterProcurementPlan = _context.MasterProcurementPlans
+                .FirstOrDefault(m => m.MppId == mppId);
+
+            if (masterProcurementPlan == null || masterProcurementPlan.BidOpeningCommitteeId == null)
+            {
+                return BadRequest("Invalid MppId. MasterProcurementPlan or BidOpeningCommittee not found.");
+            }
+
+            // Get the BidOpeningCommitteeId
+            string bidOpeningCommitteeId = masterProcurementPlan.BidOpeningCommitteeId;
+
+            // Retrieve the existing employeeIds in the TecCommittee
+            var existingEmployeeIds = _context.CommitteeMemberCommittees
+                .Where(c => c.CommitteeId == bidOpeningCommitteeId)
+                .Select(c => c.EmployeeId)
+                .ToList();
+
+            // Remove employees who are not in the new list from the TecCommittee
+            var employeesToRemove = existingEmployeeIds.Except(employeeIds).ToList();
+            var committeeMembersToRemove = _context.CommitteeMemberCommittees
+                .Where(c => c.CommitteeId == bidOpeningCommitteeId && employeesToRemove.Contains(c.EmployeeId))
+                .ToList();
+
+            _context.CommitteeMemberCommittees.RemoveRange(committeeMembersToRemove);
+
+            // Add employees who are not in the existing list to the BidOpeningCommittee
+            var employeesToAdd = employeeIds.Except(existingEmployeeIds).ToList();
+            foreach (var employeeId in employeesToAdd)
+            {
+                var committeeMemberCommittee = new CommitteeMemberCommittee
+                {
+                    EmployeeId = employeeId,
+                    CommitteeId = bidOpeningCommitteeId
+                };
+
+                _context.CommitteeMemberCommittees.Add(committeeMemberCommittee);
+            }
+
+            _context.SaveChanges();
+
+            return Ok("BidOpeningCommittee members updated successfully.");
+        }
     }
 }
