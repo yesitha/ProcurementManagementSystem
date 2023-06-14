@@ -8,7 +8,7 @@ const user = {
   lastname: "Doe",
   email: "johndoe@gmail.com",
   designation: "Tec Committee Member",
-  userType: "Vendor",
+  userType: "PurchaseDivisionHOD",
   department: "Finance",
   phone: "1234567890",
   address: "123, ABC Street, XYZ City, 123456",
