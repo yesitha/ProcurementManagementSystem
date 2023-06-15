@@ -39,9 +39,13 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VendorDetails from "../../../components/Popups/VendorDetails/VendorDetails";
 import DonePopup from "../../../components/Popups/DonePopup/DonePopup";
 
-
 const columns = [
-  {id: "MasterProcurementPlanID",label: "Master Procurement Plan ID",Width: 300,align: "center",},
+  {
+    id: "MasterProcurementPlanID",
+    label: "Master Procurement Plan ID",
+    Width: 300,
+    align: "center",
+  },
   { id: "GrandTotal", label: "Grand Total", Width: 300, align: "center" },
   { id: "CreationDate", label: "Creation Date", Width: 300, align: "center" },
   { id: "Action", label: "Action", Width: 300, align: "center" },
@@ -78,11 +82,7 @@ const rows = [
       View{" "}
     </Button>
   ),
-  createData(
-    "MP-0003",
-    "Rs. 3000000",
-    "2021-09-03",
-  ),
+  createData("MP-0003", "Rs. 3000000", "2021-09-03"),
   createData(
     "MP-0004",
     "Rs. 4000000",
@@ -141,7 +141,7 @@ function MasterProcurementPlanEvalate() {
               <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
             </IconButton>
 
-            <h1 className={styles.Header}>Master Procurement Plan</h1>
+            <h1 className={styles.Header}>Master Procurement Plan </h1>
           </div>
         </div>
 
