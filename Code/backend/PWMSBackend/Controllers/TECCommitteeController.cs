@@ -92,6 +92,7 @@ namespace PWMSBackend.Controllers
                 .SelectMany(mpp => mpp.SubProcurementPlans)
                 .SelectMany(spp => spp.subProcurementPlanItems)
                 .Where(item => item.ItemId == itemId)
+                .Where(item => item.TecCommitteeStatus == null && item.ProcuremnetCommitteeStatus == null)
                 .Select(item => new
                 {
                     item.SppId,
@@ -128,6 +129,7 @@ namespace PWMSBackend.Controllers
 
             return Ok(result);
         }
+
 
         [HttpPut("UpdateTecCommitteeStatus")]
         public IActionResult UpdateTecCommitteeStatus(string sppId, string itemId, string tecCommitteeStatus, string tecCommitteeComment)

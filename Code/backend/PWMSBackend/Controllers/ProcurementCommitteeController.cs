@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PWMSBackend.Data;
+using PWMSBackend.Models;
 
 namespace PWMSBackend.Controllers
 {
@@ -91,6 +92,7 @@ namespace PWMSBackend.Controllers
                 .SelectMany(mpp => mpp.SubProcurementPlans)
                 .SelectMany(spp => spp.subProcurementPlanItems)
                 .Where(item => item.ItemId == itemId)
+                .Where(item => item.TecCommitteeStatus != null && item.ProcuremnetCommitteeStatus == null)
                 .Select(item => new
                 {
                     item.SppId,
@@ -147,8 +149,53 @@ namespace PWMSBackend.Controllers
 
             _context.SaveChanges();
 
+            if (procurementCommitteeStatus == "approve")
+            {
+                var existingApprovedItem = _context.SubProcurementApprovedItems
+                    .FirstOrDefault(approvedItem => approvedItem.SppId == sppId && approvedItem.ItemId == itemId);
+
+                if (existingApprovedItem == null)
+                {
+                    // Create a new record in SubProcurementApprovedItems table
+                    var approvedItem = new SubProcurementApprovedItems
+                    {
+                        SppId = sppId,
+                        ItemId = itemId,
+                        SubProcurementPlan = subProcurementPlanItem.SubProcurementPlan,
+                        ApprovedItem = subProcurementPlanItem.Item as ApprovedItem,
+                    };
+
+                    _context.SubProcurementApprovedItems.Add(approvedItem);
+                    _context.SaveChanges();
+                }
+            }
+
             return Ok("ProcurementCommitteeStatus and ProcurementCommitteeComment updated successfully.");
         }
 
+
+
+        // Approved Items page Controllers (1-GET)
+
+        [HttpGet("GetApprovedItems/{mppId}")]
+        public IActionResult GetApprovedItems(string mppId)
+        {
+            var approvedItems = _context.MasterProcurementPlans
+                .Where(mpp => mpp.MppId == mppId)
+                .SelectMany(mpp => mpp.SubProcurementPlans)
+                .SelectMany(spp => spp.subProcurementPlanItems)
+                .Where(item => item.ProcuremnetCommitteeStatus == "approve")
+                .GroupBy(item => item.ItemId)
+                .Select(group => new
+                {
+                    ItemId = group.Key,
+                    ItemName = group.First().Item.ItemName,
+                    TotalQuantity = group.Sum(item => item.Quantity),
+                    RecommendedVendors = group.Select(item => item.RecommendedVendor).ToList()
+                })
+                .ToList();
+
+            return Ok(approvedItems);
+        }
     }
 }
