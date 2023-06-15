@@ -92,6 +92,7 @@ namespace PWMSBackend.Controllers
                 .SelectMany(mpp => mpp.SubProcurementPlans)
                 .SelectMany(spp => spp.subProcurementPlanItems)
                 .Where(item => item.ItemId == itemId)
+                .Where(item => item.TecCommitteeStatus != null && item.ProcuremnetCommitteeStatus == null)
                 .Select(item => new
                 {
                     item.SppId,
@@ -174,7 +175,7 @@ namespace PWMSBackend.Controllers
 
 
 
-
+        // Approved Items page Controllers (1-GET)
 
         [HttpGet("GetApprovedItems/{mppId}")]
         public IActionResult GetApprovedItems(string mppId)
