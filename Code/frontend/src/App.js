@@ -122,7 +122,7 @@ function App() {
             element={<RequesttoInitiateSubProcurementPlan />}
           />
            <Route
-            path="/pd-view-sub-procurement-plan"
+            path="/pd-view-sub-procurement-plan/:selectedSubId/:divisionName"
             element={<PDViewSubProcurementPlan />}
           />
 

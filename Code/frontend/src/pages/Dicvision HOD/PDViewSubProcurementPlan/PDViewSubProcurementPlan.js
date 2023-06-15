@@ -32,35 +32,18 @@ import Grid from "@mui/material/Unstable_Grid2";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SearchFilter from "../../../components/Search/Search";
 import SelectDropDown from "../../../components/SelectDropDown/SelectDropDown";
-import { Link as Routerlink } from "react-router-dom";
+import { Link as Routerlink, useParams } from "react-router-dom";
 import DonePopup from "../../../components/Popups/DonePopup/DonePopup";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import {fetchSubProcurementPlanDetails} from '../../../services/PurchasingDivisionHOD/PurchasingDivisionHOD.js';
 
-const hodId='HIP05185';//get from login user(HOD)
+
 function PDViewSubProcurementPlan() {
+  const {selectedSubId,divisionName}=useParams();
 
-  ///////////////Add axios/////////////
-  async function getDivision(hodId) {
-    try {
-      const response = await axios.get(`https://localhost:7102/api/DivisionHOD/divisionName/${hodId}`);
-      return response.data;
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
-  }
 
-  async function getSubProcurmentPlanPerDivision(hodId) {
-    try {
-      const response2 = await axios.get(`https://localhost:7102/api/DivisionHOD/sppIds/${hodId}`);
-      return response2.data;
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
-  }
-
+ 
 
   const columns = [
     { id: "ItemID", label: "Item ID", Width: 300, align: "center" },
@@ -76,7 +59,7 @@ function PDViewSubProcurementPlan() {
     { id: "EDD", label: "Expected Delivery Date", Width: 300, align: "center" },
     { id: "Del", Width: 300, align: "center" },
   ];
-  // function createData(ItemID, ItemName, Qty, Specification, RV, EDD, Del) {
+
   //   return { ItemID, ItemName, Qty, Specification, RV, EDD, Del };
   // }
 
@@ -215,9 +198,9 @@ function PDViewSubProcurementPlan() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-  const [division, setDivision] = useState([]);
+  const division = divisionName;
   const [subIds, setSubIds] = useState([]);
-  const [selectedSubId, setSelectedSubId] = useState('');
+  
   const [data, setData] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredData, setFilteredData] = useState([]);
@@ -249,42 +232,13 @@ function PDViewSubProcurementPlan() {
 
   
 
-  const handleSubIdChange = (event) => {
-    setSelectedSubId(event.target.value);
-  };
-
-  const fetchDataForSubId = async () => {
-    try {
-      const response = await axios.get(`https://localhost:7102/api/DivisionHOD/SubProcurementPlanItems/${selectedSubId}`);
-      setData(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const divisionResponse = await getDivision(hodId);
-        setDivision(divisionResponse);
-      } catch (error) {
-        console.log(error);
-      }
-
-      try {
-        const subIdsResponse = await getSubProcurmentPlanPerDivision(hodId);
-        setSubIds(subIdsResponse);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchData();
-  }, []);
+  
+  
 
   useEffect(() => {
     const fetchDataForSubId = async () => {
       try {
-        const response = await axios.get(`https://localhost:7102/api/DivisionHOD/SubProcurementPlanItems/${selectedSubId}`);
+        const response = await fetchSubProcurementPlanDetails(selectedSubId)
         
         setData(response.data);
         
@@ -296,7 +250,7 @@ function PDViewSubProcurementPlan() {
     
       fetchDataForSubId();
     
-  }, [selectedSubId]);
+  }, []);
   
 
   return (
@@ -327,13 +281,11 @@ function PDViewSubProcurementPlan() {
         <div className={styles.OuterMiddle}>
           <div className={styles.Ph2}>
             <h4>Division: {division}</h4>
+            <h4>Sub Procurement Plan ID: {selectedSubId}</h4>
           </div>
 
           <div className={styles.MiddleSectionN}>
-            <div className={styles.Ph3}>
-              <h4 className={styles.h4m}>SUB PROCUREMENT ID</h4>
-              <SelectDropDown list={subIds} value={selectedSubId} onChange={handleSubIdChange} /> <AddCircleOutlineIcon />
-            </div>
+            
 
             <SearchFilter  value={searchQuery}
         onChange={handleSearchQueryChange}
@@ -389,9 +341,7 @@ function PDViewSubProcurementPlan() {
                   <TableCell align="center">{row.recommendedVendor}</TableCell>
                   <TableCell align="center">{new Date(row.expectedDeliveryDate).toLocaleDateString()}</TableCell>
                   
-                  <TableCell align="center"><IconButton aria-label="delete" sx={{ color: "#205295" }}>
-                <DeleteIcon />
-              </IconButton></TableCell>
+                  
                 </TableRow>
                 
               ))}
@@ -412,15 +362,7 @@ function PDViewSubProcurementPlan() {
 
           
 
-          <div
-            classname="footerButton"
-            style={{ display: "flex", alignContent: "flex-end", marginTop: 15 }}
-          >
-            
-            <Routerlink to={-1}>
-              <Button variant="contained">Add</Button>
-              </Routerlink>
-          </div>
+          
         </div>
       </Container>
     </div>
