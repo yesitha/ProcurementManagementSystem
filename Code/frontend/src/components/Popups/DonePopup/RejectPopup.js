@@ -9,6 +9,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { Button } from "@mui/material";
 import styles from "./RejectPopup.module.css";
 import { Container } from "@mui/system";
+import axios from "axios";
 
 const style = {
   position: "absolute",
@@ -23,10 +24,27 @@ const style = {
   p: 3,
 };
 
-export default function BasicModal() {
+export default function BasicModal(link) {
   const [open, setOpen] = React.useState(false);
+  const [rejectComment, setRejectComment] = React.useState("");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const handleCommentChange = (event) => setRejectComment(event.target.value);
+  const [commentAddedlink, setCommentAddedLink] = React.useState(link.link.toString());
+  const manipulatedString = commentAddedlink.replace('$rejectedComment', rejectComment);
+  
+  const handleOkClick = async () => {
+    setCommentAddedLink(manipulatedString);
+    try {
+      const response = await axios.put(manipulatedString);
+      console.log(manipulatedString);
+      console.log(response);
+      sessionStorage.removeItem('rejectComment');
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
 
   return (
     <div>
@@ -71,12 +89,14 @@ export default function BasicModal() {
           >
             <TextField
               sx={{ width: "150px", height: 50 }}
-              id="outlined-search"
+              id="rejectcomment"
               label="Enter Comment"
               type="search"
+              value={rejectComment}
+              onChange={handleCommentChange}
             />
             <Button
-              onClick={handleClose}
+              onClick={handleOkClick}
               variant="contained"
               fontFamily={"Inter"}
               sx={{

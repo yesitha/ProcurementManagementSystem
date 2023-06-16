@@ -3,29 +3,13 @@ import styles from "./ApprovalForMasterProcurementPlan.module.css";
 import {
   Button,
   Container,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  FormControl,
-  FormControlLabel,
   IconButton,
-  InputLabel,
-  List,
-  ListItem,
-  ListItemText,
-  MenuItem,
   Paper,
-  Select,
-  Switch,
   Typography,
 } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 import { Box } from "@mui/system";
-import SearchNoFilter from "../../../components/Search/Search";
-import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import "../../../fonts.css";
 
 import Table from "@mui/material/Table";
@@ -36,58 +20,24 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { Link as Routerlink } from "react-router-dom";
-
+import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { GetMasterProcurementPlanmppid } from "./../../../services/TecCommitte/TecCommitteeservices";
+import { GetItemListmppid } from "./../../../services/TecCommitte/TecCommitteeservices";
+import { DateFormat, MoneyFormat } from "../../../services/dataFormats";
 
 const columns = [
-  {id: "itemID", label: "Item ID", Width: 300, align: "center"},
-  {id: "itemName", label: "Item Name", Width: 300, align: "center"},
-  {id: "quentity", label: "Quentity", Width: 300, align: "center"},
-  {id: "estimatedBudget",label: "Estimated Budget",Width: 300,align: "center",},
-  {id: "action", label: "Action", Width: 300, align: "center"},
+  { id: "itemID", label: "Item ID", Width: 300, align: "center" },
+  { id: "itemName", label: "Item Name", Width: 300, align: "center" },
+  { id: "quentity", label: "Quentity", Width: 300, align: "center" },
+  {
+    id: "estimatedBudget",
+    label: "Estimated Budget",
+    Width: 300,
+    align: "center",
+  },
+  { id: "action", label: "Action", Width: 300, align: "center" },
 ];
-
-function createData(itemID, itemName, quentity, estimatedBudget, action) {
-  return { itemID, itemName, quentity, estimatedBudget, action };
-}
-
-const rows = [
-  createData(
-    "IT-0001",
-    "A4 Bundle",
-    "400",
-    "Rs. 1000000",
-    <Routerlink to={'/view-item-tec'}>
-    <Button
-      className={styles.ViewButton}
-      variant="contained"
-      sx={{ borderRadius: 8, px: { xs: 2, md: 5 } }}
-    >
-      {" "}
-      View{" "}
-    </Button>
-    </Routerlink>
-  ),
-  createData(
-    "IT-0002",
-    "Pen",
-    "2000",
-    "Rs. 2000000",
-    <Routerlink to={'/view-item-tec'}>
-    <Button
-      className={styles.ViewButton}
-      variant="contained"
-      sx={{ borderRadius: 8, px: { xs: 2, md: 5 } }}
-    >
-      {" "}
-      View{" "}
-    </Button>
-    </Routerlink>
-  ),
-];
-
-const procurementId = "MP-0001";
-const grandTotal = "Rs. 1000000";
-const creationDate = "2021-09-01";
 
 function ApprovalForMasterProcurementPlan() {
   const [page, setPage] = React.useState(0);
@@ -100,9 +50,37 @@ function ApprovalForMasterProcurementPlan() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  const { mppId } = useParams();
+  const [title, settitle] = useState(null);
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const fetchdata = async () => {
+      try {
+        const response = await GetMasterProcurementPlanmppid(mppId);
+        const title = response;
+        settitle(title);
+      } catch (error) {
+        console.log(error);
+      }
+      try {
+        const response = await GetItemListmppid(mppId);
+        const data = response;
+        setData(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchdata();
+  }, []);
+
+  if (title === null) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <div className={styles.outer}>
-
       <Container
         sx={{
           ml: { xs: "60px", sm: "65px", md: "65px", lg: "68px", xl: "70px" },
@@ -115,11 +93,11 @@ function ApprovalForMasterProcurementPlan() {
         <div className={styles.upperSection}>
           <div className={styles.PageContainer__header}>
             <Routerlink to={-1}>
-            <IconButton
-              sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
-            >
-              <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
-            </IconButton>
+              <IconButton
+                sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
+              >
+                <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
+              </IconButton>
             </Routerlink>
             <h1 className={styles.Header}>
               Approval for Master Procurement Plan
@@ -140,7 +118,7 @@ function ApprovalForMasterProcurementPlan() {
                   color: "#ffffff",
                 }}
               >
-                MASTER PROCUREMENT ID : {procurementId}
+                MASTER PROCUREMENT ID : {mppId}
               </Typography>
               <Typography
                 sx={{
@@ -149,7 +127,7 @@ function ApprovalForMasterProcurementPlan() {
                   color: "#ffffff",
                 }}
               >
-                CREATED DATE : {creationDate}
+                CREATED DATE : {DateFormat(title.creationDate)}
               </Typography>
               <Typography
                 sx={{
@@ -158,7 +136,7 @@ function ApprovalForMasterProcurementPlan() {
                   color: "#ffffff",
                 }}
               >
-                GRAND TOTAL : {grandTotal}
+                GRAND TOTAL : LKR {MoneyFormat(title.estimatedGrandTotal)}
               </Typography>
             </Container>
           </div>
@@ -199,36 +177,51 @@ function ApprovalForMasterProcurementPlan() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row) => {
-                      return (
+                  {data &&
+                    data
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
+                      .map((row, index) => (
                         <TableRow
                           hover
                           role="checkbox"
                           tabIndex={-1}
-                          key={row.code}
+                          key={index}
                         >
-                          {columns.map((column) => {
-                            const value = row[column.id];
-                            return (
-                              <TableCell key={column.id} align={column.align}>
-                                {column.format && typeof value === "number"
-                                  ? column.format(value)
-                                  : value}
-                              </TableCell>
-                            );
-                          })}
+                          <TableCell align="center">{row.itemId}</TableCell>
+                          <TableCell align="center">{row.itemName}</TableCell>
+                          <TableCell align="center">
+                            {row.totalQuantity}
+                          </TableCell>
+                          <TableCell align="center">
+                            {MoneyFormat(row.estimatedBudget)}
+                          </TableCell>
+                          <TableCell align="center">
+                            {
+                              <Routerlink
+                                to={`/view-item-tec/${row.itemId}/${mppId}`}
+                              >
+                                <Button
+                                  className={styles.ViewButton}
+                                  variant="contained"
+                                  sx={{ borderRadius: 8, px: { xs: 2, md: 5 } }}
+                                >
+                                  View
+                                </Button>
+                              </Routerlink>
+                            }
+                          </TableCell>
                         </TableRow>
-                      );
-                    })}
+                      ))}
                 </TableBody>
               </Table>
             </TableContainer>
             <TablePagination
               rowsPerPageOptions={[10, 25, 50, 100]}
               component="div"
-              count={rows.length}
+              count={10}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}

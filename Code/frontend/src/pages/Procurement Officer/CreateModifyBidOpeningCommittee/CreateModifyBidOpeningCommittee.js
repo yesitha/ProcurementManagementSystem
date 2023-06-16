@@ -40,7 +40,7 @@ function CreateModifyBidOpeningCommittee() {
   const masterProcurementId = "MP0001";
   
   return (
-    <div style={{ overflowX: "auto" }}>
+    <div>
 
       <Container
         className={styles.main}
@@ -173,14 +173,14 @@ function CreateModifyBidOpeningCommittee() {
           >
             <DonePopup
             text={"Successfully Created Bid Opening Committee"}
-            title={"Create"}
+            title={"CREATE BID OPENING COMMITTEE"}
             styles={{
               position: "absolute",
               right: "0",
               bgcolor: "#205295",
               borderRadius: 5,
               height: 60,
-              width: 300,
+              width: 200,
             }}
           />
           </Container>

@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./MasterProcurementPlanTEC.module.css";
-import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import SearchNoFilter from "../../../components/Search/Search";
-import { Button, IconButton, Paper, Stack, TextField } from "@mui/material";
+import { Button, IconButton, Paper } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -12,6 +11,9 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { Link as Routerlink } from "react-router-dom";
+import { useEffect } from "react";
+import { GetMasterProcurementPlan } from "./../../../services/TecCommitte/TecCommitteeservices";
+import { DateFormat, MoneyFormat } from "../../../services/dataFormats";
 
 const columns = [
   {
@@ -25,45 +27,8 @@ const columns = [
   { id: "Action", label: "Action", Width: 300, align: "center" },
 ];
 
-function createData(MPPID, GTotal, CDate, Action) {
-  return { MPPID, GTotal, CDate, Action };
-}
-
-const rows = [
-  createData(
-    "MPPID1000",
-    "Rs.650000",
-    "2021/01/01",
-    <Routerlink to={'/approval-for-master-procurement-plan-tec'}>
-    <Button
-      variant="contained"
-      fontFamily={"Inter"}
-      sx={{ bgcolor: "#205295", borderRadius: 5, height: 50, width: 100 }}
-    >
-      View
-    </Button>
-    </Routerlink>
-  ),
-  createData(
-    "MPPID1001",
-    "Rs.400000",
-    "2021/06/02",
-    <Routerlink to={'/approval-for-master-procurement-plan-tec'}>
-    <Button
-      variant="contained"
-      fontFamily={"Inter"}
-      sx={{ bgcolor: "#205295", borderRadius: 5, height: 50, width: 100 }}
-    >
-      View
-    </Button>
-    </Routerlink>
-  ),
-];
-
 function MasterProcurementPlans() {
-
-  const list = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
-
+  const [data, setData] = useState(null);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const handleChangePage = (event, newPage) => {
@@ -75,14 +40,28 @@ function MasterProcurementPlans() {
     setPage(0);
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await GetMasterProcurementPlan();
+
+        const data = response;
+        setData(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <div>
       <div className={styles.vfmpp_mainBody}>
         <div className={styles.vfmpp_heading}>
           <Routerlink to={-1}>
-          <IconButton sx={{ pl: "15px", height: "34px", width: "34px" }}>
-            <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
-          </IconButton>
+            <IconButton sx={{ pl: "15px", height: "34px", width: "34px" }}>
+              <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
+            </IconButton>
           </Routerlink>
           Master Procurement Plan
         </div>
@@ -96,15 +75,14 @@ function MasterProcurementPlans() {
         <div className={styles.vfmpp_table}>
           <Paper
             sx={{
-              width: "75%",
-              overflow: "hidden",
+              width: "100%",
               borderRadius: 5,
               scrollBehavior: "smooth",
             }}
           >
             <TableContainer sx={{ maxHeight: "100%" }}>
               <Table stickyHeader aria-label="sticky table">
-                <TableHead className={styles.TableHeaders0}>
+                <TableHead>
                   <TableRow>
                     {columns.map((column) => (
                       <TableCell
@@ -118,36 +96,55 @@ function MasterProcurementPlans() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row) => {
-                      return (
+                  {data &&
+                    data
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
+                      .map((row, index) => (
                         <TableRow
                           hover
                           role="checkbox"
                           tabIndex={-1}
-                          key={row.code}
+                          key={index}
                         >
-                          {columns.map((column) => {
-                            const value = row[column.id];
-                            return (
-                              <TableCell key={column.id} align={column.align}>
-                                {column.format && typeof value === "number"
-                                  ? column.format(value)
-                                  : value}
-                              </TableCell>
-                            );
-                          })}
+                          <TableCell align="center">{row.mppId}</TableCell>
+                          <TableCell align="center">
+                            {MoneyFormat(row.estimatedGrandTotal)}
+                          </TableCell>
+                          <TableCell align="center">
+                            {DateFormat(row.creationDate)}
+                          </TableCell>
+                          <TableCell align="center">
+                            {
+                              <Routerlink
+                                to={`/approval-for-master-procurement-plan-tec/${row.mppId}`}
+                              >
+                                <Button
+                                  variant="contained"
+                                  fontFamily={"Inter"}
+                                  sx={{
+                                    bgcolor: "#205295",
+                                    borderRadius: 5,
+                                    height: 50,
+                                    width: 100,
+                                  }}
+                                >
+                                  View
+                                </Button>
+                              </Routerlink>
+                            }
+                          </TableCell>
                         </TableRow>
-                      );
-                    })}
+                      ))}
                 </TableBody>
               </Table>
             </TableContainer>
             <TablePagination
               rowsPerPageOptions={[10, 25, 50, 100]}
               component="div"
-              count={rows.length}
+              count={10}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
