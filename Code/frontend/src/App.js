@@ -75,7 +75,6 @@ import BidVerificationSubmit from "./pages/Vendor/Bid Verification Submit/BidVer
 import IssueItem from "./pages/InventoryManager/IssueItem/IssueItem";
 import AssetRegistry from "./pages/Assets Registry/AssetRegistry";
 import LetterofAcceptance from "./pages/Vendor/Letter of Acceptance/LetterofAcceptance";
-
 import PDViewSubProcurementPlan from "./pages/Dicvision HOD/PDViewSubProcurementPlan/PDViewSubProcurementPlan"
 
 function App() {
@@ -199,10 +198,10 @@ function App() {
             element={<MasterProcurementPlanTEC />}
           />
           <Route
-            path="/approval-for-master-procurement-plan-tec"
+            path="/approval-for-master-procurement-plan-tec/:mppId"
             element={<ApprovalForMasterProcurementPlan />}
           />
-          <Route path="/view-item-tec" element={<ViewItemTEC />} />
+          <Route path="/view-item-tec/:itemId/:mppId" element={<ViewItemTEC />} />
           <Route path="/vendor-selection" element={<VendorSelection />} />
           <Route
             path="/revise-vendor-selection"
