@@ -436,5 +436,29 @@ namespace PWMSBackend.Controllers
 
             return Ok("BidOpeningCommittee members updated successfully.");
         }
+
+        // Set pre bid meeting date (1-POST)
+
+        [HttpPost("SetPreBidMeetingDate")]
+        public IActionResult SetPreBidMeetingDate([FromBody] DateTime date)
+        {
+            // Retrieve the SubProcurementApprovedItems where PreBidMeetingDate is null
+            var items = _context.SubProcurementApprovedItems
+                .Where(item => item.PreBidMeetingDate == null)
+                .ToList();
+
+            // Set PreBidMeetingDate for each item
+            foreach (var item in items)
+            {
+                item.PreBidMeetingDate = date;
+            }
+
+            // Save the changes to the database
+            _context.SaveChanges();
+
+            return Ok();
+        }
+
+
     }
 }
