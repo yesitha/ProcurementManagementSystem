@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./MasterProcurementPlan.module.css";
 import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -12,6 +12,8 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { Link as Routerlink } from "react-router-dom";
+import { useState} from "react";
+import {viewMasterProcurementPlanInfo} from "./../../../services/ProcurementCommittee/ProcurementCommitteeServices";
 
 const columns = [
   {
@@ -29,38 +31,26 @@ function createData(MPPID, GTotal, CDate, Action) {
   return { MPPID, GTotal, CDate, Action };
 }
 
-const rows = [
-  createData(
-    "MPPID1000",
-    "Rs.650000",
-    "2021/01/01",
-    <Routerlink to={'/PCApprovalforMasterProcurmentPlan'}>
-    <Button
-      variant="contained"
-      fontFamily={"Inter"}
-      sx={{ bgcolor: "#205295", borderRadius: 5, height: 50, width: 100 }}
-    >
-      View
-    </Button>
-    </Routerlink>
-  ),
-  createData(
-    "MPPID1001",
-    "Rs.400000",
-    "2021/06/02",
-    <Routerlink to={'/PCApprovalforMasterProcurmentPlan'}>
-    <Button
-      variant="contained"
-      fontFamily={"Inter"}
-      sx={{ bgcolor: "#205295", borderRadius: 5, height: 50, width: 100 }}
-    >
-      View
-    </Button>
-    </Routerlink>
-  ),
-];
+
 
 function MasterProcurementPlans() {
+
+  const[data,setData]=useState();
+
+  useEffect(()=>{
+  const fetchData = async () => {
+    try {
+      const response = await viewMasterProcurementPlanInfo();
+      const data=response;
+      setData(data);
+      console.log(data);
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  fetchData();
+}, [] );
 
   const list = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
 
@@ -118,36 +108,31 @@ function MasterProcurementPlans() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row) => {
-                      return (
-                        <TableRow
-                          hover
-                          role="checkbox"
-                          tabIndex={-1}
-                          key={row.code}
-                        >
-                          {columns.map((column) => {
-                            const value = row[column.id];
-                            return (
-                              <TableCell key={column.id} align={column.align}>
-                                {column.format && typeof value === "number"
-                                  ? column.format(value)
-                                  : value}
-                              </TableCell>
-                            );
-                          })}
-                        </TableRow>
-                      );
-                    })}
-                </TableBody>
+            { data && data
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((row, index) => (
+                <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                  <TableCell align="center">{row.mppId}</TableCell>
+                  <TableCell align="center">{row.estimatedGrandTotal}</TableCell>
+                  <TableCell align="center">{row.creationDate}</TableCell>
+                  <TableCell>{<Routerlink to={'/PCApprovalforMasterProcurmentPlan'}>
+                  <Button
+                    variant="contained"
+                    fontFamily={"Inter"}
+                    sx={{ bgcolor: "#205295", borderRadius: 5, height: 50, width: 100 }}
+                  >
+                    View
+                  </Button>
+                  </Routerlink>}</TableCell>  
+                </TableRow>    
+              ))}
+          </TableBody>
               </Table>
             </TableContainer>
             <TablePagination
               rowsPerPageOptions={[10, 25, 50, 100]}
               component="div"
-              count={rows.length}
+              count={10}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
