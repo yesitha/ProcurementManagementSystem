@@ -144,8 +144,11 @@ namespace PWMSBackend.Controllers
 
             // Update the properties
             subProcurementPlanItem.TecCommitteeStatus = tecCommitteeStatus;
-            subProcurementPlanItem.TecCommitteeComment = tecCommitteeComment;
-
+            if(tecCommitteeStatus != "approve")
+            {
+                subProcurementPlanItem.TecCommitteeComment = tecCommitteeComment;
+            }
+            
             _context.SaveChanges();
 
             return Ok("TecCommitteeStatus and TecCommitteeComment updated successfully.");
