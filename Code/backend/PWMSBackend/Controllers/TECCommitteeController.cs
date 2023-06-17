@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -157,14 +158,13 @@ namespace PWMSBackend.Controllers
 
         //Vendor Selection
 
-        [HttpGet("GetBidDetails")]
-        public async Task<ActionResult<IEnumerable<object>>> GetBidDetails()
+        [HttpGet("GetVendorSelectionBidDetails")]
+        public async Task<ActionResult<IEnumerable<object>>> GetVendorSelectionBidDetails()
         {
             DateTime currentDate = DateTime.Today;
 
-            var closestDate = _context.SubProcurementApprovedItems
-                .Where(a => a.PreBidMeetingDate.HasValue && a.PreBidMeetingDate.Value.Date >= currentDate)
-                .OrderBy(a => a.PreBidMeetingDate.Value)
+            var closestDate = _context.SubProcurementApprovedItems.Where(a => a.PreBidMeetingDate.HasValue && a.PreBidMeetingDate.Value.Date <= currentDate)
+                .OrderByDescending(a => a.PreBidMeetingDate.Value)
                 .Select(a => a.PreBidMeetingDate.Value.Date)
                 .FirstOrDefault();
 
@@ -254,11 +254,12 @@ namespace PWMSBackend.Controllers
                              join vendorInfo in _context.Vendors
                              on vendor.VendorId equals vendorInfo.VendorId
                              where vendor.DateAndTime >= input.auctionOpeningDate && vendor.DateAndTime <= input.auctionClosingDate
-                             group new { 
-                                 vendor.VendorId, 
-                                 vendor.BidValue, 
-                                 vendorInfo.FirstName, 
-                                 vendorInfo.LastName, 
+                             group new
+                             {
+                                 vendor.VendorId,
+                                 vendor.BidValue,
+                                 vendorInfo.FirstName,
+                                 vendorInfo.LastName,
                                  vendorInfo.BusinessRegistrationDoc,
                                  vendorInfo.TaxIdentificationDoc,
                                  vendorInfo.InsuaranceCertificate,
@@ -267,17 +268,18 @@ namespace PWMSBackend.Controllers
                              select new
                              {
                                  itemId = g.Key,
-                                 bidInfo = g.Select(v => new { 
-                                     vendorId = v.VendorId, 
-                                     vendorName = v.FirstName + " " + v.LastName, 
+                                 bidInfo = g.Select(v => new
+                                 {
+                                     vendorId = v.VendorId,
+                                     vendorName = v.FirstName + " " + v.LastName,
                                      bidValue = v.BidValue,
                                      vendorInfo = new
                                      {
-                                            v.BusinessRegistrationDoc,
-                                            v.TaxIdentificationDoc,
-                                            v.InsuaranceCertificate,
-                                            v.OtherDocs
-                                        }
+                                         v.BusinessRegistrationDoc,
+                                         v.TaxIdentificationDoc,
+                                         v.InsuaranceCertificate,
+                                         v.OtherDocs
+                                     }
                                  }).ToList()
                              };
 
@@ -298,13 +300,85 @@ namespace PWMSBackend.Controllers
             return Ok(result2);
         }
 
-        [HttpPost("VendorSelection/{vendorId}/{itemId}")]
+        [HttpPut("VendorSelection/{vendorId}/{itemId}")]
 
         public async Task<ActionResult> VendorSelection(String vendorId, String itemId)
         {
+            DateTime currentDate = DateTime.Today;
+
+            var closestDate = _context.SubProcurementApprovedItems.Where(a => a.PreBidMeetingDate.HasValue && a.PreBidMeetingDate.Value.Date <= currentDate)
+                .OrderByDescending(a => a.PreBidMeetingDate.Value)
+                .Select(a => a.PreBidMeetingDate.Value.Date)
+                .FirstOrDefault();
+
+            var items = await _context.SubProcurementApprovedItems
+                .Where(a => a.PreBidMeetingDate.HasValue && a.PreBidMeetingDate.Value.Date == closestDate && a.ItemId == itemId)
+                .Select(a => new { a.SppId, a.ItemId, a.AuctionOpeningDate, a.AuctionClosingDate })
+                .ToListAsync();
+
+            if (items == null)
+            {
+                return NotFound();
+            }
+
+            // Retrieve vendor's full name from the Vendor table
+            var vendorFullName = await _context.Vendors
+                                        .Where(vendor => vendor.VendorId == vendorId)
+                                        .Select(vendor => vendor.FirstName + " " + vendor.LastName)
+                                        .FirstOrDefaultAsync();
+
+            foreach (var input in items)
+            {
+                string SppId = input.SppId;
+                string ItemId = input.ItemId;
+
+                var planItems = await _context.SubProcurementPlanItems
+                    .Where(item => item.SppId == SppId && item.ItemId == ItemId)
+                    .ToListAsync();
+
+                if (planItems.Any())
+                {
+                    foreach (var planItem in planItems)
+                    {
+                        planItem.SelectedVendor = vendorFullName;
+                    }
+                }
+            }
+
+            await _context.SaveChangesAsync();
+            //return Ok("SelectedVendor updated successfully.");
 
 
-            return Ok();
+            // Update bid status for the selected vendor
+            var selectedVendorBid = await _context.VendorPlaceBidItems
+                .Where(bid => bid.ItemId == itemId && bid.VendorId == vendorId && bid.DateAndTime >= items.FirstOrDefault().AuctionOpeningDate && bid.DateAndTime <= items.FirstOrDefault().AuctionClosingDate)
+                .FirstOrDefaultAsync();
+
+            if (selectedVendorBid != null)
+            {
+                selectedVendorBid.BidStatus = "Selected";
+            }
+
+            // Update bid status for other vendors
+            var rejectedVendorsBids = await _context.VendorPlaceBidItems
+                .Where(bid => bid.ItemId == itemId && bid.VendorId != vendorId && bid.DateAndTime >= items.FirstOrDefault().AuctionOpeningDate && bid.DateAndTime <= items.FirstOrDefault().AuctionClosingDate)
+                .ToListAsync();
+
+            foreach (var bid in rejectedVendorsBids)
+            {
+                bid.BidStatus = "Not Selected";
+            }
+
+
+            await _context.SaveChangesAsync();
+            return Ok("Bid status updated successfully and SelectedVendor updated successfully.");
+
         }
+
+
+        // Revise Vendor Selection
+
+
+
     }
 }
