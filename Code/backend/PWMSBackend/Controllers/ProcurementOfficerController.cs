@@ -44,8 +44,6 @@ namespace PWMSBackend.Controllers
         [HttpPost("CreateNewTECCommitteeID")]
         public IActionResult CreateNewTECCommittee(string mppId)
         {
-            // Generate a new CommitteeId
-            string committeeId = _committeeIdGenerator.GenerateCommitteeId();
 
             // Find the MasterProcurementPlan by the provided MppId
             var masterProcurementPlan = _context.MasterProcurementPlans.FirstOrDefault(m => m.MppId == mppId);
@@ -53,6 +51,15 @@ namespace PWMSBackend.Controllers
             {
                 return BadRequest("Invalid MppId. MasterProcurementPlan not found.");
             }
+
+            // Check if a TecCommitteeId is already assigned
+            if (!string.IsNullOrEmpty(masterProcurementPlan.TecCommitteeId))
+            {
+                return BadRequest("TEC Committee already created for this MasterProcurementPlan.");
+            }
+
+            // Generate a new CommitteeId
+            string committeeId = _committeeIdGenerator.GenerateCommitteeId();
 
             // Assign the generated CommitteeId to the TecCommitteeId property
             masterProcurementPlan.TecCommitteeId = committeeId;
@@ -72,8 +79,6 @@ namespace PWMSBackend.Controllers
         [HttpPost("CreateNewBidOpeningCommitteeID")]
         public IActionResult CreateNewBidOpeningCommittee(string mppId)
         {
-            // Generate a new CommitteeId
-            string committeeId = _committeeIdGenerator.GenerateCommitteeId();
 
             // Find the MasterProcurementPlan by the provided MppId
             var masterProcurementPlan = _context.MasterProcurementPlans.FirstOrDefault(m => m.MppId == mppId);
@@ -81,6 +86,15 @@ namespace PWMSBackend.Controllers
             {
                 return BadRequest("Invalid MppId. MasterProcurementPlan not found.");
             }
+
+            // Check if a TecCommitteeId is already assigned
+            if (!string.IsNullOrEmpty(masterProcurementPlan.BidOpeningCommitteeId))
+            {
+                return BadRequest("BidOpening Committee already created for this MasterProcurementPlan.");
+            }
+
+            // Generate a new CommitteeId
+            string committeeId = _committeeIdGenerator.GenerateCommitteeId();
 
             // Assign the generated CommitteeId to the TecCommitteeId property
             masterProcurementPlan.BidOpeningCommitteeId = committeeId;
@@ -436,5 +450,225 @@ namespace PWMSBackend.Controllers
 
             return Ok("BidOpeningCommittee members updated successfully.");
         }
+
+        // Set pre bid meeting date (1-POST)
+
+        [HttpPost("SetPreBidMeetingDate")]
+        public IActionResult SetPreBidMeetingDate([FromBody] DateTime date)
+        {
+            // Retrieve the SubProcurementApprovedItems where PreBidMeetingDate is null
+            var items = _context.SubProcurementApprovedItems
+                .Where(item => item.PreBidMeetingDate == null)
+                .ToList();
+
+            // Set PreBidMeetingDate for each item
+            foreach (var item in items)
+            {
+                item.PreBidMeetingDate = date;
+            }
+
+            // Save the changes to the database
+            _context.SaveChanges();
+
+            return Ok();
+        }
+
+        // Bid Details
+
+        [HttpGet("GetBidDetails")]
+        public async Task<ActionResult<IEnumerable<object>>> GetBidDetails()
+        {
+            DateTime currentDate = DateTime.Today;
+
+            var closestDate = _context.SubProcurementApprovedItems.Where(a => a.PreBidMeetingDate.HasValue && a.PreBidMeetingDate.Value.Date <= currentDate)
+                .OrderByDescending(a => a.PreBidMeetingDate.Value)
+                .Select(a => a.PreBidMeetingDate.Value.Date)
+                .FirstOrDefault();
+
+            var items = await _context.SubProcurementApprovedItems
+                .Where(a => a.PreBidMeetingDate.HasValue && a.PreBidMeetingDate.Value.Date == closestDate)
+                .Select(a => new { a.SppId, a.ItemId, a.AuctionOpeningDate, a.AuctionClosingDate})
+                .ToListAsync();
+
+            if (items == null)
+            {
+                return NotFound();
+            }
+
+            //join sppId and itemId from SubProcurementPlanItems and SubProcurementApprovedItems
+
+            var joinedData = from input in items
+                             join planItem in _context.SubProcurementPlanItems
+                             on new { input.SppId, input.ItemId } equals new { planItem.SppId, planItem.ItemId }
+                             select new
+                             {
+                                 sppId = input.SppId,
+                                 itemId = input.ItemId,
+                                 quantity = planItem.Quantity,
+                                 expectedDeliveryDate = planItem.ExpectedDeliveryDate,
+                                 auctionOpeningDate = input.AuctionOpeningDate,
+                                 auctionClosingDate = input.AuctionClosingDate
+                             };
+
+            //filter data by itemId and sum quantity
+
+            var filteredData = joinedData.GroupBy(x => x.itemId)
+                                     .Select(group => new
+                                     {
+                                         itemId = group.Key,
+                                         totalQuantity = group.Sum(x => x.quantity),
+                                         expectedDeliveryDate = group.Select(x => x.expectedDeliveryDate).Distinct().Min(),
+                                         auctionOpeningDate = group.Select(x => x.auctionOpeningDate).Distinct().FirstOrDefault(),
+                                         auctionClosingDate = group.Select(x => x.auctionClosingDate).Distinct().FirstOrDefault()
+                                     });
+
+            //get item names
+
+            var itemIds = filteredData.Select(x => x.itemId).Distinct().ToList();
+            var itemDetails = _context.Items.Where(item => itemIds.Contains(item.ItemId))
+                                            .Select(item => new { item.ItemId, item.ItemName, item.Specification })
+                                            .ToList();
+
+            var result = from input in filteredData
+                         join itemDetail in itemDetails
+                         on input.itemId equals itemDetail.ItemId
+                         select new
+                         {
+                             itemId = input.itemId,
+                             itemName = itemDetail.ItemName,
+                             Specification = itemDetail.Specification,
+                             totalQuantity = input.totalQuantity,
+                             expectedDeliveryDate = input.expectedDeliveryDate,
+                             auctionOpeningDate = input.auctionOpeningDate,
+                             auctionClosingDate = input.auctionClosingDate
+                         };
+
+            //get Bid details
+
+            //var bidDetails = _context.VendorPlaceBidItems
+            //                                 .Where(vendor => itemIds.Contains(vendor.ItemId))
+            //                                 .GroupBy(vendor => vendor.ItemId)
+            //                                 .Select(group => new
+            //                                 {
+            //                                     itemId = group.Key,
+            //                                     bidValues = group.Select(vendor => vendor.BidValue).ToList()
+            //                                 })
+            //                                 .ToList();
+
+            var bidDetails = from input in result
+                             join vendor in _context.VendorPlaceBidItems
+                             on input.itemId equals vendor.ItemId
+                             where vendor.DateAndTime >= input.auctionOpeningDate && vendor.DateAndTime <= input.auctionClosingDate
+                             group vendor by vendor.ItemId into g
+                             select new
+                             {
+                                 itemId = g.Key,
+                                 bidValues = g.Select(v => v.BidValue).ToList()
+                             };
+
+            var result2 = from input in result
+                          join bidDetail in bidDetails
+                          on input.itemId equals bidDetail.itemId into gj
+                          from vendor in gj.DefaultIfEmpty()
+                          let bidValuesCount = vendor?.bidValues.Count ?? 0
+                          let minBidValue = vendor?.bidValues.Min()
+                          select new
+                          {
+                              itemId = input.itemId,
+                              itemName = input.itemName,
+                              Specification = input.Specification,
+                              totalQuantity = input.totalQuantity,
+                              expectedDeliveryDate = input.expectedDeliveryDate,
+                              minBidValue = minBidValue,
+                              bidValuesCount = bidValuesCount
+                          };
+
+            return Ok(result2);
+        }
+
+
+        [HttpGet("GetItemBidDetails/{itemId}")]
+        public async Task<ActionResult<IEnumerable<object>>> GetItemBidDetails(string itemId)
+        {
+            DateTime currentDate = DateTime.Today;
+
+            var closestDate = _context.SubProcurementApprovedItems.Where(a => a.PreBidMeetingDate.HasValue && a.PreBidMeetingDate.Value.Date <= currentDate)
+                .OrderByDescending(a => a.PreBidMeetingDate.Value)
+                .Select(a => a.PreBidMeetingDate.Value.Date)
+                .FirstOrDefault();
+
+            var items = await _context.SubProcurementApprovedItems
+                .Where(a => a.PreBidMeetingDate.HasValue && a.PreBidMeetingDate.Value.Date == closestDate)
+                .Where(a => a.ItemId == itemId)
+                .Select(a => new { a.SppId, a.ItemId, a.AuctionOpeningDate, a.AuctionClosingDate })
+                .ToListAsync();
+
+            if (items == null)
+            {
+                return NotFound();
+            }
+
+            //join sppId and itemId from SubProcurementPlanItems and SubProcurementApprovedItems
+
+            var joinedData = from input in items
+                             join planItem in _context.SubProcurementPlanItems
+                             on new { input.SppId, input.ItemId } equals new { planItem.SppId, planItem.ItemId }
+                             select new
+                             {
+                                 sppId = input.SppId,
+                                 itemId = input.ItemId,
+                                 auctionOpeningDate = input.AuctionOpeningDate,
+                                 auctionClosingDate = input.AuctionClosingDate
+                             };
+
+            //filter data by itemId and sum quantity
+
+            var filteredData = joinedData.GroupBy(x => x.itemId)
+                                     .Select(group => new
+                                     {
+                                         itemId = group.Key,
+                                         auctionOpeningDate = group.Select(x => x.auctionOpeningDate).Distinct().FirstOrDefault(),
+                                         auctionClosingDate = group.Select(x => x.auctionClosingDate).Distinct().FirstOrDefault()
+                                     });
+
+            //get item name and Specification
+            var itemDetails = _context.Items.Where(item => itemId.Contains(item.ItemId))
+                                            .Select(item => new { item.ItemId, item.ItemName})
+                                            .ToList();
+
+            var result = from input in filteredData
+                         join itemDetail in itemDetails
+                         on input.itemId equals itemDetail.ItemId
+                         select new
+                         {
+                             itemId = input.itemId,
+                             itemName = itemDetail.ItemName,
+                             auctionOpeningDate = input.auctionOpeningDate,
+                             auctionClosingDate = input.auctionClosingDate
+                         };
+
+            //get Bid details
+
+            var bidValues = _context.VendorPlaceBidItems
+                                .Where(vendor => vendor.ItemId == result.Select(x=> x.itemId).FirstOrDefault())
+                                .Where(vendor => vendor.DateAndTime >= result.Select(x => x.auctionOpeningDate).FirstOrDefault() && vendor.DateAndTime <= result.Select(x => x.auctionClosingDate).FirstOrDefault())
+                                .Select(vendor => new 
+                                    { 
+                                        vendor.BidValue,
+                                        vendor.DateAndTime,
+                                        VendorFullName = vendor.Vendor.FirstName + " " + vendor.Vendor.LastName
+                                })
+                                .ToList();
+
+            var output = new
+            {
+                bidValues = bidValues,
+                itemName = result.Select(x => x.itemName).FirstOrDefault()
+            };
+
+            return Ok(output);
+        }
+
+
     }
 }
