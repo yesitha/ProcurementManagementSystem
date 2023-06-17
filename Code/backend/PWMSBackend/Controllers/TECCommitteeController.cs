@@ -378,7 +378,133 @@ namespace PWMSBackend.Controllers
 
         // Revise Vendor Selection
 
+        [HttpGet("GetReviseVendorSelectionBidDetails")]
+        public async Task<ActionResult<IEnumerable<object>>> GetReviseVendorSelectionBidDetails()
+        {
+            DateTime currentDate = DateTime.Today;
 
+            var closestDate = _context.SubProcurementApprovedItems.Where(a => a.PreBidMeetingDate.HasValue && a.PreBidMeetingDate.Value.Date <= currentDate)
+                .OrderByDescending(a => a.PreBidMeetingDate.Value)
+                .Select(a => a.PreBidMeetingDate.Value.Date)
+                .FirstOrDefault();
+
+            var items = await _context.SubProcurementApprovedItems
+                .Where(a => a.PreBidMeetingDate.HasValue && a.PreBidMeetingDate.Value.Date == closestDate)
+                .Select(a => new { a.SppId, a.ItemId, a.AuctionOpeningDate, a.AuctionClosingDate })
+                .ToListAsync();
+
+            if (items == null)
+            {
+                return NotFound();
+            }
+
+            //join sppId and itemId from SubProcurementPlanItems and SubProcurementApprovedItems
+
+            var joinedData = from input in items
+                             join planItem in _context.SubProcurementPlanItems
+                             on new { input.SppId, input.ItemId } equals new { planItem.SppId, planItem.ItemId }
+                             select new
+                             {
+                                 sppId = input.SppId,
+                                 itemId = input.ItemId,
+                                 quantity = planItem.Quantity,
+                                 expectedDeliveryDate = planItem.ExpectedDeliveryDate,
+                                 auctionOpeningDate = input.AuctionOpeningDate,
+                                 auctionClosingDate = input.AuctionClosingDate,
+                                 rejectedVendor  = planItem.RejectedVendor,
+                                 selectedVendor = planItem.SelectedVendor
+                             };
+
+            //filter data by itemId and sum quantity
+
+            var filteredData = joinedData.GroupBy(x => x.itemId)
+                                     .Select(group => new
+                                     {
+                                         itemId = group.Key,
+                                         totalQuantity = group.Sum(x => x.quantity),
+                                         expectedDeliveryDate = group.Select(x => x.expectedDeliveryDate).Distinct().Min(),
+                                         auctionOpeningDate = group.Select(x => x.auctionOpeningDate).Distinct().FirstOrDefault(),
+                                         auctionClosingDate = group.Select(x => x.auctionClosingDate).Distinct().FirstOrDefault(),
+                                         rejectedVendor = group.Select(x => x.rejectedVendor).Distinct().FirstOrDefault(),
+                                         selectedVendor = group.Select(x => x.selectedVendor).Distinct().FirstOrDefault()
+                                     });
+
+            //get item names
+
+            var itemIds = filteredData.Select(x => x.itemId).Distinct().ToList();
+            var itemDetails = _context.Items.Where(item => itemIds.Contains(item.ItemId))
+                                            .Select(item => new { item.ItemId, item.ItemName, item.Specification })
+                                            .ToList();
+
+            var result = from input in filteredData
+                         join itemDetail in itemDetails
+                         on input.itemId equals itemDetail.ItemId 
+                         select new
+                         {
+                             itemId = input.itemId,
+                             itemName = itemDetail.ItemName,
+                             Specification = itemDetail.Specification,
+                             totalQuantity = input.totalQuantity,
+                             expectedDeliveryDate = input.expectedDeliveryDate,
+                             auctionOpeningDate = input.auctionOpeningDate,
+                             auctionClosingDate = input.auctionClosingDate,
+                             rejectedVendor = input.rejectedVendor,
+                             selectedVendor = input.selectedVendor
+                         };
+
+            //get Bid details
+
+            var bidDetails = from input in result
+                             join vendor in _context.VendorPlaceBidItems
+                             on input.itemId equals vendor.ItemId
+                             join vendorInfo in _context.Vendors
+                             on vendor.VendorId equals vendorInfo.VendorId
+                             where vendor.DateAndTime >= input.auctionOpeningDate && vendor.DateAndTime <= input.auctionClosingDate
+                             group new
+                             {
+                                 vendor.VendorId,
+                                 vendor.BidValue,
+                                 vendorInfo.FirstName,
+                                 vendorInfo.LastName,
+                                 vendorInfo.BusinessRegistrationDoc,
+                                 vendorInfo.TaxIdentificationDoc,
+                                 vendorInfo.InsuaranceCertificate,
+                                 vendorInfo.OtherDocs
+                             } by vendor.ItemId into g
+                             select new
+                             {
+                                 itemId = g.Key,
+                                 bidInfo = g.Select(v => new
+                                 {
+                                     vendorId = v.VendorId,
+                                     vendorName = v.FirstName + " " + v.LastName,
+                                     bidValue = v.BidValue,
+                                     vendorInfo = new
+                                     {
+                                         v.BusinessRegistrationDoc,
+                                         v.TaxIdentificationDoc,
+                                         v.InsuaranceCertificate,
+                                         v.OtherDocs
+                                     }
+                                 }).ToList()
+                             };
+
+            var result2 = from input in result
+                          join bidDetail in bidDetails
+                          on input.itemId equals bidDetail.itemId into gj
+                          from vendor in gj.DefaultIfEmpty()
+                          select new
+                          {
+                              itemId = input.itemId,
+                              itemName = input.itemName,
+                              Specification = input.Specification,
+                              totalQuantity = input.totalQuantity,
+                              expectedDeliveryDate = input.expectedDeliveryDate,
+                              bidinfo = vendor?.bidInfo?.Where(v => v.vendorName != input.rejectedVendor).ToList()
+                          };
+
+            return Ok(result2);
+        }
 
     }
 }
