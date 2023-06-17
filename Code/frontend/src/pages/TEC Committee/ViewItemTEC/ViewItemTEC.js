@@ -1,34 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./ViewItemTEC.module.css";
-import {
-  Button,
-  Container,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  FormControl,
-  FormControlLabel,
-  IconButton,
-  InputLabel,
-  List,
-  ListItem,
-  ListItemText,
-  MenuItem,
-  Paper,
-  Select,
-  Switch,
-  Typography,
-} from "@mui/material";
-import VisibilityIcon from "@mui/icons-material/Visibility";
+import { Container, IconButton, Paper, Typography } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import DoneIcon from "@mui/icons-material/Done";
-import CloseIcon from "@mui/icons-material/Close";
-
-import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import "../../../fonts.css";
-
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -39,21 +13,12 @@ import TableRow from "@mui/material/TableRow";
 import EvidenceOfAthorization from "../../../components/Popups/EvidenceOfAuthorization/EvidenceOfAuthorization";
 import ApprovePopup from "../../../components/Popups/DonePopup/ApprovePopup";
 import RejectPopup from "../../../components/Popups/DonePopup/RejectPopup";
-import ViewRecomandedVendors from "../../../components/Popups/ViewRecomandedVendors/ViewRecomandedVendors";
-import { vendors } from "../../../users/vendors.js";
-import { Link as Routerlink } from "react-router-dom";
-const item = {
-  "Sub Procurement ID": "SP-001",
-  "Master Procurement ID": "MP-001",
-  "Item ID": "IT-1001",
-  "Item Name": "Office Chairs",
-  Department: "Furniture",
-  Quantity: 20,
-  Specifications: "Comfortable, Adjustable, Ergonomic",
-  "Recommended Vendors": ["Vendor A", "Vendor B"],
-  "Expected Delivery Date": "2023-03-15",
-};
-const Recomandedvendors1 = vendors;
+import { Link as Routerlink, useParams } from "react-router-dom";
+import {
+  GetItemDetails,
+  approve,
+} from "../../../services/TecCommitte/TecCommitteeservices";
+import { DateFormat } from "../../../services/dataFormats";
 
 const columns = [
   { id: "SubProID", label: "Sub Procurement ID", Width: 300, align: "center" },
@@ -76,59 +41,6 @@ const columns = [
   { id: "Action", label: "Action", Width: 300, align: "center" },
 ];
 
-function createData(
-  SubProID,
-  Department,
-  quentity,
-  Specs,
-  RecVendors,
-  ExpDelDate,
-  Evidence,
-  Action
-) {
-  return {
-    SubProID,
-    Department,
-    quentity,
-    Specs,
-    RecVendors,
-    ExpDelDate,
-    Evidence,
-    Action,
-  };
-}
-
-const rows = [
-  createData(
-    "SP-001",
-    "IT",
-    "20",
-    "Comfortable, Adjustable, Ergonomic",
-    <ViewRecomandedVendors vendors={Recomandedvendors1} />,
-    "2023-05-07",
-    <EvidenceOfAthorization />,
-    <div className={styles.ActionButonsContainer}>
-      <ApprovePopup />
-      <RejectPopup />
-    </div>
-  ),
-  createData(
-    "SP-001",
-    "Finace",
-    "20",
-    "Comfortable, Adjustable, Ergonomic",
-    <ViewRecomandedVendors vendors={Recomandedvendors1} />,
-    "2023-05-07",
-    <EvidenceOfAthorization />,
-    <div className={styles.ActionButonsContainer}>
-      <ApprovePopup />
-      <RejectPopup />
-    </div>
-  ),
-];
-
-const creationDate = "2021-09-01";
-
 function ViewItemTEC() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -140,6 +52,28 @@ function ViewItemTEC() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  const { itemId, mppId } = useParams();
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const fetchdata = async () => {
+      try {
+        const response = await GetItemDetails(itemId, mppId);
+        const data = response;
+        console.log(data);
+        setData(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchdata();
+  }, []);
+
+  if (data === null) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <div className={styles.outer}>
       <Container
@@ -154,13 +88,13 @@ function ViewItemTEC() {
         <div className={styles.upperSection}>
           <div className={styles.PageContainer__header}>
             <Routerlink to={-1}>
-            <IconButton
-              sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
-            >
-              <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
-            </IconButton>
+              <IconButton
+                sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
+              >
+                <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
+              </IconButton>
             </Routerlink>
-            <h1 className={styles.Header}>{item["Item Name"]}</h1>
+            <h1 className={styles.Header}>{data.itemName}</h1>
           </div>
         </div>
 
@@ -177,7 +111,7 @@ function ViewItemTEC() {
                   color: "#ffffff",
                 }}
               >
-                MASTER PROCUREMENT ID : {item["Master Procurement ID"]}
+                MASTER PROCUREMENT ID : {mppId}
               </Typography>
               <Typography
                 sx={{
@@ -186,7 +120,7 @@ function ViewItemTEC() {
                   color: "#ffffff",
                 }}
               >
-                CREATED DATE : {creationDate}
+                CREATED DATE : {DateFormat(data.creationDate)}
               </Typography>
               <Typography
                 sx={{
@@ -195,7 +129,7 @@ function ViewItemTEC() {
                   color: "#ffffff",
                 }}
               >
-                ITEM ID : {item["Item ID"]}
+                ITEM ID : {itemId}
               </Typography>
             </Container>
           </div>
@@ -236,36 +170,62 @@ function ViewItemTEC() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row) => {
-                      return (
+                  {data.itemDetails &&
+                    data.itemDetails
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
+                      .map((row, index) => (
                         <TableRow
                           hover
                           role="checkbox"
                           tabIndex={-1}
-                          key={row.code}
+                          key={index}
                         >
-                          {columns.map((column) => {
-                            const value = row[column.id];
-                            return (
-                              <TableCell key={column.id} align={column.align}>
-                                {column.format && typeof value === "number"
-                                  ? column.format(value)
-                                  : value}
-                              </TableCell>
-                            );
-                          })}
+                          <TableCell align="center">{row.sppId}</TableCell>
+                          <TableCell align="center">
+                            {row.divisionName}
+                          </TableCell>
+                          <TableCell align="center">{row.quantity}</TableCell>
+                          <TableCell align="center">
+                            {row.specification}
+                          </TableCell>
+                          <TableCell align="center">
+                            {row.recommendedVendors}
+                          </TableCell>
+                          <TableCell align="center">
+                            {DateFormat(row.expectedDeliveryDate)}
+                          </TableCell>
+                          <TableCell align="center">
+                            {<EvidenceOfAthorization />}
+                          </TableCell>
+                          <TableCell align="center">
+                            {
+                              <div className={styles.ActionButonsContainer}>
+                                <div
+                                  onClick={(event) => {
+                                    approve(row.sppId, itemId);
+                                    event.stopPropagation();
+                                  }}
+                                >
+                                  <ApprovePopup />
+                                </div>
+                                <RejectPopup
+                                  link={`${process.env.REACT_APP_API_HOST}/api/TECCommittee/UpdateTecCommitteeStatus?sppId=${row.sppId}&itemId=${itemId}&tecCommitteeStatus=reject&tecCommitteeComment=$rejectedComment`}
+                                />
+                              </div>
+                            }
+                          </TableCell>
                         </TableRow>
-                      );
-                    })}
+                      ))}
                 </TableBody>
               </Table>
             </TableContainer>
             <TablePagination
               rowsPerPageOptions={[10, 25, 50, 100]}
               component="div"
-              count={rows.length}
+              count={10}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}

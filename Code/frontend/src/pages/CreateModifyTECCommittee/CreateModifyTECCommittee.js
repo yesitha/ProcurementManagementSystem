@@ -45,7 +45,7 @@ function CreateModifyTECCommittee() {
   };
   const masterProcurementId = "MP0001";
   return (
-    <div style={{ overflowX: "auto" }}>
+    <div>
 
       <Container
         className={styles.main}
@@ -185,7 +185,7 @@ function CreateModifyTECCommittee() {
               bgcolor: "#205295",
               borderRadius: 5,
               height: 60,
-              width: 300,
+              width: 200,
             }}
           />
           </Container>

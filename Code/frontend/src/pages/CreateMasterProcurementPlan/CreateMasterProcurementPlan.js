@@ -18,31 +18,66 @@ import {
   Paper,
   Button,
 } from "@mui/material";
-import PreviewIcon from '@mui/icons-material/Preview';
-import {Link as Routerlink} from 'react-router-dom';
-
-const rows = users;
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import { Link as Routerlink } from "react-router-dom";
+import { useEffect } from "react";
+import {
+  MoneyFormat,
+  fetchSppDataFromDb,
+} from "../../services/PurchasingDivisionHOD/PurchasingDivisionHOD.js";
+import { createNewMPP } from "../../services/PurchasingDivisionHOD/PurchasingDivisionHOD.js";
 
 
 function CreateMasterProcurementPlan() {
 
-const [leftTableData, setLeftTableData] = useState(rows);
-const [rightTableData, setRightTableData] = useState([]);
+
+
+  const [leftTableData, setLeftTableData] = useState([]);
+  const [rightTableData, setRightTableData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetchSppDataFromDb();
+
+        const data = response;
+        setLeftTableData(data);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+// Retrieving arrays from sessionStorage
+const storedArray1 = JSON.parse(sessionStorage.getItem('leftTableData'));
+const storedArray2 = JSON.parse(sessionStorage.getItem('rightTableData'));
+
+// If arrays exist, we retrieve them from sessionStorage and set them to state.
+if(storedArray1 && storedArray2) {
+  setLeftTableData(storedArray1);
+  setRightTableData(storedArray2);
+}else{
+  fetchData();
+}
+
+    
+  }, []);
+  
 
   const handleClickLeftToRight = (row) => {
     setRightTableData([...rightTableData, row]);
-    setLeftTableData(leftTableData.filter((data) => data.id !== row.id));
+    setLeftTableData(leftTableData.filter((data) => data.sppId !== row.sppId));
   };
 
   const handleClickRightToLeft = (row) => {
     setLeftTableData([...leftTableData, row]);
-    setRightTableData(rightTableData.filter((data) => data.id !== row.id));
+    setRightTableData(
+      rightTableData.filter((data) => data.sppId !== row.sppId)
+    );
   };
-  const masterProcurementId = "MP0001";
 
   return (
-    <div style={{ overflowX: "auto" }}>
-
+    <div>
       <Container
         className={styles.main}
         sx={{
@@ -50,27 +85,23 @@ const [rightTableData, setRightTableData] = useState([]);
           display: "flex",
 
           flexDirection: "column",
-          //   overflowY: "hidden",
+          //   ]overflowY: "hidden",
         }}
       >
         <div className={styles.upperSection}>
           <div className={styles.ManageAuctionPageContainer__header}>
             <Routerlink to={-1}>
-            <IconButton
-              sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
-            >
-              <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
-            </IconButton>
+              <IconButton
+                sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
+              >
+                <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
+              </IconButton>
             </Routerlink>
 
             <h1 className={styles.Header}>Create Master Procurement Plan</h1>
           </div>
         </div>
         <div className={styles.OuterMiddle}>
-          <div className={styles.Ph2}>
-            <h4>Master Procurement Id : {masterProcurementId}</h4>
-          </div>
-
           <Container
             className={styles.MiddleSection}
             sx={{
@@ -94,34 +125,46 @@ const [rightTableData, setRightTableData] = useState([]);
                     <TableRow>
                       <TableCell>SubProc ID</TableCell>
                       <TableCell>Department</TableCell>
-                      <TableCell>Total</TableCell>
-                      <TableCell></TableCell>
-
+                      <TableCell>Grand Total</TableCell>
+                      <TableCell>Action</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {leftTableData.map((row) => (
                       <TableRow
-                      className={styles.TableRow}
-                      key={row.id}
-                      onClick={() => handleClickLeftToRight(row)}
-                    >
-                      <TableCell component="th" scope="row">
-                        {row.id}
-                      </TableCell>
-                      <TableCell>
-                        {row.firstname + " " + row.lastname}
-                      </TableCell>
-                      <TableCell>{row.department}</TableCell>
-                      <TableCell>
-                        <Routerlink to={`/pd-view-sub-procurement-plan`}>
-                        <PreviewIcon onClick={(event) => {
-                          event.stopPropagation();
-                          console.log("Preview Clicked");
-                        }} />
-                        </Routerlink>
-                      </TableCell>
-                    </TableRow>
+                        className={styles.TableRow}
+                        key={row.sppId}
+                        onClick={() => handleClickLeftToRight(row)}
+                      >
+                        <TableCell component="th" scope="row">
+                          {row.sppId}
+                        </TableCell>
+                        <TableCell>{row.divisionName}</TableCell>
+                        <TableCell>
+                          {MoneyFormat(row.totalEstimatedBudget)}
+                        </TableCell>
+                        <TableCell>
+                          <Routerlink
+                            to={`/pd-view-sub-procurement-plan/${row.sppId}/${row.divisionName}`}
+                          >
+                            <VisibilityIcon
+                              sx={{ color: "#205295" }}
+                              onClick={(event) => {
+                                event.stopPropagation();
+                                console.log("Preview Clicked");
+                                sessionStorage.setItem(
+                                  "leftTableData",
+                                  JSON.stringify(leftTableData)
+                                );
+                                sessionStorage.setItem(
+                                  "rightTableData",
+                                  JSON.stringify(rightTableData)
+                                );
+                              }}
+                            />
+                          </Routerlink>
+                        </TableCell>
+                      </TableRow>
                     ))}
                   </TableBody>
                 </Table>
@@ -153,30 +196,46 @@ const [rightTableData, setRightTableData] = useState([]);
                     <TableRow>
                       <TableCell>SubProc ID</TableCell>
                       <TableCell>Department</TableCell>
-                      <TableCell>Total</TableCell>
+                      <TableCell>Grand Total</TableCell>
+                      <TableCell>Action</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {rightTableData.map((row) => (
                       <TableRow
                         className={styles.TableRow}
-                        key={row.id}
+                        key={row.sppId}
                         onClick={() => handleClickRightToLeft(row)}
                       >
                         <TableCell component="th" scope="row">
                           {row.id}
                         </TableCell>
+                        <TableCell>{row.divisionName}</TableCell>
                         <TableCell>
-                          {row.firstname + " " + row.lastname}
+                          {MoneyFormat(row.totalEstimatedBudget)}
                         </TableCell>
-                        <TableCell>{row.department}</TableCell>
-                        <TableCell><Routerlink to={`/pd-view-sub-procurement-plan`}>
-                        <PreviewIcon onClick={(event) => {
-                          event.stopPropagation();
-                          console.log("Preview Clicked");
-                        }} />
-                        </Routerlink></TableCell>
 
+                        <TableCell>
+                          <Routerlink
+                            to={`/pd-view-sub-procurement-plan/${row.sppId}/${row.divisionName}`}
+                          >
+                            <VisibilityIcon
+                              sx={{ color: "#205295" }}
+                              onClick={(event) => {
+                                event.stopPropagation();
+                                console.log("Preview Clicked");
+                                sessionStorage.setItem(
+                                  "leftTableData",
+                                  JSON.stringify(leftTableData)
+                                );
+                                sessionStorage.setItem(
+                                  "rightTableData",
+                                  JSON.stringify(rightTableData)
+                                );
+                              }}
+                            />
+                          </Routerlink>
+                        </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -190,26 +249,29 @@ const [rightTableData, setRightTableData] = useState([]);
             className={styles.rightButton}
             sx={{ justifyContent: { xs: "left", sm: "center", lg: "center" } }}
           >
-            <Routerlink to={'/RequesttoInitiateMasterProcurementPlan'}>
-            <Button
-              className={styles.TecAppointButton}
-              variant="contained"
-              sx={{
-                mt: 2,
-                ml: { xs: 14, md: 2 },
-                borderRadius: 4,
-                mb: 0.3,
-                minWidth: "150px",
-              }}
-            >
-              Create Master Procurement Plan
-            </Button>
+            <Routerlink to={"/RequesttoInitiateMasterProcurementPlan"}>
+              <Button
+                onClick={() =>
+                  createNewMPP(rightTableData.map((data) => data.sppId))
+                }
+                className={styles.TecAppointButton}
+                variant="contained"
+                sx={{
+                  mt: 2,
+                  ml: { xs: 14, md: 2 },
+                  borderRadius: 4,
+                  mb: 0.3,
+                  minWidth: "150px",
+                }}
+              >
+                Create Master Procurement Plan
+              </Button>
             </Routerlink>
           </Container>
         </div>
       </Container>
     </div>
-  )
+  );
 }
 
-export default CreateMasterProcurementPlan
+export default CreateMasterProcurementPlan;

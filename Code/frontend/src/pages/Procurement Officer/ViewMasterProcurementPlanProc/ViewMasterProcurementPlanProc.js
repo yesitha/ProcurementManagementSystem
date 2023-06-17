@@ -1,6 +1,8 @@
-import React from 'react'
+import React from "react";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import styles from "./ViewMasterProcurementPlanProc.module.css";
+import { DateFormat } from "../../../services/dataFormats";
+import { MoneyFormat } from "../../../services/dataFormats";
 import {
   Button,
   Dialog,
@@ -30,8 +32,9 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import Visibility from "../../FinanceDivisionAccountant/InvoicesneedtobePaid/Visibility";
-import { Link as Routerlink } from 'react-router-dom';
-
+import { Link as Routerlink } from "react-router-dom";
+import { useEffect } from "react";
+import { fetchDataFromDb } from "../../../services/ProcurementHOD/ProcurementHODServices";
 const columns = [
   {
     id: "MasterProcurementPlanID",
@@ -46,85 +49,28 @@ const columns = [
   { id: "Action2", label: "Action", Width: 200, align: "center" },
   { id: "Action3", label: "Action", Width: 200, align: "center" },
 ];
-function createData(MasterProcurementPlanID, GrandTotal, CreationDate, Status,Action1,Action2,Action3) {
-  return { MasterProcurementPlanID, GrandTotal, CreationDate, Status,Action1,Action2,Action3 };
+function createData(
+  MasterProcurementPlanID,
+  GrandTotal,
+  CreationDate,
+  Status,
+  Action1,
+  Action2
+) {
+  return {
+    MasterProcurementPlanID,
+    GrandTotal,
+    CreationDate,
+    Status,
+    Action1,
+    Action2,
+  };
 }
-
-const rows = [
-  createData(
-    "MP-0001",
-    "Rs. 1000000",
-    "2021-09-01",
-    <Routerlink to={'/master-procurement-plan-status'}><Visibility /></Routerlink>,
-    <Routerlink to={'/view-master-procurement-plan'}>
-    <Button
-      className={styles.ViewButton}
-      variant="contained"
-      sx={{ borderRadius: 8, px: { xs: 2, md: 5 } }}
-    >
-      {" "}
-      View{" "}
-    </Button></Routerlink>,
-    <Routerlink to={'/create-modify-teccommittee'}>
-    <Button
-    className={styles.ViewButton}
-    variant="contained"
-    sx={{ borderRadius: 8, px: { xs: 2, md: 5 } }}
-  >
-    {" "}
-    Appoint Tec <br/>Committee{" "}
-  </Button></Routerlink>,
-  <Routerlink to={'/create-modify-bidopeningC'}>
-    <Button
-    className={styles.ViewButton}
-    variant="contained"
-    sx={{ borderRadius: 8, px: { xs: 2, md: 5 } }}
-  >
-    {" "}
-    Appoint BidOpening <br/>Committee{" "}
-  </Button></Routerlink>
-  ),
-  createData(
-    "MP-0002",
-    "Rs. 2000000",
-    "2021-09-02",
-    <Routerlink to={'/master-procurement-plan-status'}><Visibility /></Routerlink>,
-    <Routerlink to={'/view-master-procurement-plan'}>
-    <Button
-      className={styles.ViewButton}
-      variant="contained"
-      sx={{ borderRadius: 8, px: { xs: 2, md: 5 } }}
-    >
-      {" "}
-      View{" "}
-    </Button></Routerlink>,
-     <Routerlink to={'/create-modify-teccommittee'}>
-     <Button
-     className={styles.ViewButton}
-     variant="contained"
-     sx={{ borderRadius: 8, px: { xs: 2, md: 5 } }}
-   >
-     {" "}
-     Appoint Tec <br/>Committee{" "}
-   </Button></Routerlink>,
-   <Routerlink to={'/create-modify-bidopeningC'}>
-   <Button
-   className={styles.ViewButton}
-   variant="contained"
-   sx={{ borderRadius: 8, px: { xs: 2, md: 5 } }}
- >
-   {" "}
-   Appoint BidOpening <br/>Committee{" "}
- </Button></Routerlink>
-  ),
-];
-
-
-
 
 function ViewMasterProcurementPlanProc() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [data, SetData] = React.useState([]);
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -133,96 +79,147 @@ function ViewMasterProcurementPlanProc() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetchDataFromDb();
+
+        const data = response;
+        SetData(data);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
-    <div >
-    <div className={styles.NotificationPageContainer__header}>
-    <Routerlink to={-1}>
-    <IconButton
-      sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
-    >
-      <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
-    </IconButton>
-    </Routerlink>
-    <h1 className={styles.NotificationPageHeader}> Master Procurement Plan</h1>
-  </div>
-  <div className={styles.MiddleSection}>
-          <SearchNoFilter className={styles.search} />
-        </div>
-  <div className={styles.table}>
-  <Paper
-            className={styles.baseTableContainer}
-            elevation={6}
-            sx={{
-              mr: {
-                xs: "60px",
-                sm: "65px",
-                md: "65px",
-                lg: "68px",
-                xl: "70px",
-              },
-              alignItems: "center",
-              borderRadius: "31px",
-              pt: 2,
-            }}
+    <div>
+      <div className={styles.NotificationPageContainer__header}>
+        <Routerlink to={-1}>
+          <IconButton
+            sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
           >
-            <TableContainer sx={{ maxHeight: "100%" }}>
-              <Table stickyHeader aria-label="sticky table">
-                <TableHead className={styles.TableHeaders}>
-                  <TableRow>
-                    {columns.map((column) => (
-                      <TableCell
-                        key={column.id}
-                        align={column.align}
-                        style={{ maxWidth: column.Width }}
-                      >
-                        {column.label}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {rows
+            <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
+          </IconButton>
+        </Routerlink>
+        <h1 className={styles.NotificationPageHeader}>
+          {" "}
+          Master Procurement Plan
+        </h1>
+      </div>
+      <div className={styles.MiddleSection}>
+        <SearchNoFilter className={styles.search} />
+      </div>
+      <div className={styles.table}>
+        <Paper
+          className={styles.baseTableContainer}
+          elevation={6}
+          sx={{
+            mr: {
+              xs: "60px",
+              sm: "65px",
+              md: "65px",
+              lg: "68px",
+              xl: "70px",
+            },
+            alignItems: "center",
+            borderRadius: "31px",
+            pt: 2,
+          }}
+        >
+          <TableContainer sx={{ maxHeight: "100%" }}>
+            <Table stickyHeader aria-label="sticky table">
+              <TableHead className={styles.TableHeaders}>
+                <TableRow>
+                  {columns.map((column) => (
+                    <TableCell
+                      key={column.id}
+                      align={column.align}
+                      style={{ maxWidth: column.Width }}
+                    >
+                      {column.label}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {data &&
+                  data
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row) => {
-                      return (
-                        <TableRow
-                          hover
-                          role="checkbox"
-                          tabIndex={-1}
-                          key={row.code}
-                        >
-                          {columns.map((column) => {
-                            const value = row[column.id];
-                            return (
-                              <TableCell key={column.id} align={column.align}>
-                                {column.format && typeof value === "number"
-                                  ? column.format(value)
-                                  : value}
-                              </TableCell>
-                            );
-                          })}
-                        </TableRow>
-                      );
-                    })}
-                </TableBody>
-              </Table>
-            </TableContainer>
-            <TablePagination
-              rowsPerPageOptions={[10, 25, 50, 100]}
-              component="div"
-              count={rows.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-          </Paper>
-          </div>
-
-
-  </div>
-
+                    .map((row, index) => (
+                      <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                        <TableCell align="center">{row.mppId}</TableCell>
+                        <TableCell align="center">
+                          {MoneyFormat(row.estimatedGrandTotal)}
+                        </TableCell>
+                        <TableCell align="center">
+                          {DateFormat(row.creationDate)}
+                        </TableCell>
+                        <TableCell align="center">
+                          <Routerlink to={"/master-procurement-plan-status"}>
+                            <Visibility />
+                          </Routerlink>
+                        </TableCell>
+                        <TableCell>
+                          <Routerlink to={"/view-master-procurement-plan"}>
+                            <Button
+                              className={styles.ViewButton}
+                              variant="contained"
+                              sx={{ borderRadius: 8, px: { xs: 2, md: 5 } }}
+                            >
+                              {" "}
+                              View{" "}
+                            </Button>
+                          </Routerlink>
+                        </TableCell>
+                        
+                        <TableCell align="center">
+                          <Routerlink to={"/create-modify-teccommittee"}>
+                            <Button
+                              className={styles.ViewButton}
+                              variant="contained"
+                              sx={{ borderRadius: 8, px: { xs: 2, md: 5 } }}
+                            >
+                              {" "}
+                              Appoint Tec <br />
+                              Committee{" "}
+                            </Button>
+                          </Routerlink>
+                        </TableCell>
+                        <TableCell align="center">
+                          <Routerlink to={"/create-modify-bidopeningC"}>
+                            <Button
+                              className={styles.ViewButton}
+                              variant="contained"
+                              sx={{ borderRadius: 8, px: { xs: 2, md: 5 } }}
+                            >
+                              {" "}
+                              Appoint BidOpening <br />
+                              Committee{" "}
+                            </Button>
+                          </Routerlink>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[10, 25, 50, 100]}
+            component="div"
+            count={data.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </Paper>
+      </div>
+    </div>
   );
 }
 
-export default ViewMasterProcurementPlanProc
+export default ViewMasterProcurementPlanProc;

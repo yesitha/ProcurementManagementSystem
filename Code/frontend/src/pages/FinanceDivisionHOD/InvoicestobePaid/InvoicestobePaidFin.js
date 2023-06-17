@@ -50,7 +50,7 @@ function InvoicestobePaid() {
   const list = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
   const list3 = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
   return (
-    <div style={{ overflowX: "auto" }}>
+    <div>
 
       <Container
         className={styles.main}
