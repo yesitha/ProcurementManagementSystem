@@ -184,23 +184,44 @@ namespace PWMSBackend.Controllers
         [HttpPost("CreateVendorPlaceBidItem")]
         public async Task<IActionResult> CreateVendorPlaceBidItem(string vendorId, string itemId, double bidValue, byte[] proofDocument)
         {
-            // Create a new VendorPlaceBidItem instance
-            var newVendorPlaceBidItem = new VendorPlaceBidItem
+            // Check if a record already exists for the same vendorId and itemId
+            var existingRecord = await _context.VendorPlaceBidItems.FirstOrDefaultAsync(
+                x => x.VendorId == vendorId && x.ItemId == itemId);
+
+            if (existingRecord != null)
             {
-                VendorId = vendorId,
-                ItemId = itemId,
-                BidValue = bidValue,
-                ProofDocument = proofDocument,
-                DateAndTime = DateTime.Now, // Set the current date and time
-                BidStatus = "Pending" // Set the initial bid status as "Pending" or provide the desired default value
-            };
+                // Update the existing record with the new values
+                existingRecord.BidValue = bidValue;
+                existingRecord.ProofDocument = proofDocument;
+                existingRecord.DateAndTime = DateTime.Now;
+                existingRecord.BidStatus = "Pending"; // Set the desired bid status
 
-            // Save the newVendorPlaceBidItem to the database using your data context (_context)
-            _context.VendorPlaceBidItems.Add(newVendorPlaceBidItem);
-            await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
 
-            // Return a success response 
-            return Ok("Bid Placed Successfully");
+                // Return a success response 
+                return Ok("Bid Updated Successfully");
+            }
+            else
+            {
+                // Create a new VendorPlaceBidItem instance
+                var newVendorPlaceBidItem = new VendorPlaceBidItem
+                {
+                    VendorId = vendorId,
+                    ItemId = itemId,
+                    BidValue = bidValue,
+                    ProofDocument = proofDocument,
+                    DateAndTime = DateTime.Now,
+                    BidStatus = "Pending"
+                };
+
+                // Save the newVendorPlaceBidItem to the database using your data context (_context)
+                _context.VendorPlaceBidItems.Add(newVendorPlaceBidItem);
+                await _context.SaveChangesAsync();
+
+                // Return a success response 
+                return Ok("Bid Placed Successfully");
+            }
         }
+
     }
 }
