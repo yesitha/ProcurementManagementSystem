@@ -27,8 +27,8 @@ namespace PWMSBackend.Controllers
             DateTime currentDate = DateTime.Today;
 
             var closestDate = _context.SubProcurementApprovedItems
-                .Where(a => a.PreBidMeetingDate.HasValue && a.PreBidMeetingDate.Value.Date >= currentDate)
-                .OrderBy(a => a.PreBidMeetingDate.Value)
+                .Where(a => a.PreBidMeetingDate.HasValue && a.PreBidMeetingDate.Value.Date <= currentDate)
+                .OrderByDescending(a => a.PreBidMeetingDate.Value)
                 .Select(a => a.PreBidMeetingDate.Value.Date)
                 .FirstOrDefault();
 

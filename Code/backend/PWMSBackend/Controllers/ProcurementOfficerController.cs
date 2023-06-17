@@ -480,9 +480,8 @@ namespace PWMSBackend.Controllers
         {
             DateTime currentDate = DateTime.Today;
 
-            var closestDate = _context.SubProcurementApprovedItems
-                .Where(a => a.PreBidMeetingDate.HasValue && a.PreBidMeetingDate.Value.Date >= currentDate)
-                .OrderBy(a => a.PreBidMeetingDate.Value)
+            var closestDate = _context.SubProcurementApprovedItems.Where(a => a.PreBidMeetingDate.HasValue && a.PreBidMeetingDate.Value.Date <= currentDate)
+                .OrderByDescending(a => a.PreBidMeetingDate.Value)
                 .Select(a => a.PreBidMeetingDate.Value.Date)
                 .FirstOrDefault();
 
@@ -507,8 +506,8 @@ namespace PWMSBackend.Controllers
                                  itemId = input.ItemId,
                                  quantity = planItem.Quantity,
                                  expectedDeliveryDate = planItem.ExpectedDeliveryDate,
-                                 actionOpeningDate = input.AuctionOpeningDate,
-                                 actionClosingDate = input.AuctionClosingDate
+                                 auctionOpeningDate = input.AuctionOpeningDate,
+                                 auctionClosingDate = input.AuctionClosingDate
                              };
 
             //filter data by itemId and sum quantity
@@ -519,8 +518,8 @@ namespace PWMSBackend.Controllers
                                          itemId = group.Key,
                                          totalQuantity = group.Sum(x => x.quantity),
                                          expectedDeliveryDate = group.Select(x => x.expectedDeliveryDate).Distinct().Min(),
-                                         actionOpeningDate = group.Select(x => x.actionOpeningDate).Distinct().FirstOrDefault(),
-                                         actionClosingDate = group.Select(x => x.actionClosingDate).Distinct().FirstOrDefault()
+                                         auctionOpeningDate = group.Select(x => x.auctionOpeningDate).Distinct().FirstOrDefault(),
+                                         auctionClosingDate = group.Select(x => x.auctionClosingDate).Distinct().FirstOrDefault()
                                      });
 
             //get item names
@@ -540,8 +539,8 @@ namespace PWMSBackend.Controllers
                              Specification = itemDetail.Specification,
                              totalQuantity = input.totalQuantity,
                              expectedDeliveryDate = input.expectedDeliveryDate,
-                             actionOpeningDate = input.actionOpeningDate,
-                             actionClosingDate = input.actionClosingDate
+                             auctionOpeningDate = input.auctionOpeningDate,
+                             auctionClosingDate = input.auctionClosingDate
                          };
 
             //get Bid details
@@ -559,7 +558,7 @@ namespace PWMSBackend.Controllers
             var bidDetails = from input in result
                              join vendor in _context.VendorPlaceBidItems
                              on input.itemId equals vendor.ItemId
-                             where vendor.DateAndTime >= input.actionOpeningDate && vendor.DateAndTime <= input.actionClosingDate
+                             where vendor.DateAndTime >= input.auctionOpeningDate && vendor.DateAndTime <= input.auctionClosingDate
                              group vendor by vendor.ItemId into g
                              select new
                              {
@@ -593,9 +592,8 @@ namespace PWMSBackend.Controllers
         {
             DateTime currentDate = DateTime.Today;
 
-            var closestDate = _context.SubProcurementApprovedItems
-                .Where(a => a.PreBidMeetingDate.HasValue && a.PreBidMeetingDate.Value.Date >= currentDate)
-                .OrderBy(a => a.PreBidMeetingDate.Value)
+            var closestDate = _context.SubProcurementApprovedItems.Where(a => a.PreBidMeetingDate.HasValue && a.PreBidMeetingDate.Value.Date <= currentDate)
+                .OrderByDescending(a => a.PreBidMeetingDate.Value)
                 .Select(a => a.PreBidMeetingDate.Value.Date)
                 .FirstOrDefault();
 
@@ -619,8 +617,8 @@ namespace PWMSBackend.Controllers
                              {
                                  sppId = input.SppId,
                                  itemId = input.ItemId,
-                                 actionOpeningDate = input.AuctionOpeningDate,
-                                 actionClosingDate = input.AuctionClosingDate
+                                 auctionOpeningDate = input.AuctionOpeningDate,
+                                 auctionClosingDate = input.AuctionClosingDate
                              };
 
             //filter data by itemId and sum quantity
@@ -629,8 +627,8 @@ namespace PWMSBackend.Controllers
                                      .Select(group => new
                                      {
                                          itemId = group.Key,
-                                         actionOpeningDate = group.Select(x => x.actionOpeningDate).Distinct().FirstOrDefault(),
-                                         actionClosingDate = group.Select(x => x.actionClosingDate).Distinct().FirstOrDefault()
+                                         auctionOpeningDate = group.Select(x => x.auctionOpeningDate).Distinct().FirstOrDefault(),
+                                         auctionClosingDate = group.Select(x => x.auctionClosingDate).Distinct().FirstOrDefault()
                                      });
 
             //get item name and Specification
@@ -645,15 +643,15 @@ namespace PWMSBackend.Controllers
                          {
                              itemId = input.itemId,
                              itemName = itemDetail.ItemName,
-                             actionOpeningDate = input.actionOpeningDate,
-                             actionClosingDate = input.actionClosingDate
+                             auctionOpeningDate = input.auctionOpeningDate,
+                             auctionClosingDate = input.auctionClosingDate
                          };
 
             //get Bid details
 
             var bidValues = _context.VendorPlaceBidItems
                                 .Where(vendor => vendor.ItemId == result.Select(x=> x.itemId).FirstOrDefault())
-                                .Where(vendor => vendor.DateAndTime >= result.Select(x => x.actionOpeningDate).FirstOrDefault() && vendor.DateAndTime <= result.Select(x => x.actionClosingDate).FirstOrDefault())
+                                .Where(vendor => vendor.DateAndTime >= result.Select(x => x.auctionOpeningDate).FirstOrDefault() && vendor.DateAndTime <= result.Select(x => x.auctionClosingDate).FirstOrDefault())
                                 .Select(vendor => new 
                                     { 
                                         vendor.BidValue,
