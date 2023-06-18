@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import {
   Button,
@@ -21,10 +21,32 @@ import styles from "./ViewMasterProcurementPlan.module.css";
 import SelectDropDown from "../../components/SelectDropDown/SelectDropDown";
 import ViewRecomandedVendors from "../../components/Popups/ViewRecomandedVendors/ViewRecomandedVendors";
 import { vendors } from "../../users/vendors.js";
-import { Link as Routerlink } from "react-router-dom";
-
+import { Link as Routerlink, useParams } from "react-router-dom";
+import { fetchMasterProcurmentItemListDetails } from "../../services/ProcurementHOD/ProcurementHODServices";
+import { useState } from "react";
+import {DateFormat} from "../../services/dataFormats";
 function ViewMasterProcurementPlan() {
   const Recomandedvendors1 = vendors;
+  const {mppId} = useParams();
+  const [data,setData] = useState();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetchMasterProcurmentItemListDetails (mppId);
+
+        const data = response;
+        setData(data);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+    
+
+  }, []);
 
   const columns = [
     { id: "ItemID", label: "Item ID", Width: 300, align: "center" },
@@ -110,7 +132,7 @@ function ViewMasterProcurementPlan() {
   const handleChange = (event) => {
     setAge(event.target.value);
   };
-  const list = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
+
 
   return (
     <div className={styles.outer}>
@@ -136,19 +158,22 @@ function ViewMasterProcurementPlan() {
 
         <div className={styles.MiddleSection}>
           <div className={styles.header2Section}>
-            <div>
+            
               <Typography
                 sx={{
                   fontFamily: "mulish",
-                  fontSize: { xs: "14px", sm: "15px", md: "16px" },
+                  fontSize: { xs: "16px", sm: "18px", md: "20px" },
                   ml: 1.2,
+                  pl: 1.2,
+                  mr: 8,
                   color: "#ffffff",
+                   
                 }}
               >
-                MASTER PROCUREMENT PLAN ID*
+                MASTER PROCUREMENT PLAN ID : {mppId}
               </Typography>
-              <SelectDropDown className={styles.dropDown} list={list} />
-            </div>
+              
+            
           </div>
           <SearchNoFilter className={styles.search} />
         </div>
@@ -185,30 +210,22 @@ function ViewMasterProcurementPlan() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows
+                {data &&
+                  data
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row) => {
-                      return (
-                        <TableRow
-                          hover
-                          role="checkbox"
-                          tabIndex={-1}
-                          key={row.code}
-                        >
-                          {columns.map((column) => {
-                            const value = row[column.id];
-                            return (
-                              <TableCell key={column.id} align={column.align}>
-                                {column.format && typeof value === "number"
-                                  ? column.format(value)
-                                  : value}
-                              </TableCell>
-                            );
-                          })}
-                        </TableRow>
-                      );
-                    })}
-                </TableBody>
+                    .map((row, index) => (
+                      <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                        <TableCell align="center">{row.itemId}</TableCell>
+                        <TableCell align="center">{row.itemName}</TableCell>
+                        <TableCell align="center">{row.quantity}</TableCell>
+                        <TableCell align="center">{row.division}</TableCell>
+                        <TableCell align="center">{row.specification}</TableCell>
+                        <TableCell align="center">{row.recommendedVendor}</TableCell>
+                        <TableCell align="center">{DateFormat(row.expectedDeliveryDate
+)}</TableCell>
+                      </TableRow>
+                    ))}
+              </TableBody>
               </Table>
             </TableContainer>
             <TablePagination
@@ -225,7 +242,7 @@ function ViewMasterProcurementPlan() {
             className={styles.rightButton}
             sx={{ justifyContent: { xs: "center", md: "right" } }}
           >
-            <Routerlink to={'/create-modify-teccommittee'}>
+            <Routerlink to={`/create-modify-teccommittee/${mppId}`}>
             <Button
               className={styles.TecAppointButton}
               variant="contained"

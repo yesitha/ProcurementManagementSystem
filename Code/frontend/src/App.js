@@ -135,11 +135,11 @@ function App() {
             element={<ViewMasterProcurementPlanProc />}
           />
           <Route
-            path="/master-procurement-plan-status"
+            path="/master-procurement-plan-status/:subId"
             element={<MasterProcurementPlanStatus />}
           />
           <Route
-            path="/view-master-procurement-plan"
+            path="/view-master-procurement-plan/:mppId"
             element={<ViewMasterProcurementPlan />}
           />
           <Route path="/PurchaseOrder" element={<PurchaseOrder />} />
@@ -152,7 +152,7 @@ function App() {
             element={<ViewMasterProcurementPlanProc />}
           />
           <Route
-            path="/create-modify-bidopeningC"
+            path="/create-modify-bidopeningC/:subId"
             element={<CreateModifyBidOpeningCommittee/>}
           />
           <Route
@@ -172,7 +172,7 @@ function App() {
             element={<ViewMasterProcurementPlan />}
           />
           <Route
-            path="/create-modify-teccommittee"
+            path="/create-modify-teccommittee/:mppId"
             element={<CreateModifyTECCommittee />}
           />
           <Route
