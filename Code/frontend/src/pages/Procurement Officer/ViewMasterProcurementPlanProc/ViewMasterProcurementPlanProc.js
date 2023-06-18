@@ -35,6 +35,7 @@ import Visibility from "../../FinanceDivisionAccountant/InvoicesneedtobePaid/Vis
 import { Link as Routerlink } from "react-router-dom";
 import { useEffect } from "react";
 import { fetchDataFromDb } from "../../../services/ProcurementHOD/ProcurementHODServices";
+import { checkNeworNot } from "../../../services/ProcurementHOD/ProcurementHODServices";
 const columns = [
   {
     id: "MasterProcurementPlanID",
@@ -71,6 +72,7 @@ function ViewMasterProcurementPlanProc() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [data, SetData] = React.useState([]);
+  const [dataWithStatus, setDataWithStatus] = React.useState();
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -94,11 +96,31 @@ function ViewMasterProcurementPlanProc() {
     };
 
     fetchData();
+    console.log(data);
   }, []);
+
+
+  useEffect(() => {
+    if (Array.isArray(data)) {
+      const fetchData = async () => {
+        const newData = await Promise.all(
+          data.map(async (object) => {
+            const isNew = await checkNeworNot(object.mppId);
+            return { ...object, status: isNew };
+          })
+        );
+        setDataWithStatus(newData.map((object) => object.status));
+        console.log(newData);
+        setDataWithStatus(newData);
+      };
+  
+      fetchData();
+    }
+  }, [data]);
   return (
     <div>
       <div className={styles.NotificationPageContainer__header}>
-        <Routerlink to={-1}>
+        <Routerlink to={`/dashboard`}>
           <IconButton
             sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
           >
@@ -146,8 +168,8 @@ function ViewMasterProcurementPlanProc() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {data &&
-                  data
+                {dataWithStatus &&
+                  dataWithStatus
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) => (
                       <TableRow hover role="checkbox" tabIndex={-1} key={index}>
@@ -159,12 +181,12 @@ function ViewMasterProcurementPlanProc() {
                           {DateFormat(row.creationDate)}
                         </TableCell>
                         <TableCell align="center">
-                          <Routerlink to={"/master-procurement-plan-status"}>
+                          <Routerlink to={`/master-procurement-plan-status/${row.mppId}`}>
                             <Visibility />
                           </Routerlink>
                         </TableCell>
                         <TableCell>
-                          <Routerlink to={"/view-master-procurement-plan"}>
+                          <Routerlink to={`/view-master-procurement-plan/${row.mppId}`}>
                             <Button
                               className={styles.ViewButton}
                               variant="contained"
@@ -177,7 +199,17 @@ function ViewMasterProcurementPlanProc() {
                         </TableCell>
                         
                         <TableCell align="center">
-                          <Routerlink to={"/create-modify-teccommittee"}>
+                        {!row.status ? ( <Routerlink to={`/create-modify-teccommittee/${row.mppId}`}>
+                            <Button
+                              className={styles.ViewButton}
+                              variant="contained"
+                              sx={{ borderRadius: 8, px: { xs: 2, md: 5 },backgroundColor: "#227C70" }}
+                            >
+                              {" "}
+                              Modify Tec <br />
+                              Committee{" "}
+                            </Button>
+                          </Routerlink>) : ( <Routerlink to={`/create-modify-teccommittee/${row.mppId}`}>
                             <Button
                               className={styles.ViewButton}
                               variant="contained"
@@ -187,20 +219,34 @@ function ViewMasterProcurementPlanProc() {
                               Appoint Tec <br />
                               Committee{" "}
                             </Button>
-                          </Routerlink>
+                          </Routerlink>)}
+                         
                         </TableCell>
                         <TableCell align="center">
-                          <Routerlink to={"/create-modify-bidopeningC"}>
-                            <Button
-                              className={styles.ViewButton}
-                              variant="contained"
-                              sx={{ borderRadius: 8, px: { xs: 2, md: 5 } }}
-                            >
-                              {" "}
-                              Appoint BidOpening <br />
-                              Committee{" "}
-                            </Button>
-                          </Routerlink>
+                        {!row.status ? (
+  <Routerlink to={`/create-modify-bidopeningC/${row.mppId}`}>
+    <Button
+      className={styles.ViewButton}
+      variant="contained"
+      sx={{ borderRadius: 8, px: { xs: 2, md: 5 } }}
+    >
+      Appoint BidOpening
+      <br />
+      Committee
+    </Button>
+  </Routerlink>
+) : (
+  <Button
+    className={styles.ViewButton}
+    variant="contained"
+    sx={{ borderRadius: 8, px: { xs: 2, md: 5 } }}
+    disabled
+  >
+    Appoint BidOpening
+    <br />
+    Committee
+  </Button>
+)}
                         </TableCell>
                       </TableRow>
                     ))}
