@@ -70,7 +70,7 @@ const rows = [
     "2023/01/01",
     <div className={styles.afmpp_ActionButonsContainer}>
       <ApprovePopup />
-      <RejectPopup />
+      {/* <RejectPopup /> */}
     </div>
   ),
   createData(
@@ -83,7 +83,7 @@ const rows = [
     "2023/01/01",
     <div className={styles.afmpp_ActionButonsContainer}>
       <ApprovePopup />
-      <RejectPopup />
+      {/* <RejectPopup /> */}
     </div>
   ),
 ];

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import {
@@ -23,11 +23,11 @@ import TableRow from "@mui/material/TableRow";
 import SearchNoFilter from "../../../components/Search/Search";
 import { Container } from "@mui/system";
 import styles from "./ApprovedItemList.module.css";
-import SelectDropDown from "../../../components/SelectDropDown/SelectDropDown";
 import ViewVendors from "../../../components/Popups/ViewVendors/ViewVendors";
 import { vendors } from "../../../users/vendors.js";
 import Sucessfullyinformed from "../../../components/Popups/DonePopup/Successfullyinformed";
-import { Link as Routerlink } from "react-router-dom";
+import { Link as Routerlink, useParams } from "react-router-dom";
+import { GetApprovedItems } from "../../../services/ProcurementCommittee/ProcurementCommitteeServices";
 
 function ViewMasterProcurementPlan() {
   const Recomandedvendors1 = vendors;
@@ -45,54 +45,6 @@ function ViewMasterProcurementPlan() {
     },
   ];
 
-  function Setdate(date) {
-    return (
-      <Stack component="form" noValidate spacing={3}>
-        <TextField
-          id="date"
-          type="date"
-          align="center"
-          disabled
-          defaultValue={new Date(date).toISOString().substr(0, 10)}
-          sx={{ width: 140, height: 50 }}
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-      </Stack>
-    );
-  }
-
-  function createData(ItemID, ItemName, Qty, Ven, Action) {
-    return { ItemID, ItemName, Qty, Ven, Action };
-  }
-
-  const rows = [
-    createData(
-      "I0015",
-      "Stapler",
-      "50",
-
-      <ViewVendors vendors={Recomandedvendors1} />,
-    <Sucessfullyinformed name="Vendor" title="Notify Vendor"/>
-    ),
-    createData(
-      "I0016",
-      "Pens",
-      "100",
-
-      <ViewVendors vendors={Recomandedvendors1} />,
-      <Sucessfullyinformed name="Vendor" title="Notify Vendor"/>
-    ),
-    createData(
-      "I0017",
-      "Notebooks",
-      "25",
-
-      <ViewVendors vendors={Recomandedvendors1} />,
-      <Sucessfullyinformed name="Vendor" title="Notify Vendor"/>
-    ),
-  ];
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -105,8 +57,26 @@ function ViewMasterProcurementPlan() {
     setPage(0);
   };
 
+  const { mppId } = useParams();
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const fetchdata = async () => {
+      try {
+        const response = await GetApprovedItems(mppId);
+        const data = response;
+        setData(data);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchdata();
+  }, []);
+
+
   return (
-    <div className={styles.outer} style={{ overflowX: "hidden" }}>
+    <div className={styles.outer}>
       <Container
         sx={{
           ml: { xs: "60px", sm: "65px", md: "65px", lg: "68px", xl: "70px" },
@@ -181,36 +151,37 @@ function ViewMasterProcurementPlan() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row) => {
-                      return (
+                  {data &&
+                    data
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
+                      .map((row, index) => (
                         <TableRow
                           hover
                           role="checkbox"
                           tabIndex={-1}
-                          key={row.code}
+                          key={index}
                         >
-                          {columns.map((column) => {
-                            const value = row[column.id];
-                            return (
-                              <TableCell key={column.id} align={column.align}>
-                                {column.format && typeof value === "number"
-                                  ? column.format(value)
-                                  : value}
-                              </TableCell>
-                            );
-                          })}
+                          <TableCell align="center">{row.itemId}</TableCell>
+                          <TableCell align="center">{row.itemName}</TableCell>
+                          <TableCell align="center">
+                            {row.totalQuantity}
+                          </TableCell>
+                          <TableCell align="center">
+                            {row.recommendedVendors}
+                          </TableCell>
+                          <TableCell align="center">{<Sucessfullyinformed name="Vendor" title="Notify Vendor"/>}</TableCell>
                         </TableRow>
-                      );
-                    })}
+                      ))}
                 </TableBody>
               </Table>
             </TableContainer>
             <TablePagination
               rowsPerPageOptions={[10, 25, 50, 100]}
               component="div"
-              count={rows.length}
+              count={10}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
