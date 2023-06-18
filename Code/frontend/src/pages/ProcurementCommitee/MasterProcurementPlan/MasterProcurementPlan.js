@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
 import styles from "./MasterProcurementPlan.module.css";
-import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import SearchNoFilter from "../../../components/Search/Search";
-import { Button, IconButton, Paper, Stack, TextField } from "@mui/material";
+import { Button, IconButton, Paper} from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -16,6 +15,9 @@ import { useState} from "react";
 import {viewMasterProcurementPlanInfo} from "./../../../services/ProcurementCommittee/ProcurementCommitteeServices";
 import { MoneyFormat } from "../../../services/dataFormats";
 import { DateFormat } from "../../../services/dataFormats";
+import {GetMasterProcurementPlans} from "./../../../services/ProcurementCommittee/ProcurementCommitteeServices";
+
+
 const columns = [
   {
     id: "MPPID",
@@ -28,11 +30,6 @@ const columns = [
   { id: "Action", label: "Action", Width: 300, align: "center" },
 ];
 
-function createData(MPPID, GTotal, CDate, Action) {
-  return { MPPID, GTotal, CDate, Action };
-}
-
-
 
 function MasterProcurementPlans() {
 
@@ -41,7 +38,7 @@ function MasterProcurementPlans() {
   useEffect(()=>{
   const fetchData = async () => {
     try {
-      const response = await viewMasterProcurementPlanInfo();
+      const response = await GetMasterProcurementPlans();
       const data=response;
       setData(data);
       console.log(data);
@@ -52,8 +49,6 @@ function MasterProcurementPlans() {
   };
   fetchData();
 }, [] );
-
-  const list = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -87,8 +82,7 @@ function MasterProcurementPlans() {
         <div className={styles.vfmpp_table}>
           <Paper
             sx={{
-              width: "75%",
-              overflow: "hidden",
+              width: "100%",
               borderRadius: 5,
               scrollBehavior: "smooth",
             }}
@@ -116,7 +110,7 @@ function MasterProcurementPlans() {
                   <TableCell align="center">{row.mppId}</TableCell>
                   <TableCell align="center">{MoneyFormat(row.estimatedGrandTotal)}</TableCell>
                   <TableCell align="center">{DateFormat(row.creationDate)}</TableCell>
-                  <TableCell>{<Routerlink to={'/PCApprovalforMasterProcurmentPlan'}>
+                  <TableCell>{<Routerlink to={`/PCApprovalforMasterProcurmentPlan/${row.mppId}`}>
                   <Button
                     variant="contained"
                     fontFamily={"Inter"}
