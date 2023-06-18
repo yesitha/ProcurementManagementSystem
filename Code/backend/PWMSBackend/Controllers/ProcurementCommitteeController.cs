@@ -330,6 +330,17 @@ namespace PWMSBackend.Controllers
                               bidCount = vendor.bidCount
                           };
 
+            // Add Total cost to FinalizedMasterProcurementPlan table
+
+            double sumBidValues = result2.Sum(r => r.bidValue);
+
+            var firstNullGrandTotal = _context.FinalizedMasterProcurementPlans.FirstOrDefault(fmpp => fmpp.GrandTotal == null);
+            if (firstNullGrandTotal != null)
+            {
+                firstNullGrandTotal.GrandTotal = sumBidValues;
+                _context.SaveChanges();
+            }
+
             return Ok(result2);
         }
 

@@ -8,7 +8,7 @@ namespace PWMSBackend.Models
         [Key("FmppId")]
         public string FmppId { get; set; }
 
-        public double GrandTotal { get; set; }
+        public double? GrandTotal { get; set; }
 
         //One to one relationships
         public MasterProcurementPlan MasterProcurementPlan { get; set; }
