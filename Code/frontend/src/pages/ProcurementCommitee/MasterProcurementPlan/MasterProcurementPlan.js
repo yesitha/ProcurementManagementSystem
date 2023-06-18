@@ -14,7 +14,8 @@ import TableRow from "@mui/material/TableRow";
 import { Link as Routerlink } from "react-router-dom";
 import { useState} from "react";
 import {viewMasterProcurementPlanInfo} from "./../../../services/ProcurementCommittee/ProcurementCommitteeServices";
-
+import { MoneyFormat } from "../../../services/dataFormats";
+import { DateFormat } from "../../../services/dataFormats";
 const columns = [
   {
     id: "MPPID",
@@ -113,8 +114,8 @@ function MasterProcurementPlans() {
               .map((row, index) => (
                 <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                   <TableCell align="center">{row.mppId}</TableCell>
-                  <TableCell align="center">{row.estimatedGrandTotal}</TableCell>
-                  <TableCell align="center">{row.creationDate}</TableCell>
+                  <TableCell align="center">{MoneyFormat(row.estimatedGrandTotal)}</TableCell>
+                  <TableCell align="center">{DateFormat(row.creationDate)}</TableCell>
                   <TableCell>{<Routerlink to={'/PCApprovalforMasterProcurmentPlan'}>
                   <Button
                     variant="contained"
