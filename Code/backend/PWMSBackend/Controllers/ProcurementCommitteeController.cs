@@ -149,7 +149,7 @@ namespace PWMSBackend.Controllers
             {
                 subProcurementPlanItem.ProcurementCommitteeComment = procurementCommitteeComment;
             }
-            
+
 
             _context.SaveChanges();
 
@@ -203,7 +203,7 @@ namespace PWMSBackend.Controllers
         }
 
 
-        // Bid Details
+        // TEC Report page Controllers (1-GET)
 
         [HttpGet("GetBidDetails")]
         public async Task<ActionResult<IEnumerable<object>>> GetBidDetails()
@@ -288,21 +288,21 @@ namespace PWMSBackend.Controllers
                              };
 
             var bidDetails1 = from input in result
-                             join vendor in _context.VendorPlaceBidItems
-                             on input.itemId equals vendor.ItemId
-                             where vendor.DateAndTime >= input.auctionOpeningDate && vendor.DateAndTime <= input.auctionClosingDate && vendor.BidStatus == "Selected"
-                             join v in _context.Vendors
-                             on vendor.VendorId equals v.VendorId
-                             group new { vendor.VendorId, vendor.BidValue, v.FirstName, v.LastName } by vendor.ItemId into g
-                             select new
-                             {
-                                 itemId = g.Key,
-                                 bidValues = g.Select(v => new
-                                 {
-                                     bidValue = v.BidValue,
-                                     vendorFullName = v.FirstName + " " + v.LastName
-                                 }).FirstOrDefault()
-                             };
+                              join vendor in _context.VendorPlaceBidItems
+                              on input.itemId equals vendor.ItemId
+                              where vendor.DateAndTime >= input.auctionOpeningDate && vendor.DateAndTime <= input.auctionClosingDate && vendor.BidStatus == "Selected"
+                              join v in _context.Vendors
+                              on vendor.VendorId equals v.VendorId
+                              group new { vendor.VendorId, vendor.BidValue, v.FirstName, v.LastName } by vendor.ItemId into g
+                              select new
+                              {
+                                  itemId = g.Key,
+                                  bidValues = g.Select(v => new
+                                  {
+                                      bidValue = v.BidValue,
+                                      vendorFullName = v.FirstName + " " + v.LastName
+                                  }).FirstOrDefault()
+                              };
 
             var combinedResult = from b1 in bidDetails1
                                  join b2 in bidDetails on b1.itemId equals b2.itemId
@@ -414,6 +414,63 @@ namespace PWMSBackend.Controllers
             };
 
             return Ok(output);
+        }
+
+
+        // Finalized Master Procurement Plan
+
+        [HttpGet("GetFinalizedMasterProcurementPlan")]
+
+        public IActionResult GetFinalizedMasterProcurementPlan(string mppId)
+        {
+            var approvedItems = _context.MasterProcurementPlans
+                .Where(mpp => mpp.MppId == mppId)
+                .SelectMany(mpp => mpp.SubProcurementPlans)
+                .SelectMany(spp => spp.subProcurementPlanItems)
+                .Where(item => item.ProcuremnetCommitteeStatus == "approve")
+                .OrderBy(item => item.ItemId)
+                .Select(item => new
+                {
+                    ItemId = item.ItemId,
+                    ItemName = item.Item.ItemName,
+                    Specification = item.Item.Specification,
+                    quantity = item.Quantity,
+                    SppId = item.SppId,
+                    division = item.SubProcurementPlan.HOD.Division.DivisionName,
+                    expectedDeliverDate = item.ExpectedDeliveryDate,
+                    selectedVendor = item.SelectedVendor,
+                    BidValue = _context.VendorPlaceBidItems
+                                    .Where(vpb => vpb.Vendor.VendorId == _context.Vendors
+                                                                            .Where(v => v.FirstName + " " + v.LastName == item.SelectedVendor)
+                                                                            .Select(v => v.VendorId)
+                                                                            .FirstOrDefault()
+                                                                      && vpb.ItemId == item.ItemId)
+                                    .Select(vpb => vpb.BidValue)
+                                    .FirstOrDefault(),
+                    SelectedVendorInfo = new
+                    {
+                        BusinessRegistrationDoc = _context.Vendors
+                                                    .Where(v => v.FirstName + " " + v.LastName == item.SelectedVendor)
+                                                    .Select(v => v.BusinessRegistrationDoc)
+                                                    .FirstOrDefault(),
+                        TaxIdentificationDoc = _context.Vendors
+                                                    .Where(v => v.FirstName + " " + v.LastName == item.SelectedVendor)
+                                                    .Select(v => v.TaxIdentificationDoc)
+                                                    .FirstOrDefault(),
+                        InsuranceCertificate = _context.Vendors
+                                                    .Where(v => v.FirstName + " " + v.LastName == item.SelectedVendor)
+                                                    .Select(v => v.InsuaranceCertificate)
+                                                    .FirstOrDefault(),
+                        OtherDocs = _context.Vendors
+                                                    .Where(v => v.FirstName + " " + v.LastName == item.SelectedVendor)
+                                                    .Select(v => v.OtherDocs)
+                                                    .FirstOrDefault(),
+                        
+                    }
+                })
+                .ToList();
+
+            return Ok(approvedItems);
         }
 
     }
