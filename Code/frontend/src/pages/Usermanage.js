@@ -8,7 +8,7 @@ const user = {
   lastname: "Doe",
   email: "johndoe@gmail.com",
   designation: "Procurement Officer",
-  userType: "ProcurementOfficer",
+  userType: "BidOpeningCommittee",
   department: "Finance",
   phone: "1234567890",
   address: "123, ABC Street, XYZ City, 123456",
@@ -227,7 +227,6 @@ switch (currentUser) {
   case "BidOpeningCommittee":
     list1 = [
       { displayName: "Auctions", path: "Auctions-BOC" },
-      { displayName: "Bid History", path: "BidHistory-BOC" },
     ];
 
     list2 = ["Settings"];

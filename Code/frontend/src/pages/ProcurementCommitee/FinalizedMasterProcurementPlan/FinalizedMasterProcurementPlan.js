@@ -1,10 +1,9 @@
 import React from "react";
 import styles from "./FinalizedMasterProcurementPlan.module.css";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import SelectDropDown from "../../../components/SelectDropDown/SelectDropDown";
 import SearchNoFilter from "../../../components/Search/Search";
-import { Button, IconButton, Paper, Stack, TextField } from "@mui/material";
+import { IconButton, Paper, Stack, TextField } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -15,8 +14,13 @@ import TableRow from "@mui/material/TableRow";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VendorDetails from "../../../components/Popups/VendorDetails/VendorDetails";
 import DonePopup from "../../../components/Popups/DonePopup/DonePopup";
-import SetPreBidMeetingDate from "../../../components/Popups/SetPreBidMeetingDate/SetPreBidMeetingDate";
-import { Link as Routerlink } from "react-router-dom";
+import { Link as Routerlink, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import {
+  GetFinalizedMasterProcurementPlan,
+  GetMasterProcurementPlansIDList,
+} from "../../../services/ProcurementCommittee/ProcurementCommitteeServices";
+import { DateFormat, MoneyFormat } from "../../../services/dataFormats";
 
 //===============Applicable for table data===================================
 
@@ -38,7 +42,9 @@ const columns = [
     Width: 300,
     align: "center",
   },
-  { id: "Vendor", label: "Vendor", Width: 300, align: "center" },
+  { id: "Vendor", label: "Selected Vendor", Width: 300, align: "center" },
+  { id: "VendorDetails", label: "Vendor Details", Width: 300, align: "center" },
+  { id: "tenderValue", label: "Tender Value", Width: 300, align: "center" },
 ];
 
 function Setdate() {
@@ -59,65 +65,7 @@ function Setdate() {
   );
 }
 
-function createData(
-  ItemID,
-  ItemName,
-  Qty,
-  Spe,
-  SppID,
-  Division,
-  EDdate,
-  Vendor
-) {
-  return { ItemID, ItemName, Qty, Spe, SppID, Division, EDdate, Vendor };
-}
-
-const rows = [
-  createData(
-    "I0014",
-    "A4 Papers",
-    "500",
-    "loerm",
-    "SPPID1000",
-    "IT Department",
-    Setdate(),
-    <VendorDetails />
-  ),
-  createData(
-    "I0028",
-    "Ruler",
-    "10",
-    "loerm",
-    "SPPID1000",
-    "IT Department",
-    Setdate(),
-    <VendorDetails />
-  ),
-  createData(
-    "I0015",
-    "Stapler",
-    "50",
-    "loerm",
-    "SPPID1000",
-    "IT Department",
-    Setdate(),
-    <VendorDetails />
-  ),
-];
-
-//===========================================================================
-
-// Here in class names, fmmp=FinalizedMasterProcurementPlan
-
 function FinalizedMasterProcurementPlan() {
-
-
-  //=======values for 'SelectDropDown.js' as an array=======
-
-  const list = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
-
-  //========================================================
-
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const handleChangePage = (event, newPage) => {
@@ -129,21 +77,66 @@ function FinalizedMasterProcurementPlan() {
     setPage(0);
   };
 
+  const [mppIds, setmppIds] = useState([]);
+  const [selectedmppId, setSelectedmppId] = useState("");
+  const [data, setData] = useState(null);
+
+  const { selectedmppIdforNextPage } = useParams();
+
+  const handleSubIdChange = (event) => {
+    setSelectedmppId(event.target.value);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const mppIdsResponse = await GetMasterProcurementPlansIDList();
+        setmppIds(mppIdsResponse);
+        console.log(mppIdsResponse);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+    if (selectedmppIdforNextPage) {
+      setSelectedmppId(selectedmppIdforNextPage);
+    }
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await GetFinalizedMasterProcurementPlan(selectedmppId);
+        setData(data);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, [selectedmppId]);
+
   return (
     <div>
       <div className={styles.fmpp_mainBody}>
         <div className={styles.fmpp_heading}>
-        <Routerlink to={-1}>
-          <IconButton sx={{ pl: "15px", height: "34px", width: "34px" }}>
-            <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
-          </IconButton>
+          <Routerlink to={-1}>
+            <IconButton sx={{ pl: "15px", height: "34px", width: "34px" }}>
+              <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
+            </IconButton>
           </Routerlink>
           Finalized Master Procurement Plan
         </div>
         <div className={styles.fmpp_title_search}>
           <div className={styles.fmpp_title}>
             <label>MASTER PROCUREMENT PLAN ID*</label>
-            <SelectDropDown list={list} />
+            <SelectDropDown
+              list={mppIds}
+              value={selectedmppId}
+              onChange={handleSubIdChange}
+            />
           </div>
           <div className={styles.fmpp_search}>
             <SearchNoFilter />
@@ -177,36 +170,48 @@ function FinalizedMasterProcurementPlan() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row) => {
-                      return (
+                  {data &&
+                    data
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
+                      .map((row, index) => (
                         <TableRow
                           hover
                           role="checkbox"
                           tabIndex={-1}
-                          key={row.code}
+                          key={index}
                         >
-                          {columns.map((column) => {
-                            const value = row[column.id];
-                            return (
-                              <TableCell key={column.id} align={column.align}>
-                                {column.format && typeof value === "number"
-                                  ? column.format(value)
-                                  : value}
-                              </TableCell>
-                            );
-                          })}
+                          <TableCell align="center">{row.itemId}</TableCell>
+                          <TableCell align="center">{row.itemName}</TableCell>
+                          <TableCell align="center">{row.quantity}</TableCell>
+                          <TableCell align="center">
+                            {row.specification}
+                          </TableCell>
+                          <TableCell align="center">{row.sppId}</TableCell>
+                          <TableCell align="center">{row.division}</TableCell>
+                          <TableCell align="center">
+                            {DateFormat(row.expectedDeliverDate)}
+                          </TableCell>
+                          <TableCell align="center">
+                            {row.selectedVendor}
+                          </TableCell>
+                          <TableCell align="center">
+                            {<VendorDetails />}
+                          </TableCell>
+                          <TableCell align="center">
+                            {MoneyFormat(row.bidValue)}
+                          </TableCell>
                         </TableRow>
-                      );
-                    })}
+                      ))}
                 </TableBody>
               </Table>
             </TableContainer>
             <TablePagination
               rowsPerPageOptions={[10, 25, 50, 100]}
               component="div"
-              count={rows.length}
+              count={10}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
