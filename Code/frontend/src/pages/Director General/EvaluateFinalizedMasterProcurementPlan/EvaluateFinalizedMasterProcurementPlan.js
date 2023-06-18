@@ -119,7 +119,7 @@ const rows = [
     auditApproved,
     <div className={styles.efmpp_ActionButonsContainer}>
       <ApprovePopup />
-      <RejectPopup />
+      {/* <RejectPopup /> */}
     </div>
   ),
   createData(
@@ -133,7 +133,7 @@ const rows = [
     auditRejected,
     <div className={styles.efmpp_ActionButonsContainer}>
       <ApprovePopup />
-      <RejectPopup />
+      {/* <RejectPopup /> */}
     </div>
   ),
   
