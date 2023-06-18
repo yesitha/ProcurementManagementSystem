@@ -85,7 +85,7 @@ function App() {
       <SideNavBar list1={list1} list2={list2} user={user} />
       <div className="app-content">
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<AuditFinalizedMasterProcurementPlan />} />
           <Route path="/view-notification" element={<NotificationPage />} />
 
           {/* Division HOD */}
@@ -157,7 +157,7 @@ function App() {
           />
           <Route
             path="/evaluate-master-procurementplan"
-            element={<MasterProcurementPlanStatus />}
+            element={<ViewMasterProcurementPlanProc />}
           />
           <Route path="/create-purchase-order" element={<PurchaseOrder />} />
 
@@ -229,11 +229,11 @@ function App() {
             element={<MasterProcurementPlan />}
           />
           <Route
-            path="/PCApprovalforMasterProcurmentPlan"
+            path="/PCApprovalforMasterProcurmentPlan/:mppId"
             element={<ApprovalForMasterProcurementPlanPC />}
           />
-          <Route path="/PCviewitem" element={<ViewItemPC />} />
-          <Route path="/ApprovedItemList" element={<ApprovedItemList />} />
+          <Route path="/PCviewitem/:itemId/:mppId" element={<ViewItemPC />} />
+          <Route path="/ApprovedItemList/:mppId" element={<ApprovedItemList />} />
           <Route
             path="/FinalizedMasterProcurementPlan"
             element={<FinalizedMasterProcurementPlan />}
