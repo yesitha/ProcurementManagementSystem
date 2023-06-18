@@ -8,10 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-
-import { Box } from "@mui/system";
 import "../../../fonts.css";
-
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -136,7 +133,7 @@ function ApprovalForMasterProcurementPlan() {
                   color: "#ffffff",
                 }}
               >
-                GRAND TOTAL : LKR {MoneyFormat(title.estimatedGrandTotal)}
+                GRAND TOTAL : {MoneyFormat(title.estimatedGrandTotal)}
               </Typography>
             </Container>
           </div>
