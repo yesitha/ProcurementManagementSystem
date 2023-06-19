@@ -81,3 +81,52 @@ export const GetMasterProcurementPlans = async () => {
       throw error;
     }
   }; 
+
+  export const GetBidDetails = async () => {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_HOST}/api/ProcurementCommittee/GetBidDetails`);
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      console.log('Axios error:', error);
+      throw error;
+    }
+  };
+
+  export const GetBidDetailsitemId = async (itemId) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_HOST}/api/ProcurementCommittee/GetItemBidDetails/${itemId}`
+      );
+      console.log(response);
+      return response.data;  
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }; 
+
+  export const GetMasterProcurementPlansIDList = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/GetMasterProcurementPlansIDList`
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+
+  export const GetFinalizedMasterProcurementPlan = async (selectedmppId) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_HOST}/api/ProcurementCommittee/GetFinalizedMasterProcurementPlan?mppId=${selectedmppId}`
+      );
+      console.log(response.data);
+      return response.data;
+      
+    } catch (error) {
+      console.log(error);
+    }
+  };

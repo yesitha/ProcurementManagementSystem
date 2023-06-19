@@ -85,7 +85,7 @@ function App() {
       <SideNavBar list1={list1} list2={list2} user={user} />
       <div className="app-content">
         <Routes>
-          <Route path="/" element={<AuditFinalizedMasterProcurementPlan />} />
+          <Route path="/" element={<Login />} />
           <Route path="/view-notification" element={<NotificationPage />} />
 
           {/* Division HOD */}
@@ -243,7 +243,7 @@ function App() {
             element={<MasterProcurementPlan />}
           />
           <Route path="/view-tec-report" element={<TecReport />} />
-          <Route path="/tec-report-view" element={<TecReportView />} />
+          <Route path="/tec-report-view/:itemId" element={<TecReportView />} />
           <Route
             path="/new-master-procurement-plan-for-evaluate-PC"
             element={<MasterProcurementPlan />}
@@ -297,6 +297,7 @@ function App() {
 
           {/* BidOpeningCommitee */}
           <Route path="/manage-auction" element={<ManageAuction />} />
+          <Route path="/Auctions-BOC" element={<ManageAuction />} />
 
           {/* InternalAuditor */}
           <Route

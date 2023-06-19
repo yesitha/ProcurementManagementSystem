@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./TecReport.module.css";
-import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { Button, IconButton, Paper } from "@mui/material";
 import Table from "@mui/material/Table";
@@ -12,7 +11,10 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import SearchNoFilter from "../../../components/Search/Search";
 import { Container } from "@mui/system";
+import { useState } from "react";
 import { Link as Routerlink } from "react-router-dom";
+import { GetBidDetails } from "../../../services/ProcurementCommittee/ProcurementCommitteeServices";
+import { MoneyFormat } from "../../../services/dataFormats";
 
 const columns = [
   { id: "ItemID", label: "Item ID", Width: 300, align: "center" },
@@ -35,50 +37,6 @@ const columns = [
   { id: "act", label: "Action", Width: 300, align: "center" },
 ];
 
-function createData(
-  ItemID,
-  ItemName,
-  Qty,
-  specification,
-  selectedbidvalue,
-  selectedven,
-  numofbidreceived,
-  act
-) {
-  return {
-    ItemID,
-    ItemName,
-    Qty,
-    specification,
-    selectedbidvalue,
-    selectedven,
-    numofbidreceived,
-    act,
-  };
-}
-
-const rows = [
-  createData(
-    "I0015",
-    "A4 Papers",
-    "45",
-    "GSM 80",
-    "LKR 4000",
-    "Vendor 01",
-    "05",
-    <Routerlink to={'/tec-report-view'}><Button variant="contained">View</Button></Routerlink>
-  ),
-  createData(
-    "I0016",
-    "Pens",
-    "60",
-    "Blue",
-    "LKR 5000",
-    "Vendor 05",
-    "10",
-    <Routerlink to={'/tec-report-view'}><Button variant="contained">View</Button></Routerlink>
-  ),
-];
 
 function TecReport() {
   const [page, setPage] = React.useState(0);
@@ -91,9 +49,25 @@ function TecReport() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  const [data, setData] = useState();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await GetBidDetails();
+        const data = response;
+        setData(data);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <div style={{ overflowX: "hidden" }}>
-
       <Container
         className={styles.main}
         sx={{
@@ -105,11 +79,11 @@ function TecReport() {
         <div className={styles.upperSection}>
           <div className={styles.ManageAuctionPageContainer__header}>
             <Routerlink to={-1}>
-            <IconButton
-              sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
-            >
-              <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
-            </IconButton>
+              <IconButton
+                sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
+              >
+                <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
+              </IconButton>
             </Routerlink>
             <h1 className={styles.Header}> Tec Report</h1>
           </div>
@@ -151,36 +125,61 @@ function TecReport() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row) => {
-                      return (
+                  {data &&
+                    data
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
+                      .map((row, index) => (
                         <TableRow
                           hover
                           role="checkbox"
                           tabIndex={-1}
-                          key={row.code}
+                          key={index}
                         >
-                          {columns.map((column) => {
-                            const value = row[column.id];
-                            return (
-                              <TableCell key={column.id} align={column.align}>
-                                {column.format && typeof value === "number"
-                                  ? column.format(value)
-                                  : value}
-                              </TableCell>
-                            );
-                          })}
+                          <TableCell align="center">{row.itemId}</TableCell>
+                          <TableCell align="center">{row.itemName}</TableCell>
+                          <TableCell align="center">
+                            {row.totalQuantity}
+                          </TableCell>
+                          <TableCell align="center">
+                            {row.specification}
+                          </TableCell>
+                          <TableCell align="center">
+                            {MoneyFormat(row.bidValue)}
+                          </TableCell>
+                          <TableCell align="center">
+                            {row.selectedVendorName}
+                          </TableCell>
+                          <TableCell align="center">{row.bidCount}</TableCell>
+                          <TableCell>
+                            {
+                              <Routerlink to={`/tec-report-view/${row.itemId}`}>
+                                <Button
+                                  variant="contained"
+                                  fontFamily={"Inter"}
+                                  sx={{
+                                    bgcolor: "#205295",
+                                    borderRadius: 5,
+                                    height: 50,
+                                    width: 100,
+                                  }}
+                                >
+                                  View
+                                </Button>
+                              </Routerlink>
+                            }
+                          </TableCell>
                         </TableRow>
-                      );
-                    })}
+                      ))}
                 </TableBody>
               </Table>
             </TableContainer>
             <TablePagination
               rowsPerPageOptions={[10, 25, 50, 100]}
               component="div"
-              count={rows.length}
+              count={10}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
