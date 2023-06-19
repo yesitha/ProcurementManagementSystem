@@ -1,11 +1,13 @@
 import styles from "./CreateModifyBidOpeningCommittee.module.css";
-import React, { useState } from "react";
+import React, { useState,useEffect} from "react";
 import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { Container } from "@mui/system";
 import { users } from "../../../users/SystemUsers";
 import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
 import DonePopup from "../../../components/Popups/DonePopup/DonePopup";
+import { submitBidOpCommitteeToDb } from "../../../services/ProcurementHOD/ProcurementHODServices";
+import { fetchAlreadyMembersInBidOpCommittee } from "../../../services/ProcurementHOD/ProcurementHODServices";
 import {
   IconButton,
   TableRow,
@@ -19,25 +21,74 @@ import {
   Button,
 } from "@mui/material";
 import { Rotate90DegreesCcw } from "@mui/icons-material";
-import { Link as Routerlink } from "react-router-dom";
+import { Link as Routerlink,useParams } from "react-router-dom";
 
 const rows = users;
 
+
+
 function CreateModifyBidOpeningCommittee() {
+
+  const {mppId}= useParams();
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+  const[value,setvalue]=useState("Create Bid opening Committee");
+  const [isFirstRender, setIsFirstRender] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      
+      try {
+        const response = await fetchAlreadyMembersInBidOpCommittee(mppId);
+
+        const data = response;
+        setLeftTableData(data.otherEmployees);
+        setRightTableData(data.employeesInBidOpeningCommittee );
+        if(data.employeesInBidOpeningCommittee.length>0){
+          setvalue("Modify Bid Opening Committee");
+        }
+     console.log(rightTableData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (isFirstRender) {
+
+    fetchData();
+  }
+   
+  }, [isFirstRender]);
+
+
   //   const classes = useStyles();
   const [leftTableData, setLeftTableData] = useState(rows);
   const [rightTableData, setRightTableData] = useState([]);
 
   const handleClickLeftToRight = (row) => {
     setRightTableData([...rightTableData, row]);
-    setLeftTableData(leftTableData.filter((data) => data.id !== row.id));
+    setLeftTableData(leftTableData.filter((data) => data.employeeId!== row.employeeId));
   };
 
   const handleClickRightToLeft = (row) => {
     setLeftTableData([...leftTableData, row]);
-    setRightTableData(rightTableData.filter((data) => data.id !== row.id));
+    setRightTableData(rightTableData.filter((data) => data.employeeId!== row.employeeId));
   };
-  const masterProcurementId = "MP0001";
+  //const masterProcurementId = "MP0001";
+
+  const handleSubmit = () => {
+    // Handle form submission or any other logic here
+    submitBidOpCommitteeToDb(mppId,rightTableData.filter(item => item !== null).map((item) => {
+      return item.employeeId
+      
+    }));
+    setIsFormSubmitted(true);
+  };
+
+  const handleDivClick = (event) => {
+    event.stopPropagation();
+    if (!isFormSubmitted) {
+      handleSubmit();
+    }
+  };
   
   return (
     <div>
@@ -66,7 +117,7 @@ function CreateModifyBidOpeningCommittee() {
         </div>
         <div className={styles.OuterMiddle}>
           <div className={styles.Ph2}>
-            <h4>Master Procurement Id : {masterProcurementId}</h4>
+            <h4>Master Procurement Id : {mppId}</h4>
           </div>
 
           <Container
@@ -99,16 +150,18 @@ function CreateModifyBidOpeningCommittee() {
                     {leftTableData.map((row) => (
                       <TableRow
                         className={styles.TableRow}
-                        key={row.id}
+                        key={row.employeeId
+                        }
                         onClick={() => handleClickLeftToRight(row)}
                       >
                         <TableCell component="th" scope="row">
-                          {row.id}
+                          {row.employeeId
+}
                         </TableCell>
                         <TableCell>
-                          {row.firstname + " " + row.lastname}
+                          {row.employeeName}
                         </TableCell>
-                        <TableCell>{row.department}</TableCell>
+                        <TableCell>{row.divisionName}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -148,16 +201,16 @@ function CreateModifyBidOpeningCommittee() {
                     {rightTableData.map((row) => (
                       <TableRow
                         className={styles.TableRow}
-                        key={row.id}
+                        key={row.employeeId}
                         onClick={() => handleClickRightToLeft(row)}
                       >
                         <TableCell component="th" scope="row">
-                          {row.id}
+                          {row.employeeId}
                         </TableCell>
                         <TableCell>
-                          {row.firstname + " " + row.lastname}
+                          {row.employeeName}
                         </TableCell>
-                        <TableCell>{row.department}</TableCell>
+                        <TableCell>{row.divisionName}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -170,10 +223,12 @@ function CreateModifyBidOpeningCommittee() {
           <Container
             className={styles.rightButton}
             sx={{ justifyContent: { xs: "left", sm: "center", lg: "center" } }}
+          ><div
+          onClick={handleDivClick}
           >
             <DonePopup
-            text={"Successfully Created Bid Opening Committee"}
-            title={"CREATE BID OPENING COMMITTEE"}
+            text={`Successfully ${value}`}
+            title={value}
             styles={{
               position: "absolute",
               right: "0",
@@ -182,7 +237,7 @@ function CreateModifyBidOpeningCommittee() {
               height: 60,
               width: 200,
             }}
-          />
+          /></div>
           </Container>
         </div>
       </Container>
