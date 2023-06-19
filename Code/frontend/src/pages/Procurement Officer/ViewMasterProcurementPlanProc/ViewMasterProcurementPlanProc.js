@@ -203,7 +203,9 @@ function ViewMasterProcurementPlanProc() {
                             <Button
                               className={styles.ViewButton}
                               variant="contained"
-                              sx={{ borderRadius: 8, px: { xs: 2, md: 5 },backgroundColor: "#227C70" }}
+                              sx={{ borderRadius: 8, px: { xs: 2, md: 5 },backgroundColor: "#227C70" ,':hover': {
+                                backgroundColor: '#227C70',
+                              }, }}
                             >
                               {" "}
                               Modify Tec <br />
@@ -213,7 +215,7 @@ function ViewMasterProcurementPlanProc() {
                             <Button
                               className={styles.ViewButton}
                               variant="contained"
-                              sx={{ borderRadius: 8, px: { xs: 2, md: 5 } }}
+                              sx={{ borderRadius: 8, px: { xs: 2, md: 5 }}}
                             >
                               {" "}
                               Appoint Tec <br />
@@ -228,9 +230,11 @@ function ViewMasterProcurementPlanProc() {
     <Button
       className={styles.ViewButton}
       variant="contained"
-      sx={{ borderRadius: 8, px: { xs: 2, md: 5 } }}
+      sx={{ borderRadius: 8, px: { xs: 2, md: 5 },backgroundColor: "#227C70",':hover': {
+        backgroundColor: '#227C70',
+      }, }}
     >
-      Appoint BidOpening
+      Modify BidOpening
       <br />
       Committee
     </Button>
