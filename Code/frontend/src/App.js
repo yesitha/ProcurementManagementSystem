@@ -152,7 +152,7 @@ function App() {
             element={<ViewMasterProcurementPlanProc />}
           />
           <Route
-            path="/create-modify-bidopeningC/:subId"
+            path="/create-modify-bidopeningC/:mppId"
             element={<CreateModifyBidOpeningCommittee/>}
           />
           <Route
@@ -256,7 +256,7 @@ function App() {
           {/* CoparateCommunicationDivision */}
           <Route path="/publish-papaer-ad" element={<PublishPaperAd />} />
           <Route
-            path="/publish-papaer-ad-view-item"
+            path="/publish-papaer-ad-view-item/:itemId"
             element={<ItemDetails />}
           />
 
