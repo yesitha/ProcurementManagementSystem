@@ -41,17 +41,28 @@ namespace PWMSBackend.Controllers
 
             var approvedItems = _context.SubProcurementApprovedItems
                 .Where(a => a.PreBidMeetingDate.HasValue && a.PreBidMeetingDate.Value.Date == dateOnly)
-                .Select(a => new
-                {
-                    a.ItemId,
-                    a.ApprovedItem.ItemName,
-                    TotalQuantity = _context.SubProcurementPlanItems
-                        .Where(s => s.ItemId == a.ItemId && s.SppId == a.SppId)
-                        .Sum(s => s.Quantity)
+                .Select(a => new 
+                { 
+                    a.ItemId, 
+                    a.SppId,
+                    ItemName = _context.Items.FirstOrDefault(i => i.ItemId == a.ItemId).ItemName
                 })
                 .ToList();
 
-            return Ok(approvedItems);
+            var result = approvedItems
+                .GroupBy(a => new { a.ItemId, a.ItemName })
+                .Select(g => new
+                {
+                    g.Key.ItemId,
+                    g.Key.ItemName,
+                    Totalquantity = g.Sum(a => _context.SubProcurementPlanItems
+                                                .Where(s => s.SppId == a.SppId && s.ItemId == a.ItemId)
+                                                .Sum(s => s.Quantity)
+                                          )
+                })
+                .ToList();
+
+            return Ok(result);
         }
 
         // GET: api/Items/{itemId}
