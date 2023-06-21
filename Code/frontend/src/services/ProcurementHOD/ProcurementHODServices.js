@@ -1,6 +1,6 @@
 import axios from "axios";
 
-//
+// 
 
 export const fetchDataFromDb = async () => {
   try {
@@ -61,6 +61,18 @@ export const fetchMasterProcurmentItemListDetails = async (mppId) => {
   }
 };
 
+export const fetchDataToTable = async (selectedSppId) => {
+  try {
+    const response = await axios.get(`${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/GetSubProcurementPlanItemsByMppId/${selectedSppId}`);
+    
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    console.log('Axios error:', error);
+    throw error;
+  }
+};
+
 
 //CreateModifyTecCommittee
 
@@ -73,8 +85,7 @@ export const fetchAlreadyMembersInTecCommittee = async (mppId) => {
     console.log(response);
     
   }catch(error){
-    console.log(error);
-    
+    console.log(error); 
   }
 
   try {
@@ -83,11 +94,11 @@ export const fetchAlreadyMembersInTecCommittee = async (mppId) => {
     );
     console.log(response.data);
     return response.data;
+
   } catch (error) {
     console.log(error);
-    throw error;
   }
-};
+}
 
 
 export const submitTECCommitteeToDb = async (mppId,data) => {
@@ -96,6 +107,51 @@ export const submitTECCommitteeToDb = async (mppId,data) => {
   try {
     const response = await axios.post(
       `${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/AppointTECCommitteeMembers?mppId=${mppId}`,data
+    );
+   
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+//Create/Modify BidOpeningCommittee
+
+export const fetchAlreadyMembersInBidOpCommittee = async (mppId) => {
+  try{
+    const response = await axios.post(
+      `${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/CreateNewBidOpeningCommitteeID?mppId=${mppId}`
+      
+    );
+    
+    console.log(response);
+    
+  }catch(error){
+    console.log(error); 
+  
+  }
+
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/GetEmployeesInBidOpeningCommittee/${mppId}`
+    );
+    console.log(response.data);
+    return response.data;
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
+export const submitBidOpCommitteeToDb = async (mppId,data) => {
+  console.log(data);
+  
+  try {
+    const response = await axios.post(
+      `${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/AppointBidOpeningCommitteeMembers?mppId${mppId}`,data
     );
    
     console.log(response.data);

@@ -34,7 +34,7 @@ namespace PWMSBackend.Controllers
 
             var items = await _context.SubProcurementApprovedItems
                 .Where(a => a.PreBidMeetingDate.HasValue && a.PreBidMeetingDate.Value.Date == closestDate)
-                .Select(a => new { a.SppId, a.ItemId })
+                .Select(a => new { a.SppId, a.ItemId, a.AuctionOpeningDate, a.AuctionClosingDate })
                 .ToListAsync();
 
             if (items == null)
@@ -51,6 +51,8 @@ namespace PWMSBackend.Controllers
                              {
                                  sppId = input.SppId,
                                  itemId = input.ItemId,
+                                 auctionOpeningDate = input.AuctionOpeningDate,
+                                 auctionClosingDate = input.AuctionClosingDate,
                                  quantity = planItem.Quantity,
                                  recommendedVendor = planItem.RecommendedVendor
                              };
@@ -62,7 +64,9 @@ namespace PWMSBackend.Controllers
                                      {
                                          itemId = group.Key,
                                          totalQuantity = group.Sum(x => x.quantity),
-                                         recommendedVendors = group.Select(x => x.recommendedVendor).Distinct().ToList()
+                                         recommendedVendors = group.Select(x => x.recommendedVendor).Distinct().ToList(),
+                                         auctionOpeningDate = group.Select(x => x.auctionOpeningDate).FirstOrDefault(),
+                                         auctionClosingDate = group.Select(x => x.auctionClosingDate).FirstOrDefault()
                                      });
 
             //get item names
@@ -80,7 +84,9 @@ namespace PWMSBackend.Controllers
                                    itemId = input.itemId,
                                    itemName = itemName.ItemName,
                                    totalQuantity = input.totalQuantity,
-                                   recommendedVendors = input.recommendedVendors
+                                   recommendedVendors = input.recommendedVendors,
+                                   auctionOpeningDate = input.auctionOpeningDate,
+                                   auctionClosingDate = input.auctionClosingDate
                                };
 
             return Ok(result);

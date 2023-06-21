@@ -152,12 +152,12 @@ function App() {
             element={<ViewMasterProcurementPlanProc />}
           />
           <Route
-            path="/create-modify-bidopeningC/:subId"
+            path="/create-modify-bidopeningC/:mppId"
             element={<CreateModifyBidOpeningCommittee/>}
           />
           <Route
             path="/evaluate-master-procurementplan"
-            element={<MasterProcurementPlanStatus />}
+            element={<ViewMasterProcurementPlanProc />}
           />
           <Route path="/create-purchase-order" element={<PurchaseOrder />} />
 
@@ -229,11 +229,11 @@ function App() {
             element={<MasterProcurementPlan />}
           />
           <Route
-            path="/PCApprovalforMasterProcurmentPlan"
+            path="/PCApprovalforMasterProcurmentPlan/:mppId"
             element={<ApprovalForMasterProcurementPlanPC />}
           />
-          <Route path="/PCviewitem" element={<ViewItemPC />} />
-          <Route path="/ApprovedItemList" element={<ApprovedItemList />} />
+          <Route path="/PCviewitem/:itemId/:mppId" element={<ViewItemPC />} />
+          <Route path="/ApprovedItemList/:mppId" element={<ApprovedItemList />} />
           <Route
             path="/FinalizedMasterProcurementPlan"
             element={<FinalizedMasterProcurementPlan />}
@@ -243,7 +243,7 @@ function App() {
             element={<MasterProcurementPlan />}
           />
           <Route path="/view-tec-report" element={<TecReport />} />
-          <Route path="/tec-report-view" element={<TecReportView />} />
+          <Route path="/tec-report-view/:itemId" element={<TecReportView />} />
           <Route
             path="/new-master-procurement-plan-for-evaluate-PC"
             element={<MasterProcurementPlan />}
@@ -256,7 +256,7 @@ function App() {
           {/* CoparateCommunicationDivision */}
           <Route path="/publish-papaer-ad" element={<PublishPaperAd />} />
           <Route
-            path="/publish-papaer-ad-view-item"
+            path="/publish-papaer-ad-view-item/:itemId"
             element={<ItemDetails />}
           />
 
@@ -297,6 +297,7 @@ function App() {
 
           {/* BidOpeningCommitee */}
           <Route path="/manage-auction" element={<ManageAuction />} />
+          <Route path="/Auctions-BOC" element={<ManageAuction />} />
 
           {/* InternalAuditor */}
           <Route
