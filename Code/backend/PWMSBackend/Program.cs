@@ -3,6 +3,7 @@ using PWMSBackend.Data;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http.Json;
 using PWMSBackend.CustomIdGenerator;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,14 +13,13 @@ builder.Services.Configure<JsonOptions>(options =>
     options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 });
 
-
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers().AddJsonOptions(x =>
-                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DataContext>(options =>
 {
@@ -41,11 +41,18 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(app.Environment.ContentRootPath, "Uploads/Evidence_of_authorization")),
+    RequestPath = "/Uploads/Evidence_of_authorization"
+});
+
 // Allow Cors
 app.UseCors(option =>
     option.WithOrigins("http://localhost:3000")
-    .AllowAnyMethod()
-    .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowAnyHeader()
 );
 
 app.UseHttpsRedirection();
