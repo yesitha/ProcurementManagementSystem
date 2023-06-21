@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PWMSBackend.Data;
 
@@ -11,9 +12,10 @@ using PWMSBackend.Data;
 namespace PWMSBackend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230620172029_fix6")]
+    partial class fix6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -100,7 +102,7 @@ namespace PWMSBackend.Migrations
                     b.Property<string>("FmppId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<double?>("GrandTotal")
+                    b.Property<double>("GrandTotal")
                         .HasColumnType("float");
 
                     b.Property<string>("MppId")
@@ -338,31 +340,36 @@ namespace PWMSBackend.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<byte[]>("Agreement")
+                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<byte[]>("BankGuarantee")
+                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<byte[]>("Bond")
+                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("CommentsForSpecialInstruction")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("CommentsForSpecialInstruction")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
                     b.Property<byte[]>("LetterOfAcceptance")
+                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("ProcumentOfficerStatus")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("ProcumentOfficerStatus")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<double>("TotalAmount")
                         .HasColumnType("float");
 
                     b.Property<string>("VendorId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("PoId");
@@ -942,9 +949,7 @@ namespace PWMSBackend.Migrations
                 {
                     b.HasOne("PWMSBackend.Models.Vendor", "Vendor")
                         .WithMany("PurchaseOrders")
-                        .HasForeignKey("VendorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("VendorId");
 
                     b.Navigation("Vendor");
                 });

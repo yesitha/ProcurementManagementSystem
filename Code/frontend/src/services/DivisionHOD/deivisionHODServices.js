@@ -91,12 +91,16 @@ export const addNewItemDb = async (
 
 //Add New Item to Sub Procurement Plan Page
 
-export const pushNewItemSubProcurementPlan = async (formData) => {
+export const pushNewItemSubProcurementPlan = async (formData,file) => {
   try {
-    await axios.post(
-      "${process.env.REACT_APP_API_HOST}/api/DivisionHOD/AddItemToSubProcurementPlan",
-      formData
-    );
+    const data = new FormData();
+    data.append('file', file);
+    
+    const response = await fetch(`${process.env.REACT_APP_API_HOST}/api/DivisionHOD/AddItemToSubProcurementPlan?SppId=${formData.SppId}&ItemId=${formData.ItemId}&RecomendedVendor=${formData.RecomendedVendor}&ExpectedDate=${formData.expectedDeliveryDate}&Estimated_budget=${formData.estimatedBudget}&Quantity=${formData.quantity}`, {
+      method: 'POST',
+      body: data,
+    });
+    console.log(response);
   } catch (error) {
     console.log(error);
   }

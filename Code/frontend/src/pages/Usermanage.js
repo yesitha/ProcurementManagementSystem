@@ -7,8 +7,10 @@ const user = {
   firstname: "John",
   lastname: "Doe",
   email: "johndoe@gmail.com",
+
   designation: "Procurement Officer",
   userType: "BidOpeningCommittee",
+
   department: "Finance",
   phone: "1234567890",
   address: "123, ABC Street, XYZ City, 123456",
