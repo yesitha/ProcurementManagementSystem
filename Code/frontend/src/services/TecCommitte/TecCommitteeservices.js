@@ -64,5 +64,40 @@ export const GetMasterProcurementPlan = async () => {
       throw error;
     }
   }; 
+  
+  export const GetVendorSelectionBidDetails = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_HOST}/api/TECCommittee/GetVendorSelectionBidDetails`
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
 
+  export const VendorSelectionVidIid = async (vendorId,itemId) => {
+    try {
+      const response = await axios.put(
+        `${process.env.REACT_APP_API_HOST}/api/TECCommittee/VendorSelection/${vendorId}/${itemId}`
+      );
+      console.log(response);
+      return response;  
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }; 
 
+  export const GetReviseVendorSelectionBidDetails = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_HOST}/api/TECCommittee/GetReviseVendorSelectionBidDetails`
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
