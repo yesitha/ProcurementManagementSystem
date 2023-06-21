@@ -147,14 +147,17 @@ namespace PWMSBackend.Controllers
                 return NotFound("Evidence not found.");
             }
 
+            var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
+
             var pdf = new
             {
-                name = sppId+"_"+itemId,
-                url = "https://localhost:7102/" + evidence
+                name = $"{sppId}_{itemId}",
+                url = $"{baseUrl}/{evidence}"
             };
 
             return Ok(pdf);
         }
+
 
         [HttpPut("UpdateTecCommitteeStatus")]
         public IActionResult UpdateTecCommitteeStatus(string sppId, string itemId, string tecCommitteeStatus, string tecCommitteeComment)
