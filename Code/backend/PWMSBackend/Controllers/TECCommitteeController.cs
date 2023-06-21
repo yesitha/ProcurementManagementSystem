@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PWMSBackend.CustomIdGenerator;
 using PWMSBackend.Data;
+using PWMSBackend;
+using static System.Net.WebRequestMethods;
 
 namespace PWMSBackend.Controllers
 {
@@ -132,6 +134,27 @@ namespace PWMSBackend.Controllers
             return Ok(result);
         }
 
+        [HttpGet("GetEvidencePdf/{itemId}/{sppId}")]
+        public IActionResult GetEvidencePdf(string itemId, string sppId)
+        {
+            var evidence = _context.SubProcurementPlanItems
+                .Where(item => item.ItemId == itemId && item.SppId == sppId)
+                .Select(item => item.EvidenceOfAuthorization)
+                .FirstOrDefault();
+
+            if (evidence == null)
+            {
+                return NotFound("Evidence not found.");
+            }
+
+            var pdf = new
+            {
+                name = sppId+"_"+itemId,
+                url = "https://localhost:7102/" + evidence
+            };
+
+            return Ok(pdf);
+        }
 
         [HttpPut("UpdateTecCommitteeStatus")]
         public IActionResult UpdateTecCommitteeStatus(string sppId, string itemId, string tecCommitteeStatus, string tecCommitteeComment)
