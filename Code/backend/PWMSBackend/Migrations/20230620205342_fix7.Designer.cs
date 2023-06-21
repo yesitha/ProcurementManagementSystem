@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PWMSBackend.Data;
 
@@ -11,9 +12,10 @@ using PWMSBackend.Data;
 namespace PWMSBackend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230620205342_fix7")]
+    partial class fix7
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -338,24 +340,30 @@ namespace PWMSBackend.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<byte[]>("Agreement")
+                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<byte[]>("BankGuarantee")
+                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<byte[]>("Bond")
+                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("CommentsForSpecialInstruction")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("CommentsForSpecialInstruction")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
                     b.Property<byte[]>("LetterOfAcceptance")
+                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<string>("ProcumentOfficerStatus")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("TotalAmount")
