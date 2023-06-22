@@ -26,6 +26,7 @@ namespace PWMSBackend.Controllers
         public IActionResult GetMasterProcurementPlans()
         {
             var plans = _context.MasterProcurementPlans
+                .OrderByDescending(mpp => mpp.CreationDate)
                 .Select(mpp => new
                 {
                     mpp.MppId,
@@ -330,17 +331,6 @@ namespace PWMSBackend.Controllers
                               bidCount = vendor.bidCount
                           };
 
-            // Add Total cost to FinalizedMasterProcurementPlan table
-
-            double sumBidValues = result2.Sum(r => r.bidValue);
-
-            var firstNullGrandTotal = _context.FinalizedMasterProcurementPlans.FirstOrDefault(fmpp => fmpp.GrandTotal == null);
-            if (firstNullGrandTotal != null)
-            {
-                firstNullGrandTotal.GrandTotal = sumBidValues;
-                _context.SaveChanges();
-            }
-
             return Ok(result2);
         }
 
@@ -430,7 +420,7 @@ namespace PWMSBackend.Controllers
 
         // Finalized Master Procurement Plan
 
-        [HttpGet("GetFinalizedMasterProcurementPlan")]
+        [HttpGet("GetFinalizedMasterProcurementPlan/{mppId}")]
 
         public IActionResult GetFinalizedMasterProcurementPlan(string mppId)
         {
@@ -480,6 +470,39 @@ namespace PWMSBackend.Controllers
                     }
                 })
                 .ToList();
+
+            // Calculate Total cost
+
+            var getBidValueList = _context.MasterProcurementPlans
+                .Where(mpp => mpp.MppId == mppId)
+                .SelectMany(mpp => mpp.SubProcurementPlans)
+                .SelectMany(spp => spp.subProcurementPlanItems)
+                .Where(item => item.ProcuremnetCommitteeStatus == "approve")
+                .OrderBy(item => item.ItemId)
+                .GroupBy(item => item.ItemId)
+                .Select(item => new
+                {
+                    BidValue = _context.VendorPlaceBidItems
+                                    .Where(vpb => vpb.Vendor.VendorId == _context.Vendors
+                                                                            .Where(v => v.FirstName + " " + v.LastName == item.FirstOrDefault().SelectedVendor)
+                                                                            .Select(v => v.VendorId)
+                                                                            .FirstOrDefault()
+                                                                      && vpb.ItemId == item.FirstOrDefault().ItemId)
+                                    .Select(vpb => vpb.BidValue)
+                                    .FirstOrDefault()
+                })
+                .ToList();
+
+            // Add Total cost to FinalizedMasterProcurementPlan table
+
+            double sumBidValues = getBidValueList.Sum(r => r.BidValue);
+
+            var fmpp = _context.FinalizedMasterProcurementPlans.FirstOrDefault(fmpp => fmpp.MppId == mppId);
+            if (fmpp != null)
+            {
+                fmpp.GrandTotal = sumBidValues;
+                _context.SaveChanges();
+            }
 
             return Ok(approvedItems);
         }

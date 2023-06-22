@@ -21,9 +21,25 @@ namespace PWMSBackend.Controllers
         }
 
 
-        [HttpGet("GetSubProcurementApprovedItems")]
-        public async Task<ActionResult<IEnumerable<object>>> GetSubProcurementApprovedItems()
+        [HttpGet("GetSubProcurementApprovedItems/{committeeMemberId}")]
+        public async Task<ActionResult<IEnumerable<object>>> GetSubProcurementApprovedItems(string committeeMemberId)
         {
+            // Retrieve the CommitteeMemberCommittee records for the given employeeId
+            var committeeIds = _context.CommitteeMemberCommittees
+                .Where(cmc => cmc.EmployeeId == committeeMemberId)
+                .Select(cmc => cmc.CommitteeId)
+                .ToList();
+
+            var plans = _context.MasterProcurementPlans
+                .Where(mpp => mpp.BidOpeningCommitteeId != null && committeeIds.Contains(mpp.BidOpeningCommitteeId))
+                .OrderByDescending(mpp => mpp.CreationDate)
+                .Select(mpp => new
+                {
+                    mpp.MppId,
+                    mpp.CreationDate,
+                })
+                .FirstOrDefault();
+
             DateTime currentDate = DateTime.Today;
 
             var closestDate = _context.SubProcurementApprovedItems
@@ -31,6 +47,11 @@ namespace PWMSBackend.Controllers
                 .OrderByDescending(a => a.PreBidMeetingDate.Value)
                 .Select(a => a.PreBidMeetingDate.Value.Date)
                 .FirstOrDefault();
+
+            if (closestDate < plans.CreationDate)
+            {
+                return NotFound($"{committeeMemberId} don't have any autions to manage");
+            }
 
             var items = await _context.SubProcurementApprovedItems
                 .Where(a => a.PreBidMeetingDate.HasValue && a.PreBidMeetingDate.Value.Date == closestDate)
@@ -41,6 +62,17 @@ namespace PWMSBackend.Controllers
             {
                 return NotFound();
             }
+
+            var mppId = _context.SubProcurementPlans
+                .Where(spp => spp.SppId == items[0].SppId)
+                .Select(spp => new { spp.MasterProcurementPlan.MppId })
+                .FirstOrDefault();
+
+            if (mppId.MppId != plans.MppId)
+            {
+                return NotFound( $"{committeeMemberId} don't have permission to manage current autions");
+            }
+
 
             //join sppId and itemId from SubProcurementPlanItems and SubProcurementApprovedItems
 

@@ -25,11 +25,18 @@ namespace PWMSBackend.Controllers
 
         // TEC Committee View MasterProcurementPlan page Controllers (1-GET)
 
-        [HttpGet("GetMasterProcurementPlans")]
-        public IActionResult GetMasterProcurementPlans()
+        [HttpGet("GetMasterProcurementPlans/{committeeMemberId}")]
+        public IActionResult GetMasterProcurementPlans(string committeeMemberId)
         {
+            // Retrieve the CommitteeMemberCommittee records for the given employeeId
+            var committeeIds = _context.CommitteeMemberCommittees
+                .Where(cmc => cmc.EmployeeId == committeeMemberId)
+                .Select(cmc => cmc.CommitteeId)
+                .ToList();
+
             var plans = _context.MasterProcurementPlans
-                .Where(mpp => mpp.TecCommitteeId != null)
+                .Where(mpp => mpp.TecCommitteeId != null && committeeIds.Contains(mpp.TecCommitteeId))
+                .OrderByDescending(mpp => mpp.CreationDate)
                 .Select(mpp => new
                 {
                     mpp.MppId,
