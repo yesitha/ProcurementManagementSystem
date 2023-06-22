@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PWMSBackend.Data;
 using PWMSBackend.Models;
+using System.Net.NetworkInformation;
 
 namespace PWMSBackend.Controllers
 {
@@ -183,6 +184,27 @@ namespace PWMSBackend.Controllers
                     if (internalAuditorStatus != "approve")
                     {
                         subProcurementPlanItem.InternalAuditorComment = internalAuditorComment;
+
+                        // update rejected vendor details
+
+                        subProcurementPlanItem.RejectedVendor = subProcurementPlanItem.SelectedVendor;
+
+                        var vendorId = _context.Vendors
+                            .Where(v => v.FirstName + " " + v.LastName == subProcurementPlanItem.SelectedVendor)
+                            .Select(v => v.VendorId)
+                            .FirstOrDefault();
+
+                        var vendorPlaceBidItem = _context.VendorPlaceBidItems.FirstOrDefault(item => item.VendorId == vendorId && item.ItemId == itemId);
+
+                        if (vendorPlaceBidItem == null)
+                        {
+                            continue;
+                        }
+
+                        // Update the property
+                        vendorPlaceBidItem.BidStatus = "Not Selected";
+
+                        _context.SaveChanges();
                     }
                 }
             }

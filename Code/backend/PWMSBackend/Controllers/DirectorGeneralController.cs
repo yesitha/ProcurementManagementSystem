@@ -181,6 +181,58 @@ namespace PWMSBackend.Controllers
                     if (DGStatus != "approve")
                     {
                         subProcurementPlanItem.DGComment = DGComment;
+
+                        //update rejected vendor
+
+                        if (subProcurementPlanItem.InternalAuditorStatus == "approve")
+                        {
+                            var vendorId = _context.Vendors
+                            .Where(v => v.FirstName + " " + v.LastName == subProcurementPlanItem.SelectedVendor)
+                            .Select(v => v.VendorId)
+                            .FirstOrDefault();
+
+                            var vendorPlaceBidItem = _context.VendorPlaceBidItems.FirstOrDefault(item => item.VendorId == vendorId && item.ItemId == itemId);
+
+                            if (vendorPlaceBidItem == null)
+                            {
+                                continue;
+                            }
+
+                            // Update the property
+                            vendorPlaceBidItem.BidStatus = "Not Selected";
+
+                            _context.SaveChanges();
+                        }
+
+                        subProcurementPlanItem.RejectedVendor = subProcurementPlanItem.SelectedVendor;
+
+                        subProcurementPlanItem.SelectedVendor = null;
+                    }
+
+                    //update rejected vendor
+
+                    if(DGStatus == "approve")
+                    {
+                        if (subProcurementPlanItem.InternalAuditorStatus != "approve")
+                        {
+                            var vendorId = _context.Vendors
+                            .Where(v => v.FirstName + " " + v.LastName == subProcurementPlanItem.SelectedVendor)
+                            .Select(v => v.VendorId)
+                            .FirstOrDefault();
+
+                            var vendorPlaceBidItem = _context.VendorPlaceBidItems.FirstOrDefault(item => item.VendorId == vendorId && item.ItemId == itemId);
+
+                            if (vendorPlaceBidItem == null)
+                            {
+                                continue;
+                            }
+
+                            // Update the property
+                            vendorPlaceBidItem.BidStatus = "Selected";
+
+                            _context.SaveChanges();
+                        }
+                        subProcurementPlanItem.SelectedVendor = subProcurementPlanItem.RejectedVendor;
                     }
                 }
             }

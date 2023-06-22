@@ -223,6 +223,8 @@ namespace PWMSBackend.Controllers
             }
         }
 
+        // PO details for vendor
+
         [HttpGet("GetPurchaseOrdersByVendorId/{vendorId}")]
         public IActionResult GetPurchaseOrdersByVendorId(string vendorId)
         {
@@ -233,7 +235,8 @@ namespace PWMSBackend.Controllers
                 {
                     PoId = po.PoId,
                     Date = po.Date,
-                    TotalAmount = po.TotalAmount
+                    TotalAmount = po.TotalAmount,
+                    ProcuementOfficerStatus = po.ProcumentOfficerStatus
                 })
                 .ToList();
 
@@ -294,10 +297,55 @@ namespace PWMSBackend.Controllers
                 })
                 .ToList();
 
-            return Ok(itemList);
+            var comments = _context.PurchaseOrders
+                .Where(po => po.PoId == PoId)
+                .Select(po => po.CommentsForSpecialInstruction)
+                .FirstOrDefault();
+
+            return Ok(new { itemList, comments });
         }
 
-        // Items to shipped page controller
+
+        // PO verification page controller
+
+        [HttpGet("GetPODetails/{PoId}")]
+        public IActionResult GetPODetails(string PoId)
+        {
+            var poDetails = _context.PurchaseOrders
+                .Where(po => po.PoId == PoId)
+                .Select(po => new
+                {
+                    po.PoId,
+                    po.Date,
+                    po.TotalAmount
+                })
+                .FirstOrDefault();
+
+            return Ok(poDetails);
+        }
+
+        [HttpPut("UploadPurchaseOrderVerificationDocs")]
+        public IActionResult UploadPurchaseOrderVerificationDocs(string poId,string agreement,string bond,string bankGuarantee)
+        {
+            var purchaseOrder = _context.PurchaseOrders.FirstOrDefault(po => po.PoId == poId);
+
+            if (purchaseOrder == null)
+            {
+                return NotFound("PurchaseOrder not found.");
+            }
+
+            // Update the properties
+            purchaseOrder.Agreement = agreement;
+            purchaseOrder.Bond = bond;
+            purchaseOrder.BankGuarantee = bankGuarantee;
+
+            _context.SaveChanges();
+
+            return Ok("PurchaseOrder verification docs updated successfully.");
+        }
+
+
+        // Items to be shipped page controller
 
         [HttpGet("GetPOIdListByVendorId/{vendorId}")]
         public IActionResult GetPOIdListByVendorId(string vendorId)
