@@ -15,6 +15,8 @@ import { useEffect } from "react";
 import { GetMasterProcurementPlan } from "./../../../services/TecCommitte/TecCommitteeservices";
 import { DateFormat, MoneyFormat } from "../../../services/dataFormats";
 
+const userId='BEC18324'; //need to come from login
+
 const columns = [
   {
     id: "MPPID",
@@ -43,7 +45,7 @@ function MasterProcurementPlans() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await GetMasterProcurementPlan();
+        const response = await GetMasterProcurementPlan(userId);
 
         const data = response;
         setData(data);
