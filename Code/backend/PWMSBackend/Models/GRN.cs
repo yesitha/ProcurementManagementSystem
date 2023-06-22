@@ -4,7 +4,7 @@
     {
         public string GrnId { get; set; }
 
-        public string Checkedby { get; set; }
+        public string? Checkedby { get; set; }
 
         public DateTime Date { get; set; }
 
