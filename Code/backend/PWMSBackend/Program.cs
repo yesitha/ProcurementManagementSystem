@@ -31,6 +31,7 @@ builder.Services.AddScoped<MppIdGenerator>();
 builder.Services.AddScoped<ItemIdGenerator>();
 builder.Services.AddScoped<CommitteeIdGenerator>();
 builder.Services.AddScoped<POIdGenerator>();
+builder.Services.AddScoped<FmppIdGenerator>();
 
 var app = builder.Build();
 

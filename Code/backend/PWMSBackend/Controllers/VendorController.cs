@@ -223,5 +223,166 @@ namespace PWMSBackend.Controllers
             }
         }
 
+        [HttpGet("GetPurchaseOrdersByVendorId/{vendorId}")]
+        public IActionResult GetPurchaseOrdersByVendorId(string vendorId)
+        {
+            var purchaseOrders = _context.PurchaseOrders
+                .Where(po => po.VendorId == vendorId)
+                .OrderByDescending(po => po.Date)
+                .Select(po => new
+                {
+                    PoId = po.PoId,
+                    Date = po.Date,
+                    TotalAmount = po.TotalAmount
+                })
+                .ToList();
+
+            return Ok(purchaseOrders);
+        }
+
+        [HttpGet("GetPOVendorDetails/{PoId}")]
+        public IActionResult GetPOVendorDetails(string PoId)
+        {
+            var poVendorDetails = _context.PurchaseOrders
+                .Where(po => po.PoId == PoId)
+                .Select(po => new
+                {
+                    po.PoId,
+                    po.Date,
+                    po.TotalAmount,
+                    po.CommentsForSpecialInstruction,
+                    VendorFullName = po.Vendor.FirstName + " " + po.Vendor.LastName,
+                    CompanyName = po.Vendor.CompanyFullName,
+                    Contact = po.Vendor.EmailAddress,
+                    address = po.Vendor.Address1 + "," + po.Vendor.State,
+                    city = po.Vendor.City + "," + po.Vendor.PostalCode
+                })
+                .FirstOrDefault();
+
+            return Ok(poVendorDetails);
+        }
+
+        [HttpGet("GetPOItemDetails/{PoId}/{vendorId}")]
+        public IActionResult GetPOItemDetails(string PoId, string vendorId)
+        {
+            var mppId = _context.PurchaseOrders
+                .Where(po => po.PoId == PoId)
+                .Select(po => po.MppId)
+                .FirstOrDefault();
+
+            var itemList = _context.MasterProcurementPlans
+                .Where(mpp => mpp.MppId == mppId)
+                .SelectMany(mpp => mpp.SubProcurementPlans)
+                .SelectMany(spp => spp.subProcurementPlanItems)
+                .Where(item => item.ProcuremnetCommitteeStatus == "approve" && item.DGStatus == "approve"
+                                && item.SelectedVendor == _context.Vendors
+                                                                .Where(v => v.VendorId == vendorId)
+                                                                .Select(v => v.FirstName + " " + v.LastName)
+                                                                .FirstOrDefault())
+                .GroupBy(item => item.ItemId)
+                .Select(group => new
+                {
+                    ItemId = group.Key,
+                    ItemName = group.First().Item.ItemName,
+                    Specifications = group.First().Item.Specification,
+                    TotalQuantity = group.Sum(item => item.Quantity),
+                    BidValue = _context.VendorPlaceBidItems
+                                    .Where(vpb => vpb.Vendor.VendorId == vendorId && vpb.ItemId == group.Key)
+                                    .Select(vpb => vpb.BidValue)
+                                    .FirstOrDefault(),
+
+                })
+                .ToList();
+
+            return Ok(itemList);
+        }
+
+        // Items to shipped page controller
+
+        [HttpGet("GetPOIdListByVendorId/{vendorId}")]
+        public IActionResult GetPOIdListByVendorId(string vendorId)
+        {
+            var poIdList = _context.PurchaseOrders
+                .Where(po => po.VendorId == vendorId)
+                .Select(po => new
+                {
+                    po.PoId,
+                    po.Date
+                })
+                .ToList();
+
+            return Ok(poIdList);
+        }
+
+        public class PurchaseOrderItemToBeShippedInput
+        {
+            public string ItemId { get; set; }
+            public int ShippedQuantity { get; set; }
+        }
+
+        [HttpPost("CreatePurchaseOrderItemsToBeShippedRecords")]
+        public IActionResult CreatePurchaseOrderItemsToBeShippedRecords(string PoId, List<PurchaseOrderItemToBeShippedInput> itemsToBeShipped)
+        {
+            // Retrieve the Purchase Order based on the provided PoId
+            var purchaseOrder = _context.PurchaseOrders.FirstOrDefault(po => po.PoId == PoId);
+
+            // Check if the Purchase Order exists
+            if (purchaseOrder == null)
+            {
+                return BadRequest("Invalid PoId. Purchase Order not found.");
+            }
+
+            // Create a list to store the duplicate itemIds
+            var duplicateItemIds = new List<string>();
+
+            // Iterate through the list of itemsToBeShipped and create PurchaseOrderItemsToBeShipped records
+            foreach (var item in itemsToBeShipped)
+            {
+                string itemId = item.ItemId;
+                int shippedQuantity = item.ShippedQuantity;
+
+                // Check if the PurchaseOrderItemsToBeShipped record already exists
+                bool recordExists = _context.PurchaseOrder_ItemTobeShippeds.Any(aipo =>
+                    aipo.PoId == PoId && aipo.ItemId == itemId);
+
+                if (recordExists)
+                {
+                    // Add the duplicate itemId to the list
+                    duplicateItemIds.Add(itemId);
+                    continue; // Skip to the next iteration
+                }
+
+                // Retrieve the Approved Item based on the ItemId
+                var approvedItem = _context.Items.FirstOrDefault(item => item.ItemId == itemId);
+
+                // Check if the Approved Item exists
+                if (approvedItem == null)
+                {
+                    return BadRequest($"Invalid ItemId '{itemId}'. Approved Item not found.");
+                }
+
+                // Create a new PurchaseOrder_ItemTobeShipped record
+                var purchaseOrderItemToBeShipped = new PurchaseOrder_ItemTobeShipped
+                {
+                    ItemId = itemId,
+                    PoId = PoId,
+                    Shipped_Qty = shippedQuantity
+                };
+
+                // Add the record to the context
+                _context.PurchaseOrder_ItemTobeShippeds.Add(purchaseOrderItemToBeShipped);
+            }
+
+            // Save the changes to the database
+            _context.SaveChanges();
+
+            if (duplicateItemIds.Count > 0)
+            {
+                return BadRequest($"The following ItemIds are already associated with the Purchase Order '{PoId}': {string.Join(", ", duplicateItemIds)}");
+            }
+
+            return Ok("PurchaseOrderItemsToBeShipped records created successfully.");
+        }
+
     }
 }

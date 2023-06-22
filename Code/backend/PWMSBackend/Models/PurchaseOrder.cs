@@ -29,5 +29,8 @@ namespace PWMSBackend.Models
 
         [ForeignKey("Vendor")]
         public string VendorId { get; set; }
+
+        [ForeignKey("MasterProcuementPlan")]
+        public string MppId { get; set; } // add this beacasue there need to be a relationship between MPP and PO otherwise difficult to get PO details from MPP
     }
 }

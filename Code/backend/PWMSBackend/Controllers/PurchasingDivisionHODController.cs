@@ -15,12 +15,14 @@ namespace PWMSBackend.Controllers
         private readonly DataContext _context;
         private readonly IMapper _mapper;
         private MppIdGenerator _mppIdGenerator;
+        private FmppIdGenerator _fmppIdGenerator;
 
-        public PurchasingDivisionHODController(DataContext context, IMapper mapper, MppIdGenerator mppIdGenerator)
+        public PurchasingDivisionHODController(DataContext context, IMapper mapper, MppIdGenerator mppIdGenerator, FmppIdGenerator fmppIdGenerator)
         {
             _context = context;
             _mapper = mapper;
             _mppIdGenerator = mppIdGenerator;
+            _fmppIdGenerator = fmppIdGenerator;
         }
 
         //Master Procurement Plan page Controllers (1-GET 1-POST)
@@ -31,6 +33,7 @@ namespace PWMSBackend.Controllers
             var plans = _context.MasterProcurementPlans
                 .Include(mpp => mpp.MasterProcurementPlanStatuses)
                     .ThenInclude(mpps => mpps.Status)
+                .OrderByDescending(mpp => mpp.CreationDate)
                 .Select(mpp => new
                 {
                     mpp.MppId,
@@ -50,6 +53,8 @@ namespace PWMSBackend.Controllers
         public IActionResult CreateNewMasterProcurementPlan()
         {
             string mppId = _mppIdGenerator.GenerateMppId();
+            string fmppId = _fmppIdGenerator.GenerateFmppId();
+
             var mpp = new MasterProcurementPlan
             {
                 MppId = mppId,
@@ -57,7 +62,15 @@ namespace PWMSBackend.Controllers
                 EstimatedGrandTotal = 0,
             };
 
+            var fmpp = new FinalizedMasterProcurementPlan
+            {
+                FmppId = fmppId,
+                MppId = mppId,
+                GrandTotal = 0,
+            };
+
             _context.MasterProcurementPlans.Add(mpp);
+            _context.FinalizedMasterProcurementPlans.Add(fmpp);
             _context.SaveChanges();
 
             return Ok(mpp.MppId);
@@ -102,6 +115,7 @@ namespace PWMSBackend.Controllers
         {
             // Generate a new MPP ID
             string mppId = _mppIdGenerator.GenerateMppId();
+            string fmppId = _fmppIdGenerator.GenerateFmppId();
 
             // Create a new MasterProcurementPlan
             var mpp = new MasterProcurementPlan
@@ -111,7 +125,16 @@ namespace PWMSBackend.Controllers
                 EstimatedGrandTotal = 0
             };
 
+            // Create a new FinalizedlMasterProcurementPlan
+            var fmpp = new FinalizedMasterProcurementPlan
+            {
+                FmppId = fmppId,
+                MppId = mppId,
+                GrandTotal = 0,
+            };
+
             _context.MasterProcurementPlans.Add(mpp);
+            _context.FinalizedMasterProcurementPlans.Add(fmpp);
             _context.SaveChanges();
 
             // Update SubProcurementPlan table with new MPP ID
