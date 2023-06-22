@@ -197,6 +197,68 @@ namespace PWMSBackend.Controllers
             return Ok(newItem);
         }
 
+        //Modify rejected item in Sub Procurement Plan
+
+        [HttpGet("GetSubProcurementPlanRejectedItemDetails/{sppId}/{itemId}")]
+        public IActionResult GetSubProcurementPlanRejectedItemDetails(string sppId, string itemId)
+        {
+            // Retrieve the SubProcurementPlanItem based on sppId and itemId
+            var item = _context.SubProcurementPlanItems
+                .Where(item => item.SppId == sppId && item.ItemId == itemId)
+                .Select(item => new
+                {
+                    ItemName = item.Item.ItemName,
+                    Specification = item.Item.Specification,
+                    Quantity = item.Quantity,
+                    ExpectedDeliveryDate = item.ExpectedDeliveryDate,
+                    RecommendedVendor = item.RecommendedVendor,
+                    EvidenceOfAuthorization = item.EvidenceOfAuthorization,
+                    EstimatedBudget = item.EstimatedBudget
+                })
+                .FirstOrDefault();
+
+            // Check if the SubProcurementPlanItem exists
+            if (item == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(item);
+        }
+
+        [HttpPut("ModifySubProcurementPlanRejectedItem")]
+        public IActionResult ModifySubProcurementPlanRejectedItem(CreateSubProcurementPlanItemDTO itemDto)
+        {
+            // Retrieve the SubProcurementPlanItem based on sppId and itemId
+            var existingItem = _context.SubProcurementPlanItems.FirstOrDefault(item => item.SppId == itemDto.SppId && item.ItemId == itemDto.ItemId);
+
+            // Check if the SubProcurementPlanItem exists
+            if (existingItem == null)
+            {
+                return NotFound();
+            }
+
+            // Update the properties of the existing item
+            existingItem.RecommendedVendor = itemDto.RecommendedVendor;
+            existingItem.EvidenceOfAuthorization = itemDto.EvidenceOfAuthorization;
+            existingItem.ExpectedDeliveryDate = itemDto.ExpectedDeliveryDate;
+            existingItem.Quantity = itemDto.Quantity;
+            existingItem.EstimatedBudget = itemDto.EstimatedBudget;
+
+            // Set null for other attributes
+            existingItem.ProcuremnetCommitteeStatus = null;
+            existingItem.ProcurementCommitteeComment = null;
+            existingItem.TecCommitteeStatus = null;
+            existingItem.TecCommitteeComment = null;
+            
+
+            // Save changes to the database
+            _context.SaveChanges();
+
+            return Ok("Modify Rejected Item Successfully");
+        }
+
+
 
         // Add new Item page Controllers (2-GET(1 from AddItemToSubProcurementPlan page) 1-POST)
 
