@@ -9,10 +9,11 @@ import {
     TextField,
     Typography,
 } from "@mui/material";
-import {Link as RouterLink, useParams} from "react-router-dom";
+import {Link as RouterLink} from "react-router-dom";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import SelectDropDown from "../../components/SelectDropDown/SelectDropDown";
 import DonePopup from "../../components/Popups/DonePopup/DonePopup";
+import { Link as Routerlink, useParams } from "react-router-dom";
 import {
     getItemNameList,
     getVendorList,
@@ -26,8 +27,6 @@ function AddItemtoSubProcurementPlan() {
         control,
         register,
         handleSubmit,
-        watch,
-        setValue,
         formState: {errors},
     } = useForm();
     const [list, setList] = useState([]);
@@ -104,8 +103,7 @@ function AddItemtoSubProcurementPlan() {
         try {
             console.log("formData: " + JSON.stringify(formData));
             await pushNewItemSubProcurementPlan(formData, selectedFile);
-
-            // Handle success or navigate to a different page
+            // Handle success
         } catch (error) {
             console.log(error);
             // Handle error
@@ -295,21 +293,24 @@ function AddItemtoSubProcurementPlan() {
                                         </div>
                                     </div>
                                     <div className={Styles.bottomContainer}>
-                                        <Button
-                                            type="submit"
-                                            fullWidth
-                                            variant="contained"
-                                            sx={{
-                                                borderRadius: 10,
-                                                height: "50px",
-                                                textTransform: "none",
-                                                fontSize: "20px",
-                                                mt: 3,
-                                                mb: 2,
-                                            }}
-                                        >
-                                            Add Item
-                                        </Button>
+                                        <div className={Styles.addButton}>
+                                            <div onClick={handleSubmit}>
+                                                <DonePopup
+                                                    text={"Successfully Added"}
+                                                    title={"Add Item to Sub Procurement Plan"}
+                                                    styles={{
+                                                        mb: "10px",
+                                                    }}
+                                                    onC
+                                                />
+                                            </div>
+
+                                            <Routerlink to={"/add-new-item"}>
+                                                <Button className={Styles.belowButton} variant="contained">
+                                                    Add a new Item to system
+                                                </Button>
+                                            </Routerlink>
+                                        </div>
                                     </div>
                                 </form>
                                 <DevTool control={control} placement={"top-right"}/>
