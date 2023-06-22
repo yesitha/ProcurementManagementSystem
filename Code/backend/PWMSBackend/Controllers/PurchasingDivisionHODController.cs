@@ -33,6 +33,7 @@ namespace PWMSBackend.Controllers
             var plans = _context.MasterProcurementPlans
                 .Include(mpp => mpp.MasterProcurementPlanStatuses)
                     .ThenInclude(mpps => mpps.Status)
+                .OrderByDescending(mpp => mpp.CreationDate)
                 .Select(mpp => new
                 {
                     mpp.MppId,

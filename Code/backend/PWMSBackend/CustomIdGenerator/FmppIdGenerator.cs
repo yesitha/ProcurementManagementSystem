@@ -42,7 +42,7 @@ namespace PWMSBackend.CustomIdGenerator
 
         private bool IsDuplicateFmppId(string FmppId)
         {
-            return _dbContext.MasterProcurementPlans.Any(s => s.FmppId == FmppId);
+            return _dbContext.FinalizedMasterProcurementPlans.Any(s => s.FmppId == FmppId);
         }
     }
 }

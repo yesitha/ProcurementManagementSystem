@@ -238,6 +238,22 @@ namespace PWMSBackend.Controllers
                 return NotFound();
             }
 
+            var plan = _context.SubProcurementPlans.FirstOrDefault(spp => spp.SppId == itemDto.SppId);
+
+            if (plan == null)
+            {
+                return NotFound();
+            }
+
+            plan.EstimatedTotal = plan.EstimatedTotal - existingItem.EstimatedBudget + itemDto.EstimatedBudget;
+
+            if (plan.MasterProcurementPlan == null)
+            {
+                return NotFound();
+            }
+
+            plan.MasterProcurementPlan.EstimatedGrandTotal = plan.MasterProcurementPlan.EstimatedGrandTotal - existingItem.EstimatedBudget + itemDto.EstimatedBudget;
+
             // Update the properties of the existing item
             existingItem.RecommendedVendor = itemDto.RecommendedVendor;
             existingItem.EvidenceOfAuthorization = itemDto.EvidenceOfAuthorization;
