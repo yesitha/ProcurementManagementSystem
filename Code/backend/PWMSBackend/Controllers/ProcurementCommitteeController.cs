@@ -26,6 +26,7 @@ namespace PWMSBackend.Controllers
         public IActionResult GetMasterProcurementPlans()
         {
             var plans = _context.MasterProcurementPlans
+                .OrderByDescending(mpp => mpp.CreationDate)
                 .Select(mpp => new
                 {
                     mpp.MppId,
