@@ -13,7 +13,8 @@ import styles from "./EvidenceOfAuthorization.module.css";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { ListItemIcon, makeStyles, Paper, withStyles } from "@mui/material";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
-
+import { useEffect } from "react";
+import { fetchPdf } from "../../../services/TecCommitte/TecCommitteeservices";
 const style = {
   position: "absolute",
   top: "50%",
@@ -26,10 +27,45 @@ const style = {
   p: 4,
 };
 
-export default function EvidenceOfAthorization() {
+export default function EvidenceOfAuthorization(props) {
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
+  const [data, setData] = React.useState([]);
+  const [sppId, setSppId] = React.useState(props.sppId);
+  const [itemId, setItemId] = React.useState(props.itemId);
+
+  console.log(props);
+  
+
+  const handleOpen = async () => {
+    try {
+      const response = await fetchPdf(props.sppId, props.itemId);
+      const data = response;
+      setData(data);
+    } catch (error) {
+      console.log(error);
+    }
+
+    setOpen(true);
+  };
+
   const handleClose = () => setOpen(false);
+
+  // Update sppId and itemId if the props change
+  React.useEffect(() => {
+    if (props.sppId.toString() !== null && props.itemId.toString() !== null){
+    setSppId(props.sppId);
+    setItemId(props.itemId);
+  }
+  }, [props]);
+  
+  const handleDownload = () => {
+    
+    const link = document.createElement('a');
+    link.href = data.url;
+    link.download = `${data.name}.pdf`;
+    link.click();
+  };
+
 
   return (
     <div>
@@ -75,7 +111,7 @@ export default function EvidenceOfAthorization() {
             sx={{ mt: 1, color: "#A3A3A3" }}
             align="center"
           >
-            Click to download Following Documents
+            Click to download Following Document
           </Typography>
           <div
             style={{
@@ -93,38 +129,17 @@ export default function EvidenceOfAthorization() {
                 alignItems: "center",
                 justifyContent: "center",
                 marginTop: 10,
-                marginRight: 20,
+                
               }}
+              onClick={handleDownload}
             >
               <ListItemIcon sx={{ color: "#205295" }}>
                 <InsertDriveFileIcon style={{ fontSize: 80 }} />
               </ListItemIcon>
-              <Typography variant="subtitle2">Evidence 1</Typography>
+              <Typography variant="subtitle2">{data.name}.pdf</Typography>
             </div>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                marginTop: 10,
-                marginLeft: 20,
-              }}
-            >
-              <ListItemIcon sx={{ color: "#205295" }}>
-                <InsertDriveFileIcon style={{ fontSize: 80 }} />
-              </ListItemIcon>
-              <Typography variant="subtitle2">Evidence 2</Typography>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                marginTop: 10,
-              }}
-            ></div>
+           
+           
           </div>
           <div
             style={{

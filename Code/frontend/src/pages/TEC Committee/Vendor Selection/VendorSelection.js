@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./VendorSelection.module.css";
-import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { Button, IconButton, Paper } from "@mui/material";
+import { IconButton, Paper } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -13,81 +12,29 @@ import TableRow from "@mui/material/TableRow";
 import { Container } from "@mui/system";
 import VendorDetails from "../../../components/Popups/VendorDetails/VendorDetails";
 import { Link as Routerlink } from "react-router-dom";
-import TecReportCreated from "../../../components/Popups/DonePopup/TecReportCreated";
+import DonePopup from "../../../components/Popups/DonePopup/DonePopup";
+import { GetVendorSelectionBidDetails, VendorSelectionVidIid } from "../../../services/TecCommitte/TecCommitteeservices";
+import { DateFormat, MoneyFormat } from "../../../services/dataFormats";
 
 const columns = [
-  { id: "vendorID", label: "Vendor ID", Width: 300, align: "center" },
-  { id: "VendorName", label: "Vendor Name", Width: 300, align: "center" },
-  { id: "Item", label: "Item", Width: 300, align: "center" },
+  { id: "ItemId", label: "Item ID", Width: 300, align: "center" },
+  { id: "ItemName", label: "Item Name", Width: 300, align: "center" },
   { id: "Qty", label: "Quantity", Width: 300, align: "center" },
   { id: "specification", label: "Specification", Width: 300, align: "center" },
+  {
+    id: "exdeliveryDate",
+    label: "Expected Delivery Date",
+    Width: 300,
+    align: "center",
+  },
+  { id: "vendorID", label: "Vendor ID", Width: 300, align: "center" },
+  { id: "VendorName", label: "Vendor Name", Width: 300, align: "center" },
   { id: "bidvalue", label: "Bid Value", Width: 300, align: "center" },
   { id: "Venveri", label: "Vendor Verification", Width: 300, align: "center" },
   { id: "act", label: "Action", Width: 300, align: "center" },
 ];
 
-function createData(
-  vendorID,
-  VendorName,
-  Item,
-  Qty,
-  specification,
-  bidvalue,
-  Venveri,
-  act
-) {
-  return {
-    vendorID,
-    VendorName,
-    Item,
-    Qty,
-    specification,
-    bidvalue,
-    Venveri,
-    act,
-  };
-}
-
-const rows = [
-  createData(
-    "V0015",
-    "ABC Bookshop",
-    "A4 Papers",
-    "40",
-    "GSM 80",
-    "4000",
-    <VendorDetails/>,
-    <TecReportCreated
-            text={"Vendor Selection Successfully"}
-            title={"Select"}
-            styles={{
-              mb: "10px",
-              ml: "10px",
-            }}
-          />
-  ),
-  createData(
-    "V0016",
-    "ABC Bookshop",
-    "A4 Papers",
-    "40",
-    "GSM 80",
-    "4000",
-    <VendorDetails/>,
-    <TecReportCreated
-            text={"Vendor Selection Successfully"}
-            title={"Select"}
-            styles={{
-              mb: "10px",
-              ml: "10px",
-            }}
-          />
-  ),
-];
-
 function VendorSelection() {
-
-  const BidDate = "2022.12.15";
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const handleChangePage = (event, newPage) => {
@@ -98,8 +45,24 @@ function VendorSelection() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await GetVendorSelectionBidDetails();
+        const data = response;
+        setData(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
-    <div style={{ overflowX: "hidden" }}>
+    <div>
       <Container
         className={styles.main}
         sx={{
@@ -111,19 +74,13 @@ function VendorSelection() {
         <div className={styles.upperSection}>
           <div className={styles.ManageAuctionPageContainer__header}>
             <Routerlink to={-1}>
-            <IconButton
-              sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
-            >
-              <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
-            </IconButton>
+              <IconButton
+                sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
+              >
+                <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
+              </IconButton>
             </Routerlink>
             <h1 className={styles.Header}>Vendor Selection</h1>
-          </div>
-        </div>
-
-        <div className={styles.MiddleSection}>
-          <div className={styles.Ph2}>
-            <h4>Bid Date : {BidDate}</h4>
           </div>
         </div>
 
@@ -159,36 +116,70 @@ function VendorSelection() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row) => {
-                      return (
+                  {data &&
+                    data
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
+                      .map((row, index) => (
                         <TableRow
                           hover
                           role="checkbox"
                           tabIndex={-1}
-                          key={row.code}
+                          key={index}
                         >
-                          {columns.map((column) => {
-                            const value = row[column.id];
-                            return (
-                              <TableCell key={column.id} align={column.align}>
-                                {column.format && typeof value === "number"
-                                  ? column.format(value)
-                                  : value}
-                              </TableCell>
-                            );
-                          })}
+                          <TableCell align="center">{row.itemId}</TableCell>
+                          <TableCell align="center">{row.itemName}</TableCell>
+                          <TableCell align="center">
+                            {row.totalQuantity}
+                          </TableCell>
+                          <TableCell align="center">
+                            {row.specification}
+                          </TableCell>
+                          <TableCell align="center">
+                            {DateFormat(row.expectedDeliveryDate)}
+                          </TableCell>
+                          <TableCell align="center">
+                            {row.bidinfo[0].vendorId}
+                          </TableCell>
+                          <TableCell align="center">
+                            {row.bidinfo[0].vendorName}
+                          </TableCell>
+                          <TableCell align="center">
+                            {MoneyFormat(row.bidinfo[0].bidValue)}
+                          </TableCell>
+                          <TableCell align="center">
+                            {<VendorDetails />}
+                          </TableCell>
+                          <TableCell align="center">
+                            {
+                              <div
+                                  onClick={(event) => {
+                                    VendorSelectionVidIid(row.bidinfo[0].vendorId, row.itemId);
+                                    event.stopPropagation();
+                                  }}
+                                >
+                              <DonePopup
+                                text={"Vendor Selection Successfully"}
+                                title={"Select"}
+                                styles={{
+                                  mb: "10px",
+                                  ml: "10px",
+                                }}
+                              />
+                              </div>
+                            }
+                          </TableCell>
                         </TableRow>
-                      );
-                    })}
+                      ))}
                 </TableBody>
               </Table>
             </TableContainer>
             <TablePagination
               rowsPerPageOptions={[10, 25, 50, 100]}
               component="div"
-              count={rows.length}
+              count={10}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}

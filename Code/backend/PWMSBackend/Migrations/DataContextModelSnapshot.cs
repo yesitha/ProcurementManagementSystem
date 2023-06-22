@@ -478,9 +478,8 @@ namespace PWMSBackend.Migrations
                     b.Property<double>("EstimatedBudget")
                         .HasColumnType("float");
 
-                    b.Property<byte[]>("EvidenceOfAuthorization")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("EvidenceOfAuthorization")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ExpectedDeliveryDate")
                         .HasColumnType("datetime2");

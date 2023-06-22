@@ -6,6 +6,8 @@ using PWMSBackend.CustomIdGenerator;
 using PWMSBackend.Data;
 using PWMSBackend.DTOs.Incoming;
 using PWMSBackend.Models;
+using System.IO;
+
 
 namespace PWMSBackend.Controllers
 {
@@ -173,20 +175,56 @@ namespace PWMSBackend.Controllers
         }
 
 
+        //[HttpPost("AddItemToSubProcurementPlan")]
+        //public IActionResult CreateSubProcurementPlanItem(CreateSubProcurementPlanItemDTO itemDto)
+        //{
+        //    // Create a new SubProcurementPlanItem instance
+        //    var newItem = new SubProcurementPlanItem
+        //    {
+        //        SppId = itemDto.SppId,
+        //        ItemId = itemDto.ItemId,
+        //        RecommendedVendor = itemDto.RecommendedVendor,
+        //        EvidenceOfAuthorization = itemDto.EvidenceOfAuthorization,
+        //        ExpectedDeliveryDate = itemDto.ExpectedDeliveryDate,
+        //        EstimatedBudget = itemDto.EstimatedBudget,
+        //        Quantity = itemDto.Quantity
+        //    };
+
+        //    // Add the new item to the context
+        //    _context.SubProcurementPlanItems.Add(newItem);
+
+        //    // Save changes to the database
+        //    _context.SaveChanges();
+
+        //    return Ok(newItem);
+        //}
         [HttpPost("AddItemToSubProcurementPlan")]
-        public IActionResult CreateSubProcurementPlanItem(CreateSubProcurementPlanItemDTO itemDto)
+        public IActionResult CreateSubProcurementPlanItem(string SppId,string ItemId,String RecomendedVendor,DateTime ExpectedDate,double Estimated_budget ,int Quantity , [FromForm] IFormFile file)
         {
             // Create a new SubProcurementPlanItem instance
             var newItem = new SubProcurementPlanItem
             {
-                SppId = itemDto.SppId,
-                ItemId = itemDto.ItemId,
-                RecommendedVendor = itemDto.RecommendedVendor,
-                EvidenceOfAuthorization = itemDto.EvidenceOfAuthorization,
-                ExpectedDeliveryDate = itemDto.ExpectedDeliveryDate,
-                EstimatedBudget = itemDto.EstimatedBudget,
-                Quantity = itemDto.Quantity
+                SppId = SppId,
+                ItemId = ItemId,
+                RecommendedVendor =  RecomendedVendor,
+                ExpectedDeliveryDate = ExpectedDate,
+                EstimatedBudget = Estimated_budget,
+                Quantity = Quantity
             };
+
+            if (file != null && file.Length > 0)
+            {
+                // Generate a unique filename
+                string fileName = $"{SppId}_{ItemId}{Path.GetExtension(file.FileName)}";
+                string filePath = Path.Combine("Uploads/Evidence_of_authorization", fileName); // Replace "path_to_project_directory" with the actual path to the directory where you want to save the files
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    file.CopyTo(fileStream);
+                }
+
+                newItem.EvidenceOfAuthorization = filePath;
+            }
 
             // Add the new item to the context
             _context.SubProcurementPlanItems.Add(newItem);

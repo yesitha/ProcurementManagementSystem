@@ -34,11 +34,23 @@
 }
 
 .bodyContainer {
-  margin-right: 10px;
-  justify-content: space-around;
-  display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+}
+.browseButton{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 10px;
+  background-color: #205295;
+  color: white;
+  border-radius: 5px;
+  border: none;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  cursor: pointer;
 }
 .bodyLeft {
   flex-grow: 4;
@@ -52,6 +64,14 @@
   display: flex;
   flex-direction: column;
   margin-right: 20px;
+}
+.color{
+  
+  font-family: "Inter", sans-serif;
+  font-weight: 5;
+  border-radius: 10px;
+  
+
 }
 
 .evidenceContainer {

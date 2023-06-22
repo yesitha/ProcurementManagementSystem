@@ -12,7 +12,7 @@ using PWMSBackend.Data;
 namespace PWMSBackend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230618040723_fix6")]
+    [Migration("20230620172029_fix6")]
     partial class fix6
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -102,7 +102,7 @@ namespace PWMSBackend.Migrations
                     b.Property<string>("FmppId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<double?>("GrandTotal")
+                    b.Property<double>("GrandTotal")
                         .HasColumnType("float");
 
                     b.Property<string>("MppId")
@@ -481,9 +481,8 @@ namespace PWMSBackend.Migrations
                     b.Property<double>("EstimatedBudget")
                         .HasColumnType("float");
 
-                    b.Property<byte[]>("EvidenceOfAuthorization")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("EvidenceOfAuthorization")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ExpectedDeliveryDate")
                         .HasColumnType("datetime2");

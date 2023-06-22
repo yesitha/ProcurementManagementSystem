@@ -21,6 +21,7 @@ export const fetchSppDataFromDb = async () => {
     const response = await axios.get(
       `${process.env.REACT_APP_API_HOST}/api/PurchasingDivisionHOD/GetSubProcurementPlans`
     );
+    console.log(response.data);
     return response.data;
   } catch (error) {
     console.log(error);

@@ -167,7 +167,7 @@ function LetterofAcceptance() {
                     value={selectedFile ? selectedFile.name : ""}
                     style={{
                       width: 300,
-                      height: 35,
+                      height: 55,
                       backgroundColor: "white",
                       borderRadius: "9px",
                       marginRight: 15,
