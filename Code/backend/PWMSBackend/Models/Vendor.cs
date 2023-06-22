@@ -30,13 +30,13 @@
 
         public string CompanyFullName { get; set; }
 
-        public byte[] BusinessRegistrationDoc { get; set; }
+        public string? BusinessRegistrationDoc { get; set; }
 
-        public byte[] TaxIdentificationDoc { get; set; }
+        public string? TaxIdentificationDoc { get; set; }
 
-        public byte[] InsuaranceCertificate { get; set; }
+        public string? InsuaranceCertificate { get; set; }
 
-        public byte[] OtherDocs { get; set; }
+        public string? OtherDocs { get; set; }
         public ICollection<VendorPlaceBidItem> VendorPlaceBidItems { get; set; }
         public ICollection<VendorhasItem> VendorhasItems { get; set; }
         public ICollection<PurchaseOrder> PurchaseOrders { get; set; }

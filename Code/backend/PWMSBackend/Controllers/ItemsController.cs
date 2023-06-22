@@ -70,7 +70,6 @@ namespace PWMSBackend.Controllers
                 expectedDeliveryDate = mergedItem.subProcurementItem.ExpectedDeliveryDate,
                 Quantity = mergedItem.subProcurementItem.Quantity,
                 BidStatus = mergedItem.vendorBidItem.BidStatus,
-                ProofDocument = mergedItem.vendorBidItem?.ProofDocument ?? null
             }).ToList();
 
 
