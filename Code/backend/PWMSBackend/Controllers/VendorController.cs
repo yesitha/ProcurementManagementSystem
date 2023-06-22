@@ -182,7 +182,7 @@ namespace PWMSBackend.Controllers
 
 
         [HttpPost("CreateVendorPlaceBidItem")]
-        public async Task<IActionResult> CreateVendorPlaceBidItem(string vendorId, string itemId, double bidValue, byte[] proofDocument)
+        public async Task<IActionResult> CreateVendorPlaceBidItem(string vendorId, string itemId, double bidValue)
         {
             // Check if a record already exists for the same vendorId and itemId
             var existingRecord = await _context.VendorPlaceBidItems.FirstOrDefaultAsync(
@@ -192,7 +192,7 @@ namespace PWMSBackend.Controllers
             {
                 // Update the existing record with the new values
                 existingRecord.BidValue = bidValue;
-                existingRecord.ProofDocument = proofDocument;
+                //existingRecord.ProofDocument = proofDocument;
                 existingRecord.DateAndTime = DateTime.Now;
                 existingRecord.BidStatus = "Pending"; // Set the desired bid status
 
@@ -209,7 +209,7 @@ namespace PWMSBackend.Controllers
                     VendorId = vendorId,
                     ItemId = itemId,
                     BidValue = bidValue,
-                    ProofDocument = proofDocument,
+                    //ProofDocument = proofDocument,
                     DateAndTime = DateTime.Now,
                     BidStatus = "Pending"
                 };
