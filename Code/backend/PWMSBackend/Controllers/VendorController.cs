@@ -453,6 +453,42 @@ namespace PWMSBackend.Controllers
             return Ok(poIdList);
         }
 
+
+        [HttpGet("GetItemToBeShippedDetails/{PoId}/{vendorId}")]
+        public IActionResult GetItemToBeShippedDetails(string PoId, string vendorId)
+        {
+            var mppId = _context.PurchaseOrders
+                .Where(po => po.PoId == PoId)
+                .Select(po => po.MppId)
+                .FirstOrDefault();
+
+            var itemList = _context.MasterProcurementPlans
+                .Where(mpp => mpp.MppId == mppId)
+                .SelectMany(mpp => mpp.SubProcurementPlans)
+                .SelectMany(spp => spp.subProcurementPlanItems)
+                .Where(item => item.ProcuremnetCommitteeStatus == "approve" && item.DGStatus == "approve"
+                                && item.SelectedVendor == _context.Vendors
+                                                                .Where(v => v.VendorId == vendorId)
+                                                                .Select(v => v.FirstName + " " + v.LastName)
+                                                                .FirstOrDefault())
+                .GroupBy(item => item.ItemId)
+                .Select(group => new
+                {
+                    ItemId = group.Key,
+                    ItemName = group.First().Item.ItemName,
+                    Specifications = group.First().Item.Specification,
+                    TotalQuantity = group.Sum(item => item.Quantity),
+                    BidValue = _context.VendorPlaceBidItems
+                                    .Where(vpb => vpb.Vendor.VendorId == vendorId && vpb.ItemId == group.Key)
+                                    .Select(vpb => vpb.BidValue)
+                                    .FirstOrDefault(),
+
+                })
+                .ToList();
+
+            return Ok(itemList);
+        }
+
         public class PurchaseOrderItemToBeShippedInput
         {
             public string ItemId { get; set; }
