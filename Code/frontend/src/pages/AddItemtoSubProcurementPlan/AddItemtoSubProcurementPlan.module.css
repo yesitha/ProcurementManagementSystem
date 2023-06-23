@@ -1,9 +1,4 @@
-.sideNavBar {
-  display: flex;
-  z-index: 3;
-  overflow: "hidden";
-  height: 100%;
-}
+
 .headTitle {
   display: flex;
   flex-direction: row;
@@ -66,12 +61,9 @@
   margin-right: 20px;
 }
 .color{
-  
   font-family: "Inter", sans-serif;
   font-weight: 5;
   border-radius: 10px;
-  
-
 }
 
 .evidenceContainer {

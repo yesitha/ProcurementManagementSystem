@@ -6,7 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="bef3c3fc-1eae-49f2-978e-a16cd54f3c7d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/frontend/src/components/Popups/DonePopup/DonePopup.js" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/src/components/Popups/DonePopup/DonePopup.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Code/frontend/src/pages/AddItemtoSubProcurementPlan/AddItemtoSubProcurementPlan.js" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/src/pages/AddItemtoSubProcurementPlan/AddItemtoSubProcurementPlan.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/frontend/src/pages/AddItemtoSubProcurementPlan/AddItemtoSubProcurementPlan.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/src/pages/AddItemtoSubProcurementPlan/AddItemtoSubProcurementPlan.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/frontend/src/pages/AddNewItemtoSubProcurementPlan/AddNewItemToSubProcurementPlan.js" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/src/pages/AddNewItemtoSubProcurementPlan/AddNewItemToSubProcurementPlan.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/frontend/src/pages/AddNewItemtoSubProcurementPlan/AddNewItemtoSubProcurementPlan.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/src/pages/AddNewItemtoSubProcurementPlan/AddNewItemtoSubProcurementPlan.module.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,7 +67,7 @@
       <workItem from="1687339403757" duration="2390000" />
       <workItem from="1687342323643" duration="1706000" />
       <workItem from="1687344058137" duration="13651000" />
-      <workItem from="1687421033971" duration="7950000" />
+      <workItem from="1687421033971" duration="19204000" />
     </task>
     <servers />
   </component>

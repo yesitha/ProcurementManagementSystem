@@ -24,6 +24,7 @@ import Styles from "./AddItemtoSubProcurementPlan.module.css";
 function AddItemtoSubProcurementPlan() {
     const {division, selectedSubId} = useParams();
     const {
+        getValues,
         control,
         register,
         handleSubmit,
@@ -87,8 +88,11 @@ function AddItemtoSubProcurementPlan() {
         fileInputRef.current.click();
     };
 
-    const onSubmit = async (data) => {
-        const {expectedDeliveryDate, estimatedBudget, quantity} = data;
+
+    const onSubmit = async () => {
+        const data=getValues();
+        const {expectedDeliveryDate, estimatedBudget, quantity,recommendedVendor} = data;
+        console.log(data);
         const dateParts = expectedDeliveryDate.split("/");
         const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}T00:00:00Z`;
         const formData = {
@@ -109,14 +113,11 @@ function AddItemtoSubProcurementPlan() {
             // Handle error
         }
     };
+
     return (
         <div style={{display: "flex", overflow: "hidden"}}>
-            <Container
-                sx={{
-                    ml: {xs: "20px", sm: "20px", md: "20px", lg: "21px", xl: "22px"},
-                }}
-            >
-                <div className="upperSection">
+            <Container sx={{ml: {xs: "20px", sm: "20px", md: "20px", lg: "21px", xl: "22px"},}}>
+                <div>
                     <div className={Styles.headTitle}>
                         <RouterLink to={`/SubProcurmentPlan/${selectedSubId}`}>
                             <IconButton
@@ -294,7 +295,7 @@ function AddItemtoSubProcurementPlan() {
                                     </div>
                                     <div className={Styles.bottomContainer}>
                                         <div className={Styles.addButton}>
-                                            <div onClick={handleSubmit}>
+                                            <div onClick={onSubmit}>
                                                 <DonePopup
                                                     text={"Successfully Added"}
                                                     title={"Add Item to Sub Procurement Plan"}
