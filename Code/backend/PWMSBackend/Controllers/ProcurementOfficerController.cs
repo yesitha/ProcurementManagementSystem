@@ -1060,18 +1060,58 @@ namespace PWMSBackend.Controllers
                     Ok.Shipped_Qty
                 })
                 .ToList();
-
-            var combinedList = itemList.Join(itemList1,
-               item => item.ItemId,
-               item1 => item1.ItemId,
-               (item, item1) => new
-               {
-                    item.ItemId,
-                    item.ItemName,
-                    item.OrderedQuantity,
-                    item1.Shipped_Qty
-                })
+            
+            var grnId = _context.GRNs
+                .Where(grn => grn.PoId == PoId)
+                .Select(grn => grn.GrnId)
                 .ToList();
+
+            //if (grnId == null)
+            //{
+            //    var combinedList0 = itemList.Join(itemList1,
+            //           item => item.ItemId,
+            //           item1 => item1.ItemId,
+            //           (item, item1) => new
+            //           {
+            //               item.ItemId,
+            //               item.ItemName,
+            //               item.OrderedQuantity,
+            //               item1.Shipped_Qty,
+            //               ReceivedQuantity = 0
+            //           })
+            //            .ToList();
+
+            //    return Ok(combinedList0);
+            //}
+
+            var itemList2 = _context.GRNItemsToBeShipped
+                    .Where(grn => grnId.Contains(grn.GrnId))
+                    .GroupBy(grn => grn.ItemId)
+                    .Select(group => new
+                    {
+                        ItemId = group.Key,
+                        Received_Qty = group.Sum(grn => grn.Received_Qty)
+                    })
+                    .ToList();
+
+
+            var combinedList = from item in itemList
+                               join orderItem in itemList1 on item.ItemId equals orderItem.ItemId into orderItems
+                               from oi in orderItems.DefaultIfEmpty()
+                               join grnItem in itemList2 on item.ItemId equals grnItem.ItemId into grnItems
+                               from gi in grnItems.DefaultIfEmpty()
+                               where item.OrderedQuantity > (gi?.Received_Qty ?? 0)
+                               select new
+                               {
+                                   item.ItemId,
+                                   item.ItemName,
+                                   item.OrderedQuantity,
+                                   ShippedQuantity = oi?.Shipped_Qty ?? 0,
+                                   ReceivedQuantity = gi != null && item.ItemId == gi.ItemId ? gi.Received_Qty : 0
+                               };
+
+            // Convert the combined list to a final list
+            var result = combinedList.ToList();
 
             return Ok(combinedList);
         }
@@ -1166,6 +1206,23 @@ namespace PWMSBackend.Controllers
                 })
                 .ToList();
 
+            // Get total received quantity for each item
+
+            var grnIdList = _context.GRNs
+                .Where(grn => grn.PoId == PoId)
+                .Select(grn => grn.GrnId)
+                .ToList();
+
+            var itemList0 = _context.GRNItemsToBeShipped
+                    .Where(grn => grnIdList.Contains(grn.GrnId))
+                    .GroupBy(grn => grn.ItemId)
+                    .Select(group => new
+                    {
+                        ItemId = group.Key,
+                        TotalReceived_Qty = group.Sum(grn => grn.Received_Qty)
+                    })
+                    .ToList();
+
             var itemList2 = _context.GRNItemsToBeShipped
                 .Where(Ok => Ok.GrnId == grnId)
                 .Select(Ok => new
@@ -1175,28 +1232,68 @@ namespace PWMSBackend.Controllers
                 })
                 .ToList();
 
-            var combinedList = itemList.Join(itemList1,
-              item => item.ItemId,
-              item1 => item1.ItemId,
-              (item, item1) => new
-              {
-                   item.ItemId,
-                   item.ItemName,
-                   item.OrderedQuantity,
-                   item1.Shipped_Qty
-               })
-                .Join(itemList2,
-                item => item.ItemId,
-                item2 => item2.ItemId,
-                (item, item2) => new
-               {
-                   item.ItemId,
-                   item.ItemName,
-                   item.OrderedQuantity,
-                   item.Shipped_Qty,
-                   item2.Received_Qty
-               })
-                .ToList();
+            //var combinedList = itemList.Join(itemList1,
+            //  item => item.ItemId,
+            //  item1 => item1.ItemId,
+            //  (item, item1) => new
+            //  {
+            //       item.ItemId,
+            //       item.ItemName,
+            //       item.OrderedQuantity,
+            //       item1.Shipped_Qty
+            //   })
+            //    .Join(itemList2,
+            //    item => item.ItemId,
+            //    item2 => item2.ItemId,
+            //    (item, item2) => new
+            //   {
+            //       item.ItemId,
+            //       item.ItemName,
+            //       item.OrderedQuantity,
+            //       item.Shipped_Qty,
+            //       item2.Received_Qty
+            //   })
+            //    .ToList();
+
+            //var combinedList = from item in itemList
+            //                   join orderItem in itemList1 on item.ItemId equals orderItem.ItemId into orderItems
+            //                   from oi in orderItems.DefaultIfEmpty()
+            //                   join grnItem in itemList2 on item.ItemId equals grnItem.ItemId into grnItems
+            //                   from gi in grnItems.DefaultIfEmpty()
+            //                   join grnItem0 in itemList0 on item.ItemId equals grnItem0.ItemId into grnItems0
+            //                   from gi0 in grnItems0.DefaultIfEmpty()
+            //                   select new
+            //                   {
+            //                       item.ItemId,
+            //                       item.ItemName,
+            //                       item.OrderedQuantity,
+            //                       Shipped_Qty = oi?.Shipped_Qty ?? 0,
+            //                       Received_Qty = gi?.Received_Qty ?? 0,
+            //                       TotalReceived_Qty = gi0?.TotalReceived_Qty ?? 0
+            //                   };
+
+
+            var combinedList = from item in itemList
+                               join orderItem in itemList1 on item.ItemId equals orderItem.ItemId into orderItems
+                               from oi in orderItems.DefaultIfEmpty()
+                               join grnItem in itemList2 on item.ItemId equals grnItem.ItemId into grnItems
+                               from gi in grnItems.DefaultIfEmpty()
+                               join grnItem0 in itemList0 on item.ItemId equals grnItem0.ItemId into grnItems0
+                               from gi0 in grnItems0.DefaultIfEmpty()
+                               where itemList2.Select(x => x.ItemId).Contains(item.ItemId)
+                               select new
+                               {
+                                   item.ItemId,
+                                   item.ItemName,
+                                   item.OrderedQuantity,
+                                   Shipped_Qty = oi?.Shipped_Qty ?? 0,
+                                   Received_Qty = gi?.Received_Qty ?? 0,
+                                   TotalReceived_Qty = gi0?.TotalReceived_Qty ?? 0
+                               };
+
+            var result = combinedList.ToList();
+
+
 
             var vendorName = _context.PurchaseOrders
                 .Where(po => po.PoId == PoId)
@@ -1208,7 +1305,7 @@ namespace PWMSBackend.Controllers
                 .Select(grn => grn.ShippingDate)
                 .FirstOrDefault();
 
-            return Ok(new { combinedList, vendorName, shippingDate });
+            return Ok(new { result, vendorName, shippingDate });
         }
 
         public class GRNItemComment

@@ -623,6 +623,70 @@ namespace PWMSBackend.Controllers
             public int ShippedQuantity { get; set; }
         }
 
+        //[HttpPost("CreatePurchaseOrderItemsToBeShippedRecords")]
+        //public IActionResult CreatePurchaseOrderItemsToBeShippedRecords(string PoId, List<PurchaseOrderItemToBeShippedInput> itemsToBeShipped)
+        //{
+        //    // Retrieve the Purchase Order based on the provided PoId
+        //    var purchaseOrder = _context.PurchaseOrders.FirstOrDefault(po => po.PoId == PoId);
+
+        //    // Check if the Purchase Order exists
+        //    if (purchaseOrder == null)
+        //    {
+        //        return BadRequest("Invalid PoId. Purchase Order not found.");
+        //    }
+
+        //    // Create a list to store the duplicate itemIds
+        //    var duplicateItemIds = new List<string>();
+
+        //    // Iterate through the list of itemsToBeShipped and create PurchaseOrderItemsToBeShipped records
+        //    foreach (var item in itemsToBeShipped)
+        //    {
+        //        string itemId = item.ItemId;
+        //        int shippedQuantity = item.ShippedQuantity;
+
+        //        // Check if the PurchaseOrderItemsToBeShipped record already exists
+        //        bool recordExists = _context.PurchaseOrder_ItemTobeShippeds.Any(aipo =>
+        //            aipo.PoId == PoId && aipo.ItemId == itemId);
+
+        //        if (recordExists)
+        //        {
+        //            // Add the duplicate itemId to the list
+        //            duplicateItemIds.Add(itemId);
+        //            continue; // Skip to the next iteration
+        //        }
+
+        //        // Retrieve the Approved Item based on the ItemId
+        //        var approvedItem = _context.Items.FirstOrDefault(item => item.ItemId == itemId);
+
+        //        // Check if the Approved Item exists
+        //        if (approvedItem == null)
+        //        {
+        //            return BadRequest($"Invalid ItemId '{itemId}'. Approved Item not found.");
+        //        }
+
+        //        // Create a new PurchaseOrder_ItemTobeShipped record
+        //        var purchaseOrderItemToBeShipped = new PurchaseOrder_ItemTobeShipped
+        //        {
+        //            ItemId = itemId,
+        //            PoId = PoId,
+        //            Shipped_Qty = shippedQuantity
+        //        };
+
+        //        // Add the record to the context
+        //        _context.PurchaseOrder_ItemTobeShippeds.Add(purchaseOrderItemToBeShipped);
+        //    }
+
+        //    // Save the changes to the database
+        //    _context.SaveChanges();
+
+        //    if (duplicateItemIds.Count > 0)
+        //    {
+        //        return BadRequest($"The following ItemIds are already associated with the Purchase Order '{PoId}': {string.Join(", ", duplicateItemIds)}");
+        //    }
+
+        //    return Ok("PurchaseOrderItemsToBeShipped records created successfully.");
+        //}
+
         [HttpPost("CreatePurchaseOrderItemsToBeShippedRecords")]
         public IActionResult CreatePurchaseOrderItemsToBeShippedRecords(string PoId, List<PurchaseOrderItemToBeShippedInput> itemsToBeShipped)
         {
@@ -635,57 +699,51 @@ namespace PWMSBackend.Controllers
                 return BadRequest("Invalid PoId. Purchase Order not found.");
             }
 
-            // Create a list to store the duplicate itemIds
-            var duplicateItemIds = new List<string>();
-
-            // Iterate through the list of itemsToBeShipped and create PurchaseOrderItemsToBeShipped records
+            // Iterate through the list of itemsToBeShipped and create/update PurchaseOrderItemsToBeShipped records
             foreach (var item in itemsToBeShipped)
             {
                 string itemId = item.ItemId;
                 int shippedQuantity = item.ShippedQuantity;
 
-                // Check if the PurchaseOrderItemsToBeShipped record already exists
-                bool recordExists = _context.PurchaseOrder_ItemTobeShippeds.Any(aipo =>
+                // Retrieve the existing PurchaseOrderItemsToBeShipped record
+                var existingRecord = _context.PurchaseOrder_ItemTobeShippeds.FirstOrDefault(aipo =>
                     aipo.PoId == PoId && aipo.ItemId == itemId);
 
-                if (recordExists)
+                if (existingRecord != null)
                 {
-                    // Add the duplicate itemId to the list
-                    duplicateItemIds.Add(itemId);
-                    continue; // Skip to the next iteration
+                    // Update the existing record with the new shipped quantity
+                    existingRecord.Shipped_Qty += shippedQuantity;
                 }
-
-                // Retrieve the Approved Item based on the ItemId
-                var approvedItem = _context.Items.FirstOrDefault(item => item.ItemId == itemId);
-
-                // Check if the Approved Item exists
-                if (approvedItem == null)
+                else
                 {
-                    return BadRequest($"Invalid ItemId '{itemId}'. Approved Item not found.");
+                    // Retrieve the Approved Item based on the ItemId
+                    var approvedItem = _context.Items.FirstOrDefault(item => item.ItemId == itemId);
+
+                    // Check if the Approved Item exists
+                    if (approvedItem == null)
+                    {
+                        return BadRequest($"Invalid ItemId '{itemId}'. Approved Item not found.");
+                    }
+
+                    // Create a new PurchaseOrder_ItemTobeShipped record
+                    var purchaseOrderItemToBeShipped = new PurchaseOrder_ItemTobeShipped
+                    {
+                        ItemId = itemId,
+                        PoId = PoId,
+                        Shipped_Qty = shippedQuantity
+                    };
+
+                    // Add the record to the context
+                    _context.PurchaseOrder_ItemTobeShippeds.Add(purchaseOrderItemToBeShipped);
                 }
-
-                // Create a new PurchaseOrder_ItemTobeShipped record
-                var purchaseOrderItemToBeShipped = new PurchaseOrder_ItemTobeShipped
-                {
-                    ItemId = itemId,
-                    PoId = PoId,
-                    Shipped_Qty = shippedQuantity
-                };
-
-                // Add the record to the context
-                _context.PurchaseOrder_ItemTobeShippeds.Add(purchaseOrderItemToBeShipped);
             }
 
             // Save the changes to the database
             _context.SaveChanges();
 
-            if (duplicateItemIds.Count > 0)
-            {
-                return BadRequest($"The following ItemIds are already associated with the Purchase Order '{PoId}': {string.Join(", ", duplicateItemIds)}");
-            }
-
-            return Ok("PurchaseOrderItemsToBeShipped records created successfully.");
+            return Ok("PurchaseOrderItemsToBeShipped records created/updated successfully.");
         }
+
 
         // View GRN page controller
 
