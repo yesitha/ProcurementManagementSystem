@@ -6,7 +6,7 @@ namespace PWMSBackend.Models
     {
         public string PvId { get; set; }
 
-        public byte[] Evidence { get; set; }
+        public string? PaymentVoucherEvidence { get; set; }
 
         public InvoiceTobePay InvoiceTobePay { get; set; }
 

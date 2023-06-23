@@ -10,15 +10,13 @@ namespace PWMSBackend.Models
 
         public double TotalAmount { get; set; }
 
-        public byte[]? Agreement { get; set; }
+        public string? Agreement { get; set; }
 
-        public byte[]? Bond { get; set; }
+        public string? Bond { get; set; }
 
-        public byte[]? BankGuarantee { get; set; }
+        public string? BankGuarantee { get; set; }
 
         public string? CommentsForSpecialInstruction { get; set; }
-
-        public byte[]? LetterOfAcceptance { get; set; }
 
         public string? ProcumentOfficerStatus { get; set; }
 

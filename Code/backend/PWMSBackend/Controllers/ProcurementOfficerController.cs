@@ -672,6 +672,62 @@ namespace PWMSBackend.Controllers
             return Ok(output);
         }
 
+        // Audit reoprt
+
+        [HttpGet("GetFinalizedMasterProcurementPlan/{mppId}")]
+        public IActionResult GetFinalizedMasterProcurementPlan(string mppId)
+        {
+            var approvedItems = _context.MasterProcurementPlans
+                    .Where(mpp => mpp.MppId == mppId)
+                    .SelectMany(mpp => mpp.SubProcurementPlans)
+                    .SelectMany(spp => spp.subProcurementPlanItems)
+                    .Where(item => item.ProcuremnetCommitteeStatus == "approve")
+                    .OrderBy(item => item.ItemId)
+                    .GroupBy(item => item.ItemId) // Group the items by ItemId
+                    .Select(group => new
+                    {
+                        ItemId = group.Key,
+                        ItemName = group.First().Item.ItemName, // Use First() to retrieve the ItemName (assuming it's the same within the group)
+                        Specification = group.First().Item.Specification, // Use First() to retrieve the Specification
+                        Quantity = group.Sum(item => item.Quantity), // Calculate the sum of Quantity within the group
+                        MinExpectedDeliveryDate = group.Min(item => item.ExpectedDeliveryDate), // Get the min expected Delivery Date within the group
+                        SelectedVendor = group.First().SelectedVendor, // Use First() to retrieve the SelectedVendor (assuming it's the same within the group)
+                        BidValue = _context.VendorPlaceBidItems
+                                    .Where(vpb => vpb.Vendor.VendorId == _context.Vendors
+                                                                            .Where(v => v.FirstName + " " + v.LastName == group.FirstOrDefault().SelectedVendor)
+                                                                            .Select(v => v.VendorId)
+                                                                            .FirstOrDefault()
+                                                                      && vpb.ItemId == group.FirstOrDefault().ItemId)
+                                    .Select(vpb => vpb.BidValue)
+                                    .FirstOrDefault(),
+                        SelectedVendorInfo = group.First().SelectedVendor != null ? new
+                        {
+                            BusinessRegistrationDoc = _context.Vendors
+                                    .Where(v => v.FirstName + " " + v.LastName == group.First().SelectedVendor)
+                                    .Select(v => v.BusinessRegistrationDoc)
+                                    .FirstOrDefault(),
+                            TaxIdentificationDoc = _context.Vendors
+                                    .Where(v => v.FirstName + " " + v.LastName == group.First().SelectedVendor)
+                                    .Select(v => v.TaxIdentificationDoc)
+                                    .FirstOrDefault(),
+                            InsuranceCertificate = _context.Vendors
+                                    .Where(v => v.FirstName + " " + v.LastName == group.First().SelectedVendor)
+                                    .Select(v => v.InsuaranceCertificate)
+                                    .FirstOrDefault(),
+                            OtherDocs = _context.Vendors
+                                    .Where(v => v.FirstName + " " + v.LastName == group.First().SelectedVendor)
+                                    .Select(v => v.OtherDocs)
+                                    .FirstOrDefault()
+                        } : null,
+                        internalAuditorStatus = group.First().InternalAuditorStatus,
+                        internalAuditorComment = group.First().InternalAuditorComment
+                    })
+                    .ToList();
+
+
+            return Ok(approvedItems);
+        }
+
 
         // Create PO vendor wise 
 
@@ -682,7 +738,7 @@ namespace PWMSBackend.Controllers
                 .Where(mpp => mpp.MppId == mppId)
                 .SelectMany(mpp => mpp.SubProcurementPlans)
                 .SelectMany(spp => spp.subProcurementPlanItems)
-                .Where(item => item.ProcuremnetCommitteeStatus == "approve")
+                .Where(item => item.ProcuremnetCommitteeStatus == "approve" && item.DGStatus == "approve")
                 .GroupBy(item => item.ItemId)
                 //.Select(group => new
                 //{
@@ -692,6 +748,7 @@ namespace PWMSBackend.Controllers
                 //    SelecetdVendor = group.Select(item => item.SelectedVendor).ToList()
                 //})
                 .Select(item => item.FirstOrDefault().SelectedVendor)
+                .Distinct()
                 .ToList();
 
             return Ok(selectedVendorList);
@@ -740,6 +797,54 @@ namespace PWMSBackend.Controllers
                 .ToList();
 
             return Ok(selectedVendorList);
+        }
+
+        [HttpPost("CreatePO/{mppId}/{vendorId}/{PODate}")]
+        public IActionResult CreatePO(string mppId, string vendorId, DateTime PODate)
+        {
+            var selectedVendorList = _context.MasterProcurementPlans
+                .Where(mpp => mpp.MppId == mppId)
+                .SelectMany(mpp => mpp.SubProcurementPlans)
+                .SelectMany(spp => spp.subProcurementPlanItems)
+                .Where(item => item.ProcuremnetCommitteeStatus == "approve" && item.DGStatus == "approve"
+                                && item.SelectedVendor == _context.Vendors
+                                                                .Where(v => v.VendorId == vendorId)
+                                                                .Select(v => v.FirstName + " " + v.LastName)
+                                                                .FirstOrDefault())
+                .GroupBy(item => item.ItemId)
+                .Select(group => new
+                {
+                    ItemId = group.Key,
+                    ItemName = group.First().Item.ItemName,
+                    Specifications = group.First().Item.Specification,
+                    TotalQuantity = group.Sum(item => item.Quantity),
+                    BidValue = _context.VendorPlaceBidItems
+                                    .Where(vpb => vpb.Vendor.VendorId == vendorId && vpb.ItemId == group.Key)
+                                    .Select(vpb => vpb.BidValue)
+                                    .FirstOrDefault(),
+                })
+                .ToList();
+
+            double sumOfBidValue = selectedVendorList.Sum(item => item.BidValue);
+
+            // Generate a new PoId
+            string PoId = _poIdGenerator.GeneratePOId();
+
+
+            // Create a new PurchaseOrder instance
+            var PO = new PurchaseOrder
+            {
+                PoId = PoId,
+                Date = PODate,
+                TotalAmount = sumOfBidValue,
+                VendorId = vendorId,
+                MppId = mppId
+            };
+
+            _context.PurchaseOrders.Add(PO);
+            _context.SaveChanges();
+
+            return Ok(PO.PoId);
         }
 
         [HttpPost("CreateApprovedItemsPurchaseOrderRecords")]
@@ -802,56 +907,6 @@ namespace PWMSBackend.Controllers
             return Ok("ApprovedItemPurchaseOrder records created successfully.");
         }
 
-
-
-
-        [HttpPost("CreatePO/{mppId}/{vendorId}/{PODate}")]
-        public IActionResult CreatePO(string mppId, string vendorId, DateTime PODate)
-        {
-            var selectedVendorList = _context.MasterProcurementPlans
-                .Where(mpp => mpp.MppId == mppId)
-                .SelectMany(mpp => mpp.SubProcurementPlans)
-                .SelectMany(spp => spp.subProcurementPlanItems)
-                .Where(item => item.ProcuremnetCommitteeStatus == "approve" && item.DGStatus == "approve"
-                                && item.SelectedVendor == _context.Vendors
-                                                                .Where(v => v.VendorId == vendorId)
-                                                                .Select(v => v.FirstName + " " + v.LastName)
-                                                                .FirstOrDefault())
-                .GroupBy(item => item.ItemId)
-                .Select(group => new
-                {
-                    ItemId = group.Key,
-                    ItemName = group.First().Item.ItemName,
-                    Specifications = group.First().Item.Specification,
-                    TotalQuantity = group.Sum(item => item.Quantity),
-                    BidValue = _context.VendorPlaceBidItems
-                                    .Where(vpb => vpb.Vendor.VendorId == vendorId && vpb.ItemId == group.Key)
-                                    .Select(vpb => vpb.BidValue)
-                                    .FirstOrDefault(),
-                })
-                .ToList();
-
-            double sumOfBidValue = selectedVendorList.Sum(item => item.BidValue);
-
-            // Generate a new CommitteeId
-            string PoId = _poIdGenerator.GeneratePOId();
-
-
-            // Create a new Committee instance
-            var PO = new PurchaseOrder
-            {
-                PoId = PoId,
-                Date = PODate,
-                TotalAmount = sumOfBidValue,
-                VendorId = vendorId,
-                MppId = mppId
-            };
-
-            _context.PurchaseOrders.Add(PO);
-            _context.SaveChanges();
-
-            return Ok(PO.PoId);
-        }
 
         [HttpGet("GetPOVendorDetails/{PoId}")]
 
@@ -922,5 +977,45 @@ namespace PWMSBackend.Controllers
 
             return Ok("Add comment successfully");
         }
+
+        //Evaluate vendor finance state page 
+
+        [HttpGet("GetVendorFinanceStatedetails")]
+        public IActionResult GetVendorFinanceStatedetails()
+        {
+            var vendorFinanceStateDetails = _context.PurchaseOrders
+                .Where(po => po.ProcumentOfficerStatus != null)
+                .Select(v => new
+                {
+                    v.PoId,
+                    v.VendorId,
+                    v.Agreement,
+                    v.Bond,
+                    v.BankGuarantee
+                }) 
+                .ToList();
+
+            return Ok(vendorFinanceStateDetails);
+                
+        }
+
+        [HttpPut("UpdateProcurementOfficerStatus/{vendorId}/{PoId}")]
+        public IActionResult UpdateProcurementOfficerStatus(string vendorId, string PoId, string status)
+        {
+            var po = _context.PurchaseOrders
+                .Where(po => po.PoId == PoId && po.VendorId == vendorId)
+                .FirstOrDefault();
+
+            if (po == null)
+            {
+                return BadRequest("PO not found");
+            }
+
+            po.ProcumentOfficerStatus = status;
+
+            _context.SaveChanges();
+
+            return Ok("Procurement Officer Status updated successfully");
+        }   
     }
 }

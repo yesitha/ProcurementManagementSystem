@@ -4,10 +4,10 @@
     {
         public string VendorId { get; set; }
         public string ItemId { get; set; }
-        public string BidStatus { get; set; }
+        public string? BidStatus { get; set; }
         public double BidValue { get; set; }
         public DateTime DateAndTime { get; set; }
-        public byte[] ProofDocument { get; set; }
+        public string? LetterOfAcceptance { get; set; }
         public Vendor Vendor { get; set; }
         public ApprovedItem ApprovedItem { get; set; }
     }

@@ -9,7 +9,5 @@
         public int Quantity { get; set; }
 
         public string BidStatus { get; set; }
-
-        public byte[] ProofDocument { get; set; }
     }
 }

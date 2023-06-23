@@ -182,7 +182,7 @@ namespace PWMSBackend.Controllers
 
 
         [HttpPost("CreateVendorPlaceBidItem")]
-        public async Task<IActionResult> CreateVendorPlaceBidItem(string vendorId, string itemId, double bidValue, byte[] proofDocument)
+        public async Task<IActionResult> CreateVendorPlaceBidItem(string vendorId, string itemId, double bidValue)
         {
             // Check if a record already exists for the same vendorId and itemId
             var existingRecord = await _context.VendorPlaceBidItems.FirstOrDefaultAsync(
@@ -192,7 +192,7 @@ namespace PWMSBackend.Controllers
             {
                 // Update the existing record with the new values
                 existingRecord.BidValue = bidValue;
-                existingRecord.ProofDocument = proofDocument;
+                //existingRecord.ProofDocument = proofDocument;
                 existingRecord.DateAndTime = DateTime.Now;
                 existingRecord.BidStatus = "Pending"; // Set the desired bid status
 
@@ -209,7 +209,7 @@ namespace PWMSBackend.Controllers
                     VendorId = vendorId,
                     ItemId = itemId,
                     BidValue = bidValue,
-                    ProofDocument = proofDocument,
+                    //ProofDocument = proofDocument,
                     DateAndTime = DateTime.Now,
                     BidStatus = "Pending"
                 };
@@ -223,6 +223,99 @@ namespace PWMSBackend.Controllers
             }
         }
 
+        //Bid history for vendor
+
+        [HttpGet("GetBidHistory/{vendorId}")]
+        public async Task<ActionResult<IEnumerable<object>>> GetBidHistory(string vendorId)
+        {
+            DateTime currentDate = DateTime.Today;
+
+            var closestDate = _context.SubProcurementApprovedItems
+                .Where(a => a.PreBidMeetingDate.HasValue && a.PreBidMeetingDate.Value.Date <= currentDate)
+                .OrderByDescending(a => a.PreBidMeetingDate.Value)
+                .Select(a => a.PreBidMeetingDate.Value.Date)
+                .FirstOrDefault();
+
+            var items = await _context.SubProcurementApprovedItems
+                .Where(a => a.PreBidMeetingDate.HasValue && a.PreBidMeetingDate.Value.Date == closestDate)
+                .Select(a => new { a.SppId, a.ItemId})
+                .ToListAsync();
+
+            if (items == null)
+            {
+                return NotFound();
+            }
+
+            //join sppId and itemId from SubProcurementPlanItems and SubProcurementApprovedItems
+
+            var joinedData = from input in items
+                             join planItem in _context.SubProcurementPlanItems
+                             on new { input.SppId, input.ItemId } equals new { planItem.SppId, planItem.ItemId }
+                             select new
+                             {
+                                 sppId = input.SppId,
+                                 itemId = input.ItemId,
+                                 quantity = planItem.Quantity,
+                                 expectedDeliveryDate = planItem.ExpectedDeliveryDate
+                             };
+
+            //filter data by itemId and sum quantity
+
+            var filteredData = joinedData.GroupBy(x => x.itemId)
+                                     .Select(group => new
+                                     {
+                                         itemId = group.Key,
+                                         totalQuantity = group.Sum(x => x.quantity),
+                                         expectedDeliveryDate = group.Select(x => x.expectedDeliveryDate).Distinct().Min()
+                                     });
+
+            //get item names
+
+            var itemIds = filteredData.Select(x => x.itemId).Distinct().ToList();
+            var itemDetails = _context.Items.Where(item => itemIds.Contains(item.ItemId))
+                                            .Select(item => new { item.ItemId, item.ItemName, item.Specification })
+                                            .ToList();
+
+            var result = from input in filteredData
+                         join itemDetail in itemDetails
+                         on input.itemId equals itemDetail.ItemId
+                         select new
+                         {
+                             itemId = input.itemId,
+                             itemName = itemDetail.ItemName,
+                             Specification = itemDetail.Specification,
+                             totalQuantity = input.totalQuantity,
+                             expectedDeliveryDate = input.expectedDeliveryDate,
+                         };
+
+            //get vendor details
+
+            var vendorDetails = _context.VendorPlaceBidItems.Where(vendor => vendor.VendorId == vendorId && itemIds.Contains(vendor.ItemId))
+                                                            .Select(vendor => new { vendor.VendorId, vendor.ItemId, vendor.BidValue, vendor.BidStatus, vendor.LetterOfAcceptance })
+                                                            .ToList();
+
+            var result2 = from input in result
+                          join vendorDetail in vendorDetails
+                          on input.itemId equals vendorDetail.ItemId into gj
+                          from vendor in gj.DefaultIfEmpty()
+                          select new
+                          {
+                              itemId = input.itemId,
+                              itemName = input.itemName,
+                              Specification = input.Specification,
+                              totalQuantity = input.totalQuantity,
+                              expectedDeliveryDate = input.expectedDeliveryDate,
+                              bidValue = vendor?.BidValue,
+                              bidStatus = vendor?.BidStatus,
+                              isletterOfAcceptance = vendor != null && !string.IsNullOrEmpty(vendor.LetterOfAcceptance)
+                          };
+
+            return Ok(result2);
+        }
+
+
+        // PO details for vendor
+
         [HttpGet("GetPurchaseOrdersByVendorId/{vendorId}")]
         public IActionResult GetPurchaseOrdersByVendorId(string vendorId)
         {
@@ -233,7 +326,8 @@ namespace PWMSBackend.Controllers
                 {
                     PoId = po.PoId,
                     Date = po.Date,
-                    TotalAmount = po.TotalAmount
+                    TotalAmount = po.TotalAmount,
+                    ProcuementOfficerStatus = po.ProcumentOfficerStatus
                 })
                 .ToList();
 
@@ -294,10 +388,55 @@ namespace PWMSBackend.Controllers
                 })
                 .ToList();
 
-            return Ok(itemList);
+            var comments = _context.PurchaseOrders
+                .Where(po => po.PoId == PoId)
+                .Select(po => po.CommentsForSpecialInstruction)
+                .FirstOrDefault();
+
+            return Ok(new { itemList, comments });
         }
 
-        // Items to shipped page controller
+
+        // PO verification page controller
+
+        [HttpGet("GetPODetails/{PoId}")]
+        public IActionResult GetPODetails(string PoId)
+        {
+            var poDetails = _context.PurchaseOrders
+                .Where(po => po.PoId == PoId)
+                .Select(po => new
+                {
+                    po.PoId,
+                    po.Date,
+                    po.TotalAmount
+                })
+                .FirstOrDefault();
+
+            return Ok(poDetails);
+        }
+
+        [HttpPut("UploadPurchaseOrderVerificationDocs")]
+        public IActionResult UploadPurchaseOrderVerificationDocs(string poId,string agreement,string bond,string bankGuarantee)
+        {
+            var purchaseOrder = _context.PurchaseOrders.FirstOrDefault(po => po.PoId == poId);
+
+            if (purchaseOrder == null)
+            {
+                return NotFound("PurchaseOrder not found.");
+            }
+
+            // Update the properties
+            purchaseOrder.Agreement = agreement;
+            purchaseOrder.Bond = bond;
+            purchaseOrder.BankGuarantee = bankGuarantee;
+
+            _context.SaveChanges();
+
+            return Ok("PurchaseOrder verification docs updated successfully.");
+        }
+
+
+        // Items to be shipped page controller
 
         [HttpGet("GetPOIdListByVendorId/{vendorId}")]
         public IActionResult GetPOIdListByVendorId(string vendorId)

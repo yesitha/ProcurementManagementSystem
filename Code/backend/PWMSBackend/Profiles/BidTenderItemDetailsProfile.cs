@@ -22,9 +22,7 @@ namespace PWMSBackend.Profiles
 
             CreateMap<VendorPlaceBidItem, BidTenderItemDetailsDTO>()
                 .ForMember(dest => dest.BidStatus,
-                    opt => opt.MapFrom(src => src.BidStatus))
-                .ForMember(dest => dest.ProofDocument,
-                                   opt => opt.MapFrom(src => src.ProofDocument));
+                    opt => opt.MapFrom(src => src.BidStatus));
         }
     }
 }

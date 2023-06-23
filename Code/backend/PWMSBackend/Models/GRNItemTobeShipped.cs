@@ -11,7 +11,7 @@
 
         public ItemTobeShipped ItemTobeShipped { get; set; }
 
-        public string GRNComment { get; set; }
+        public string? GRNComment { get; set; }
 
         public int Received_Qty { get; set; }
     }
