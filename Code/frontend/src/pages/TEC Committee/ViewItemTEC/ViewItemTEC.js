@@ -71,7 +71,7 @@ function ViewItemTEC() {
   }, []);
 
   if (data === null) {
-    return <p>Loading...</p>;
+    return <p></p>;
   }
 
   return (

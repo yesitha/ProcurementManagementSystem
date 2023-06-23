@@ -21,6 +21,8 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Link as Routerlink } from "react-router-dom";
+import {GetPODetailsbyId} from "../../../services/Vendor/Vendorservices";
+import {MoneyFormat,DateFormat} from "../../../services/dataFormats"
 
 ///////////////Add axios/////////////
 
@@ -31,35 +33,30 @@ const columns = [
   { id: "del", Width: 200, align: "center" },
 ];
 
-function createData(DOC, view, upld, del) {
-  return { DOC, view, upld, del };
-}
-
-const rows = [
-  createData(
-    "Agreement",
-    <Button variant="contained">View</Button>,
-    <Button variant="contained">Upload</Button>,
-    <Button variant="contained">Delete</Button>
-  ),
-  createData(
-    "Bank Garantee",
-    <Button variant="contained">View</Button>,
-    <Button variant="contained">Upload</Button>,
-    <Button variant="contained">Delete</Button>
-  ),
-  createData(
-    "Bond",
-    <Button variant="contained">View</Button>,
-    <Button variant="contained">Upload</Button>,
-    <Button variant="contained">Delete</Button>
-  ),
-];
 
 
 
 function BidVerificationSubmit() {
   const {poId} =useParams();
+  const [data,setData]= useState(null);
+
+  useEffect(() => {
+    const fetchdata = async () => {
+      try {
+        const response = await GetPODetailsbyId(poId);
+        const data = response;
+        console.log(data);
+        setData(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchdata();
+  }, []);
+  if (data === null) {
+    return <p></p>;
+  }
+
   return (
     <div style={{ overflowX: "hidden" }}>
       <Container
@@ -97,7 +94,7 @@ function BidVerificationSubmit() {
               },
               alignItems: "left",
               borderRadius: "20px",
-              width: 700,
+              width: 400,
               backgroundColor: "#205295",
               mt:3,
               mb:3,
@@ -105,8 +102,8 @@ function BidVerificationSubmit() {
             }}
           >
             <Typography sx={{color:'white',mt:2,mb:1,ml:3}}>Purchase Order Id : {poId}</Typography>
-            <Typography sx={{color:'white',mt:1,mb:1,ml:3}}>Date : </Typography>
-            <Typography sx={{color:'white',mb:2,mt:1,ml:3}}>Total Value :</Typography>
+            <Typography sx={{color:'white',mt:1,mb:1,ml:3}}>Date : {DateFormat(data.date)}</Typography>
+            <Typography sx={{color:'white',mb:2,mt:1,ml:3}}>Total Value : {MoneyFormat(data.totalAmount)}</Typography>
           </Paper>
         </div>
 

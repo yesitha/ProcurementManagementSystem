@@ -26,3 +26,17 @@ export const GetApprovedItemsDetailsvendorId = async (vendorId) => {
       throw error;
     }
   }; 
+
+  export const GetPODetailsbyId = async (poId) => {
+    try {
+      console.log();
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_HOST}/api/Vendor/GetPOVendorDetails/${poId}`
+      );
+      console.log(response);
+      return response.data;  
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
