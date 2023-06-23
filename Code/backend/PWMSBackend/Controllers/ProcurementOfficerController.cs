@@ -18,13 +18,14 @@ namespace PWMSBackend.Controllers
         private readonly IMapper _mapper;
         private CommitteeIdGenerator _committeeIdGenerator;
         private POIdGenerator _poIdGenerator;
-
-        public ProcurementOfficerController(DataContext context, IMapper mapper, CommitteeIdGenerator committeeIdGenerator, POIdGenerator poIdGenerator)
+        private GRNIdGenerator _grnIdGenerator;
+        public ProcurementOfficerController(DataContext context, IMapper mapper, CommitteeIdGenerator committeeIdGenerator, POIdGenerator poIdGenerator, GRNIdGenerator gRNIdGenerator)
         {
             _context = context;
             _mapper = mapper;
             _committeeIdGenerator = committeeIdGenerator;
             _poIdGenerator = poIdGenerator;
+            _grnIdGenerator = gRNIdGenerator;
         }
 
         //Master Procurement Plan page Controllers (1-GET 2-POST)
@@ -1016,6 +1017,257 @@ namespace PWMSBackend.Controllers
             _context.SaveChanges();
 
             return Ok("Procurement Officer Status updated successfully");
-        }   
+        }
+
+        // Create GRN
+
+        [HttpGet("GetPOItemDetailsForGRN/{PoId}")]
+        public IActionResult GetPOItemDetailsForGRN(string PoId)
+        {
+            var mppId = _context.PurchaseOrders
+                .Where(po => po.PoId == PoId)
+                .Select(po => po.MppId)
+                .FirstOrDefault();
+
+            var vendorId = _context.PurchaseOrders
+                .Where(po => po.PoId == PoId)
+                .Select(po => po.VendorId)
+                .FirstOrDefault();
+
+            var itemList = _context.MasterProcurementPlans
+                .Where(mpp => mpp.MppId == mppId)
+                .SelectMany(mpp => mpp.SubProcurementPlans)
+                .SelectMany(spp => spp.subProcurementPlanItems)
+                .Where(item => item.ProcuremnetCommitteeStatus == "approve" && item.DGStatus == "approve"
+                                && item.SelectedVendor == _context.Vendors
+                                                                .Where(v => v.VendorId == vendorId)
+                                                                .Select(v => v.FirstName + " " + v.LastName)
+                                                                .FirstOrDefault())
+                .GroupBy(item => item.ItemId)
+                .Select(group => new
+                {
+                    ItemId = group.Key,
+                    ItemName = group.First().Item.ItemName,
+                    OrderedQuantity = group.Sum(item => item.Quantity)
+                })
+                .ToList();
+
+            var itemList1= _context.PurchaseOrder_ItemTobeShippeds
+                .Where(Ok => Ok.PoId == PoId)
+                .Select(Ok => new
+                {
+                    Ok.ItemId,
+                    Ok.Shipped_Qty
+                })
+                .ToList();
+
+            var combinedList = itemList.Join(itemList1,
+               item => item.ItemId,
+               item1 => item1.ItemId,
+               (item, item1) => new
+               {
+                    item.ItemId,
+                    item.ItemName,
+                    item.OrderedQuantity,
+                    item1.Shipped_Qty
+                })
+                .ToList();
+
+            return Ok(combinedList);
+        }
+
+        public class GRNItemInput
+        {
+            public string ItemId { get; set; }
+            public int ReceivedQty { get; set; }
+        }
+
+
+        [HttpPost("CreateGRN")]
+        public IActionResult CreateGRN(string poId, List<GRNItemInput> items)
+        {
+            //Generate GRN ID
+            string grnId = _grnIdGenerator.GenerateGRNId();
+
+            // Create the GRN record
+            var grn = new GRN
+            {
+                GrnId = grnId,
+                PoId = poId,
+                GRNItemTobeShippeds = new List<GRNItemTobeShipped>()
+            };
+
+            // Create GRNItemTobeShipped records for each item
+            foreach (var item in items)
+            {
+                // Check if a GRNItemTobeShipped record with the same grnId and itemId already exists
+                bool isDuplicate = _context.GRNItemsToBeShipped
+                    .Any(g => g.GrnId == grnId && g.ItemId == item.ItemId);
+
+                if (!isDuplicate)
+                {
+                    var grnItem = new GRNItemTobeShipped
+                    {
+                        GrnId = grnId,
+                        ItemId = item.ItemId,
+                        GRN = grn,
+                        Received_Qty = item.ReceivedQty
+                    };
+
+                    grn.GRNItemTobeShippeds.Add(grnItem);
+                }
+            }
+
+            // Save the GRN and associated GRNItemTobeShipped records to the database
+            _context.GRNs.Add(grn);
+            _context.SaveChanges();
+
+            return Ok(grn.GrnId);
+        }
+
+        [HttpGet("GetGRNItemDetails/{PoId}")]
+        public IActionResult GetGRNItemDetails(string PoId,string grnId)
+        {
+            var mppId = _context.PurchaseOrders
+                .Where(po => po.PoId == PoId)
+                .Select(po => po.MppId)
+                .FirstOrDefault();
+
+            var vendorId = _context.PurchaseOrders
+                .Where(po => po.PoId == PoId)
+                .Select(po => po.VendorId)
+                .FirstOrDefault();
+
+            var itemList = _context.MasterProcurementPlans
+                .Where(mpp => mpp.MppId == mppId)
+                .SelectMany(mpp => mpp.SubProcurementPlans)
+                .SelectMany(spp => spp.subProcurementPlanItems)
+                .Where(item => item.ProcuremnetCommitteeStatus == "approve" && item.DGStatus == "approve"
+                                && item.SelectedVendor == _context.Vendors
+                                                                .Where(v => v.VendorId == vendorId)
+                                                                .Select(v => v.FirstName + " " + v.LastName)
+                                                                .FirstOrDefault())
+                .GroupBy(item => item.ItemId)
+                .Select(group => new
+                {
+                    ItemId = group.Key,
+                    ItemName = group.First().Item.ItemName,
+                    OrderedQuantity = group.Sum(item => item.Quantity)
+                })
+                .ToList();
+
+            var itemList1 = _context.PurchaseOrder_ItemTobeShippeds
+                .Where(Ok => Ok.PoId == PoId)
+                .Select(Ok => new
+                {
+                    Ok.ItemId,
+                    Ok.Shipped_Qty
+                })
+                .ToList();
+
+            var itemList2 = _context.GRNItemsToBeShipped
+                .Where(Ok => Ok.GrnId == grnId)
+                .Select(Ok => new
+                {
+                    Ok.ItemId,
+                    Ok.Received_Qty
+                })
+                .ToList();
+
+            var combinedList = itemList.Join(itemList1,
+              item => item.ItemId,
+              item1 => item1.ItemId,
+              (item, item1) => new
+              {
+                   item.ItemId,
+                   item.ItemName,
+                   item.OrderedQuantity,
+                   item1.Shipped_Qty
+               })
+                .Join(itemList2,
+                item => item.ItemId,
+                item2 => item2.ItemId,
+                (item, item2) => new
+               {
+                   item.ItemId,
+                   item.ItemName,
+                   item.OrderedQuantity,
+                   item.Shipped_Qty,
+                   item2.Received_Qty
+               })
+                .ToList();
+
+            var vendorName = _context.PurchaseOrders
+                .Where(po => po.PoId == PoId)
+                .Select(po => po.Vendor.FirstName + " " + po.Vendor.LastName)
+                .FirstOrDefault();
+
+            var shippingDate = _context.GRNItemsToBeShipped
+                .Where(grn => grn.GrnId == grnId)
+                .Select(grn => grn.ShippingDate)
+                .FirstOrDefault();
+
+            return Ok(new { combinedList, vendorName, shippingDate });
+        }
+
+        public class GRNItemComment
+        {
+            public string ItemId { get; set; }
+            public string GRNComment { get; set; }
+        }
+
+
+
+        [HttpPut("UpdateGRNItemComment/{grnId}")]
+        public IActionResult UpdateGRNItemComment(string grnId, List<GRNItemComment> inputs)
+        {
+            // Find the GRN record by the provided grnId
+            var grn = _context.GRNs.FirstOrDefault(g => g.GrnId == grnId);
+
+            if (grn == null)
+            {
+                return NotFound("GRN not found.");
+            }
+
+            foreach (var input in inputs)
+            {
+                // Find the GRNItemTobeShipped record by the provided grnId and itemId
+                var grnItem = _context.GRNItemsToBeShipped.FirstOrDefault(gi => gi.GrnId == grnId && gi.ItemId == input.ItemId);
+
+                if (grnItem != null)
+                {
+                    // Update the GRNItemTobeShipped properties
+                    grnItem.GRNComment = input.GRNComment;
+                }
+            }
+
+            // Save the changes to the database
+            _context.SaveChanges();
+
+            return Ok("GRN items comment updated successfully.");
+        }
+
+        [HttpPut("UpdateGRNCheckedBy/{grnId}")]
+        public IActionResult UpdateGRNCheckedBy(string grnId, string checkedBy)
+        {
+            // Find the GRN record by the provided grnId
+            var grn = _context.GRNs.FirstOrDefault(g => g.GrnId == grnId);
+
+            if (grn == null)
+            {
+                return NotFound("GRN not found.");
+            }
+
+            // Update the GRN properties
+            grn.Checkedby = checkedBy;
+            grn.Date = DateTime.Now;
+
+            // Save the changes to the database
+            _context.SaveChanges();
+
+            return Ok("GRN checkedBy updated successfully.");
+        }
+
+
     }
 }
