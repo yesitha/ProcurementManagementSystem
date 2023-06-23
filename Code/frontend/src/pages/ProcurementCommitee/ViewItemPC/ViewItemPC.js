@@ -210,7 +210,7 @@ function ViewItemPC() {
                             {row.tecCommitteeStatus}
                           </TableCell>
                           <TableCell align="center">
-                            {<EvidenceOfAthorization />}
+                          {<EvidenceOfAthorization sppId={row.sppId} itemId={itemId}/>}
                           </TableCell>
                           <TableCell align="center">
                             {

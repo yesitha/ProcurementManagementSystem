@@ -56,11 +56,12 @@ const rows = [
   ),
 ];
 
-function BidVerificationSubmit() {
 
+
+function BidVerificationSubmit() {
+  const {poId} =useParams();
   return (
     <div style={{ overflowX: "hidden" }}>
-     
       <Container
         className={styles.main}
         sx={{
@@ -71,14 +72,14 @@ function BidVerificationSubmit() {
       >
         <div className={styles.upperSection}>
           <div className={styles.TenderDetailsPageContainer__header}>
-          <Routerlink to={-1}>
-            <IconButton
-              sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
-            >
-              <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
-            </IconButton>
+            <Routerlink to={-1}>
+              <IconButton
+                sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
+              >
+                <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
+              </IconButton>
             </Routerlink>
-            <h1 className={styles.Header}>Bid Verification Submit</h1>
+            <h1 className={styles.Header}>Purchase Order Verification Submit</h1>
           </div>
         </div>
 
@@ -96,46 +97,16 @@ function BidVerificationSubmit() {
               },
               alignItems: "left",
               borderRadius: "20px",
-              width:700,
+              width: 700,
+              backgroundColor: "#205295",
+              mt:3,
+              mb:3,
+              
             }}
           >
-            SPECIFICATION
-            <TextField
-              id="specification"
-              multiline
-              rows={4}
-              sx={{ width: 500 }}
-            />
-            ITEM NAME
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="duedate"
-              name="duedate"
-              size="small"
-              sx={{ width: 300 }}
-            />
-            QUANTITY
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="qty"
-              name="qty"
-              size="small"
-              sx={{ width: 300 }}
-            />
-            BID VALUE
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="bidvalue"
-              name="bidvalue"
-              size="small"
-              sx={{ width: 300 }}
-            />
+            <Typography sx={{color:'white',mt:2,mb:1,ml:3}}>Purchase Order Id : {poId}</Typography>
+            <Typography sx={{color:'white',mt:1,mb:1,ml:3}}>Date : </Typography>
+            <Typography sx={{color:'white',mb:2,mt:1,ml:3}}>Total Value :</Typography>
           </Paper>
         </div>
 
@@ -155,58 +126,48 @@ function BidVerificationSubmit() {
                 },
                 alignItems: "center",
                 borderRadius: "20px",
+                justifyContent:'center',
+                textAlign:'center',
+                alignItems:'center',
+                mt:3,
+                pt:3
               }}
             >
-              <TableContainer>
-                <Table
-                  stickyHeader
-                  aria-label="sticky table"
-                  sx={{
-                    [`& .${tableCellClasses.root}`]: { borderBottom: "none" },
-                  }}
-                >
-                  <TableRow>
-                    {columns.map((column) => (
-                      <TableCell
-                        key={column.id}
-                        align={column.align}
-                        style={{ maxWidth: column.Width }}
-                      >
-                        {column.label}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                  <TableBody>
-                    {rows.map((row) => {
-                      return (
-                        <TableRow
-                          hover
-                          role="checkbox"
-                          tabIndex={-1}
-                          key={row.code}
-                        >
-                          {columns.map((column) => {
-                            const value = row[column.id];
-                            return (
-                              <TableCell key={column.id} align={column.align}>
-                                {column.format && typeof value === "number"
-                                  ? column.format(value)
-                                  : value}
-                              </TableCell>
-                            );
-                          })}
-                        </TableRow>
-                      );
-                    })}
-                  </TableBody>
-                </Table>
-              </TableContainer>
+       <Container sx={{display:'flex',flexDirection:'row'}}>
+       <Container  sx={{display:'flex',flexDirection:'column',width:'320px',pl:'2'}}>
+        <Typography sx={{mt:1,mb:1,textAlign:'left',mb:1}}>Agreement :</Typography>
+        <Typography sx={{mt:1,mb:1,textAlign:'left',mb:1}}>Bank Guarantee :</Typography>
+        <Typography sx={{mt:1,mb:1,textAlign:'left',mb:1}}>Bond :</Typography>
+       </Container>
+      <Container sx={{display:'flex',flexDirection:'column'}}>
+        <Container sx={{display:'flex',flexDirection:'row',justifyContent:'space-between',mb:1}}>
+          <Button sx={{color:'white',backgroundColor:'#205295'}}>Download</Button>
+          <Button sx={{color:'white',backgroundColor:'#205295'}}>Upload</Button>
+          <Button sx={{color:'white',backgroundColor:'#205295'}}>Delete</Button>
+        </Container>
+        <Container sx={{display:'flex',flexDirection:'row',justifyContent:'space-between',mb:1}}>
+          <Button sx={{color:'white',backgroundColor:'#205295'}}>Download</Button>
+          <Button sx={{color:'white',backgroundColor:'#205295'}}>Upload</Button>
+          <Button sx={{color:'white',backgroundColor:'#205295'}}>Delete</Button>
+        </Container>
+        <Container sx={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
+          <Button sx={{color:'white',backgroundColor:'#205295'}}>Download</Button>
+          <Button sx={{color:'white',backgroundColor:'#205295'}}>Upload</Button>
+          <Button sx={{color:'white',backgroundColor:'#205295'}}>Delete</Button>
+        </Container>
+
+      </Container>
+
+       </Container>
+
+
+
             </Paper>
-            <Routerlink to={'/letter-of-acceptance'}>
-            <Button variant="contained" sx={{height:50}}>
-               Next
-             </Button>
-             </Routerlink>
+            <Routerlink to={"/letter-of-acceptance"}>
+              <Button variant="contained" sx={{ mt: 15 ,backgroundColor:'#205295' ,height:50,width:150 }}>
+                Next
+              </Button>
+            </Routerlink>
           </div>
         </div>
       </Container>

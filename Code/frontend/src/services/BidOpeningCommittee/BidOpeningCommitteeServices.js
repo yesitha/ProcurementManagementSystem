@@ -1,11 +1,11 @@
 import axios from "axios";
 
-export const GetSubProcurementApprovedItems = async () => {
+export const GetSubProcurementApprovedItems = async (employeeId) => {
   try {
     const response = await axios.get(
-      `${process.env.REACT_APP_API_HOST}/api/BidOpeningCommittee/GetSubProcurementApprovedItems`
+      `${process.env.REACT_APP_API_HOST}/api/BidOpeningCommittee/GetSubProcurementApprovedItems/${employeeId}`
     );
-    // console.log(response);
+     console.log(response);
     return response.data;
   } catch (error) {
     console.log(error);

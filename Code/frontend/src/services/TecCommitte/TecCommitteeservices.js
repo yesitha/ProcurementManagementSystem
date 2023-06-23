@@ -1,9 +1,9 @@
 import axios from "axios";
 
-export const GetMasterProcurementPlan = async () => {
+export const GetMasterProcurementPlan = async (userId) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_HOST}/api/TECCommittee/GetMasterProcurementPlans`
+        `${process.env.REACT_APP_API_HOST}/api/TECCommittee/GetMasterProcurementPlans/${userId}`
       );
       console.log(response);
       return response.data;

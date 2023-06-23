@@ -18,6 +18,8 @@ import {
   UpdateAuctionDates,
 } from "../../../services/BidOpeningCommittee/BidOpeningCommitteeServices";
 
+
+const emplyoeeId ='ZAC43913'; //This need to get from login
 const columns = [
   { id: "ItemID", label: "Item ID", width: 300, align: "center" },
   { id: "ItemName", label: "Item Name", width: 300, align: "center" },
@@ -37,7 +39,7 @@ function ManageAuction() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await GetSubProcurementApprovedItems();
+        const response = await GetSubProcurementApprovedItems(emplyoeeId);
         const data = response;
         // console.log(data);
         setData(data);

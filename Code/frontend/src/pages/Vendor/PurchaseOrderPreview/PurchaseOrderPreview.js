@@ -33,6 +33,8 @@ const rows = [
     createData("I0055", "Sticky Notes", "Yellow", "300", "2", 600),
 ];
 
+const poId ='BAS95814';
+
 function PurchaseOrderPreview() {
  
 
@@ -63,7 +65,7 @@ function PurchaseOrderPreview() {
               </div>
               <Typography style={{ marginLeft: "35px" }}>
                Date:[17/12/2023]<br/>
-               PO# :[2314]
+               PO# :{poId}
               </Typography>
             </div>
             <Typography className={styles.tag}>
@@ -183,7 +185,7 @@ function PurchaseOrderPreview() {
           </center>
           <div className={styles.btn}>
             <Button variant="contained">PRINT</Button>
-            <Routerlink to={'/bid-verification-submit'}>
+            <Routerlink to={`/po-verification-submit/${poId}`}>
             <Button variant="contained" style={{ marginLeft: 40 }}>
              NEXT
             </Button>
