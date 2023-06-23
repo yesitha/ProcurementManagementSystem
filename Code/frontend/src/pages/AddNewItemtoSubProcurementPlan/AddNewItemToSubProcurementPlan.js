@@ -42,17 +42,34 @@ function AddNewItemtoSubProcurementPlan() {
     }, []);
 
     const [categoryList, setCategoryList] = useState([]);
-    const [selectedCategoryId, setSelectedCategoryId] = useState('');
+    const [selectedCategoryName, setSelectedCategoryName] = useState('');
+    const [categoryId, setCategoryId] = useState('');
 
     const handleCategoryIdChange = (event) => {
-        setSelectedCategoryId(event.target.value);
+        setSelectedCategoryName(event.target.value);
         console.log(event.target.value);
+        
     };
 
     const onSubmit = async () => {
         const data = getValues();
+        handleSearch();
+        console.log(categoryId);
+        addNewItemDb(data.itemName,data.itemSpecification,categoryId)
         console.log(data);
     };
+
+    const handleSearch = () => {
+        const category = categoryList.find(
+          (category) => category.categoryName === selectedCategoryName
+        );
+    
+        if (category) {
+          setCategoryId(category.categoryId);
+        } else {
+          console.log('Category not found.');
+        }
+      };
 
     return (
         <div style={{display: 'flex', overflow: 'hidden'}}>
@@ -84,7 +101,7 @@ function AddNewItemtoSubProcurementPlan() {
                                     <Typography>Category</Typography>
                                     <SelectDropDown
                                         list={categoryList.map((category) => category.categoryName)}
-                                        value={selectedCategoryId}
+                                        value={selectedCategoryName}
                                         onChange={handleCategoryIdChange}
                                     />
                                     <TextField
