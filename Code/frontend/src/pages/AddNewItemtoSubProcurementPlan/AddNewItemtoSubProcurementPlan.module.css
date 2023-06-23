@@ -1,56 +1,45 @@
-.sideNavBar {
-  display: flexbox;
-  z-index: 3;
-  overflow: "hidden";
-  height: 100%;
-}
+
 .headTitle {
-  display: flex;
-  flex-direction: row;
+    display: flex;
+    flex-direction: row;
 }
+
 .headTitleName {
-  font-family: "Inter", sans-serif;
-  font-weight: 500;
-  color: #ffffff;
-  font-size: 36px;
-  position: relative;
-  margin-right: 10vw;
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    color: #ffffff;
+    font-size: 36px;
+    position: relative;
+    margin-right: 10vw;
 }
 
 .bodyBlueContainer {
-  font-family: "Inter", sans-serif;
-  font-weight: 500;
-  color: #ffffff;
-  font-size: 15px;
-  background-color: #205295;
-  border-radius: 5px;
-  padding: 2px;
-  width: fit-content;
-  margin-top: 10px;
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    color: #ffffff;
+    font-size: 15px;
+    background-color: #205295;
+    border-radius: 5px;
+    padding: 2px;
+    width: fit-content;
+    margin-top: 10px;
 }
 
 .bodyContainer {
-  justify-content: flex-start;
-  display: flex;
-  flex-wrap: wrap;
-  align-content: flex-start;
-}
-.bodyLeft {
-  max-width: 400px;
-  margin-right: 10px;
-}
+    flex-grow: 4;
 
-.bodyRight {
-  max-width: 400px;
-  margin-right: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    margin: 20px
 }
 
 .addButton {
-  margin-top: 13px;
-  margin-bottom: 13px;
+    margin-top: 10px;
+    position: relative;
 }
 
 .entireBody {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: row;
 }
