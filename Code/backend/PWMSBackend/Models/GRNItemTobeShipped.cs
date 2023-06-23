@@ -5,7 +5,7 @@
         public string GrnId { get; set; }
         public string ItemId { get; set; }
 
-        public DateTime ShippingDate { get; set; }
+        public DateTime? ShippingDate { get; set; }
 
         public GRN GRN { get; set; }
 
