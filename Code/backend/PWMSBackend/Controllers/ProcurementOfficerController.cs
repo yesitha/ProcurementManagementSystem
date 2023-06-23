@@ -1094,6 +1094,7 @@ namespace PWMSBackend.Controllers
             {
                 GrnId = grnId,
                 PoId = poId,
+                Date = DateTime.Now,
                 GRNItemTobeShippeds = new List<GRNItemTobeShipped>()
             };
 
@@ -1125,7 +1126,7 @@ namespace PWMSBackend.Controllers
             return Ok(grn.GrnId);
         }
 
-        [HttpGet("GetGRNItemDetails/{PoId}")]
+        [HttpGet("GetGRNItemDetails/{PoId}/{grnId}")]
         public IActionResult GetGRNItemDetails(string PoId,string grnId)
         {
             var mppId = _context.PurchaseOrders
@@ -1218,8 +1219,8 @@ namespace PWMSBackend.Controllers
 
 
 
-        [HttpPut("UpdateGRNItemComment/{grnId}")]
-        public IActionResult UpdateGRNItemComment(string grnId, List<GRNItemComment> inputs)
+        [HttpPut("UpdateGRNItemCommentAndCheckedBy/{grnId}")]
+        public IActionResult UpdateGRNItemCommentAndCheckedBy(string grnId, List<GRNItemComment> inputs,string checkedBy)
         {
             // Find the GRN record by the provided grnId
             var grn = _context.GRNs.FirstOrDefault(g => g.GrnId == grnId);
@@ -1228,6 +1229,12 @@ namespace PWMSBackend.Controllers
             {
                 return NotFound("GRN not found.");
             }
+
+            // Update the GRN properties
+            grn.Checkedby = checkedBy;
+
+            // Save the changes to the database
+            _context.SaveChanges();
 
             foreach (var input in inputs)
             {
@@ -1244,30 +1251,8 @@ namespace PWMSBackend.Controllers
             // Save the changes to the database
             _context.SaveChanges();
 
-            return Ok("GRN items comment updated successfully.");
+            return Ok("GRN checkedBy and GRN items comment updated successfully.");
         }
-
-        [HttpPut("UpdateGRNCheckedBy/{grnId}")]
-        public IActionResult UpdateGRNCheckedBy(string grnId, string checkedBy)
-        {
-            // Find the GRN record by the provided grnId
-            var grn = _context.GRNs.FirstOrDefault(g => g.GrnId == grnId);
-
-            if (grn == null)
-            {
-                return NotFound("GRN not found.");
-            }
-
-            // Update the GRN properties
-            grn.Checkedby = checkedBy;
-            grn.Date = DateTime.Now;
-
-            // Save the changes to the database
-            _context.SaveChanges();
-
-            return Ok("GRN checkedBy updated successfully.");
-        }
-
 
     }
 }

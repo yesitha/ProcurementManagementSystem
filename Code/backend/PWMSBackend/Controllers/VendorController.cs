@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PWMSBackend.Data;
 using PWMSBackend.Models;
+using System.Linq;
 
 namespace PWMSBackend.Controllers
 {
@@ -356,12 +357,17 @@ namespace PWMSBackend.Controllers
             return Ok(poVendorDetails);
         }
 
-        [HttpGet("GetPOItemDetails/{PoId}/{vendorId}")]
-        public IActionResult GetPOItemDetails(string PoId, string vendorId)
+        [HttpGet("GetPOItemDetails/{PoId}")]
+        public IActionResult GetPOItemDetails(string PoId)
         {
             var mppId = _context.PurchaseOrders
                 .Where(po => po.PoId == PoId)
                 .Select(po => po.MppId)
+                .FirstOrDefault();
+
+            var vendorId = _context.PurchaseOrders
+                .Where(po => po.PoId == PoId)
+                .Select(po => po.VendorId)
                 .FirstOrDefault();
 
             var itemList = _context.MasterProcurementPlans
@@ -557,6 +563,127 @@ namespace PWMSBackend.Controllers
             }
 
             return Ok("PurchaseOrderItemsToBeShipped records created successfully.");
+        }
+
+        // View GRN page controller
+
+        [HttpGet("GetGRNIdListByVendorId/{vendorId}")]
+        public IActionResult GetGRNIdListByVendorId(string vendorId)
+        {
+            var poIdList = _context.PurchaseOrders
+                .Where(po => po.VendorId == vendorId)
+                .Select(po => new
+                {
+                    po.PoId
+                })
+                .ToList();
+
+            var grnList = _context.GRNs
+                .Select(grn => new
+                {
+                    grn.GrnId,
+                    grn.PoId,
+                    grn.Date
+                })
+                .ToList();
+
+            var combinedList = (from poId in poIdList
+                                join grn in grnList on poId.PoId equals grn.PoId
+                                select new
+                                {
+                                    GrnId = grn.GrnId,
+                                    PoId = grn.PoId,
+                                    Date = grn.Date
+                                })
+                     .ToList();
+
+
+            return Ok(combinedList);
+        }
+
+        [HttpGet("GetGRNItemDetails/{PoId}/{grnId}")]
+        public IActionResult GetGRNItemDetails(string PoId, string grnId)
+        {
+            var mppId = _context.PurchaseOrders
+                .Where(po => po.PoId == PoId)
+                .Select(po => po.MppId)
+                .FirstOrDefault();
+
+            var vendorId = _context.PurchaseOrders
+                .Where(po => po.PoId == PoId)
+                .Select(po => po.VendorId)
+                .FirstOrDefault();
+
+            var itemList = _context.MasterProcurementPlans
+                .Where(mpp => mpp.MppId == mppId)
+                .SelectMany(mpp => mpp.SubProcurementPlans)
+                .SelectMany(spp => spp.subProcurementPlanItems)
+                .Where(item => item.ProcuremnetCommitteeStatus == "approve" && item.DGStatus == "approve"
+                                && item.SelectedVendor == _context.Vendors
+                                                                .Where(v => v.VendorId == vendorId)
+                                                                .Select(v => v.FirstName + " " + v.LastName)
+                                                                .FirstOrDefault())
+                .GroupBy(item => item.ItemId)
+                .Select(group => new
+                {
+                    ItemId = group.Key,
+                    ItemName = group.First().Item.ItemName,
+                    OrderedQuantity = group.Sum(item => item.Quantity)
+                })
+                .ToList();
+
+            var itemList1 = _context.PurchaseOrder_ItemTobeShippeds
+                .Where(Ok => Ok.PoId == PoId)
+                .Select(Ok => new
+                {
+                    Ok.ItemId,
+                    Ok.Shipped_Qty
+                })
+                .ToList();
+
+            var itemList2 = _context.GRNItemsToBeShipped
+                .Where(Ok => Ok.GrnId == grnId)
+                .Select(Ok => new
+                {
+                    Ok.ItemId,
+                    Ok.Received_Qty
+                })
+                .ToList();
+
+            var combinedList = itemList.Join(itemList1,
+              item => item.ItemId,
+              item1 => item1.ItemId,
+              (item, item1) => new
+              {
+                  item.ItemId,
+                  item.ItemName,
+                  item.OrderedQuantity,
+                  item1.Shipped_Qty
+              })
+                .Join(itemList2,
+                item => item.ItemId,
+                item2 => item2.ItemId,
+                (item, item2) => new
+                {
+                    item.ItemId,
+                    item.ItemName,
+                    item.OrderedQuantity,
+                    item.Shipped_Qty,
+                    item2.Received_Qty
+                })
+                .ToList();
+
+            var vendorName = _context.PurchaseOrders
+                .Where(po => po.PoId == PoId)
+                .Select(po => po.Vendor.FirstName + " " + po.Vendor.LastName)
+                .FirstOrDefault();
+
+            var shippingDate = _context.GRNItemsToBeShipped
+                .Where(grn => grn.GrnId == grnId)
+                .Select(grn => grn.ShippingDate)
+                .FirstOrDefault();
+
+            return Ok(new { combinedList, vendorName, shippingDate });
         }
 
     }
