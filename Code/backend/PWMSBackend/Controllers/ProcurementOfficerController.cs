@@ -977,5 +977,45 @@ namespace PWMSBackend.Controllers
 
             return Ok("Add comment successfully");
         }
+
+        //Evaluate vendor finance state page 
+
+        [HttpGet("GetVendorFinanceStatedetails")]
+        public IActionResult GetVendorFinanceStatedetails()
+        {
+            var vendorFinanceStateDetails = _context.PurchaseOrders
+                .Where(po => po.ProcumentOfficerStatus != null)
+                .Select(v => new
+                {
+                    v.PoId,
+                    v.VendorId,
+                    v.Agreement,
+                    v.Bond,
+                    v.BankGuarantee
+                }) 
+                .ToList();
+
+            return Ok(vendorFinanceStateDetails);
+                
+        }
+
+        [HttpPut("UpdateProcurementOfficerStatus/{vendorId}/{PoId}")]
+        public IActionResult UpdateProcurementOfficerStatus(string vendorId, string PoId, string status)
+        {
+            var po = _context.PurchaseOrders
+                .Where(po => po.PoId == PoId && po.VendorId == vendorId)
+                .FirstOrDefault();
+
+            if (po == null)
+            {
+                return BadRequest("PO not found");
+            }
+
+            po.ProcumentOfficerStatus = status;
+
+            _context.SaveChanges();
+
+            return Ok("Procurement Officer Status updated successfully");
+        }   
     }
 }
