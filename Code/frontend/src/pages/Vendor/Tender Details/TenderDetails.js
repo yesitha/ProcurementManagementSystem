@@ -21,6 +21,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Link as Routerlink } from "react-router-dom";
+import { GetApprovedItemDetailsitemId } from "../../../services/Vendor/Vendorservices";
 
 ///////////////Add axios/////////////
 
@@ -58,7 +59,25 @@ const rows = [
 
 function TenderDetails() {
 
-  const { itemId } = useParams();
+  const {itemId} = useParams();
+  const[data,setData]=useState(null);
+
+  useEffect(()=>{
+    const fetchData = async () => {
+      try {
+        const response = await GetApprovedItemDetailsitemId(itemId);
+        const data=response;
+        setData(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, [] );
+
+  if (data === null) {
+    return <p style={{marginLeft:"20px"}}>Loading...</p>;
+  }
 
   return (
     <div style={{ overflowX: "hidden" }}>
@@ -103,49 +122,70 @@ function TenderDetails() {
           >
             SPECIFICATION
             <TextField
-              id="specification"
-              multiline
-              rows={4}
-              sx={{ width: 500 }}
-            />
-            DUE DATE
+                    margin="normal"
+                    rows={8}
+                    multiline
+                    id="specification"
+                    name="specification"
+                    autoFocus
+                    InputLabelProps={{ shrink: true }}
+                    InputProps={{
+                      readOnly: true,
+                      disableUnderline: true,
+                      style: { padding: '10px', borderRadius: '4px' ,maxWidth: 500}
+                    }}
+                    value={data.specification}
+                  />
+
+            EXPECTED DELIVERY DATE
             <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="duedate"
-              name="duedate"
-              size="small"
-              sx={{ width: 300 }}
-            />
+                    margin="normal"
+                    fullWidth
+                    id="exdate"
+                    name="exdate"
+                    autoFocus
+                    InputLabelProps={{ shrink: true }}
+                    InputProps={{
+                      readOnly: true,
+                      disableUnderline: true,
+                      style: { padding: '10px', borderRadius: '4px',height:56 , width: 300}
+                    }}
+                    value={data.itemName}
+                  />
             QUANTITY
             <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="qty"
-              name="qty"
-              size="small"
-              sx={{ width: 300 }}
-            />
+                    margin="normal"
+                    fullWidth
+                    size="medium"
+                    id="qty"
+                    name="qty"
+                    autoFocus
+                    InputLabelProps={{ shrink: true }}
+                    InputProps={{
+                      readOnly: true,
+                      disableUnderline: true,
+                      style: { padding: '10px', borderRadius: '4px' ,height:56 ,width:300}
+                    }}
+                    value={data.itemName}
+                  />
             BID VALUE
             <TextField
               margin="normal"
               required
               fullWidth
+              size="medium"
               id="bidvalue"
               name="bidvalue"
-              size="small"
               sx={{ width: 300 }}
             />
-            TENDER VALUE
+            TOTAL TENDER VALUE
             <TextField
               margin="normal"
               required
               fullWidth
               id="tendervalue"
               name="tendervalue"
-              size="small"
+              size="medium"
               sx={{ width: 300 }}
             />
           </Paper>

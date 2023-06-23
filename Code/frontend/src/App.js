@@ -262,7 +262,7 @@ function App() {
 
           {/* Vendor */}
           <Route path="/BidTender" element={<BidTender />} />
-          <Route path="/tender-details" element={<TenderDetails />} />
+          <Route path="/tender-details/:itemId" element={<TenderDetails />} />
           <Route path="/BidHistory" element={<BidHistory />} />
           <Route
             path="/bid-verification-submit"
