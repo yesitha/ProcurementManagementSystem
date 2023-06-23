@@ -152,68 +152,9 @@ function TenderDetails() {
         </div>
 
         <div className={styles.downSection}>
-          <h3 className={styles.header2}>Upload Required Document</h3>
+          <h3 className={styles.header2}></h3>
           <div className={styles.tableNbutton}>
-            <Paper
-              className={styles.DownContainer}
-              elevation={6}
-              sx={{
-                mr: {
-                  xs: "60px",
-                  sm: "65px",
-                  md: "65px",
-                  lg: "68px",
-                  xl: "70px",
-                },
-                alignItems: "center",
-                borderRadius: "20px",
-              }}
-            >
-              <TableContainer>
-                <Table
-                  stickyHeader
-                  aria-label="sticky table"
-                  sx={{
-                    [`& .${tableCellClasses.root}`]: { borderBottom: "none" },
-                  }}
-                >
-                  <TableRow>
-                    {columns.map((column) => (
-                      <TableCell
-                        key={column.id}
-                        align={column.align}
-                        style={{ maxWidth: column.Width }}
-                      >
-                        {column.label}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                  <TableBody>
-                    {rows.map((row) => {
-                      return (
-                        <TableRow
-                          hover
-                          role="checkbox"
-                          tabIndex={-1}
-                          key={row.code}
-                        >
-                          {columns.map((column) => {
-                            const value = row[column.id];
-                            return (
-                              <TableCell key={column.id} align={column.align}>
-                                {column.format && typeof value === "number"
-                                  ? column.format(value)
-                                  : value}
-                              </TableCell>
-                            );
-                          })}
-                        </TableRow>
-                      );
-                    })}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </Paper>
+            
             <Routerlink to={-1}>
             <Button
               variant="contained"

@@ -71,7 +71,7 @@ import MasterProcurementPlanTEC from "./pages/TEC Committee/MasterProcurementPla
 import ViewItemTEC from "./pages/TEC Committee/ViewItemTEC/ViewItemTEC";
 import ViewItemPC from "./pages/ProcurementCommitee/ViewItemPC/ViewItemPC";
 import ApprovalForMasterProcurementPlanPC from "./pages/ProcurementCommitee/ApprovalForMasterProcurementPlanPC/ApprovalForMasterProcurementPlanPC";
-import BidVerificationSubmit from "./pages/Vendor/Bid Verification Submit/BidVerificationSubmit";
+import POVerificationSubmit from "./pages/Vendor/POVerification Submit/POVerificationSubmit";
 import IssueItem from "./pages/InventoryManager/IssueItem/IssueItem";
 import AssetRegistry from "./pages/Assets Registry/AssetRegistry";
 import LetterofAcceptance from "./pages/Vendor/Letter of Acceptance/LetterofAcceptance";
@@ -265,8 +265,12 @@ function App() {
           <Route path="/tender-details" element={<TenderDetails />} />
           <Route path="/BidHistory" element={<BidHistory />} />
           <Route
-            path="/bid-verification-submit"
-            element={<BidVerificationSubmit />}
+            path="/po-verification-submit"
+            element={<POVerificationSubmit />}
+          />
+           <Route
+            path="/po-verification-submit/:poId"
+            element={<POVerificationSubmit />}
           />
           <Route path='/letter-of-acceptance' element={<LetterofAcceptance/>}/>
           <Route

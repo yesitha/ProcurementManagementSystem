@@ -9,7 +9,7 @@ const user = {
   email: "johndoe@gmail.com",
   designation: "Procurement Officer",
 
-  userType: "ProcurementCommittee",
+  userType: "Vendor",
 
 
   department: "Finance",
