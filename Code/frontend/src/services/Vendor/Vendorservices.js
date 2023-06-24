@@ -65,3 +65,40 @@ export const GetApprovedItemsDetailsvendorId = async (vendorId) => {
       throw error;
     }
   }
+
+  export const GetPurchaseOrdersByVendorId = async (vendorId) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_HOST}/api/Vendor/GetPurchaseOrdersByVendorId/LAH23201`
+      );
+      return response.data;  
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }; 
+
+  export const GetPOVendorDetails = async (poId) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_HOST}/api/Vendor/GetPOVendorDetails/${poId}`
+      );
+      return response.data;  
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }; 
+
+
+  export const GetPOItemDetailspoIdvendorId = async (poId,vendorId) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_HOST}/api/Vendor/GetPOItemDetails/${poId}/LAH23201`
+      );
+      return response.data;  
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }; 

@@ -1,6 +1,5 @@
-import React from "react";
+import React, {useState,useEffect} from "react";
 import styles from "./PurchaseOrderPreview.module.css";
-import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { Button, IconButton, Paper, TextField, Typography } from "@mui/material";
 import { Container } from "@mui/system";
@@ -10,7 +9,9 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Link as Routerlink } from "react-router-dom";
+import { Link as Routerlink, useParams } from "react-router-dom";
+import { GetPOItemDetailspoIdvendorId, GetPOVendorDetails } from "../../../services/Vendor/Vendorservices";
+import { DateFormat, MoneyFormat } from "../../../services/dataFormats";
 
 const columns = [
   { id: "ItemID", label: "Item ID", Width: 300, align: "center" },
@@ -33,15 +34,47 @@ const rows = [
     createData("I0055", "Sticky Notes", "Yellow", "300", "2", 600),
 ];
 
-const poId ='BAS95814';
-
 function PurchaseOrderPreview() {
- 
+  const {poId ,vendorId } = useParams();
+
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const fetchdata = async () => {
+      try {
+        const response = await GetPOVendorDetails(poId);
+        const data = response;
+        setData(data);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchdata();
+  }, []);
+
+  const [tabledata, settableData] = useState(null);
+
+  useEffect(() => {
+    const fetchdata = async () => {
+      try {
+        const response = await GetPOItemDetailspoIdvendorId(poId,vendorId);
+        const tabledata = response;
+        settableData(tabledata);
+        console.log(tabledata);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchdata();
+  }, []);
+
+  if (data===null) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div style={{ overflowX: "hidden" }}>
-      
-
       <Container
         className={styles.main}
         sx={{
@@ -64,8 +97,8 @@ function PurchaseOrderPreview() {
                 <h1 className={styles.Header}>Purchase Order</h1>
               </div>
               <Typography style={{ marginLeft: "35px" }}>
-               Date:[17/12/2023]<br/>
-               PO# :{poId}
+               Date  : {DateFormat(data.date)}<br/>
+               PO#   : {poId}
               </Typography>
             </div>
             <Typography className={styles.tag}>
@@ -75,21 +108,15 @@ function PurchaseOrderPreview() {
                 ST.MICHAEL'S ROAD,<br></br>
                 COLOMBO 03,<br></br>
                 SRI LANKA
-              {/* Date - [2023-05-10]<br></br>
-              Invoice - #00012<br></br>
-              Customer ID - <br></br>
-              Due Date - */}
             </Typography>
           </div>
           <div style={{ marginLeft: "35px" }}>
             <Typography className={styles.tag}>
-              <h1 className={styles.Header}>VENDOR</h1>
-              [Company Name]<br></br>
-              [Contact or Department]<br></br>
-              [Street Address]<br></br>
-              [City, ZIP Code]<br></br>
-              [Phone]<br></br>
-              [Tax]
+              <h1 className={styles.Header}>{data.vendorFullName}</h1>
+              {data.companyName}<br></br>
+              {data.address}<br></br>
+              {data.city}<br></br>
+              {data.contact}<br></br>
             </Typography>
           </div>
         </div>
@@ -126,27 +153,31 @@ function PurchaseOrderPreview() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows.map((row) => {
-                    return (
-                      <TableRow
-                        hover
-                        role="checkbox"
-                        tabIndex={-1}
-                        key={row.code}
-                      >
-                        {columns.map((column) => {
-                          const value = row[column.id];
-                          return (
-                            <TableCell key={column.id} align={column.align}>
-                              {column.format && typeof value === "number"
-                                ? column.format(value)
-                                : value}
-                            </TableCell>
-                          );
-                        })}
-                      </TableRow>
-                    );
-                  })}
+                  {tabledata.itemList &&
+                    tabledata.itemList
+                      .map((row, index) => (
+                        <TableRow
+                          hover
+                          role="checkbox"
+                          tabIndex={-1}
+                          key={index}
+                        >
+                          <TableCell align="center">{row.itemId}</TableCell>
+                          <TableCell align="center">{row.itemName}</TableCell>
+                          <TableCell align="center">
+                            {row.specifications}
+                          </TableCell>
+                          <TableCell align="center">
+                            {row.totalQuantity}
+                          </TableCell>
+                          <TableCell align="center">
+                            {MoneyFormat(row.bidValue)}
+                          </TableCell>
+                          <TableCell align="center">
+                            {MoneyFormat(row.bidValue*row.totalQuantity)}
+                          </TableCell>
+                        </TableRow>
+                      ))}
                 </TableBody>
               </Table>
             </TableContainer>
@@ -164,23 +195,24 @@ function PurchaseOrderPreview() {
             <Typography>
               <h4>Comments on Special Instructions</h4>
             </Typography>
-            <TextField sx={{backgroundColor:"white",borderRadius:"10px",width:"300px"}}/> 
+            <TextField sx={{backgroundColor:"white",borderRadius:"10px",width:"300px"}}
+            value={data.commentsForSpecialInstruction}>
+            </TextField> 
             </div>
-            <Typography>
-                
+            <Typography>   
               <h4>
                 Sub total<br></br>
                 Tax<br></br>
                 Shipping<br></br>
                 Other<br></br>
-                Total
+                Total - {MoneyFormat(data.totalAmount)}
               </h4>
             </Typography>
           </div>
           <center>
             <Typography>
               if you have any concern of this PO, please contact<br></br>
-              [Name, Phone, Email]<br></br>
+              {data.vendorFullName} Via {data.contact}<br></br>
             </Typography>
           </center>
           <div className={styles.btn}>
