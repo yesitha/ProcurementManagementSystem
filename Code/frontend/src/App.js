@@ -270,11 +270,11 @@ function App() {
           />
           <Route path="/letter-of-acceptance/:itemId" element={<LetterofAcceptance/>}/>
           <Route
-            path="/PurchaseOrder-vendor"
+            path="/PurchaseOrder-vendor/:vendorId"
             element={<PurchseOrdersVendor />}
           />
           <Route
-            path="/PurchaseOrder-vendor-view"
+            path="/PurchaseOrder-vendor-view/:poId"
             element={<PurchaseOrderPreview />}
           />
           <Route path="/VGoodReceiveNote" element={<ViewGRN />} />
@@ -289,7 +289,6 @@ function App() {
             path="/verification-statuses-evaluated"
             element={<BidHistory />}
           />
-          <Route path="/new-purchase-order" element={<PurchseOrdersVendor />} />
           <Route path="/new-grn" element={<ViewGRN />} />
           <Route path="/payment-received" element={<ViewInvoices />} />
 
