@@ -96,3 +96,36 @@ export const GetApprovedItemsDetailsvendorId = async (vendorId) => {
       console.log(error);
     }
   };
+
+
+  
+  export const GetLetterAcceptenceData= async (itemId,venderId) => {
+    try {
+      
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_HOST}/api/Vendor/GetLetterOfAcceptanceItemAndVendorDetails/${venderId}/${itemId}`
+      );
+      console.log(response);
+      return response.data;  
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+
+
+  export const updateLetterOfAcceptance = async (itemId, venderId, selectedFile) => {
+    try {
+      const data = new FormData();
+      data.append('letterOfAcceptance', selectedFile);
+      ;
+      
+      const response = await fetch(`${process.env.REACT_APP_API_HOST}api/Vendor/UpdateLetterOfAcceptance/${venderId}/${itemId}`, {
+        method: 'POST',
+        body: data,
+      });
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };

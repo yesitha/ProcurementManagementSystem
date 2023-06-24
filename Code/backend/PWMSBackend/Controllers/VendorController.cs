@@ -419,7 +419,7 @@ namespace PWMSBackend.Controllers
 
 
         [HttpPut("UpdateLetterOfAcceptance/{vendorId}/{itemId}")]
-        public IActionResult UpdateLetterOfAcceptance(string vendorId, string itemId, [FromBody] string letterOfAcceptance)
+        public IActionResult UpdateLetterOfAcceptance(string vendorId, string itemId, IFormFile letterOfAcceptance)
         {
             var vendorPlaceBidItem = _context.VendorPlaceBidItems
                 .FirstOrDefault(item => item.VendorId == vendorId && item.ItemId == itemId);
@@ -429,7 +429,21 @@ namespace PWMSBackend.Controllers
                 return NotFound();
             }
 
-            vendorPlaceBidItem.LetterOfAcceptance = letterOfAcceptance;
+            if (letterOfAcceptance != null)
+            {
+                // Generate a unique filename
+                string fileName = $"{itemId}_{vendorId}{Path.GetExtension(letterOfAcceptance.FileName)}";
+                string filePath = Path.Combine("Uploads/Letter_of_Acceptence", fileName); 
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    letterOfAcceptance.CopyTo(fileStream);
+                }
+
+                vendorPlaceBidItem.LetterOfAcceptance = filePath;
+            }
+
+           
             _context.SaveChanges();
 
             return Ok("Letter of Acceptance updated successfully.");
@@ -545,6 +559,10 @@ namespace PWMSBackend.Controllers
                 return BadRequest("No Such PO");
             }
         }
+
+
+      
+
 
         [HttpGet("GetUploadedPdf/{poId}")]
         public IActionResult GetUploadedPdf(string poId)

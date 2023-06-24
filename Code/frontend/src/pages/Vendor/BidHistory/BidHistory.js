@@ -85,7 +85,7 @@ function BidHistory() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-  const { vendorId } = useParams();
+  const vendorId  = 'BUW52' //this need to gte from the login
   const [data, setData] = useState(null);
 
   useEffect(() => {
@@ -190,7 +190,8 @@ function BidHistory() {
                           <TableCell align="center">{row.bidValue}</TableCell>
                           <TableCell align="center">{row.bidStatus}</TableCell>
                           <TableCell align="center">
-                            {!row.isLetterOfAcceptance ? (
+                            {row.bidStatus === "Selected" && !row.isletterOfAcceptance
+? (
                               <Routerlink
                                 to={`/letter-of-acceptance/${row.itemId}`}
                               >
@@ -201,6 +202,7 @@ function BidHistory() {
                                     height: 30,
                                     borderRadius: "20px",
                                   }}
+                                  
                                 >
                                   Submit
                                 </Button>

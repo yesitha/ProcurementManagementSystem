@@ -390,7 +390,7 @@ function BidVerificationSubmit() {
                   selectedBond
                 )}
               >
-                Next
+                Submit
               </Button>
             </Routerlink>
           </div>
