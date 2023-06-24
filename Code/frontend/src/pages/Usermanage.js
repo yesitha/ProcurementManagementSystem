@@ -191,7 +191,7 @@ switch (currentUser) {
     list1 = [
       { displayName: "Bid Tender", path: "bid-tender/:vendorId" },
       { displayName: "Bid History", path: "bid-history/:vendorId" },
-      { displayName: "Purchase Orders", path: "PurchaseOrder-vendor" },
+      { displayName: "Purchase Orders", path: "PurchaseOrder-vendor/:vendorId" },
       { displayName: "Good Receive Note", path: "VGoodReceiveNote" },
     ];
 
@@ -213,7 +213,7 @@ switch (currentUser) {
       },
       {
         displayName: "New Purchase Order",
-        path: "new-purchase-order",
+        path: "PurchaseOrder-vendor/:vendorId",
         number: "2",
       },
       { displayName: "New GRN", path: "new-grn", number: "3" },

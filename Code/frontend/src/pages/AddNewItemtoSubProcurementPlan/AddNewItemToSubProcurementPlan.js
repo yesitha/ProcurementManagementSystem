@@ -88,7 +88,13 @@ function AddNewItemtoSubProcurementPlan() {
                     </div>
                 </div>
                 <div>
-                    <Paper elevation={6}>
+                    <Paper elevation={6} sx={{
+                        pl: 5,
+                        pr: {lg: 5, md: 5},
+                        ml: {lg: 2.5, md: 1},
+                        mr: 2,
+                        borderRadius: 10,
+                    }}>
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <div className={Styles.entireBody}>
                                 <div className={Styles.bodyContainer}>

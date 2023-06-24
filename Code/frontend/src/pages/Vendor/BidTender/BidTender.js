@@ -27,57 +27,6 @@ const columns = [
 ];
 
 
-function createData(ItemName, Qty, specification, duedate, bidstatus, act) {
-  return { ItemName, Qty, specification, duedate, bidstatus, act };
-}
-const itemId = "PAY35503";
-
-
-const rows = [
-  createData(
-    "A4 Papers",
-    "45",
-    "GSM 80",
-    "2023-01-23",
-    <Typography sx={{ color: "#227C70" }}>LKR 4000</Typography>,
-    // <Routerlink to={`/tender-details/${itemId}`}>
-    <Routerlink to={'/tender-details'}>
-    <Button
-      variant="contained"
-      sx={{
-        backgroundColor: "#227C70",
-        width: 50,
-        height: 50,
-        borderRadius: "20px",
-      }}
-    >
-      <GavelIcon style={{ fontSize: 30 }} />
-    </Button>
-    </Routerlink>
-  ),
-  createData(
-    "Pens",
-    "45",
-    "Blue",
-    "2023-01-23",
-    <Typography sx={{ color: "#9C254D" }}>Not Bided</Typography>,
-    // <Routerlink to={`/tender-details/${itemId}`}>
-    <Routerlink to={'/tender-details'}>
-    <Button
-      variant="contained"
-      sx={{
-        backgroundColor: "#9C254D",
-        width: 50,
-        height: 50,
-        borderRadius: "20px",
-      }}
-    >
-      <GavelIcon style={{ fontSize: 30 }} />
-    </Button>
-    </Routerlink>
-  ),
-];
-
 function BidTender() {
 
   const [page, setPage] = React.useState(0);
@@ -217,7 +166,7 @@ useEffect(() => {
             <TablePagination
               rowsPerPageOptions={[10, 25, 50, 100]}
               component="div"
-              count={rows.length}
+              count={10}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
