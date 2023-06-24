@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState ,useEffect} from "react";
 import styles from "./BidDetails.module.css";
 import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -13,48 +13,18 @@ import TableRow from "@mui/material/TableRow";
 import SearchNoFilter from "../../../components/Search/Search";
 import { Container } from "@mui/system";
 import { Link as Routerlink } from "react-router-dom";
+import { GetBidDetails } from "../../../services/ProcurementHOD/ProcurementHODServices";
+import { DateFormat, MoneyFormat } from "../../../services/dataFormats";
 
 const columns = [
   { id: "ItemID", label: "Item ID", Width: 300, align: "center" },
   { id: "ItemName", label: "Item Name", Width: 300, align: "center" },
   { id: "Qty", label: "Quantity", Width: 300, align: "center" },
   { id: "specification", label: "Specification", Width: 300, align: "center" },
+  { id: "exDdate", label: "Expected Delivery Date", Width: 300, align: "center" },
   { id: "minbid", label: "Minimum Bid", Width: 300, align: "center" },
   { id: "NoofBid", label: "Num of Bid Received", Width: 300, align: "center" },
   { id: "act", label: "Action", Width: 300, align: "center" },
-];
-
-function createData(
-  ItemID,
-  ItemName,
-  Qty,
-  specification,
-  minbid,
-  NoofBid,
-  act
-) {
-  return { ItemID, ItemName, Qty, specification, minbid, NoofBid, act };
-}
-
-const rows = [
-  createData(
-    "I0015",
-    "A4 Papers",
-    "45",
-    "GSM 80",
-    "4000",
-    "05",
-    <Routerlink to={'/bid-details-view'}><Button variant="contained">View</Button></Routerlink>
-  ),
-  createData(
-    "I0016",
-    "Pens",
-    "60",
-    "Blue",
-    "5000",
-    "10",
-    <Routerlink to={'/bid-details-view'}><Button variant="contained">View</Button></Routerlink>
-  ),
 ];
 
 function BidDetails() {
@@ -68,6 +38,23 @@ function BidDetails() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await GetBidDetails();
+        const data = response;
+        setData(data);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <div style={{ overflowX: "hidden" }}>
 
@@ -128,36 +115,44 @@ function BidDetails() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row) => {
-                      return (
+                  {data &&
+                    data
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
+                      .map((row, index) => (
                         <TableRow
                           hover
                           role="checkbox"
                           tabIndex={-1}
-                          key={row.code}
+                          key={index}
                         >
-                          {columns.map((column) => {
-                            const value = row[column.id];
-                            return (
-                              <TableCell key={column.id} align={column.align}>
-                                {column.format && typeof value === "number"
-                                  ? column.format(value)
-                                  : value}
-                              </TableCell>
-                            );
-                          })}
+                          <TableCell align="center">{row.itemId}</TableCell>
+                          <TableCell align="center">{row.itemName}</TableCell>
+                          <TableCell align="center">{row.totalQuantity}</TableCell>
+                          <TableCell align="center">{row.specification}</TableCell>
+                          <TableCell align="center">{DateFormat(row.expectedDeliveryDate)}</TableCell>
+                          <TableCell align="center">
+                            {MoneyFormat(row.minBidValue)}
+                          </TableCell>
+                          <TableCell align="center">
+                            {row.bidValuesCount}
+                          </TableCell>
+                          <TableCell align="center">
+                            {
+                              <Routerlink to={`/bid-details-view/${row.itemId}`}><Button variant="contained">View</Button></Routerlink>
+                            }
+                          </TableCell>
                         </TableRow>
-                      );
-                    })}
+                      ))}
                 </TableBody>
               </Table>
             </TableContainer>
             <TablePagination
               rowsPerPageOptions={[10, 25, 50, 100]}
               component="div"
-              count={rows.length}
+              count={10}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}

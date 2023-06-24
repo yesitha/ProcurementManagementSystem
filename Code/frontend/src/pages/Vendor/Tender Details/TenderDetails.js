@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./TenderDetails.module.css";
-import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import { useParams } from "react-router-dom";
 import {
   Button,
@@ -21,48 +20,60 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Link as Routerlink } from "react-router-dom";
-
-///////////////Add axios/////////////
-
-const columns = [
-  { id: "DOC", Width: 200, align: "center" },
-  { id: "view", Width: 200, align: "center" },
-  { id: "upld", Width: 200, align: "center" },
-  { id: "del", Width: 200, align: "center" },
-];
-
-function createData(DOC, view, upld, del) {
-  return { DOC, view, upld, del };
-}
-
-const rows = [
-  createData(
-    "DOC 1",
-    <Button variant="contained">View</Button>,
-    <Button variant="contained">Upload</Button>,
-    <Button variant="contained">Delete</Button>
-  ),
-  createData(
-    "DOC 2",
-    <Button variant="contained">View</Button>,
-    <Button variant="contained">Upload</Button>,
-    <Button variant="contained">Delete</Button>
-  ),
-  createData(
-    "DOC 3",
-    <Button variant="contained">View</Button>,
-    <Button variant="contained">Upload</Button>,
-    <Button variant="contained">Delete</Button>
-  ),
-];
+import { CreateVendorPlaceBidItem, GetApprovedItemDetailsitemId } from "../../../services/Vendor/Vendorservices";
+import { DateFormat, MoneyFormat } from "../../../services/dataFormats";
 
 function TenderDetails() {
+  const [bidValue, setbidValue] = useState(null);
+
+  const handleChange = (event) => {
+    setbidValue(event.target.value);
+  };
+
+  const calculateTenderValue = () => {
+    if (bidValue && data && data[0]) {
+      const tenderValue = parseFloat(bidValue) * parseFloat(data[0].totalQuantity);
+      return isNaN(tenderValue) ? "" : MoneyFormat(tenderValue);
+    }
+    return "";
+  };
 
   const { itemId } = useParams();
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await GetApprovedItemDetailsitemId(itemId);
+        const data = response;
+        setData(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  if (data === null) {
+    return <p style={{ marginLeft: "20px" }}>Loading...</p>;
+  }
+
+  const vendorId = "HEL9863";
+
+  const handlePlaceBid = async () => {
+    try {
+      await CreateVendorPlaceBidItem(
+        vendorId,
+        itemId,
+        bidValue
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div style={{ overflowX: "hidden" }}>
-     
       <Container
         className={styles.main}
         sx={{
@@ -73,17 +84,17 @@ function TenderDetails() {
       >
         <div className={styles.upperSection}>
           <div className={styles.TenderDetailsPageContainer__header}>
-          <Routerlink to={-1}>
-            <IconButton
-              sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
-            >
-              <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
-            </IconButton>
+            <Routerlink to={-1}>
+              <IconButton
+                sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
+              >
+                <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
+              </IconButton>
             </Routerlink>
-            <h1 className={styles.Header}>Tender Details</h1>
+            <h1 className={styles.Header}>{data[0].itemName}</h1>
           </div>
         </div>
-
+        <h3 className={styles.header2}>Tender Details</h3>
         <div className={styles.MiddleSection}>
           <Paper
             className={styles.UpperContainer}
@@ -98,138 +109,123 @@ function TenderDetails() {
               },
               alignItems: "left",
               borderRadius: "20px",
-              width:700,
+              width: 700,
             }}
           >
             SPECIFICATION
             <TextField
-              id="specification"
+              margin="normal"
+              rows={8}
               multiline
-              rows={4}
-              sx={{ width: 500 }}
+              id="specification"
+              name="specification"
+              autoFocus
+              InputLabelProps={{ shrink: true }}
+              InputProps={{
+                readOnly: true,
+                disableUnderline: true,
+                style: { padding: "10px", borderRadius: "4px", maxWidth: 500 },
+              }}
+              value={data[0].specification}
             />
-            DUE DATE
+            EXPECTED DELIVERY DATE
             <TextField
               margin="normal"
-              required
               fullWidth
-              id="duedate"
-              name="duedate"
-              size="small"
-              sx={{ width: 300 }}
+              id="exdate"
+              name="exdate"
+              autoFocus
+              InputLabelProps={{ shrink: true }}
+              InputProps={{
+                readOnly: true,
+                disableUnderline: true,
+                style: {
+                  padding: "10px",
+                  borderRadius: "4px",
+                  height: 56,
+                  width: 300,
+                },
+              }}
+              value={DateFormat(data[0].expectedDeliveryDate)}
             />
             QUANTITY
             <TextField
               margin="normal"
-              required
               fullWidth
+              size="medium"
               id="qty"
               name="qty"
-              size="small"
-              sx={{ width: 300 }}
+              autoFocus
+              InputLabelProps={{ shrink: true }}
+              InputProps={{
+                readOnly: true,
+                disableUnderline: true,
+                style: {
+                  padding: "10px",
+                  borderRadius: "4px",
+                  height: 56,
+                  width: 300,
+                },
+              }}
+              value={data[0].totalQuantity}
             />
             BID VALUE
             <TextField
               margin="normal"
               required
               fullWidth
+              size="medium"
               id="bidvalue"
               name="bidvalue"
-              size="small"
               sx={{ width: 300 }}
+              value={bidValue}
+              onChange={handleChange}
             />
-            TENDER VALUE
+            TOTAL TENDER VALUE
             <TextField
               margin="normal"
               required
               fullWidth
               id="tendervalue"
               name="tendervalue"
-              size="small"
+              size="medium"
               sx={{ width: 300 }}
+              value={calculateTenderValue()}
+              InputProps={{
+                readOnly: true,
+                disableUnderline: true,
+                style: {
+                  padding: "10px",
+                  borderRadius: "4px",
+                  height: 56,
+                  width: 300,
+                },
+              }}
             />
           </Paper>
         </div>
 
         <div className={styles.downSection}>
-          <h3 className={styles.header2}>Upload Required Document</h3>
+          <h3 className={styles.header2}></h3>
           <div className={styles.tableNbutton}>
-            <Paper
-              className={styles.DownContainer}
-              elevation={6}
-              sx={{
-                mr: {
-                  xs: "60px",
-                  sm: "65px",
-                  md: "65px",
-                  lg: "68px",
-                  xl: "70px",
-                },
-                alignItems: "center",
-                borderRadius: "20px",
-              }}
-            >
-              <TableContainer>
-                <Table
-                  stickyHeader
-                  aria-label="sticky table"
+          <div onClick={handlePlaceBid}>
+              <Routerlink to={-1}>
+                <Button
+                  variant="contained"
                   sx={{
-                    [`& .${tableCellClasses.root}`]: { borderBottom: "none" },
+                    backgroundColor: "#227C70",
+                    width: 150,
+                    height: 150,
+                    borderRadius: "20px",
                   }}
                 >
-                  <TableRow>
-                    {columns.map((column) => (
-                      <TableCell
-                        key={column.id}
-                        align={column.align}
-                        style={{ maxWidth: column.Width }}
-                      >
-                        {column.label}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                  <TableBody>
-                    {rows.map((row) => {
-                      return (
-                        <TableRow
-                          hover
-                          role="checkbox"
-                          tabIndex={-1}
-                          key={row.code}
-                        >
-                          {columns.map((column) => {
-                            const value = row[column.id];
-                            return (
-                              <TableCell key={column.id} align={column.align}>
-                                {column.format && typeof value === "number"
-                                  ? column.format(value)
-                                  : value}
-                              </TableCell>
-                            );
-                          })}
-                        </TableRow>
-                      );
-                    })}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </Paper>
-            <Routerlink to={-1}>
-            <Button
-              variant="contained"
-              sx={{
-                backgroundColor: "#227C70",
-                width: 150,
-                height: 150,
-                borderRadius: "20px",
-              }}
-            >
-              <Container display="flex" flexDirection="column">
-                <GavelIcon style={{ fontSize: 40 }}/>
-                <Typography>Place BID</Typography>
-              </Container>
-             </Button>
-            </Routerlink>
+                  <Container display="flex" flexDirection="column">
+                    <GavelIcon style={{ fontSize: 40 }} />
+                    <Typography>Place BID</Typography>
+                  </Container>
+                </Button>
+              </Routerlink>
+            </div>
           </div>
         </div>
       </Container>

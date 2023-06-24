@@ -117,6 +117,8 @@ function ViewMasterProcurementPlanProc() {
       fetchData();
     }
   }, [data]);
+
+  
   return (
     <div>
       <div className={styles.NotificationPageContainer__header}>

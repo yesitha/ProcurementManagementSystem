@@ -71,7 +71,7 @@ import MasterProcurementPlanTEC from "./pages/TEC Committee/MasterProcurementPla
 import ViewItemTEC from "./pages/TEC Committee/ViewItemTEC/ViewItemTEC";
 import ViewItemPC from "./pages/ProcurementCommitee/ViewItemPC/ViewItemPC";
 import ApprovalForMasterProcurementPlanPC from "./pages/ProcurementCommitee/ApprovalForMasterProcurementPlanPC/ApprovalForMasterProcurementPlanPC";
-import BidVerificationSubmit from "./pages/Vendor/Bid Verification Submit/BidVerificationSubmit";
+import POVerificationSubmit from "./pages/Vendor/POVerification Submit/POVerificationSubmit";
 import IssueItem from "./pages/InventoryManager/IssueItem/IssueItem";
 import AssetRegistry from "./pages/Assets Registry/AssetRegistry";
 import LetterofAcceptance from "./pages/Vendor/Letter of Acceptance/LetterofAcceptance";
@@ -180,7 +180,7 @@ function App() {
             element={<ViewMasterProcurementPlanProc />}
           />
           <Route path="/auctions-end" element={<BidDetails />} />
-          <Route path="/bid-details-view" element={<BidDetailsView />} />
+          <Route path="/bid-details-view/:itemId" element={<BidDetailsView />} />
           <Route
             path="/internal-auditor-report-availble"
             element={<AuditReport />}
@@ -261,28 +261,26 @@ function App() {
           />
 
           {/* Vendor */}
-          <Route path="/BidTender" element={<BidTender />} />
-          <Route path="/tender-details" element={<TenderDetails />} />
-          <Route path="/BidHistory" element={<BidHistory />} />
-          <Route
-            path="/bid-verification-submit"
-            element={<BidVerificationSubmit />}
+          <Route path="/bid-tender/:vendorId" element={<BidTender />} />
+          <Route path="/tender-details/:itemId" element={<TenderDetails />} />
+          <Route path="/bid-history/:vendorId" element={<BidHistory />} />
+           <Route
+            path="/po-verification-submit/:poId"
+            element={<POVerificationSubmit />}
           />
-          <Route path='/letter-of-acceptance' element={<LetterofAcceptance/>}/>
+          <Route path="/letter-of-acceptance/:itemId" element={<LetterofAcceptance/>}/>
           <Route
-            path="/PurchaseOrder-vendor"
+            path="/PurchaseOrder-vendor/:vendorId"
             element={<PurchseOrdersVendor />}
           />
           <Route
-            path="/PurchaseOrder-vendor-view"
+            path="/PurchaseOrder-vendor-view/:poId"
             element={<PurchaseOrderPreview />}
           />
           <Route path="/VGoodReceiveNote" element={<ViewGRN />} />
           <Route path="/grn" element={<GRN />} />
           <Route path="/create-invoice" element={<CreateInvoice2 />} />
           <Route path="/send-invoice" element={<SendInvoice />} />
-          <Route path="/bid-tender" element={<BidTender />} />
-          <Route path="/bid-history" element={<BidHistory />} />
           <Route path="/view-invoice" element={<ViewInvoices />} />
           <Route path="/invoice" element={<Invoicesvendorside />} />
           <Route path="/items-to-be-shipped" element={<ItemstobeShipped />} />
@@ -291,7 +289,6 @@ function App() {
             path="/verification-statuses-evaluated"
             element={<BidHistory />}
           />
-          <Route path="/new-purchase-order" element={<PurchseOrdersVendor />} />
           <Route path="/new-grn" element={<ViewGRN />} />
           <Route path="/payment-received" element={<ViewInvoices />} />
 

@@ -8,10 +8,7 @@ const user = {
   lastname: "Doe",
   email: "johndoe@gmail.com",
   designation: "Procurement Officer",
-
-  userType: "HOD",
-
-
+  userType: "Vendor",
   department: "Finance",
   phone: "1234567890",
   address: "123, ABC Street, XYZ City, 123456",
@@ -192,16 +189,16 @@ switch (currentUser) {
     break;
   case "Vendor":
     list1 = [
-      { displayName: "Bid Tender", path: "BidTender" },
-      { displayName: "Bid History", path: "BidHistory" },
-      { displayName: "Purchase Orders", path: "PurchaseOrder-vendor" },
+      { displayName: "Bid Tender", path: "bid-tender/:vendorId" },
+      { displayName: "Bid History", path: "bid-history/:vendorId" },
+      { displayName: "Purchase Orders", path: "PurchaseOrder-vendor/:vendorId" },
       { displayName: "Good Receive Note", path: "VGoodReceiveNote" },
     ];
 
     list2 = ["Settings"];
     actions = [
-      { displayName: "Bid Tender", path: "bid-tender" },
-      { displayName: "Bid History", path: "bid-history" },
+      { displayName: "Bid Tender", path: "bid-tender/:vendorId" },
+      { displayName: "Bid History", path: "bid-history/:vendorId" },
       { displayName: "View Invoice", path: "view-invoice" },
       { displayName: "Items to be Shipped", path: "items-to-be-shipped" },
     ];
@@ -216,7 +213,7 @@ switch (currentUser) {
       },
       {
         displayName: "New Purchase Order",
-        path: "new-purchase-order",
+        path: "PurchaseOrder-vendor/:vendorId",
         number: "2",
       },
       { displayName: "New GRN", path: "new-grn", number: "3" },
