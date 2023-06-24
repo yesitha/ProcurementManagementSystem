@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PWMSBackend.Data;
 using PWMSBackend.Models;
+using System.Linq;
 
 namespace PWMSBackend.Controllers
 {
@@ -313,6 +314,128 @@ namespace PWMSBackend.Controllers
             return Ok(result2);
         }
 
+        // Letter of Acceptance by itemId 
+
+        [HttpGet("GetLetterOfAcceptanceItemAndVendorDetails/{vendorId}/{itemId}")]
+        public async Task<ActionResult<IEnumerable<object>>> GetLetterOfAcceptanceItemAndVendorDetails(string vendorId,string itemId)
+        {
+            DateTime currentDate = DateTime.Today;
+
+            var closestDate = _context.SubProcurementApprovedItems
+                .Where(a => a.PreBidMeetingDate.HasValue && a.PreBidMeetingDate.Value.Date <= currentDate)
+                .OrderByDescending(a => a.PreBidMeetingDate.Value)
+                .Select(a => a.PreBidMeetingDate.Value.Date)
+                .FirstOrDefault();
+
+            var items = await _context.SubProcurementApprovedItems
+                .Where(a => a.PreBidMeetingDate.HasValue && a.PreBidMeetingDate.Value.Date == closestDate)
+                .Select(a => new { a.SppId, a.ItemId })
+                .ToListAsync();
+
+            if (items == null)
+            {
+                return NotFound();
+            }
+
+            //join sppId and itemId from SubProcurementPlanItems and SubProcurementApprovedItems
+
+            var joinedData = from input in items
+                             join planItem in _context.SubProcurementPlanItems
+                             on new { input.SppId, input.ItemId } equals new { planItem.SppId, planItem.ItemId }
+                             select new
+                             {
+                                 sppId = input.SppId,
+                                 itemId = input.ItemId,
+                                 quantity = planItem.Quantity,
+                                 expectedDeliveryDate = planItem.ExpectedDeliveryDate
+                             };
+
+            //filter data by itemId and sum quantity
+
+            var filteredData = joinedData.GroupBy(x => x.itemId)
+                                     .Select(group => new
+                                     {
+                                         itemId = group.Key,
+                                         totalQuantity = group.Sum(x => x.quantity),
+                                         expectedDeliveryDate = group.Select(x => x.expectedDeliveryDate).Distinct().Min()
+                                     });
+
+            //get item names
+
+            var itemIds = filteredData.Select(x => x.itemId).Distinct().ToList();
+            var itemDetails = _context.Items.Where(item => itemIds.Contains(item.ItemId))
+                                            .Select(item => new { item.ItemId, item.ItemName, item.Specification })
+                                            .ToList();
+
+            var result = from input in filteredData
+                         join itemDetail in itemDetails
+                         on input.itemId equals itemDetail.ItemId
+                         select new
+                         {
+                             itemId = input.itemId,
+                             itemName = itemDetail.ItemName,
+                             Specification = itemDetail.Specification,
+                             totalQuantity = input.totalQuantity,
+                             expectedDeliveryDate = input.expectedDeliveryDate,
+                         };
+
+            //get vendor details
+
+            var vendorDetails = _context.VendorPlaceBidItems.Where(vendor => vendor.VendorId == vendorId && itemIds.Contains(vendor.ItemId))
+                                                            .Select(vendor => new { vendor.VendorId, vendor.ItemId, vendor.BidValue})
+                                                            .ToList();
+
+            var result2 = (from input in result
+                          join vendorDetail in vendorDetails
+                          on input.itemId equals vendorDetail.ItemId into gj
+                          from vendor in gj.DefaultIfEmpty()
+                          select new
+                          {
+                              itemId = input.itemId,
+                              itemName = input.itemName,
+                              Specification = input.Specification,
+                              totalQuantity = input.totalQuantity,
+                              expectedDeliveryDate = input.expectedDeliveryDate,
+                              bidValue = vendor?.BidValue
+                          })
+                         .Where(x => x.itemId == itemId)
+                         .FirstOrDefault();
+
+            var vendorD = _context.Vendors
+                .Where(vendor => vendor.VendorId == vendorId)
+                .Select(po => new
+                {
+                VendorFullName = po.FirstName + " " + po.LastName,
+                CompanyName = po.CompanyFullName,
+                Contact = po.EmailAddress,
+                address = po.Address1 + "," + po.State,
+                city = po.City + "," + po.PostalCode,
+                salutation = po.Salutation
+                })
+                .FirstOrDefault();
+
+            return Ok(new {result2 , vendorD });
+        }
+
+
+        [HttpPut("UpdateLetterOfAcceptance/{vendorId}/{itemId}")]
+        public IActionResult UpdateLetterOfAcceptance(string vendorId, string itemId, [FromBody] string letterOfAcceptance)
+        {
+            var vendorPlaceBidItem = _context.VendorPlaceBidItems
+                .FirstOrDefault(item => item.VendorId == vendorId && item.ItemId == itemId);
+
+            if (vendorPlaceBidItem == null)
+            {
+                return NotFound();
+            }
+
+            vendorPlaceBidItem.LetterOfAcceptance = letterOfAcceptance;
+            _context.SaveChanges();
+
+            return Ok("Letter of Acceptance updated successfully.");
+        }
+
+
 
         // PO details for vendor
 
@@ -356,12 +479,17 @@ namespace PWMSBackend.Controllers
             return Ok(poVendorDetails);
         }
 
-        [HttpGet("GetPOItemDetails/{PoId}/{vendorId}")]
-        public IActionResult GetPOItemDetails(string PoId, string vendorId)
+        [HttpGet("GetPOItemDetails/{PoId}")]
+        public IActionResult GetPOItemDetails(string PoId)
         {
             var mppId = _context.PurchaseOrders
                 .Where(po => po.PoId == PoId)
                 .Select(po => po.MppId)
+                .FirstOrDefault();
+
+            var vendorId = _context.PurchaseOrders
+                .Where(po => po.PoId == PoId)
+                .Select(po => po.VendorId)
                 .FirstOrDefault();
 
             var itemList = _context.MasterProcurementPlans
@@ -495,6 +623,70 @@ namespace PWMSBackend.Controllers
             public int ShippedQuantity { get; set; }
         }
 
+        //[HttpPost("CreatePurchaseOrderItemsToBeShippedRecords")]
+        //public IActionResult CreatePurchaseOrderItemsToBeShippedRecords(string PoId, List<PurchaseOrderItemToBeShippedInput> itemsToBeShipped)
+        //{
+        //    // Retrieve the Purchase Order based on the provided PoId
+        //    var purchaseOrder = _context.PurchaseOrders.FirstOrDefault(po => po.PoId == PoId);
+
+        //    // Check if the Purchase Order exists
+        //    if (purchaseOrder == null)
+        //    {
+        //        return BadRequest("Invalid PoId. Purchase Order not found.");
+        //    }
+
+        //    // Create a list to store the duplicate itemIds
+        //    var duplicateItemIds = new List<string>();
+
+        //    // Iterate through the list of itemsToBeShipped and create PurchaseOrderItemsToBeShipped records
+        //    foreach (var item in itemsToBeShipped)
+        //    {
+        //        string itemId = item.ItemId;
+        //        int shippedQuantity = item.ShippedQuantity;
+
+        //        // Check if the PurchaseOrderItemsToBeShipped record already exists
+        //        bool recordExists = _context.PurchaseOrder_ItemTobeShippeds.Any(aipo =>
+        //            aipo.PoId == PoId && aipo.ItemId == itemId);
+
+        //        if (recordExists)
+        //        {
+        //            // Add the duplicate itemId to the list
+        //            duplicateItemIds.Add(itemId);
+        //            continue; // Skip to the next iteration
+        //        }
+
+        //        // Retrieve the Approved Item based on the ItemId
+        //        var approvedItem = _context.Items.FirstOrDefault(item => item.ItemId == itemId);
+
+        //        // Check if the Approved Item exists
+        //        if (approvedItem == null)
+        //        {
+        //            return BadRequest($"Invalid ItemId '{itemId}'. Approved Item not found.");
+        //        }
+
+        //        // Create a new PurchaseOrder_ItemTobeShipped record
+        //        var purchaseOrderItemToBeShipped = new PurchaseOrder_ItemTobeShipped
+        //        {
+        //            ItemId = itemId,
+        //            PoId = PoId,
+        //            Shipped_Qty = shippedQuantity
+        //        };
+
+        //        // Add the record to the context
+        //        _context.PurchaseOrder_ItemTobeShippeds.Add(purchaseOrderItemToBeShipped);
+        //    }
+
+        //    // Save the changes to the database
+        //    _context.SaveChanges();
+
+        //    if (duplicateItemIds.Count > 0)
+        //    {
+        //        return BadRequest($"The following ItemIds are already associated with the Purchase Order '{PoId}': {string.Join(", ", duplicateItemIds)}");
+        //    }
+
+        //    return Ok("PurchaseOrderItemsToBeShipped records created successfully.");
+        //}
+
         [HttpPost("CreatePurchaseOrderItemsToBeShippedRecords")]
         public IActionResult CreatePurchaseOrderItemsToBeShippedRecords(string PoId, List<PurchaseOrderItemToBeShippedInput> itemsToBeShipped)
         {
@@ -507,56 +699,171 @@ namespace PWMSBackend.Controllers
                 return BadRequest("Invalid PoId. Purchase Order not found.");
             }
 
-            // Create a list to store the duplicate itemIds
-            var duplicateItemIds = new List<string>();
-
-            // Iterate through the list of itemsToBeShipped and create PurchaseOrderItemsToBeShipped records
+            // Iterate through the list of itemsToBeShipped and create/update PurchaseOrderItemsToBeShipped records
             foreach (var item in itemsToBeShipped)
             {
                 string itemId = item.ItemId;
                 int shippedQuantity = item.ShippedQuantity;
 
-                // Check if the PurchaseOrderItemsToBeShipped record already exists
-                bool recordExists = _context.PurchaseOrder_ItemTobeShippeds.Any(aipo =>
+                // Retrieve the existing PurchaseOrderItemsToBeShipped record
+                var existingRecord = _context.PurchaseOrder_ItemTobeShippeds.FirstOrDefault(aipo =>
                     aipo.PoId == PoId && aipo.ItemId == itemId);
 
-                if (recordExists)
+                if (existingRecord != null)
                 {
-                    // Add the duplicate itemId to the list
-                    duplicateItemIds.Add(itemId);
-                    continue; // Skip to the next iteration
+                    // Update the existing record with the new shipped quantity
+                    existingRecord.Shipped_Qty += shippedQuantity;
                 }
-
-                // Retrieve the Approved Item based on the ItemId
-                var approvedItem = _context.Items.FirstOrDefault(item => item.ItemId == itemId);
-
-                // Check if the Approved Item exists
-                if (approvedItem == null)
+                else
                 {
-                    return BadRequest($"Invalid ItemId '{itemId}'. Approved Item not found.");
+                    // Retrieve the Approved Item based on the ItemId
+                    var approvedItem = _context.Items.FirstOrDefault(item => item.ItemId == itemId);
+
+                    // Check if the Approved Item exists
+                    if (approvedItem == null)
+                    {
+                        return BadRequest($"Invalid ItemId '{itemId}'. Approved Item not found.");
+                    }
+
+                    // Create a new PurchaseOrder_ItemTobeShipped record
+                    var purchaseOrderItemToBeShipped = new PurchaseOrder_ItemTobeShipped
+                    {
+                        ItemId = itemId,
+                        PoId = PoId,
+                        Shipped_Qty = shippedQuantity
+                    };
+
+                    // Add the record to the context
+                    _context.PurchaseOrder_ItemTobeShippeds.Add(purchaseOrderItemToBeShipped);
                 }
-
-                // Create a new PurchaseOrder_ItemTobeShipped record
-                var purchaseOrderItemToBeShipped = new PurchaseOrder_ItemTobeShipped
-                {
-                    ItemId = itemId,
-                    PoId = PoId,
-                    Shipped_Qty = shippedQuantity
-                };
-
-                // Add the record to the context
-                _context.PurchaseOrder_ItemTobeShippeds.Add(purchaseOrderItemToBeShipped);
             }
 
             // Save the changes to the database
             _context.SaveChanges();
 
-            if (duplicateItemIds.Count > 0)
-            {
-                return BadRequest($"The following ItemIds are already associated with the Purchase Order '{PoId}': {string.Join(", ", duplicateItemIds)}");
-            }
+            return Ok("PurchaseOrderItemsToBeShipped records created/updated successfully.");
+        }
 
-            return Ok("PurchaseOrderItemsToBeShipped records created successfully.");
+
+        // View GRN page controller
+
+        [HttpGet("GetGRNIdListByVendorId/{vendorId}")]
+        public IActionResult GetGRNIdListByVendorId(string vendorId)
+        {
+            var poIdList = _context.PurchaseOrders
+                .Where(po => po.VendorId == vendorId)
+                .Select(po => new
+                {
+                    po.PoId
+                })
+                .ToList();
+
+            var grnList = _context.GRNs
+                .Select(grn => new
+                {
+                    grn.GrnId,
+                    grn.PoId,
+                    grn.Date
+                })
+                .ToList();
+
+            var combinedList = (from poId in poIdList
+                                join grn in grnList on poId.PoId equals grn.PoId
+                                select new
+                                {
+                                    GrnId = grn.GrnId,
+                                    PoId = grn.PoId,
+                                    Date = grn.Date
+                                })
+                     .ToList();
+
+
+            return Ok(combinedList);
+        }
+
+        [HttpGet("GetGRNItemDetails/{PoId}/{grnId}")]
+        public IActionResult GetGRNItemDetails(string PoId, string grnId)
+        {
+            var mppId = _context.PurchaseOrders
+                .Where(po => po.PoId == PoId)
+                .Select(po => po.MppId)
+                .FirstOrDefault();
+
+            var vendorId = _context.PurchaseOrders
+                .Where(po => po.PoId == PoId)
+                .Select(po => po.VendorId)
+                .FirstOrDefault();
+
+            var itemList = _context.MasterProcurementPlans
+                .Where(mpp => mpp.MppId == mppId)
+                .SelectMany(mpp => mpp.SubProcurementPlans)
+                .SelectMany(spp => spp.subProcurementPlanItems)
+                .Where(item => item.ProcuremnetCommitteeStatus == "approve" && item.DGStatus == "approve"
+                                && item.SelectedVendor == _context.Vendors
+                                                                .Where(v => v.VendorId == vendorId)
+                                                                .Select(v => v.FirstName + " " + v.LastName)
+                                                                .FirstOrDefault())
+                .GroupBy(item => item.ItemId)
+                .Select(group => new
+                {
+                    ItemId = group.Key,
+                    ItemName = group.First().Item.ItemName,
+                    OrderedQuantity = group.Sum(item => item.Quantity)
+                })
+                .ToList();
+
+            var itemList1 = _context.PurchaseOrder_ItemTobeShippeds
+                .Where(Ok => Ok.PoId == PoId)
+                .Select(Ok => new
+                {
+                    Ok.ItemId,
+                    Ok.Shipped_Qty
+                })
+                .ToList();
+
+            var itemList2 = _context.GRNItemsToBeShipped
+                .Where(Ok => Ok.GrnId == grnId)
+                .Select(Ok => new
+                {
+                    Ok.ItemId,
+                    Ok.Received_Qty
+                })
+                .ToList();
+
+            var combinedList = itemList.Join(itemList1,
+              item => item.ItemId,
+              item1 => item1.ItemId,
+              (item, item1) => new
+              {
+                  item.ItemId,
+                  item.ItemName,
+                  item.OrderedQuantity,
+                  item1.Shipped_Qty
+              })
+                .Join(itemList2,
+                item => item.ItemId,
+                item2 => item2.ItemId,
+                (item, item2) => new
+                {
+                    item.ItemId,
+                    item.ItemName,
+                    item.OrderedQuantity,
+                    item.Shipped_Qty,
+                    item2.Received_Qty
+                })
+                .ToList();
+
+            var vendorName = _context.PurchaseOrders
+                .Where(po => po.PoId == PoId)
+                .Select(po => po.Vendor.FirstName + " " + po.Vendor.LastName)
+                .FirstOrDefault();
+
+            var shippingDate = _context.GRNItemsToBeShipped
+                .Where(grn => grn.GrnId == grnId)
+                .Select(grn => grn.ShippingDate)
+                .FirstOrDefault();
+
+            return Ok(new { combinedList, vendorName, shippingDate });
         }
 
     }
