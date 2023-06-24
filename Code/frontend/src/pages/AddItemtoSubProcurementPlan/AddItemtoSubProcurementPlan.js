@@ -92,7 +92,6 @@ function AddItemtoSubProcurementPlan() {
     const onSubmit = async () => {
         const data=getValues();
         const {expectedDeliveryDate, estimatedBudget, quantity,recommendedVendor} = data;
-        console.log(data);
         const dateParts = expectedDeliveryDate.split("/");
         const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}T00:00:00Z`;
         const formData = {

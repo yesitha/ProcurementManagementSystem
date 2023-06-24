@@ -6,8 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="bef3c3fc-1eae-49f2-978e-a16cd54f3c7d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/frontend/src/pages/AddNewItemtoSubProcurementPlan/AddNewItemToSubProcurementPlan.js" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/src/pages/AddNewItemtoSubProcurementPlan/AddNewItemToSubProcurementPlan.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/frontend/src/pages/AddItemtoSubProcurementPlan/AddItemtoSubProcurementPlan.js" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/src/pages/AddItemtoSubProcurementPlan/AddItemtoSubProcurementPlan.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/frontend/src/pages/Dicvision HOD/PDViewSubProcurementPlan/PDViewSubProcurementPlan.js" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/src/pages/Dicvision HOD/PDViewSubProcurementPlan/PDViewSubProcurementPlan.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/frontend/src/pages/Procurement Officer/AuditReport/AuditReport.js" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/src/pages/Procurement Officer/AuditReport/AuditReport.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Code/frontend/src/pages/Usermanage.js" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/src/pages/Usermanage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/frontend/src/services/ProcurementHOD/ProcurementHODServices.js" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/src/services/ProcurementHOD/ProcurementHODServices.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
