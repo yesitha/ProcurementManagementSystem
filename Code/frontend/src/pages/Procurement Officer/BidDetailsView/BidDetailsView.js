@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./BidDetailsView.module.css";
-import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { Button, IconButton, Paper } from "@mui/material";
+import {IconButton, Paper } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -12,7 +11,9 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import SearchNoFilter from "../../../components/Search/Search";
 import { Container } from "@mui/system";
-import { Link as Routerlink } from "react-router-dom";
+import { Link as Routerlink, useParams } from "react-router-dom";
+import { GetItemBidDetailsitemId } from "../../../services/ProcurementHOD/ProcurementHODServices";
+import { DateFormat, MoneyFormat } from "../../../services/dataFormats";
 
 const columns = [
   { id: "VenName", label: "Vendor Name", Width: 300, align: "center" },
@@ -20,14 +21,6 @@ const columns = [
   { id: "bidvalue", label: "Bid Value", Width: 300, align: "center" },
 ];
 
-function createData(VenName, timestamp, bidvalue) {
-  return { VenName, timestamp, bidvalue };
-}
-
-const rows = [
-  createData("ABC Bookshop", "5 Days", "LKR 4000"),
-  createData("ABC Bookshop", "5 Days", "LKR 5000"),
-];
 
 function BidDetailsView() {
 
@@ -41,6 +34,28 @@ function BidDetailsView() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  const{itemId}= useParams();
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await GetItemBidDetailsitemId(itemId);
+        const data = response;
+        setData(data);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  if (data === null) {
+    return <p style={{ marginLeft: "20px" }}>Loading...</p>;
+  }
+
   return (
     <div style={{ overflowX: "hidden" }}>
 
@@ -61,7 +76,7 @@ function BidDetailsView() {
               <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
             </IconButton>
             </Routerlink>
-            <h1 className={styles.Header}>[Item Name]</h1>
+          <h1 className={styles.Header}>{data.itemName}</h1>
           </div>
         </div>
 
@@ -101,36 +116,31 @@ function BidDetailsView() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row) => {
-                      return (
+                  {data.bidValues &&
+                    data.bidValues
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
+                      .map((row, index) => (
                         <TableRow
                           hover
                           role="checkbox"
                           tabIndex={-1}
-                          key={row.code}
+                          key={index}
                         >
-                          {columns.map((column) => {
-                            const value = row[column.id];
-                            return (
-                              <TableCell key={column.id} align={column.align}>
-                                {column.format && typeof value === "number"
-                                  ? column.format(value)
-                                  : value}
-                              </TableCell>
-                            );
-                          })}
+                          <TableCell align="center">{row.vendorFullName}</TableCell>
+                          <TableCell align="center">{DateFormat(row.dateAndTime)}</TableCell>
+                          <TableCell align="center">{MoneyFormat(row.bidValue)}</TableCell>
                         </TableRow>
-                      );
-                    })}
+                      ))}
                 </TableBody>
               </Table>
             </TableContainer>
             <TablePagination
               rowsPerPageOptions={[10, 25, 50, 100]}
               component="div"
-              count={rows.length}
+              count={10}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}

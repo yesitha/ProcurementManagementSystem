@@ -180,7 +180,7 @@ function App() {
             element={<ViewMasterProcurementPlanProc />}
           />
           <Route path="/auctions-end" element={<BidDetails />} />
-          <Route path="/bid-details-view" element={<BidDetailsView />} />
+          <Route path="/bid-details-view/:itemId" element={<BidDetailsView />} />
           <Route
             path="/internal-auditor-report-availble"
             element={<AuditReport />}
@@ -261,18 +261,14 @@ function App() {
           />
 
           {/* Vendor */}
-          <Route path="/BidTender" element={<BidTender />} />
+          <Route path="/bid-tender/:vendorId" element={<BidTender />} />
           <Route path="/tender-details/:itemId" element={<TenderDetails />} />
-          <Route path="/BidHistory" element={<BidHistory />} />
-          <Route
-            path="/po-verification-submit"
-            element={<POVerificationSubmit />}
-          />
+          <Route path="/bid-history/:vendorId" element={<BidHistory />} />
            <Route
             path="/po-verification-submit/:poId"
             element={<POVerificationSubmit />}
           />
-          <Route path='/letter-of-acceptance' element={<LetterofAcceptance/>}/>
+          <Route path="/letter-of-acceptance/:itemId" element={<LetterofAcceptance/>}/>
           <Route
             path="/PurchaseOrder-vendor"
             element={<PurchseOrdersVendor />}
@@ -285,8 +281,6 @@ function App() {
           <Route path="/grn" element={<GRN />} />
           <Route path="/create-invoice" element={<CreateInvoice2 />} />
           <Route path="/send-invoice" element={<SendInvoice />} />
-          <Route path="/bid-tender" element={<BidTender />} />
-          <Route path="/bid-history" element={<BidHistory />} />
           <Route path="/view-invoice" element={<ViewInvoices />} />
           <Route path="/invoice" element={<Invoicesvendorside />} />
           <Route path="/items-to-be-shipped" element={<ItemstobeShipped />} />
