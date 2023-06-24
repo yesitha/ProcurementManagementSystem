@@ -356,6 +356,135 @@ namespace PWMSBackend.Controllers
             return Ok(poVendorDetails);
         }
 
+        [HttpPost("uploadRequiredDocuments/{PoId}")]
+        public IActionResult uploadRequiredDocuments(string PoId, IFormFile? agreement, IFormFile? BankGuarantee,
+            IFormFile? bond)
+        {
+            var po = _context.PurchaseOrders.Where(po => po.PoId == PoId).FirstOrDefault();
+
+            if (po != null)
+            {
+                if (agreement != null)
+                {
+                    // Generate a unique filename
+                    string fileName = $"{PoId}_Agreement{Path.GetExtension(agreement.FileName)}";
+                    string filePath = Path.Combine("Uploads/Vendor_Required_Docs/Agreement", fileName); 
+
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        agreement.CopyTo(fileStream);
+                    }
+
+                    po.Agreement = filePath;
+                }
+
+               
+                
+
+                if (BankGuarantee != null)
+                {
+                    {
+                        // Generate a unique filename
+                        string fileName = $"{PoId}_BankGuarantee{Path.GetExtension(BankGuarantee.FileName)}";
+                        string filePath = Path.Combine("Uploads/Vendor_Required_Docs/BankGuarantee", fileName); 
+
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            BankGuarantee.CopyTo(fileStream);
+                        }
+
+                        po.BankGuarantee = filePath;
+                    }
+
+                }
+
+                if (bond != null)
+                { {
+                        // Generate a unique filename
+                        string fileName = $"{PoId}_Bond{Path.GetExtension(bond.FileName)}";
+                        string filePath = Path.Combine("Uploads/Vendor_Required_Docs/Bond", fileName); 
+
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            bond.CopyTo(fileStream);
+                        }
+
+                        po.Bond = filePath;
+                    }
+                }
+
+                _context.SaveChanges();
+
+                return Ok("Documents uploaded successfully");
+            }
+            else
+            {
+                return BadRequest("No Such PO");
+            }
+        }
+
+        [HttpGet("GetUploadedPdf/{poId}")]
+        public IActionResult GetUploadedPdf(string poId)
+        { var po = _context.PurchaseOrders.Where(po => po.PoId == poId).FirstOrDefault();
+            var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
+
+            if (po == null)
+            {
+                return NotFound("po not found.");
+            }else if (po.Agreement == null && po.BankGuarantee == null && po.Bond == null)
+            {
+                return NotFound("No documents uploaded.");
+            }
+            else
+            {
+                 
+                
+                var pdfList = new List<object>();
+
+                if (po.Agreement != null)
+                {
+                    var agreementInfo = new 
+                    {
+                        Name = $"{poId}_Agreement",
+                        Url = $"{baseUrl}/{po.Agreement}"
+                    };
+
+                    pdfList.Add(agreementInfo);
+                }
+
+                if (po.BankGuarantee != null)
+                {
+                    var bankGuaranteeInfo = new 
+                    {
+                        Name = $"{poId}_BankGuarantee",
+                        Url = $"{baseUrl}/{po.BankGuarantee}"
+                    };
+
+                    pdfList.Add(bankGuaranteeInfo);
+                }
+
+                if (po.Bond != null)
+                {
+                    var bondInfo = new 
+                    {
+                        Name = $"{poId}_Bond",
+                        Url = $"{baseUrl}/{po.Bond}"
+                    };
+
+                    pdfList.Add(bondInfo);
+                }
+
+                return Ok(pdfList);
+            }   
+            
+            
+
+
+        }   
+
+
+        
+
         [HttpGet("GetPOItemDetails/{PoId}/{vendorId}")]
         public IActionResult GetPOItemDetails(string PoId, string vendorId)
         {

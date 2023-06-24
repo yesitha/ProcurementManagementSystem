@@ -42,13 +42,35 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(
         Path.Combine(app.Environment.ContentRootPath, "Uploads/Evidence_of_authorization")),
     RequestPath = "/Uploads/Evidence_of_authorization"
 });
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(app.Environment.ContentRootPath, "Uploads/Vendor_Required_Docs/Agreement")),
+    RequestPath = "/Uploads/Vendor_Required_Docs/Agreement"
+});
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(app.Environment.ContentRootPath, "Uploads/Vendor_Required_Docs/Bond")),
+    RequestPath = "/Uploads/Vendor_Required_Docs/Bond"
+});
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(app.Environment.ContentRootPath, "Uploads/Vendor_Required_Docs/BankGuarantee")),
+    RequestPath = "/Uploads/Vendor_Required_Docs/BankGuarantee"
+});
+
+
 
 // Allow Cors
 app.UseCors(option =>

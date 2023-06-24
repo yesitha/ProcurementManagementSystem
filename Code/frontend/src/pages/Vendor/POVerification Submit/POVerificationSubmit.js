@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import styles from "./BidVerificationSubmit.module.css";
 import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import { useParams } from "react-router-dom";
@@ -21,24 +21,23 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Link as Routerlink } from "react-router-dom";
-import {GetPODetailsbyId} from "../../../services/Vendor/Vendorservices";
-import {MoneyFormat,DateFormat} from "../../../services/dataFormats"
-
-///////////////Add axios/////////////
-
-const columns = [
-  { id: "DOC", Width: 200, align: "center" },
-  { id: "view", Width: 200, align: "center" },
-  { id: "upld", Width: 200, align: "center" },
-  { id: "del", Width: 200, align: "center" },
-];
-
-
-
+import {
+  GetPODetailsbyId,
+  fetchAlreadyUploadedPDf,
+  sendFilesToDB,
+} from "../../../services/Vendor/Vendorservices";
+import { MoneyFormat, DateFormat } from "../../../services/dataFormats";
 
 function BidVerificationSubmit() {
-  const {poId} =useParams();
-  const [data,setData]= useState(null);
+  const { poId } = useParams();
+  const [data, setData] = useState(null);
+  const [selectedAgreement, setSelectedAgreement] = useState(null);
+  const [selectedBankGuarantee, setSelectedBankGuarantee] = useState(null);
+  const [selectedBond, setSelectedBond] = useState(null);
+  const fileInputRef1 = useRef(null);
+  const fileInputRef2 = useRef(null);
+  const fileInputRef3 = useRef(null);
+  const [uplodedPdf, setUploadedPdfs] = useState(null);
 
   useEffect(() => {
     const fetchdata = async () => {
@@ -50,9 +49,80 @@ function BidVerificationSubmit() {
       } catch (error) {
         console.log(error);
       }
+      try {
+        const response = await fetchAlreadyUploadedPDf(poId);
+        const data = response;
+        console.log(data);
+        setUploadedPdfs(data);
+      } catch (error) {
+        console.log(error);
+      }
     };
     fetchdata();
   }, []);
+
+  useEffect(() => {
+    if (uplodedPdf) {
+      setSelectedAgreement(
+        uplodedPdf.find((item) => item.name === `${poId}_Agreement`? item : null)
+      );
+      setSelectedBankGuarantee(
+        uplodedPdf.find((item) => item.name === `${poId}_BankGuarantee`? item : null)
+      );
+      setSelectedBond(
+        uplodedPdf.find((item) => item.name === `${poId}_Bond`? item : null)
+      );
+    }
+    console.log(uplodedPdf)
+  }, [uplodedPdf]);
+
+  const handleBrowseClick1 = () => {
+    fileInputRef1.current.click();
+  };
+  const handleBrowseClick2 = () => {
+    fileInputRef2.current.click();
+  };
+  const handleBrowseClick3 = () => {
+    fileInputRef3.current.click();
+  };
+  const handleFileChange1 = (event) => {
+    const file = event.target.files[0];
+    if (file && file.type === "application/pdf") {
+      setSelectedAgreement(file);
+    } else {
+      setSelectedAgreement(null);
+      alert("Please select a PDF file.");
+    }
+  };
+  const handleFileChange2 = (event) => {
+    const file = event.target.files[0];
+    if (file && file.type === "application/pdf") {
+      setSelectedBankGuarantee(file);
+    } else {
+      setSelectedBankGuarantee(null);
+      alert("Please select a PDF file.");
+    }
+  };
+  const handleFileChange3 = (event) => {
+    const file = event.target.files[0];
+    if (file && file.type === "application/pdf") {
+      setSelectedBond(file);
+    } else {
+      setSelectedBond(null);
+      alert("Please select a PDF file.");
+    }
+  };
+  const handleDownload = (file) => {
+    if (file && file.url) {
+      const link = document.createElement("a");
+      link.href = file.url;
+      link.download = `${file.name}.pdf`;
+      link.click();
+    } else {
+      console.log("Invalid file object or missing URL.");
+    }
+  };
+
   if (data === null) {
     return <p></p>;
   }
@@ -76,7 +146,9 @@ function BidVerificationSubmit() {
                 <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
               </IconButton>
             </Routerlink>
-            <h1 className={styles.Header}>Purchase Order Verification Submit</h1>
+            <h1 className={styles.Header}>
+              Purchase Order Verification Submit
+            </h1>
           </div>
         </div>
 
@@ -96,14 +168,19 @@ function BidVerificationSubmit() {
               borderRadius: "20px",
               width: 400,
               backgroundColor: "#205295",
-              mt:3,
-              mb:3,
-              
+              mt: 3,
+              mb: 3,
             }}
           >
-            <Typography sx={{color:'white',mt:2,mb:1,ml:3}}>Purchase Order Id : {poId}</Typography>
-            <Typography sx={{color:'white',mt:1,mb:1,ml:3}}>Date : {DateFormat(data.date)}</Typography>
-            <Typography sx={{color:'white',mb:2,mt:1,ml:3}}>Total Value : {MoneyFormat(data.totalAmount)}</Typography>
+            <Typography sx={{ color: "white", mt: 2, mb: 1, ml: 3 }}>
+              Purchase Order Id : {poId}
+            </Typography>
+            <Typography sx={{ color: "white", mt: 1, mb: 1, ml: 3 }}>
+              Date : {DateFormat(data.date)}
+            </Typography>
+            <Typography sx={{ color: "white", mb: 2, mt: 1, ml: 3 }}>
+              Total Value : {MoneyFormat(data.totalAmount)}
+            </Typography>
           </Paper>
         </div>
 
@@ -123,45 +200,196 @@ function BidVerificationSubmit() {
                 },
                 alignItems: "center",
                 borderRadius: "20px",
-                justifyContent:'center',
-                textAlign:'center',
-                alignItems:'center',
-                mt:3,
-                pt:3
+                justifyContent: "center",
+                textAlign: "center",
+                alignItems: "center",
+                mt: 3,
+                pt: 3,
               }}
             >
-       <Container sx={{display:'flex',flexDirection:'row'}}>
-       <Container  sx={{display:'flex',flexDirection:'column',width:'320px',pl:'2'}}>
-        <Typography sx={{mt:1,mb:1,textAlign:'left',mb:1}}>Agreement :</Typography>
-        <Typography sx={{mt:1,mb:1,textAlign:'left',mb:1}}>Bank Guarantee :</Typography>
-        <Typography sx={{mt:1,mb:1,textAlign:'left',mb:1}}>Bond :</Typography>
-       </Container>
-      <Container sx={{display:'flex',flexDirection:'column'}}>
-        <Container sx={{display:'flex',flexDirection:'row',justifyContent:'space-between',mb:1}}>
-          <Button sx={{color:'white',backgroundColor:'#205295'}}>Download</Button>
-          <Button sx={{color:'white',backgroundColor:'#205295'}}>Upload</Button>
-          <Button sx={{color:'white',backgroundColor:'#205295'}}>Delete</Button>
-        </Container>
-        <Container sx={{display:'flex',flexDirection:'row',justifyContent:'space-between',mb:1}}>
-          <Button sx={{color:'white',backgroundColor:'#205295'}}>Download</Button>
-          <Button sx={{color:'white',backgroundColor:'#205295'}}>Upload</Button>
-          <Button sx={{color:'white',backgroundColor:'#205295'}}>Delete</Button>
-        </Container>
-        <Container sx={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
-          <Button sx={{color:'white',backgroundColor:'#205295'}}>Download</Button>
-          <Button sx={{color:'white',backgroundColor:'#205295'}}>Upload</Button>
-          <Button sx={{color:'white',backgroundColor:'#205295'}}>Delete</Button>
-        </Container>
+              <Container sx={{ display: "flex", flexDirection: "row" }}>
+                <Container
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "320px",
+                    pl: "2",
+                  }}
+                >
+                  <Typography sx={{ mt: 1, mb: 1, textAlign: "left", mb: 1 }}>
+                    Agreement :
+                  </Typography>
+                  <Typography sx={{ mt: 1, mb: 1, textAlign: "left", mb: 1 }}>
+                    Bank Guarantee :
+                  </Typography>
+                  <Typography sx={{ mt: 1, mb: 1, textAlign: "left", mb: 1 }}>
+                    Bond :
+                  </Typography>
+                </Container>
+                <Container sx={{ display: "flex", flexDirection: "column" }}>
+                  <Container
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      mb: 1,
+                      
+                    }}
+                  >
+                    <input
+                    type="text"
+                    value={selectedAgreement ? selectedAgreement.name : ""}
+                    style={{
+                      width: 300,
+                      height: 25,
+                      backgroundColor: "white",
+                      borderRadius: "9px",
+                      marginRight: 15,
+                    }}
+                    readOnly
+                  />
+                    
+                    <input
+                      type="file"
+                      id="file"
+                      name="file"
+                      accept="application/pdf"
+                      ref={fileInputRef1}
+                      style={{ display: "none"}}
+                      onChange={handleFileChange1}
+                      
+                    />
+                    
 
-      </Container>
+                   <Container sx={{display:'flex',flexDirection:'row'}}>
 
-       </Container>
-
-
-
+                   <Button
+                      variant="contained"
+                      sx={{ color: "white", backgroundColor: "#205295",mr:2 }}
+                      onClick={handleBrowseClick1}
+                    >
+                      Upload
+                    </Button>
+                    <Button
+                    onClick={() => handleDownload(selectedAgreement)}
+                      variant="contained"
+                      sx={{ color: "white", backgroundColor: "#205295" }}
+                    >
+                      Download
+                    </Button>
+                   </Container>
+                  </Container>
+                  <Container
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      mb: 1,
+                    }}
+                  >
+                    <input
+                    type="text"
+                    value={selectedBankGuarantee ? selectedBankGuarantee.name : ""}
+                    style={{
+                      width: 300,
+                      height: 25,
+                      backgroundColor: "white",
+                      borderRadius: "9px",
+                      marginRight: 15,
+                    }}
+                    readOnly
+                  />
+                    
+                    <input
+                      type="file"
+                      id="file"
+                      name="file"
+                      accept="application/pdf"
+                      ref={fileInputRef2}
+                      style={{ display: "none" }}
+                      onChange={handleFileChange2}
+                    />
+<Container sx={{display:'flex',flexDirection:'row'}}>
+                    <Button
+                      variant="contained"
+                      sx={{ color: "white", backgroundColor: "#205295" ,mr:2}}
+                      onClick={handleBrowseClick2}
+                    >
+                      Upload
+                    </Button>
+                    <Button
+                      onClick={() => handleDownload(selectedBankGuarantee)}
+                      variant="contained"
+                      sx={{ color: "white", backgroundColor: "#205295" }}
+                    >
+                      Download
+                    </Button>
+                    </Container>
+                  </Container>
+                  <Container
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                     <input
+                    type="text"
+                    value={selectedBond ? selectedBond.name : ""}
+                    style={{
+                      width: 300,
+                      height: 25,
+                      backgroundColor: "white",
+                      borderRadius: "9px",
+                      marginRight: 15,
+                    }}
+                    readOnly
+                  />
+                    <input
+                      type="file"
+                      id="file"
+                      name="file"
+                      accept="application/pdf"
+                      ref={fileInputRef3}
+                      style={{ display: "none" ,}}
+                      onChange={handleFileChange3}
+                    />
+<Container sx={{display:'flex',flexDirection:'row'}}>
+                    <Button
+                      variant="contained"
+                      sx={{ color: "white", backgroundColor: "#205295",mr:2 }}
+                      onClick={handleBrowseClick3}
+                    >
+                      Upload
+                    </Button>
+                    <Button
+                      onClick={() => handleDownload(selectedBond)}
+                      variant="contained"
+                      sx={{ color: "white", backgroundColor: "#205295" }}
+                    >
+                      Download
+                    </Button>
+                    </Container>
+                  </Container>
+                </Container>
+              </Container>
             </Paper>
             <Routerlink to={"/letter-of-acceptance"}>
-              <Button variant="contained" sx={{ mt: 15 ,backgroundColor:'#205295' ,height:50,width:150 }}>
+              <Button
+                variant="contained"
+                sx={{
+                  mt: 15,
+                  backgroundColor: "#205295",
+                  height: 50,
+                  width: 150,
+                }}
+                onClick={sendFilesToDB(
+                  poId,
+                  selectedAgreement,
+                  selectedBankGuarantee,
+                  selectedBond
+                )}
+              >
                 Next
               </Button>
             </Routerlink>

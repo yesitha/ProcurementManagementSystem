@@ -29,7 +29,7 @@ export const GetApprovedItemsDetailsvendorId = async (vendorId) => {
 
   export const GetPODetailsbyId = async (poId) => {
     try {
-      console.log();
+      
       const response = await axios.get(
         `${process.env.REACT_APP_API_HOST}/api/Vendor/GetPOVendorDetails/${poId}`
       );
@@ -40,3 +40,34 @@ export const GetApprovedItemsDetailsvendorId = async (vendorId) => {
       throw error;
     }
   }
+
+  export const fetchAlreadyUploadedPDf= async (poId) => {
+    try {
+      console.log("reached");
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_HOST}/api/Vendor/GetUploadedPdf/${poId}`
+      );
+      console.log(response);
+      return response.data;  
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+
+  export const sendFilesToDB = async (poId,selectedAgreement,selectedBankGuarantee,selectedBond) => {
+    try {
+      const data = new FormData();
+      data.append('agreement', selectedAgreement);
+      data.append('BankGuarantee', selectedBankGuarantee);
+      data.append('bond', selectedBond);
+      
+      const response = await fetch(`${process.env.REACT_APP_API_HOST}/api/Vendor/uploadRequiredDocuments/${poId}`, {
+        method: 'POST',
+        body: data,
+      });
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
