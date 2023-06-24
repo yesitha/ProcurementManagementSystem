@@ -187,3 +187,27 @@ export const submitBidOpCommitteeToDb = async (mppId,data) => {
     throw error;
   }
 };
+
+export const GetBidDetails = async () => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/GetBidDetails`
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const GetItemBidDetailsitemId = async (itemId) => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/GetItemBidDetails/${itemId}`
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
