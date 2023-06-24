@@ -771,6 +771,33 @@ namespace PWMSBackend.Controllers
             return Ok(vendorDetails);
         }
 
+        [HttpGet("GetSelectedvendorListWithvendorDetails/{mppId}")]
+
+        public IActionResult GetSelectedvendorListWithvendorDetails(string mppId)
+        {
+            var selectedVendorList = _context.MasterProcurementPlans
+                .Where(mpp => mpp.MppId == mppId)
+                .SelectMany(mpp => mpp.SubProcurementPlans)
+                .SelectMany(spp => spp.subProcurementPlanItems)
+                .Where(item => item.ProcuremnetCommitteeStatus == "approve" && item.DGStatus == "approve")
+                .GroupBy(item => item.ItemId)
+                .Select(item => item.FirstOrDefault().SelectedVendor)
+                .Distinct()
+                .ToList();
+
+            var vendorDetails = _context.Vendors
+                .Where(vendor => selectedVendorList.Contains(vendor.FirstName + " " + vendor.LastName))
+                .Select(vendor => new
+                {
+                    selectedVendorName = vendor.FirstName + " " + vendor.LastName,
+                    vendor.VendorId,
+                    address = vendor.Address1 + "," + vendor.State + "," + vendor.City
+                })
+                .ToList();
+
+            return Ok(vendorDetails);
+        }
+        
         [HttpGet("GetApprovedItemDetailsforPO/{mppId}/{vendorFullName}")]
         public IActionResult GetApprovedItemDetailsforPO(string mppId, string vendorFullName)
         {

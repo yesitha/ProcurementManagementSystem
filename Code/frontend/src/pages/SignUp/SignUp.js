@@ -227,6 +227,68 @@ export default function Signup() {
                         name="jobTitle"
                       />
                     </Grid>
+                    <Grid item md={5} xs={11}>
+                      <TextField
+                          {...register("jobTitle")}
+                          margin="normal"
+                          fullWidth
+                          id="jobTitle"
+                          label="Salutation"
+                          name="jobTitle"
+                      />
+                    </Grid>
+
+
+
+                    <Grid item md={5} xs={11}>
+                    <TextField
+                        {...register("userName", {
+                          required: "UserName is required",
+                        })}
+                        margin="normal"
+                        fullWidth
+                        id="userName"
+                        label="User Name"
+                        name="userName"
+                    />
+                    <p className="error">{errors.userName?.message}</p>
+                      </Grid>
+
+                    <Grid item md={5} xs={11}>
+                    <TextField
+                        {...register("password", {
+                          required: "Password Required",
+                          pattern: {
+                            value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                            message:
+                                "Password must contain Minimum eight characters, at least one letter and one number",
+                          },
+                          minLength: {
+                            value: 8,
+                            message: "Password not long Enough!",
+                          },
+                        })}
+                        margin="normal"
+                        fullWidth
+                        name="password"
+                        label="Password"
+                        type="password"
+                        id="password"
+                    />
+                    <p className="error">{errors.password?.message}</p>
+                    </Grid>
+
+
+
+
+
+
+
+
+
+
+
+
                     <Grid item md={5} xs={11}></Grid>
                   </Grid>
                   <Grid container sx={{ justifyContent: "space-between" }}>
