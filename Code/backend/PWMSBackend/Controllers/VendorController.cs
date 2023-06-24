@@ -277,17 +277,17 @@ namespace PWMSBackend.Controllers
                                             .Select(item => new { item.ItemId, item.ItemName, item.Specification })
                                             .ToList();
 
-            var result = from input in filteredData
-                         join itemDetail in itemDetails
-                         on input.itemId equals itemDetail.ItemId
-                         select new
-                         {
-                             itemId = input.itemId,
-                             itemName = itemDetail.ItemName,
-                             Specification = itemDetail.Specification,
-                             totalQuantity = input.totalQuantity,
-                             expectedDeliveryDate = input.expectedDeliveryDate,
-                         };
+            //var result = from input in filteredData
+            //             join itemDetail in itemDetails
+            //             on input.itemId equals itemDetail.ItemId
+            //             select new
+            //             {
+            //                 itemId = input.itemId,
+            //                 itemName = itemDetail.ItemName,
+            //                 Specification = itemDetail.Specification,
+            //                 totalQuantity = input.totalQuantity,
+            //                 expectedDeliveryDate = input.expectedDeliveryDate,
+            //             };
 
             //get vendor details
 
@@ -295,23 +295,43 @@ namespace PWMSBackend.Controllers
                                                             .Select(vendor => new { vendor.VendorId, vendor.ItemId, vendor.BidValue, vendor.BidStatus, vendor.LetterOfAcceptance })
                                                             .ToList();
 
-            var result2 = from input in result
-                          join vendorDetail in vendorDetails
-                          on input.itemId equals vendorDetail.ItemId into gj
-                          from vendor in gj.DefaultIfEmpty()
-                          select new
-                          {
-                              itemId = input.itemId,
-                              itemName = input.itemName,
-                              Specification = input.Specification,
-                              totalQuantity = input.totalQuantity,
-                              expectedDeliveryDate = input.expectedDeliveryDate,
-                              bidValue = vendor?.BidValue,
-                              bidStatus = vendor?.BidStatus,
-                              isletterOfAcceptance = vendor != null && !string.IsNullOrEmpty(vendor.LetterOfAcceptance)
-                          };
+            //var result2 = from input in result
+            //              join vendorDetail in vendorDetails
+            //              on input.itemId equals vendorDetail.ItemId into gj
+            //              from vendor in gj.DefaultIfEmpty()
+            //              select new
+            //              {
+            //                  itemId = input.itemId,
+            //                  itemName = input.itemName,
+            //                  Specification = input.Specification,
+            //                  totalQuantity = input.totalQuantity,
+            //                  expectedDeliveryDate = input.expectedDeliveryDate,
+            //                  bidValue = vendor?.BidValue,
+            //                  bidStatus = vendor?.BidStatus,
+            //                  isletterOfAcceptance = vendor != null && !string.IsNullOrEmpty(vendor.LetterOfAcceptance)
+            //              };
 
-            return Ok(result2);
+            var result = from input in filteredData
+                         join itemDetail in itemDetails
+                         on input.itemId equals itemDetail.ItemId
+                         join vendorDetail in vendorDetails
+                         on input.itemId equals vendorDetail.ItemId into gj
+                         from vendor in gj.DefaultIfEmpty()
+                         where vendorDetails.Select(v => v.ItemId).Contains(input.itemId)
+                         select new
+                         {
+                             itemId = input.itemId,
+                             itemName = itemDetail.ItemName,
+                             Specification = itemDetail.Specification,
+                             totalQuantity = input.totalQuantity,
+                             expectedDeliveryDate = input.expectedDeliveryDate,
+                             bidValue = vendor?.BidValue,
+                             bidStatus = vendor?.BidStatus,
+                             isletterOfAcceptance = vendor != null && !string.IsNullOrEmpty(vendor.LetterOfAcceptance)
+                         };
+
+
+            return Ok(result);
         }
 
         // Letter of Acceptance by itemId 
