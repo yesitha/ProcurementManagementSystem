@@ -24,7 +24,7 @@ const style = {
   p: 3,
 };
 
-export default function BasicModal() {
+export default function BasicModal({ comment }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -74,7 +74,7 @@ export default function BasicModal() {
             <TextField
               Input
               disabled
-              defaultValue="Details of thknfjknfkjenfkejfnekjnfekjnfefefegg"
+              defaultValue={comment}
               sx={{ width: "230px", size: "400px", marginBottom: "30px" }}
               id="outlined-search"
               label="Note"
