@@ -278,8 +278,8 @@ function App() {
             path="/PurchaseOrder-vendor-view/:poId"
             element={<PurchaseOrderPreview />}
           />
-          <Route path="/VGoodReceiveNote" element={<ViewGRN />} />
-          <Route path="/grn" element={<GRN />} />
+          <Route path="/VGoodReceiveNote/:vendorId" element={<ViewGRN />} />
+          <Route path="/grn/:poId/:grnId" element={<GRN />} />
           <Route path="/create-invoice" element={<CreateInvoice2 />} />
           <Route path="/send-invoice" element={<SendInvoice />} />
           <Route path="/view-invoice" element={<ViewInvoices />} />

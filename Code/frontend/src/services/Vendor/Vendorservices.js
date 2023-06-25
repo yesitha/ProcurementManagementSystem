@@ -196,6 +196,29 @@ export const GetApprovedItemsDetailsvendorId = async (vendorId) => {
         `${process.env.REACT_APP_API_HOST}/api/Vendor/GetVendorVerifyPdf/${vendorId}`
       );
       console.log(response);
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+  
+  export const GetGRNIdListByVendorId = async (vendorId) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_HOST}/api/Vendor/GetGRNIdListByVendorId/HEL9863`
+      );
+      return response.data;  
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }; 
+
+  export const GetGRNItemDetails = async (poId,grnId) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_HOST}/api/Vendor/GetGRNItemDetails/${poId}/${grnId}`
+      );
       return response.data;  
     } catch (error) {
       console.log(error);

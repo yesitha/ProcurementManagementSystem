@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect,useState} from "react";
 import styles from "./GRN.module.css";
 import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import { ButtonBase, Typography } from "@mui/material";
@@ -17,7 +17,9 @@ import "../../../users/vendors.js";
 import EnterNotePopup from "../../../components/Popups/DonePopup/EnterNotePopup";
 import { vendors } from "../../../users/vendors.js";
 import ViewNote from "../../../components/Popups/DonePopup/ViewNote";
-import { Link as Routerlink } from "react-router-dom";
+import { Link as Routerlink, useParams } from "react-router-dom";
+import { GetGRNItemDetails } from "../../../services/Vendor/Vendorservices";
+import { DateFormat } from "../../../services/dataFormats";
 
 const columns = [
   { id: "ItemID", label: "Item ID", Width: 150, align: "center" },
@@ -60,6 +62,28 @@ export default function GRN() {
   const supplier = vendors[0].name;
   const text = `Successfully sent GRN to vendor ${supplier}`;
 
+
+  const { poId,grnId } = useParams();
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const fetchdata = async () => {
+      try {
+        const response = await GetGRNItemDetails(poId,grnId);
+        const data = response;
+        setData(data);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchdata();
+  }, []);
+
+  if (data===null) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div style={{ overflowX: "hidden" }}>
       <div className={styles.afmpp_mainBody}>
@@ -69,21 +93,21 @@ export default function GRN() {
             <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
           </IconButton>
           </Routerlink>
-          [GRN NO]
+          {grnId}
         </div>
         <div className={styles.GRNno}>
           <Typography>
-            GRN No
+            GRN No : {grnId}
             <br />
-            PO # : [12321]
+            PO No  : {poId}
           </Typography>
         </div>
 
         <div className={styles.adjust}>
           <div className={styles.supplierdetails}>
             <Typography>
-              Supplier Name: <br />
-              Date :
+              Supplier Name  : {data.vendorName} <br />
+              Date : {DateFormat(data.shippingDate)}
             </Typography>
           </div>
 
@@ -160,7 +184,6 @@ export default function GRN() {
         </div>
         <div className={styles.divide}>
           <div className={styles.supplierName}>
-            <Typography>Supplier Name:</Typography>
           </div>
           <div className={styles.checkedBy}>
             <Typography>Checked By:</Typography>
