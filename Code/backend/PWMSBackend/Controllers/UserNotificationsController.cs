@@ -89,6 +89,11 @@ namespace PWMSBackend.Controllers
         [HttpPost("CreateUserNotification")]
         public IActionResult CreateUserNotification(Notification notification)
         {
+            var employeeIds = _context.ProcurementEmployees
+                .Where(p => p.Division.DivisionName == notification.DivisionName)
+                .Select(p => p.EmployeeId)
+                .ToList();
+
             string notificationId = _NotificationIdGenerator.GenerateNotificationId();
 
             var userNotification = new UserNotification
@@ -98,7 +103,12 @@ namespace PWMSBackend.Controllers
                 type = notification.type,
                 isRead = false,
                 timeStamp = DateTime.Now,
-                ProcurementEmployee = _context.ProcurementEmployees.Where(p => p.Division.DivisionName == notification.DivisionName).FirstOrDefault()
+                //ProcurementEmployee = _context.ProcurementEmployees.Where(p => p.Division.DivisionName == notification.DivisionName).FirstOrDefault()
+                UserNotificationProcurementEmployees = employeeIds.Select(e => new UserNotificationProcurementEmployee
+                {
+                    ProcurementEmployeeId = e,
+                    NotificationId = notificationId
+                }).ToList()
             };
 
             // Your code to save the userNotification to the database using your data access layer
@@ -113,7 +123,7 @@ namespace PWMSBackend.Controllers
         public IActionResult GetUserNotifications(string employeeId)
         {
             var userNotifications = _context.UserNotifications
-                .Where(u => u.ProcurementEmployee.EmployeeId == employeeId && u.isRead == false)
+                .Where(u => u.UserNotificationProcurementEmployees.FirstOrDefault().ProcurementEmployeeId == employeeId && u.isRead == false)
                 .Select(u => new
                 {
                     u.notificationId,
@@ -143,6 +153,63 @@ namespace PWMSBackend.Controllers
             _context.SaveChanges();
 
             return Ok("UserNotification updated successfully.");
+        }
+
+        // Notification for Committee members
+
+        public class CommitteeNotification
+        {
+            public string message { get; set; }
+            public string type { get; set; }
+            public string mppId { get; set; }
+            public string committeeType { get; set; }
+        }
+
+        [HttpPost("CreateCommitteeNotification")]
+        public IActionResult CreateCommitteeNotification(CommitteeNotification notification)
+        {
+            string committeeId;
+
+            if (notification.committeeType == "Tec")
+            {
+                committeeId = _context.MasterProcurementPlans.Where(c => c.MppId == notification.mppId).FirstOrDefault().TecCommitteeId;
+            }
+            else if (notification.committeeType == "BidOpening")
+            {
+                committeeId = _context.MasterProcurementPlans.Where(c => c.MppId == notification.mppId).FirstOrDefault().BidOpeningCommitteeId;
+            }
+            else
+            {
+                committeeId = _context.MasterProcurementPlans.Where(c => c.MppId == notification.mppId).FirstOrDefault().ProcurementCommittee.CommitteeId;
+            }
+
+            var employeeIds = _context.CommitteeMemberCommittees
+                .Where(cmc => cmc.CommitteeId == committeeId)
+                .Select(cmc => cmc.EmployeeId)
+                .ToList();
+
+            string notificationId = _NotificationIdGenerator.GenerateNotificationId();
+
+            var userNotification = new UserNotification
+            {
+                notificationId = notificationId,
+                message = notification.message,
+                type = notification.type,
+                isRead = false,
+                timeStamp = DateTime.Now,
+                //ProcurementEmployee = _context.ProcurementEmployees.Where(p => p.Division.DivisionName == notification.DivisionName).FirstOrDefault()
+                UserNotificationProcurementEmployees = employeeIds.Select(e => new UserNotificationProcurementEmployee
+                {
+                    ProcurementEmployeeId = e,
+                    NotificationId = notificationId
+                }).ToList()
+            };
+
+            // Your code to save the userNotification to the database using your data access layer
+            _context.UserNotifications.Add(userNotification);
+            _context.SaveChanges();
+
+            return Ok("UserNotifications created successfully.");
         }
 
     }
