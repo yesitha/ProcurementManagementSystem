@@ -835,6 +835,15 @@ namespace PWMSBackend.Controllers
         [HttpPost("CreatePO/{mppId}/{vendorId}/{PODate}")]
         public IActionResult CreatePO(string mppId, string vendorId, DateTime PODate)
         {
+            var purchaseOrder = _context.PurchaseOrders
+                .FirstOrDefault(po => po.VendorId == vendorId && po.MppId == mppId);
+
+            if (purchaseOrder != null)
+            {
+                return Ok(purchaseOrder.PoId); // Purchase Order found
+            }
+
+
             var selectedVendorList = _context.MasterProcurementPlans
                 .Where(mpp => mpp.MppId == mppId)
                 .SelectMany(mpp => mpp.SubProcurementPlans)
