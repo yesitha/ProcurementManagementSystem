@@ -1,10 +1,11 @@
 ﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PWMSBackend.Models
 {
     public class UserNotification
     {
-        public int notificationId { get; set; }
+        public string notificationId { get; set; }
         public string message { get; set; }
 
         public string type { get; set; }
