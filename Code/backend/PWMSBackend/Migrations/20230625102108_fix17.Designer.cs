@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PWMSBackend.Data;
 
@@ -11,9 +12,10 @@ using PWMSBackend.Data;
 namespace PWMSBackend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230625102108_fix17")]
+    partial class fix17
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -531,6 +533,10 @@ namespace PWMSBackend.Migrations
                     b.Property<string>("notificationId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("ProcurementEmployeeEmployeeId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<bool>("isRead")
                         .HasColumnType("bit");
 
@@ -547,22 +553,9 @@ namespace PWMSBackend.Migrations
 
                     b.HasKey("notificationId");
 
+                    b.HasIndex("ProcurementEmployeeEmployeeId");
+
                     b.ToTable("UserNotifications");
-                });
-
-            modelBuilder.Entity("PWMSBackend.Models.UserNotificationProcurementEmployee", b =>
-                {
-                    b.Property<string>("NotificationId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ProcurementEmployeeId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("NotificationId", "ProcurementEmployeeId");
-
-                    b.HasIndex("ProcurementEmployeeId");
-
-                    b.ToTable("UserNotificationProcurementEmployees");
                 });
 
             modelBuilder.Entity("PWMSBackend.Models.Vendor", b =>
@@ -1037,23 +1030,15 @@ namespace PWMSBackend.Migrations
                     b.Navigation("SubProcurementPlan");
                 });
 
-            modelBuilder.Entity("PWMSBackend.Models.UserNotificationProcurementEmployee", b =>
+            modelBuilder.Entity("PWMSBackend.Models.UserNotification", b =>
                 {
-                    b.HasOne("PWMSBackend.Models.UserNotification", "UserNotification")
-                        .WithMany("UserNotificationProcurementEmployees")
-                        .HasForeignKey("NotificationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("PWMSBackend.Models.ProcurementEmployee", "ProcurementEmployee")
-                        .WithMany("UserNotificationProcurementEmployees")
-                        .HasForeignKey("ProcurementEmployeeId")
+                        .WithMany("UserNotifications")
+                        .HasForeignKey("ProcurementEmployeeEmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ProcurementEmployee");
-
-                    b.Navigation("UserNotification");
                 });
 
             modelBuilder.Entity("PWMSBackend.Models.VendorhasItem", b =>
@@ -1164,7 +1149,7 @@ namespace PWMSBackend.Migrations
 
             modelBuilder.Entity("PWMSBackend.Models.ProcurementEmployee", b =>
                 {
-                    b.Navigation("UserNotificationProcurementEmployees");
+                    b.Navigation("UserNotifications");
                 });
 
             modelBuilder.Entity("PWMSBackend.Models.PurchaseOrder", b =>
@@ -1184,11 +1169,6 @@ namespace PWMSBackend.Migrations
                     b.Navigation("SubProcurementApprovedItems");
 
                     b.Navigation("subProcurementPlanItems");
-                });
-
-            modelBuilder.Entity("PWMSBackend.Models.UserNotification", b =>
-                {
-                    b.Navigation("UserNotificationProcurementEmployees");
                 });
 
             modelBuilder.Entity("PWMSBackend.Models.Vendor", b =>

@@ -140,7 +140,7 @@ namespace PWMSBackend.Controllers
 
             // Get the closest PreBidMeetingDate to the current date among the items with the same itemId
             var closestDate = _context.SubProcurementApprovedItems
-                .Where(a => a.ItemId == itemId && a.PreBidMeetingDate.HasValue && a.PreBidMeetingDate.Value.Date >= currentDate)
+                .Where(a => a.ItemId == itemId && a.PreBidMeetingDate.HasValue && a.PreBidMeetingDate.Value.Date <= currentDate)
                 .OrderBy(a => a.PreBidMeetingDate.Value)
                 .Select(a => a.PreBidMeetingDate.Value)
                 .FirstOrDefault();

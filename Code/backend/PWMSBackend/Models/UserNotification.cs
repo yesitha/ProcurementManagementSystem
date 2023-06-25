@@ -1,10 +1,11 @@
 ﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PWMSBackend.Models
 {
     public class UserNotification
     {
-        public int notificationId { get; set; }
+        public string notificationId { get; set; }
         public string message { get; set; }
 
         public string type { get; set; }
@@ -12,8 +13,8 @@ namespace PWMSBackend.Models
         
         public DateTime timeStamp { get; set; }
 
-        //One to many relationships
+        //Many to many relationships
         //[JsonIgnore]
-        public ProcurementEmployee ProcurementEmployee { get; set; }
+        public ICollection<UserNotificationProcurementEmployee> UserNotificationProcurementEmployees { get; set; }
     }
 }

@@ -16,6 +16,6 @@
 
         public Division Division { get; set; }
 
-        public ICollection<UserNotification> UserNotifications { get; set; }
+        public ICollection<UserNotificationProcurementEmployee> UserNotificationProcurementEmployees { get; set; }
     }
 }
