@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PWMSBackend.Data;
 
@@ -11,9 +12,10 @@ using PWMSBackend.Data;
 namespace PWMSBackend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230624191654_fix15")]
+    partial class fix15
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -178,9 +180,6 @@ namespace PWMSBackend.Migrations
                     b.Property<double>("Tax")
                         .HasColumnType("float");
 
-                    b.Property<double>("Total")
-                        .HasColumnType("float");
-
                     b.HasKey("InvoiceId");
 
                     b.HasIndex("GrnId")
@@ -205,10 +204,6 @@ namespace PWMSBackend.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ItemName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Itemtype")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -528,8 +523,11 @@ namespace PWMSBackend.Migrations
 
             modelBuilder.Entity("PWMSBackend.Models.UserNotification", b =>
                 {
-                    b.Property<string>("notificationId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("notificationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("notificationId"), 1L, 1);
 
                     b.Property<string>("ProcurementEmployeeEmployeeId")
                         .IsRequired()

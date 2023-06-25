@@ -76,6 +76,7 @@ import IssueItem from "./pages/InventoryManager/IssueItem/IssueItem";
 import AssetRegistry from "./pages/Assets Registry/AssetRegistry";
 import LetterofAcceptance from "./pages/Vendor/Letter of Acceptance/LetterofAcceptance";
 import PDViewSubProcurementPlan from "./pages/Dicvision HOD/PDViewSubProcurementPlan/PDViewSubProcurementPlan"
+import Signup from "./pages/SignUp/SignUp";
 
 function App() {
   const baseState = useSelector((store) => store.base);
@@ -285,6 +286,7 @@ function App() {
           <Route path="/invoice" element={<Invoicesvendorside />} />
           <Route path="/items-to-be-shipped" element={<ItemstobeShipped />} />
           <Route path="/bid-approved" element={<BidHistory />} />
+          <Route path="/signUp" element={<Signup/>} />
           <Route
             path="/verification-statuses-evaluated"
             element={<BidHistory />}
