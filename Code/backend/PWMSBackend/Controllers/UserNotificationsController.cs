@@ -78,19 +78,27 @@ namespace PWMSBackend.Controllers
 
         //Purchasing Division HOD Notification
 
-        [HttpPost("CreateUserNotification")]
-        public IActionResult CreateUserNotification(string DivisionName)
+       public class Notification
         {
-            int notificationId = _NotificationIdGenerator.GenerateNotificationId();
+            public string message { get; set; }
+            public string type { get; set; }
+            public string DivisionName { get; set; }
+        }
+
+
+        [HttpPost("CreateUserNotification")]
+        public IActionResult CreateUserNotification(Notification notification)
+        {
+            string notificationId = _NotificationIdGenerator.GenerateNotificationId();
 
             var userNotification = new UserNotification
             {
                 notificationId = notificationId,
-                message = $"{DivisionName} Division created a new sub procurement plan",
-                type = "New Sub Procurement Plan",
+                message = notification.message,
+                type = notification.type,
                 isRead = false,
                 timeStamp = DateTime.Now,
-
+                ProcurementEmployee = _context.ProcurementEmployees.Where(p => p.Division.DivisionName == notification.DivisionName).FirstOrDefault()
             };
 
             // Your code to save the userNotification to the database using your data access layer
@@ -100,6 +108,42 @@ namespace PWMSBackend.Controllers
             return Ok("UserNotification created successfully.");
         }
 
+        [HttpGet("GetUserNotifications/{employeeId}")]
+
+        public IActionResult GetUserNotifications(string employeeId)
+        {
+            var userNotifications = _context.UserNotifications
+                .Where(u => u.ProcurementEmployee.EmployeeId == employeeId && u.isRead == false)
+                .Select(u => new
+                {
+                    u.notificationId,
+                    u.message,
+                    u.type,
+                    u.isRead,
+                    u.timeStamp
+                })
+                .ToList();
+
+            return Ok(userNotifications);
+        }
+
+        [HttpPut("UpdateUserNotification/{notificationId}")]
+        public IActionResult UpdateUserNotification(string notificationId)
+        {
+            var userNotification = _context.UserNotifications
+                .Where(u => u.notificationId == notificationId)
+                .FirstOrDefault();
+
+            if (userNotification == null)
+            {
+                return NotFound();
+            }
+
+            userNotification.isRead = true;
+            _context.SaveChanges();
+
+            return Ok("UserNotification updated successfully.");
+        }
 
     }
 }
