@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./viewGRN.module.css";
 import SideNavBar from "../../components/SideNavigationBar/SideNavBar";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -12,7 +12,9 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import ViewNote from "../../components/Popups/DonePopup/ViewNote";
-import { Link as Routerlink } from "react-router-dom";
+import { Link as Routerlink, useParams } from "react-router-dom";
+import { GetGRNIdListByVendorId } from "../../services/Vendor/Vendorservices";
+import { DateFormat } from "../../services/dataFormats";
 
 const columns = [
   { id: "GRNID", label: "GRN ID", Width: 200, align: "center" },
@@ -20,24 +22,6 @@ const columns = [
   { id: "Date", label: "Date", Width: 200, align: "center" },
   { id: "Action", label: "Action", Width: 200, align: "center" },
 ];
-
-function createData(GRNID, POID, Date, Action) {
-  return { GRNID, POID, Date, Action };
-}
-
-const rows = [
-  createData(
-    "I0017",
-    "544",
-    "12/02/2023",
-    <Routerlink to={'/grn'}>
-    <IconButton
-      sx={{ width: "40px", height: "40px", px: 0.5 }}
-      className={styles.rejectButton}>
-      <VisibilityIcon />
-    </IconButton>
-    </Routerlink>)
-    ];
 
 export default function ViewGRN() {
   const [page, setPage] = React.useState(0);
@@ -51,14 +35,30 @@ export default function ViewGRN() {
     setPage(0);
   };
 
+  const { vendorId } = useParams();
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const fetchdata = async () => {
+      try {
+        const response = await GetGRNIdListByVendorId(vendorId);
+        const data = response;
+        setData(data);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchdata();
+  }, []);
+
   return (
     <div>
-
       <div className={styles.afmpp_heading}>
         <Routerlink to={-1}>
-        <IconButton sx={{ pl: "15px", height: "34px", width: "34px" }}>
-          <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
-        </IconButton>
+          <IconButton sx={{ pl: "15px", height: "34px", width: "34px" }}>
+            <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
+          </IconButton>
         </Routerlink>
         View GRN
       </div>
@@ -89,36 +89,36 @@ export default function ViewGRN() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => {
-                    return (
-                      <TableRow
-                        hover
-                        role="checkbox"
-                        tabIndex={-1}
-                        key={row.code}
-                      >
-                        {columns.map((column) => {
-                          const value = row[column.id];
-                          return (
-                            <TableCell key={column.id} align={column.align}>
-                              {column.format && typeof value === "number"
-                                ? column.format(value)
-                                : value}
-                            </TableCell>
-                          );
-                        })}
+                {data &&
+                  data
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row, index) => (
+                      <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                        <TableCell align="center">{row.grnId}</TableCell>
+                        <TableCell align="center">{row.poId}</TableCell>
+                        <TableCell align="center">
+                          {DateFormat(row.date)}
+                        </TableCell>
+                        <TableCell align="center">
+                          {
+                            <Routerlink to={`/grn/${row.poId}/${row.grnId}`}>
+                              <IconButton
+                                sx={{ width: "40px", height: "40px", px: 0.5 ,color:"#205295"}}
+                              >
+                                <VisibilityIcon />
+                              </IconButton>
+                            </Routerlink>
+                          }
+                        </TableCell>
                       </TableRow>
-                    );
-                  })}
+                    ))}
               </TableBody>
             </Table>
           </TableContainer>
           <TablePagination
             rowsPerPageOptions={[10, 25, 50, 100]}
             component="div"
-            count={rows.length}
+            count={10}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
