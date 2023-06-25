@@ -821,9 +821,17 @@ namespace PWMSBackend.Controllers
             return Ok(selectedVendorList);
         }
 
-        [HttpPost("CreatePO/{mppId}/{vendorId}/{PODate}")]
-        public IActionResult CreatePO(string mppId, string vendorId, DateTime PODate)
+        [HttpPost("CreatePO/{mppId}/{vendorId}")]
+        public IActionResult CreatePO(string mppId, string vendorId)
         {
+            var purchaseOrder = _context.PurchaseOrders
+                .FirstOrDefault(po => po.VendorId == vendorId && po.MppId == mppId);
+
+            if (purchaseOrder != null)
+            {
+                return Ok(purchaseOrder.PoId); // Purchase Order found
+            }
+
             var selectedVendorList = _context.MasterProcurementPlans
                 .Where(mpp => mpp.MppId == mppId)
                 .SelectMany(mpp => mpp.SubProcurementPlans)
@@ -857,7 +865,7 @@ namespace PWMSBackend.Controllers
             var PO = new PurchaseOrder
             {
                 PoId = PoId,
-                Date = PODate,
+                Date = DateTime.Now,
                 TotalAmount = sumOfBidValue,
                 VendorId = vendorId,
                 MppId = mppId
