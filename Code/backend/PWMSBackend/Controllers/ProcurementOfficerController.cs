@@ -798,9 +798,14 @@ namespace PWMSBackend.Controllers
             return Ok(vendorDetails);
         }
         
-        [HttpGet("GetApprovedItemDetailsforPO/{mppId}/{vendorFullName}")]
-        public IActionResult GetApprovedItemDetailsforPO(string mppId, string vendorFullName)
+        [HttpGet("GetApprovedItemDetailsforPO/{mppId}/{vendorId}")]
+        public IActionResult GetApprovedItemDetailsforPO(string mppId, string vendorId)
         {
+            var vendorFullName = _context.Vendors
+                .Where(v => v.VendorId == vendorId)
+                .Select(v => v.FirstName + " " + v.LastName)
+                .FirstOrDefault();
+
             var selectedVendorList = _context.MasterProcurementPlans
                 .Where(mpp => mpp.MppId == mppId)
                 .SelectMany(mpp => mpp.SubProcurementPlans)
