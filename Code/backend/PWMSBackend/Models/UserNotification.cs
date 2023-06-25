@@ -13,8 +13,8 @@ namespace PWMSBackend.Models
         
         public DateTime timeStamp { get; set; }
 
-        //One to many relationships
+        //Many to many relationships
         //[JsonIgnore]
-        public ProcurementEmployee ProcurementEmployee { get; set; }
+        public ICollection<UserNotificationProcurementEmployee> UserNotificationProcurementEmployees { get; set; }
     }
 }
