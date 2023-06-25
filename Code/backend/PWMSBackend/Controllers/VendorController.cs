@@ -860,6 +860,117 @@ namespace PWMSBackend.Controllers
             return Ok(combinedList);
         }
 
+
+
+        [HttpGet("GetGRNItemDetails/{PoId}/{grnId}")]
+        public IActionResult GetGRNItemDetails(string PoId, string grnId)
+        {
+            var mppId = _context.PurchaseOrders
+                .Where(po => po.PoId == PoId)
+                .Select(po => po.MppId)
+                .FirstOrDefault();
+
+            var vendorId = _context.PurchaseOrders
+                .Where(po => po.PoId == PoId)
+                .Select(po => po.VendorId)
+                .FirstOrDefault();
+
+            var itemList = _context.MasterProcurementPlans
+                .Where(mpp => mpp.MppId == mppId)
+                .SelectMany(mpp => mpp.SubProcurementPlans)
+                .SelectMany(spp => spp.subProcurementPlanItems)
+                .Where(item => item.ProcuremnetCommitteeStatus == "approve" && item.DGStatus == "approve"
+                                && item.SelectedVendor == _context.Vendors
+                                                                .Where(v => v.VendorId == vendorId)
+                                                                .Select(v => v.FirstName + " " + v.LastName)
+                                                                .FirstOrDefault())
+                .GroupBy(item => item.ItemId)
+                .Select(group => new
+                {
+                    ItemId = group.Key,
+                    ItemName = group.First().Item.ItemName,
+                    OrderedQuantity = group.Sum(item => item.Quantity)
+                })
+                .ToList();
+
+            var itemList1 = _context.PurchaseOrder_ItemTobeShippeds
+                .Where(Ok => Ok.PoId == PoId)
+                .Select(Ok => new
+                {
+                    Ok.ItemId,
+                    Ok.Shipped_Qty
+                })
+                .ToList();
+
+            // Get total received quantity for each item
+
+            var grnIdList = _context.GRNs
+                .Where(grn => grn.PoId == PoId)
+                .Select(grn => grn.GrnId)
+                .ToList();
+
+            var itemList0 = _context.GRNItemsToBeShipped
+                    .Where(grn => grnIdList.Contains(grn.GrnId))
+                    .GroupBy(grn => grn.ItemId)
+                    .Select(group => new
+                    {
+                        ItemId = group.Key,
+                        TotalReceived_Qty = group.Sum(grn => grn.Received_Qty)
+                    })
+                    .ToList();
+
+            var itemList2 = _context.GRNItemsToBeShipped
+                .Where(Ok => Ok.GrnId == grnId)
+                .Select(Ok => new
+                {
+                    Ok.ItemId,
+                    Ok.Received_Qty,
+                    Ok.GRNComment
+                })
+                .ToList();
+
+
+            var combinedList = from item in itemList
+                               join orderItem in itemList1 on item.ItemId equals orderItem.ItemId into orderItems
+                               from oi in orderItems.DefaultIfEmpty()
+                               join grnItem in itemList2 on item.ItemId equals grnItem.ItemId into grnItems
+                               from gi in grnItems.DefaultIfEmpty()
+                               join grnItem0 in itemList0 on item.ItemId equals grnItem0.ItemId into grnItems0
+                               from gi0 in grnItems0.DefaultIfEmpty()
+                               where itemList2.Select(x => x.ItemId).Contains(item.ItemId)
+                               select new
+                               {
+                                   item.ItemId,
+                                   item.ItemName,
+                                   item.OrderedQuantity,
+                                   Shipped_Qty = oi?.Shipped_Qty ?? 0,
+                                   Received_Qty = gi?.Received_Qty ?? 0,
+                                   TotalReceived_Qty = gi0?.TotalReceived_Qty ?? 0
+                               };
+
+            var result = combinedList.ToList();
+
+
+
+            var vendorName = _context.PurchaseOrders
+                .Where(po => po.PoId == PoId)
+                .Select(po => po.Vendor.FirstName + " " + po.Vendor.LastName)
+                .FirstOrDefault();
+
+            var shippingDate = _context.GRNItemsToBeShipped
+                .Where(grn => grn.GrnId == grnId)
+                .Select(grn => grn.ShippingDate)
+                .FirstOrDefault();
+
+            var checkedBy = _context.GRNs
+                .Where(grn => grn.GrnId == grnId)
+                .Select(grn => new {grn.Checkedby, grn.Date})
+                .FirstOrDefault();
+
+            return Ok(new { result, vendorName, shippingDate, checkedBy });
+        }
+
+
         
 
         [HttpPost("RegisterVenderToSystem")]
@@ -1361,6 +1472,12 @@ namespace PWMSBackend.Controllers
         }
 
 
+
+
     }
 }
+
+
+
+
     
