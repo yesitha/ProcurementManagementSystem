@@ -330,7 +330,7 @@ namespace PWMSBackend.Controllers
 
 
         [HttpPost("AddItem")]
-        public IActionResult AddItem(string itemName, string specification, string categoryId)
+        public IActionResult AddItem(string itemName, string specification, string categoryId, string itemType)
         {
             string itemId = _itemIdGenerator.GenerateItemId();
 
@@ -348,7 +348,8 @@ namespace PWMSBackend.Controllers
                 ItemId = itemId,
                 ItemName = itemName,
                 Specification = specification,
-                Category = category
+                Category = category,
+                Itemtype = itemType
             };
 
             // Add the new item to the database
