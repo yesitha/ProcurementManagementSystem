@@ -5,7 +5,9 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@gsebdev/react-simple-datepicker": "^1.0.21",
     "@mui/icons-material": "^5.11.0",
+    "@mui/lab": "^5.0.0-alpha.134",
     "@mui/material": "^5.11.6",
     "@mui/x-date-pickers": "^5.0.15",
     "@react-pdf/renderer": "^3.1.12",
@@ -14,6 +16,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.4.0",
+    "date-fns": "^2.30.0",
     "dayjs": "^1.11.7",
     "file-saver": "^2.0.5",
     "pdfkit": "^0.13.0",

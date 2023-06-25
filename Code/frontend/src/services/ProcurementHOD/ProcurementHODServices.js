@@ -38,6 +38,45 @@ export const getMasterProcurementPlanContentFromDB = async (selectedMppId) => {
   }
 };
 
+export const getItemDetailsForPo = async (selectedMppId,vendorId) => {
+  try {
+    const response = await axios.get(
+        `${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/GetApprovedItemDetailsforPO/${selectedMppId}/${vendorId}`
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+
+export const getSelectedVendorDetailsForEachMppId = async (selectedMppId) => {
+  try {
+    const response = await axios.get(
+        `${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/GetSelectedvendorListWithvendorDetails/${selectedMppId}`
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const getVendorDetails = async (selectedMppId) => {
+  try {
+    const response = await axios.get(
+        `${process.env.REACT_APP_API_HOST}/api/api/ProcurementOfficer/GetVendorDetails/Roland%20Hayes`
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+
+
 
 export const MoneyFormat = (amount) => {
   if (typeof amount === "number") {

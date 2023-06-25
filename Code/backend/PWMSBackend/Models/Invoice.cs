@@ -6,6 +6,8 @@ namespace PWMSBackend.Models
     {
         public string InvoiceId { get; set; }
 
+        public double Total { get; set; }
+
         public double Tax { get; set; }
 
         public DateTime Date { get; set; }

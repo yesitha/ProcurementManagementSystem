@@ -1,5 +1,4 @@
 .NotificationPageContainer__header {
-    padding-right: 10px;
     width: fit-content;
     display: flex;
     flex-direction: row;
@@ -20,20 +19,17 @@
   }
   .divide{
     display:flex;
-    flex-direction: row;
+    flex-direction: column;
   }
 
 .block{
     margin-left: 75px;
     color: white;
-    padding-left: 10px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-right: 10px;
+    padding: 10px;
     background-color: #205295;
     border-radius: 8px;
-    width:200px;
-    height:100px;
+    width: 50%;
+    height: 50px;
     
 
 }
