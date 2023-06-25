@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./ManageAuction.module.css";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { IconButton, Paper, Stack, TextField } from "@mui/material";
+import { Button, IconButton, Paper, Stack, TextField } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -35,6 +35,7 @@ function ManageAuction() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [data, setData] = useState(null);
+  const[copyData,setCopyData]=useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,6 +44,7 @@ function ManageAuction() {
         const data = response;
         // console.log(data);
         setData(data);
+        setCopyData(data);
       } catch (error) {
         console.log(error);
       }
@@ -60,23 +62,43 @@ function ManageAuction() {
   };
 
   const handleOpeningDateChange = (itemId, event) => {
-    const newDate = event.target.value;
+  const selectedDate = new Date(event.target.value);
+  const today = new Date();
+  
+  // Check if the selected date is from today onwards
+  
+    const newD = selectedDate.toISOString();
     setData((prevData) =>
-      prevData.map((item) =>
-        item.itemId === itemId ? { ...item, openingDate: newDate } : item
-      )
+      prevData.map((item) => {
+        if (item.itemId === itemId) {
+          return { ...item, auctionOpeningDate: newD };
+        } else {
+          return item;
+        }
+      })
     );
-  };
+  
+};
 
-  const handleClosingDateChange = (itemId, event) => {
-    const newDate = event.target.value;
+const handleClosingDateChange = (itemId, event) => {
+  const selectedDate = new Date(event.target.value);
+  const today = new Date();
+  
+  // Check if the selected date is from today onwards
+  if (selectedDate >= today) {
+    const newD = selectedDate.toISOString();
     setData((prevData) =>
-      prevData.map((item) =>
-        item.itemId === itemId ? { ...item, closingDate: newDate } : item
-      )
+      prevData.map((item) => {
+        if (item.itemId === itemId) {
+          return { ...item, auctionClosingDate: newD };
+        } else {
+          return item;
+        }
+      })
     );
-  };
-
+  }
+  console.log(data);
+};
   const calculateRemainingDays = (openingDate, closingDate) => {
     const currentDate = new Date();
     const openingDateObj = new Date(openingDate);
@@ -157,7 +179,7 @@ function ManageAuction() {
                         page * rowsPerPage,
                         page * rowsPerPage + rowsPerPage
                       )
-                      .map((row) => (
+                      .map((row,index) => (
                         <TableRow
                           hover
                           role="checkbox"
@@ -183,7 +205,8 @@ function ManageAuction() {
                                 id={`openingDate-${row.itemId}`}
                                 label="Opening Date"
                                 type="date"
-                                value={row.openingDate}
+                                value={row.auctionOpeningDate!=null? row.auctionOpeningDate.substring(0, 10):null
+                                }
                                 onChange={(event) =>
                                   handleOpeningDateChange(row.itemId, event)
                                 }
@@ -200,7 +223,8 @@ function ManageAuction() {
                                 id={`closingDate-${row.itemId}`}
                                 label="Closing Date"
                                 type="date"
-                                value={row.closingDate}
+                                value={row.auctionClosingDate!=null? row.auctionClosingDate.substring(0, 10) : null
+                                }
                                 onChange={(event) =>
                                   handleClosingDateChange(row.itemId, event)
                                 }
@@ -213,19 +237,22 @@ function ManageAuction() {
                           </TableCell>
                           <TableCell align="center">
                             {calculateRemainingDays(
-                              row.openingDate,
-                              row.closingDate
+                              row.auctionOpeningDate!=null? row.auctionOpeningDate.substring(0, 10):null,
+                              row.auctionClosingDate!=null? row.auctionClosingDate.substring(0, 10) : null
                             )}
                           </TableCell>
                           <TableCell align="center">
-                            <div
+                            {(copyData[index].auctionOpeningDate && copyData[index].auctionClosingDate) ? <Button disabled variant="contained" sx={styles}>
+                Schedule
+            </Button>:<div
                               onClick={(event) => {
                                 UpdateAuctionDates(
                                   row.itemId,
-                                  row.openingDate,
-                                  row.closingDate
+                                  row.auctionOpeningDate,
+                                  row.auctionClosingDate
                                 );
                                 event.stopPropagation();
+                                
                               }}
                             >
                               <DonePopup
@@ -234,7 +261,8 @@ function ManageAuction() {
                                 color="primary"
                                 sx={{ height: "40px" }}
                               />
-                            </div>
+                            </div>}
+                            
                           </TableCell>
                         </TableRow>
                       ))}
