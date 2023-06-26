@@ -997,6 +997,7 @@ namespace PWMSBackend.Controllers
                 {
                     ItemId = group.Key,
                     ItemName = group.First().Item.ItemName,
+                    Specification = group.First().Item.Specification,
                     OrderedQuantity = group.Sum(item => item.Quantity)
                 })
                 .ToList();
@@ -1050,10 +1051,12 @@ namespace PWMSBackend.Controllers
                                {
                                    item.ItemId,
                                    item.ItemName,
+                                   item.Specification,
                                    item.OrderedQuantity,
                                    Shipped_Qty = oi?.Shipped_Qty ?? 0,
                                    Received_Qty = gi?.Received_Qty ?? 0,
-                                   TotalReceived_Qty = gi0?.TotalReceived_Qty ?? 0
+                                   TotalReceived_Qty = gi0?.TotalReceived_Qty ?? 0,
+                                   GRNComment = gi?.GRNComment ?? ""
                                };
 
             var result = combinedList.ToList();
