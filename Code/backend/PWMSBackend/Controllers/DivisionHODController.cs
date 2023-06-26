@@ -212,6 +212,12 @@ namespace PWMSBackend.Controllers
                 Quantity = Quantity
             };
 
+            var subProcurementPlan = _context.SubProcurementPlanItems
+                .Where(spi => spi.SppId == SppId)
+                .FirstOrDefault();
+
+            subProcurementPlan.EstimatedBudget += Estimated_budget;
+
             if (file != null && file.Length > 0)
             {
                 // Generate a unique filename

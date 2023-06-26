@@ -121,8 +121,7 @@ namespace PWMSBackend.Controllers
             var mpp = new MasterProcurementPlan
             {
                 MppId = mppId,
-                CreationDate = DateTime.Now,
-                EstimatedGrandTotal = 0
+                CreationDate = DateTime.Now
             };
 
             // Create a new FinalizedlMasterProcurementPlan

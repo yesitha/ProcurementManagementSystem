@@ -28,8 +28,10 @@ export default function BasicModal({text, title, styles,}) {
     const handleOpen = () => {
         setOpen(true);
     }
+
     const handleClose = () => {setOpen(false);
         window.location.reload();}
+
     return (
         <div>
             <Button onClick={handleOpen} variant="contained" sx={styles}>
