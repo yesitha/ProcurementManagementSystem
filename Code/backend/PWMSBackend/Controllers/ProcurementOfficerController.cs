@@ -705,22 +705,11 @@ namespace PWMSBackend.Controllers
                                     .FirstOrDefault(),
                         SelectedVendorInfo = group.First().SelectedVendor != null ? new
                         {
-                            BusinessRegistrationDoc = _context.Vendors
+                            vendorId = _context.Vendors
                                     .Where(v => v.FirstName + " " + v.LastName == group.First().SelectedVendor)
-                                    .Select(v => v.BusinessRegistrationDoc)
+                                    .Select(v => v.VendorId)
                                     .FirstOrDefault(),
-                            TaxIdentificationDoc = _context.Vendors
-                                    .Where(v => v.FirstName + " " + v.LastName == group.First().SelectedVendor)
-                                    .Select(v => v.TaxIdentificationDoc)
-                                    .FirstOrDefault(),
-                            InsuranceCertificate = _context.Vendors
-                                    .Where(v => v.FirstName + " " + v.LastName == group.First().SelectedVendor)
-                                    .Select(v => v.InsuaranceCertificate)
-                                    .FirstOrDefault(),
-                            OtherDocs = _context.Vendors
-                                    .Where(v => v.FirstName + " " + v.LastName == group.First().SelectedVendor)
-                                    .Select(v => v.OtherDocs)
-                                    .FirstOrDefault()
+                            
                         } : null,
                         internalAuditorStatus = group.First().InternalAuditorStatus,
                         internalAuditorComment = group.First().InternalAuditorComment

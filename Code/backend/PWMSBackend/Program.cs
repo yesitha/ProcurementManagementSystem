@@ -45,13 +45,60 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(
         Path.Combine(app.Environment.ContentRootPath, "Uploads/Evidence_of_authorization")),
     RequestPath = "/Uploads/Evidence_of_authorization"
 });
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(app.Environment.ContentRootPath, "Uploads/Vendor_Required_Docs/Agreement")),
+    RequestPath = "/Uploads/Vendor_Required_Docs/Agreement"
+});
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(app.Environment.ContentRootPath, "Uploads/Vendor_Required_Docs/Bond")),
+    RequestPath = "/Uploads/Vendor_Required_Docs/Bond"
+});
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(app.Environment.ContentRootPath, "Uploads/Vendor_Required_Docs/BankGuarantee")),
+    RequestPath = "/Uploads/Vendor_Required_Docs/BankGuarantee"
+});
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(app.Environment.ContentRootPath, "Uploads/Vendor_Required_Docs/BusinessRegistration")),
+    RequestPath = "/Uploads/Vendor_Required_Docs/BusinessRegistration"
+});
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(app.Environment.ContentRootPath, "Uploads/Vendor_Required_Docs/InsuranceCertificate")),
+    RequestPath = "/Uploads/Vendor_Required_Docs/InsuranceCertificate"
+});
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(app.Environment.ContentRootPath, "Uploads/Vendor_Required_Docs/OtherDocuments")),
+    RequestPath = "/Uploads/Vendor_Required_Docs/OtherDocuments"
+});
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(app.Environment.ContentRootPath, "Uploads/Letter_of_Acceptence")),
+    RequestPath = "/Uploads/Letter_of_Acceptence"
+});
+
+
 
 // Allow Cors
 app.UseCors(option =>

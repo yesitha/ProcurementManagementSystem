@@ -222,7 +222,7 @@ namespace PWMSBackend.Controllers
             {
                 // Generate a unique filename
                 string fileName = $"{SppId}_{ItemId}{Path.GetExtension(file.FileName)}";
-                string filePath = Path.Combine("Uploads/Evidence_of_authorization", fileName); // Replace "path_to_project_directory" with the actual path to the directory where you want to save the files
+                string filePath = Path.Combine("Uploads/Evidence_of_authorization", fileName); 
 
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {

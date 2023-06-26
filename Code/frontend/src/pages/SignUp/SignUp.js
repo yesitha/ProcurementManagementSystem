@@ -9,13 +9,15 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { createTheme, styled, ThemeProvider } from "@mui/material/styles";
 import { Card, CardContent, Divider } from "@mui/material";
 import "./SignUp.css";
 import logo from "../../images/logo.png";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
+import { useState } from "react";
+import { registerVenderToSystem } from "../../services/Vendor/Vendorservices";
 
 const theme = createTheme({
   typography: {
@@ -37,15 +39,32 @@ const theme = createTheme({
 
 export default function Signup() {
   const onSubmit = (data) => {
-    console.log("Form Submitted", data);
+    registerVenderToSystem(data, businessRegistrationFile, taxIdentificationFile, insuranceCertificateFile, otherDocumentsFile);
   };
+
+  const CustomAddCircleOutlineIcon = styled(AddCircleOutlineIcon)(({ theme, isPdf }) => ({
+    verticalAlign: 'middle',
+    marginLeft: '5px',
+    color: isPdf ? theme.palette.primary.main : 'inherit',
+  }));
 
   const form = useForm({
     mode:"onTouched"
   });
   const { register, handleSubmit, control, formState } = form;
   const { errors,isValid } = formState;
+  const [businessRegistrationFile, setBusinessRegistrationFile] = useState(null);
+  const [taxIdentificationFile, setTaxIdentificationFile] = useState(null);
+  const [insuranceCertificateFile, setInsuranceCertificateFile] = useState(null);
+  const [otherDocumentsFile, setOtherDocumentsFile] = useState(null);
 
+  const handleFileUpload = (event, fileSetter) => {
+    const file = event.target.files[0];
+    if (file && file.type === 'application/pdf') {
+      fileSetter(file);
+      // Perform further actions with the PDF file
+    }
+  };
   return (
     <div style={{ display: 'flex', justifyContent: 'center' ,padding:75}}>
       <Card variant="outlined" sx={{ minWidth: 275,maxWidth:600}}>
@@ -90,7 +109,7 @@ export default function Signup() {
                   component="form"
                   noValidate
                   onSubmit={handleSubmit(onSubmit)}
-                  noValidate
+    
                   sx={{ mt: 1 }}
                 >
                   <Grid container sx={{ justifyContent: "space-between" }}>
@@ -227,6 +246,68 @@ export default function Signup() {
                         name="jobTitle"
                       />
                     </Grid>
+                    <Grid item md={5} xs={11}>
+                      <TextField
+                          {...register("salutation")}
+                          margin="normal"
+                          fullWidth
+                          id="salutation"
+                          label="Salutation"
+                          name="salutation"
+                      />
+                    </Grid>
+
+
+
+                    <Grid item md={5} xs={11}>
+                    <TextField
+                        {...register("userName", {
+                          required: "UserName is required",
+                        })}
+                        margin="normal"
+                        fullWidth
+                        id="userName"
+                        label="User Name"
+                        name="userName"
+                    />
+                    <p className="error">{errors.userName?.message}</p>
+                      </Grid>
+
+                    <Grid item md={5} xs={11}>
+                    <TextField
+                        {...register("password", {
+                          required: "Password Required",
+                          pattern: {
+                            value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                            message:
+                                "Password must contain Minimum eight characters, at least one letter and one number",
+                          },
+                          minLength: {
+                            value: 8,
+                            message: "Password not long Enough!",
+                          },
+                        })}
+                        margin="normal"
+                        fullWidth
+                        name="password"
+                        label="Password"
+                        type="password"
+                        id="password"
+                    />
+                    <p className="error">{errors.password?.message}</p>
+                    </Grid>
+
+
+
+
+
+
+
+
+
+
+
+
                     <Grid item md={5} xs={11}></Grid>
                   </Grid>
                   <Grid container sx={{ justifyContent: "space-between" }}>
@@ -313,48 +394,80 @@ export default function Signup() {
                     </Grid>
                   </Grid>
 
-                  <Grid container sx={{ justifyContent: "center" }}>
-                    <Grid item md={12} padding="5px">
-                      <Typography
-                        variant="h8"
-                        sx={{ alignSelf: "start" }}
-                        paddingLeft="35px"
-                      >
-                        Business Registration Document
-                      </Typography>
-                      <AddCircleOutlineIcon sx={{ verticalAlign: "middle" }} />
-                    </Grid>
-                    <Grid item md={12} padding="5px">
-                      <Typography
-                        variant="h8"
-                        sx={{ alignSelf: "start" }}
-                        paddingLeft="35px"
-                      >
-                        Tax identification document
-                      </Typography>
-                      <AddCircleOutlineIcon sx={{ verticalAlign: "middle" }} />
-                    </Grid>
-                    <Grid item md={12} padding="5px">
-                      <Typography
-                        variant="h8"
-                        sx={{ alignSelf: "start" }}
-                        paddingLeft="35px"
-                      >
-                        Insurance certificate
-                      </Typography>
-                      <AddCircleOutlineIcon sx={{ verticalAlign: "middle" }} />
-                    </Grid>
-                    <Grid item md={12} padding="5px">
-                      <Typography
-                        variant="h8"
-                        sx={{ alignSelf: "start" }}
-                        paddingLeft="35px"
-                      >
-                        Other documents
-                      </Typography>
-                      <AddCircleOutlineIcon sx={{ verticalAlign: "middle" }} />
-                    </Grid>
-                  </Grid>
+                  <Grid container sx={{ justifyContent: 'center' }}>
+      <Grid item md={12} padding="5px">
+        <Typography variant="h8" sx={{ alignSelf: 'start' }} paddingLeft="35px">
+          Business Registration Document
+        </Typography>
+        <label htmlFor="business-registration-file-upload">
+          <CustomAddCircleOutlineIcon
+            isPdf={businessRegistrationFile !== null}
+            sx={{ verticalAlign: 'middle', ml: '5px' }}
+          />
+        </label>
+        <input
+          id="business-registration-file-upload"
+          type="file"
+          accept="application/pdf"
+          style={{ display: 'none' }}
+          onChange={(event) => handleFileUpload(event, setBusinessRegistrationFile)}
+        />
+      </Grid>
+      <Grid item md={12} padding="5px">
+        <Typography variant="h8" sx={{ alignSelf: 'start' }} paddingLeft="35px">
+          Tax identification document
+        </Typography>
+        <label htmlFor="tax-identification-file-upload">
+          <CustomAddCircleOutlineIcon
+            isPdf={taxIdentificationFile !== null}
+            sx={{ verticalAlign: 'middle', ml: '39.6px' }}
+          />
+        </label>
+        <input
+          id="tax-identification-file-upload"
+          type="file"
+          accept="application/pdf"
+          style={{ display: 'none' }}
+          onChange={(event) => handleFileUpload(event, setTaxIdentificationFile)}
+        />
+      </Grid>
+      <Grid item md={12} padding="5px">
+        <Typography variant="h8" sx={{ alignSelf: 'start' }} paddingLeft="35px">
+          Insurance certificate
+        </Typography>
+        <label htmlFor="insurance-certificate-file-upload">
+          <CustomAddCircleOutlineIcon
+            isPdf={insuranceCertificateFile !== null}
+            sx={{ verticalAlign: 'middle', ml: '93px' }}
+          />
+        </label>
+        <input
+          id="insurance-certificate-file-upload"
+          type="file"
+          accept="application/pdf"
+          style={{ display: 'none' }}
+          onChange={(event) => handleFileUpload(event, setInsuranceCertificateFile)}
+        />
+      </Grid>
+      <Grid item md={12} padding="5px">
+        <Typography variant="h8" sx={{ alignSelf: 'start' }} paddingLeft="35px">
+          Other documents
+        </Typography>
+        <label htmlFor="other-documents-file-upload">
+          <CustomAddCircleOutlineIcon
+            isPdf={otherDocumentsFile !== null}
+            sx={{ verticalAlign: 'middle', ml: '116.6px' }}
+          />
+        </label>
+        <input
+          id="other-documents-file-upload"
+          type="file"
+          accept="application/pdf"
+          style={{ display: 'none' }}
+          onChange={(event) => handleFileUpload(event, setOtherDocumentsFile)}
+        />
+      </Grid>
+    </Grid>
                   <Divider />
                 
                   <div id="outerButton">

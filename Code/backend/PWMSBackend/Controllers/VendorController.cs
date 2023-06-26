@@ -48,72 +48,73 @@ namespace PWMSBackend.Controllers
             //join sppId and itemId from SubProcurementPlanItems and SubProcurementApprovedItems
 
             var joinedData = from input in items
-                             join planItem in _context.SubProcurementPlanItems
-                             on new { input.SppId, input.ItemId } equals new { planItem.SppId, planItem.ItemId }
-                             select new
-                             {
-                                 sppId = input.SppId,
-                                 itemId = input.ItemId,
-                                 actionOpeningDate = input.AuctionOpeningDate,
-                                 actionClosingDate = input.AuctionClosingDate,
-                                 quantity = planItem.Quantity,
-                                 expectedDeliveryDate = planItem.ExpectedDeliveryDate
-                             };
+                join planItem in _context.SubProcurementPlanItems
+                    on new { input.SppId, input.ItemId } equals new { planItem.SppId, planItem.ItemId }
+                select new
+                {
+                    sppId = input.SppId,
+                    itemId = input.ItemId,
+                    actionOpeningDate = input.AuctionOpeningDate,
+                    actionClosingDate = input.AuctionClosingDate,
+                    quantity = planItem.Quantity,
+                    expectedDeliveryDate = planItem.ExpectedDeliveryDate
+                };
 
             //filter data by itemId and sum quantity
 
             var filteredData = joinedData.GroupBy(x => x.itemId)
-                                     .Select(group => new
-                                     {
-                                         itemId = group.Key,
-                                         actionOpeningDate = group.Select(x => x.actionOpeningDate).FirstOrDefault(),
-                                         actionClosingDate = group.Select(x => x.actionClosingDate).FirstOrDefault(),
-                                         totalQuantity = group.Sum(x => x.quantity),
-                                         expectedDeliveryDate = group.Select(x => x.expectedDeliveryDate).Distinct().Min()
-                                     });
+                .Select(group => new
+                {
+                    itemId = group.Key,
+                    actionOpeningDate = group.Select(x => x.actionOpeningDate).FirstOrDefault(),
+                    actionClosingDate = group.Select(x => x.actionClosingDate).FirstOrDefault(),
+                    totalQuantity = group.Sum(x => x.quantity),
+                    expectedDeliveryDate = group.Select(x => x.expectedDeliveryDate).Distinct().Min()
+                });
 
             //get item names
 
             var itemIds = filteredData.Select(x => x.itemId).Distinct().ToList();
             var itemDetails = _context.Items.Where(item => itemIds.Contains(item.ItemId))
-                                            .Select(item => new { item.ItemId, item.ItemName, item.Specification })
-                                            .ToList();
+                .Select(item => new { item.ItemId, item.ItemName, item.Specification })
+                .ToList();
 
             var result = from input in filteredData
-                         join itemDetail in itemDetails
-                         on input.itemId equals itemDetail.ItemId
-                         select new
-                         {
-                             itemId = input.itemId,
-                             itemName = itemDetail.ItemName,
-                             Specification = itemDetail.Specification,
-                             totalQuantity = input.totalQuantity,
-                             expectedDeliveryDate = input.expectedDeliveryDate,
-                             actionOpeningDate = input.actionOpeningDate,
-                             actionClosingDate = input.actionClosingDate
-                         };
+                join itemDetail in itemDetails
+                    on input.itemId equals itemDetail.ItemId
+                select new
+                {
+                    itemId = input.itemId,
+                    itemName = itemDetail.ItemName,
+                    Specification = itemDetail.Specification,
+                    totalQuantity = input.totalQuantity,
+                    expectedDeliveryDate = input.expectedDeliveryDate,
+                    actionOpeningDate = input.actionOpeningDate,
+                    actionClosingDate = input.actionClosingDate
+                };
 
             //get vendor details
 
-            var vendorDetails = _context.VendorPlaceBidItems.Where(vendor => vendor.VendorId == vendorId && itemIds.Contains(vendor.ItemId))
-                                                            .Select(vendor => new { vendor.VendorId, vendor.ItemId, vendor.BidValue })
-                                                            .ToList();
+            var vendorDetails = _context.VendorPlaceBidItems
+                .Where(vendor => vendor.VendorId == vendorId && itemIds.Contains(vendor.ItemId))
+                .Select(vendor => new { vendor.VendorId, vendor.ItemId, vendor.BidValue })
+                .ToList();
 
             var result2 = from input in result
-                          join vendorDetail in vendorDetails
-                          on input.itemId equals vendorDetail.ItemId into gj
-                          from vendor in gj.DefaultIfEmpty()
-                          select new
-                          {
-                              itemId = input.itemId,
-                              itemName = input.itemName,
-                              Specification = input.Specification,
-                              totalQuantity = input.totalQuantity,
-                              expectedDeliveryDate = input.expectedDeliveryDate,
-                              actionOpeningDate = input.actionOpeningDate,
-                              actionClosingDate = input.actionClosingDate,
-                              bidValue = vendor?.BidValue
-                          };
+                join vendorDetail in vendorDetails
+                    on input.itemId equals vendorDetail.ItemId into gj
+                from vendor in gj.DefaultIfEmpty()
+                select new
+                {
+                    itemId = input.itemId,
+                    itemName = input.itemName,
+                    Specification = input.Specification,
+                    totalQuantity = input.totalQuantity,
+                    expectedDeliveryDate = input.expectedDeliveryDate,
+                    actionOpeningDate = input.actionOpeningDate,
+                    actionClosingDate = input.actionClosingDate,
+                    bidValue = vendor?.BidValue
+                };
 
             return Ok(result2);
         }
@@ -145,41 +146,41 @@ namespace PWMSBackend.Controllers
             //join sppId and itemId from SubProcurementPlanItems and SubProcurementApprovedItems
 
             var joinedData = from input in items
-                             join planItem in _context.SubProcurementPlanItems
-                             on new { input.SppId, input.ItemId } equals new { planItem.SppId, planItem.ItemId }
-                             select new
-                             {
-                                 sppId = input.SppId,
-                                 itemId = input.ItemId,
-                                 quantity = planItem.Quantity,
-                                 expectedDeliveryDate = planItem.ExpectedDeliveryDate
-                             };
+                join planItem in _context.SubProcurementPlanItems
+                    on new { input.SppId, input.ItemId } equals new { planItem.SppId, planItem.ItemId }
+                select new
+                {
+                    sppId = input.SppId,
+                    itemId = input.ItemId,
+                    quantity = planItem.Quantity,
+                    expectedDeliveryDate = planItem.ExpectedDeliveryDate
+                };
 
             //filter data by itemId and sum quantity
 
             var filteredData = joinedData.GroupBy(x => x.itemId)
-                                     .Select(group => new
-                                     {
-                                         itemId = group.Key,
-                                         totalQuantity = group.Sum(x => x.quantity),
-                                         expectedDeliveryDate = group.Select(x => x.expectedDeliveryDate).Distinct().Min()
-                                     });
+                .Select(group => new
+                {
+                    itemId = group.Key,
+                    totalQuantity = group.Sum(x => x.quantity),
+                    expectedDeliveryDate = group.Select(x => x.expectedDeliveryDate).Distinct().Min()
+                });
 
             //get item name and Specification
             var itemDetails = _context.Items.Where(item => itemId.Contains(item.ItemId))
-                                            .Select(item => new { item.ItemId, item.ItemName, item.Specification })
-                                            .ToList();
+                .Select(item => new { item.ItemId, item.ItemName, item.Specification })
+                .ToList();
 
             var result = from input in filteredData
-                         join itemDetail in itemDetails
-                         on input.itemId equals itemDetail.ItemId
-                         select new
-                         {
-                             itemName = itemDetail.ItemName,
-                             Specification = itemDetail.Specification,
-                             totalQuantity = input.totalQuantity,
-                             expectedDeliveryDate = input.expectedDeliveryDate,
-                         };
+                join itemDetail in itemDetails
+                    on input.itemId equals itemDetail.ItemId
+                select new
+                {
+                    itemName = itemDetail.ItemName,
+                    Specification = itemDetail.Specification,
+                    totalQuantity = input.totalQuantity,
+                    expectedDeliveryDate = input.expectedDeliveryDate,
+                };
 
             return Ok(result);
         }
@@ -227,120 +228,15 @@ namespace PWMSBackend.Controllers
             }
         }
 
-        //Bid history for vendor
+        
 
-        [HttpGet("GetBidHistory/{vendorId}")]
-        public async Task<ActionResult<IEnumerable<object>>> GetBidHistory(string vendorId)
-        {
-            DateTime currentDate = DateTime.Today;
-
-            var closestDate = _context.SubProcurementApprovedItems
-                .Where(a => a.PreBidMeetingDate.HasValue && a.PreBidMeetingDate.Value.Date <= currentDate)
-                .OrderByDescending(a => a.PreBidMeetingDate.Value)
-                .Select(a => a.PreBidMeetingDate.Value.Date)
-                .FirstOrDefault();
-
-            var items = await _context.SubProcurementApprovedItems
-                .Where(a => a.PreBidMeetingDate.HasValue && a.PreBidMeetingDate.Value.Date == closestDate)
-                .Select(a => new { a.SppId, a.ItemId})
-                .ToListAsync();
-
-            if (items == null)
-            {
-                return NotFound();
-            }
-
-            //join sppId and itemId from SubProcurementPlanItems and SubProcurementApprovedItems
-
-            var joinedData = from input in items
-                             join planItem in _context.SubProcurementPlanItems
-                             on new { input.SppId, input.ItemId } equals new { planItem.SppId, planItem.ItemId }
-                             select new
-                             {
-                                 sppId = input.SppId,
-                                 itemId = input.ItemId,
-                                 quantity = planItem.Quantity,
-                                 expectedDeliveryDate = planItem.ExpectedDeliveryDate
-                             };
-
-            //filter data by itemId and sum quantity
-
-            var filteredData = joinedData.GroupBy(x => x.itemId)
-                                     .Select(group => new
-                                     {
-                                         itemId = group.Key,
-                                         totalQuantity = group.Sum(x => x.quantity),
-                                         expectedDeliveryDate = group.Select(x => x.expectedDeliveryDate).Distinct().Min()
-                                     });
-
-            //get item names
-
-            var itemIds = filteredData.Select(x => x.itemId).Distinct().ToList();
-            var itemDetails = _context.Items.Where(item => itemIds.Contains(item.ItemId))
-                                            .Select(item => new { item.ItemId, item.ItemName, item.Specification })
-                                            .ToList();
-
-            //var result = from input in filteredData
-            //             join itemDetail in itemDetails
-            //             on input.itemId equals itemDetail.ItemId
-            //             select new
-            //             {
-            //                 itemId = input.itemId,
-            //                 itemName = itemDetail.ItemName,
-            //                 Specification = itemDetail.Specification,
-            //                 totalQuantity = input.totalQuantity,
-            //                 expectedDeliveryDate = input.expectedDeliveryDate,
-            //             };
-
-            //get vendor details
-
-            var vendorDetails = _context.VendorPlaceBidItems.Where(vendor => vendor.VendorId == vendorId && itemIds.Contains(vendor.ItemId))
-                                                            .Select(vendor => new { vendor.VendorId, vendor.ItemId, vendor.BidValue, vendor.BidStatus, vendor.LetterOfAcceptance })
-                                                            .ToList();
-
-            //var result2 = from input in result
-            //              join vendorDetail in vendorDetails
-            //              on input.itemId equals vendorDetail.ItemId into gj
-            //              from vendor in gj.DefaultIfEmpty()
-            //              select new
-            //              {
-            //                  itemId = input.itemId,
-            //                  itemName = input.itemName,
-            //                  Specification = input.Specification,
-            //                  totalQuantity = input.totalQuantity,
-            //                  expectedDeliveryDate = input.expectedDeliveryDate,
-            //                  bidValue = vendor?.BidValue,
-            //                  bidStatus = vendor?.BidStatus,
-            //                  isletterOfAcceptance = vendor != null && !string.IsNullOrEmpty(vendor.LetterOfAcceptance)
-            //              };
-
-            var result = from input in filteredData
-                         join itemDetail in itemDetails
-                         on input.itemId equals itemDetail.ItemId
-                         join vendorDetail in vendorDetails
-                         on input.itemId equals vendorDetail.ItemId into gj
-                         from vendor in gj.DefaultIfEmpty()
-                         where vendorDetails.Select(v => v.ItemId).Contains(input.itemId)
-                         select new
-                         {
-                             itemId = input.itemId,
-                             itemName = itemDetail.ItemName,
-                             Specification = itemDetail.Specification,
-                             totalQuantity = input.totalQuantity,
-                             expectedDeliveryDate = input.expectedDeliveryDate,
-                             bidValue = vendor?.BidValue,
-                             bidStatus = vendor?.BidStatus,
-                             isletterOfAcceptance = vendor != null && !string.IsNullOrEmpty(vendor.LetterOfAcceptance)
-                         };
-
-
-            return Ok(result);
-        }
+       
 
         // Letter of Acceptance by itemId 
 
         [HttpGet("GetLetterOfAcceptanceItemAndVendorDetails/{vendorId}/{itemId}")]
-        public async Task<ActionResult<IEnumerable<object>>> GetLetterOfAcceptanceItemAndVendorDetails(string vendorId,string itemId)
+        public async Task<ActionResult<IEnumerable<object>>> GetLetterOfAcceptanceItemAndVendorDetails(string vendorId,
+            string itemId)
         {
             DateTime currentDate = DateTime.Today;
 
@@ -363,86 +259,87 @@ namespace PWMSBackend.Controllers
             //join sppId and itemId from SubProcurementPlanItems and SubProcurementApprovedItems
 
             var joinedData = from input in items
-                             join planItem in _context.SubProcurementPlanItems
-                             on new { input.SppId, input.ItemId } equals new { planItem.SppId, planItem.ItemId }
-                             select new
-                             {
-                                 sppId = input.SppId,
-                                 itemId = input.ItemId,
-                                 quantity = planItem.Quantity,
-                                 expectedDeliveryDate = planItem.ExpectedDeliveryDate
-                             };
+                join planItem in _context.SubProcurementPlanItems
+                    on new { input.SppId, input.ItemId } equals new { planItem.SppId, planItem.ItemId }
+                select new
+                {
+                    sppId = input.SppId,
+                    itemId = input.ItemId,
+                    quantity = planItem.Quantity,
+                    expectedDeliveryDate = planItem.ExpectedDeliveryDate
+                };
 
             //filter data by itemId and sum quantity
 
             var filteredData = joinedData.GroupBy(x => x.itemId)
-                                     .Select(group => new
-                                     {
-                                         itemId = group.Key,
-                                         totalQuantity = group.Sum(x => x.quantity),
-                                         expectedDeliveryDate = group.Select(x => x.expectedDeliveryDate).Distinct().Min()
-                                     });
+                .Select(group => new
+                {
+                    itemId = group.Key,
+                    totalQuantity = group.Sum(x => x.quantity),
+                    expectedDeliveryDate = group.Select(x => x.expectedDeliveryDate).Distinct().Min()
+                });
 
             //get item names
 
             var itemIds = filteredData.Select(x => x.itemId).Distinct().ToList();
             var itemDetails = _context.Items.Where(item => itemIds.Contains(item.ItemId))
-                                            .Select(item => new { item.ItemId, item.ItemName, item.Specification })
-                                            .ToList();
+                .Select(item => new { item.ItemId, item.ItemName, item.Specification })
+                .ToList();
 
             var result = from input in filteredData
-                         join itemDetail in itemDetails
-                         on input.itemId equals itemDetail.ItemId
-                         select new
-                         {
-                             itemId = input.itemId,
-                             itemName = itemDetail.ItemName,
-                             Specification = itemDetail.Specification,
-                             totalQuantity = input.totalQuantity,
-                             expectedDeliveryDate = input.expectedDeliveryDate,
-                         };
+                join itemDetail in itemDetails
+                    on input.itemId equals itemDetail.ItemId
+                select new
+                {
+                    itemId = input.itemId,
+                    itemName = itemDetail.ItemName,
+                    Specification = itemDetail.Specification,
+                    totalQuantity = input.totalQuantity,
+                    expectedDeliveryDate = input.expectedDeliveryDate,
+                };
 
             //get vendor details
 
-            var vendorDetails = _context.VendorPlaceBidItems.Where(vendor => vendor.VendorId == vendorId && itemIds.Contains(vendor.ItemId))
-                                                            .Select(vendor => new { vendor.VendorId, vendor.ItemId, vendor.BidValue})
-                                                            .ToList();
+            var vendorDetails = _context.VendorPlaceBidItems
+                .Where(vendor => vendor.VendorId == vendorId && itemIds.Contains(vendor.ItemId))
+                .Select(vendor => new { vendor.VendorId, vendor.ItemId, vendor.BidValue })
+                .ToList();
 
             var result2 = (from input in result
-                          join vendorDetail in vendorDetails
-                          on input.itemId equals vendorDetail.ItemId into gj
-                          from vendor in gj.DefaultIfEmpty()
-                          select new
-                          {
-                              itemId = input.itemId,
-                              itemName = input.itemName,
-                              Specification = input.Specification,
-                              totalQuantity = input.totalQuantity,
-                              expectedDeliveryDate = input.expectedDeliveryDate,
-                              bidValue = vendor?.BidValue
-                          })
-                         .Where(x => x.itemId == itemId)
-                         .FirstOrDefault();
+                    join vendorDetail in vendorDetails
+                        on input.itemId equals vendorDetail.ItemId into gj
+                    from vendor in gj.DefaultIfEmpty()
+                    select new
+                    {
+                        itemId = input.itemId,
+                        itemName = input.itemName,
+                        Specification = input.Specification,
+                        totalQuantity = input.totalQuantity,
+                        expectedDeliveryDate = input.expectedDeliveryDate,
+                        bidValue = vendor?.BidValue
+                    })
+                .Where(x => x.itemId == itemId)
+                .FirstOrDefault();
 
             var vendorD = _context.Vendors
                 .Where(vendor => vendor.VendorId == vendorId)
                 .Select(po => new
                 {
-                VendorFullName = po.FirstName + " " + po.LastName,
-                CompanyName = po.CompanyFullName,
-                Contact = po.EmailAddress,
-                address = po.Address1 + "," + po.State,
-                city = po.City + "," + po.PostalCode,
-                salutation = po.Salutation
+                    VendorFullName = po.FirstName + " " + po.LastName,
+                    CompanyName = po.CompanyFullName,
+                    Contact = po.EmailAddress,
+                    address = po.Address1 + "," + po.State,
+                    city = po.City + "," + po.PostalCode,
+                    salutation = po.Salutation
                 })
                 .FirstOrDefault();
 
-            return Ok(new {result2 , vendorD });
+            return Ok(new { result2, vendorD });
         }
 
 
         [HttpPut("UpdateLetterOfAcceptance/{vendorId}/{itemId}")]
-        public IActionResult UpdateLetterOfAcceptance(string vendorId, string itemId, [FromBody] string letterOfAcceptance)
+        public IActionResult UpdateLetterOfAcceptance(string vendorId, string itemId, IFormFile letterOfAcceptance)
         {
             var vendorPlaceBidItem = _context.VendorPlaceBidItems
                 .FirstOrDefault(item => item.VendorId == vendorId && item.ItemId == itemId);
@@ -452,7 +349,21 @@ namespace PWMSBackend.Controllers
                 return NotFound();
             }
 
-            vendorPlaceBidItem.LetterOfAcceptance = letterOfAcceptance;
+            if (letterOfAcceptance != null)
+            {
+                // Generate a unique filename
+                string fileName = $"{itemId}_{vendorId}{Path.GetExtension(letterOfAcceptance.FileName)}";
+                string filePath = Path.Combine("Uploads/Letter_of_Acceptence", fileName);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    letterOfAcceptance.CopyTo(fileStream);
+                }
+
+                vendorPlaceBidItem.LetterOfAcceptance = filePath;
+            }
+
+
             _context.SaveChanges();
 
             return Ok("Letter of Acceptance updated successfully.");
@@ -502,6 +413,143 @@ namespace PWMSBackend.Controllers
             return Ok(poVendorDetails);
         }
 
+        [HttpPost("uploadRequiredDocuments/{PoId}")]
+        public IActionResult uploadRequiredDocuments(string PoId, IFormFile? agreement, IFormFile? BankGuarantee,
+            IFormFile? bond)
+        {
+            var po = _context.PurchaseOrders.Where(po => po.PoId == PoId).FirstOrDefault();
+
+            if (po != null)
+            {
+                if (agreement != null)
+                {
+                    // Generate a unique filename
+                    string fileName = $"{PoId}_Agreement{Path.GetExtension(agreement.FileName)}";
+                    string filePath = Path.Combine("Uploads/Vendor_Required_Docs/Agreement", fileName);
+
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        agreement.CopyTo(fileStream);
+                    }
+
+                    po.Agreement = filePath;
+                }
+
+
+
+
+                if (BankGuarantee != null)
+                {
+                    {
+                        // Generate a unique filename
+                        string fileName = $"{PoId}_BankGuarantee{Path.GetExtension(BankGuarantee.FileName)}";
+                        string filePath = Path.Combine("Uploads/Vendor_Required_Docs/BankGuarantee", fileName);
+
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            BankGuarantee.CopyTo(fileStream);
+                        }
+
+                        po.BankGuarantee = filePath;
+                    }
+
+                }
+
+                if (bond != null)
+                {
+                    {
+                        // Generate a unique filename
+                        string fileName = $"{PoId}_Bond{Path.GetExtension(bond.FileName)}";
+                        string filePath = Path.Combine("Uploads/Vendor_Required_Docs/Bond", fileName);
+
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            bond.CopyTo(fileStream);
+                        }
+
+                        po.Bond = filePath;
+                    }
+                }
+
+                _context.SaveChanges();
+
+                return Ok("Documents uploaded successfully");
+            }
+            else
+            {
+                return BadRequest("No Such PO");
+            }
+        }
+
+
+
+
+
+        [HttpGet("GetUploadedPdf/{poId}")]
+        public IActionResult GetUploadedPdf(string poId)
+        {
+            var po = _context.PurchaseOrders.Where(po => po.PoId == poId).FirstOrDefault();
+            var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
+
+            if (po == null)
+            {
+                return NotFound("po not found.");
+            }
+            else if (po.Agreement == null && po.BankGuarantee == null && po.Bond == null)
+            {
+                return NotFound("No documents uploaded.");
+            }
+            else
+            {
+
+
+                var pdfList = new List<object>();
+
+                if (po.Agreement != null)
+                {
+                    var agreementInfo = new
+                    {
+                        Name = $"{poId}_Agreement",
+                        Url = $"{baseUrl}/{po.Agreement}"
+                    };
+
+                    pdfList.Add(agreementInfo);
+                }
+
+                if (po.BankGuarantee != null)
+                {
+                    var bankGuaranteeInfo = new
+                    {
+                        Name = $"{poId}_BankGuarantee",
+                        Url = $"{baseUrl}/{po.BankGuarantee}"
+                    };
+
+                    pdfList.Add(bankGuaranteeInfo);
+                }
+
+                if (po.Bond != null)
+                {
+                    var bondInfo = new
+                    {
+                        Name = $"{poId}_Bond",
+                        Url = $"{baseUrl}/{po.Bond}"
+                    };
+
+                    pdfList.Add(bondInfo);
+                }
+
+                return Ok(pdfList);
+            }
+
+
+
+
+        }
+
+
+
+
+
         [HttpGet("GetPOItemDetails/{PoId}")]
         public IActionResult GetPOItemDetails(string PoId)
         {
@@ -520,10 +568,11 @@ namespace PWMSBackend.Controllers
                 .SelectMany(mpp => mpp.SubProcurementPlans)
                 .SelectMany(spp => spp.subProcurementPlanItems)
                 .Where(item => item.ProcuremnetCommitteeStatus == "approve" && item.DGStatus == "approve"
-                                && item.SelectedVendor == _context.Vendors
-                                                                .Where(v => v.VendorId == vendorId)
-                                                                .Select(v => v.FirstName + " " + v.LastName)
-                                                                .FirstOrDefault())
+                                                                            && item.SelectedVendor == _context.Vendors
+                                                                                .Where(v => v.VendorId == vendorId)
+                                                                                .Select(v =>
+                                                                                    v.FirstName + " " + v.LastName)
+                                                                                .FirstOrDefault())
                 .GroupBy(item => item.ItemId)
                 .Select(group => new
                 {
@@ -532,9 +581,9 @@ namespace PWMSBackend.Controllers
                     Specifications = group.First().Item.Specification,
                     TotalQuantity = group.Sum(item => item.Quantity),
                     BidValue = _context.VendorPlaceBidItems
-                                    .Where(vpb => vpb.Vendor.VendorId == vendorId && vpb.ItemId == group.Key)
-                                    .Select(vpb => vpb.BidValue)
-                                    .FirstOrDefault(),
+                        .Where(vpb => vpb.Vendor.VendorId == vendorId && vpb.ItemId == group.Key)
+                        .Select(vpb => vpb.BidValue)
+                        .FirstOrDefault(),
 
                 })
                 .ToList();
@@ -567,7 +616,8 @@ namespace PWMSBackend.Controllers
         }
 
         [HttpPut("UploadPurchaseOrderVerificationDocs")]
-        public IActionResult UploadPurchaseOrderVerificationDocs(string poId,string agreement,string bond,string bankGuarantee)
+        public IActionResult UploadPurchaseOrderVerificationDocs(string poId, string agreement, string bond,
+            string bankGuarantee)
         {
             var purchaseOrder = _context.PurchaseOrders.FirstOrDefault(po => po.PoId == poId);
 
@@ -618,10 +668,11 @@ namespace PWMSBackend.Controllers
                 .SelectMany(mpp => mpp.SubProcurementPlans)
                 .SelectMany(spp => spp.subProcurementPlanItems)
                 .Where(item => item.ProcuremnetCommitteeStatus == "approve" && item.DGStatus == "approve"
-                                && item.SelectedVendor == _context.Vendors
-                                                                .Where(v => v.VendorId == vendorId)
-                                                                .Select(v => v.FirstName + " " + v.LastName)
-                                                                .FirstOrDefault())
+                                                                            && item.SelectedVendor == _context.Vendors
+                                                                                .Where(v => v.VendorId == vendorId)
+                                                                                .Select(v =>
+                                                                                    v.FirstName + " " + v.LastName)
+                                                                                .FirstOrDefault())
                 .GroupBy(item => item.ItemId)
                 .Select(group => new
                 {
@@ -630,9 +681,9 @@ namespace PWMSBackend.Controllers
                     Specifications = group.First().Item.Specification,
                     TotalQuantity = group.Sum(item => item.Quantity),
                     BidValue = _context.VendorPlaceBidItems
-                                    .Where(vpb => vpb.Vendor.VendorId == vendorId && vpb.ItemId == group.Key)
-                                    .Select(vpb => vpb.BidValue)
-                                    .FirstOrDefault(),
+                        .Where(vpb => vpb.Vendor.VendorId == vendorId && vpb.ItemId == group.Key)
+                        .Select(vpb => vpb.BidValue)
+                        .FirstOrDefault(),
 
                 })
                 .ToList();
@@ -711,7 +762,8 @@ namespace PWMSBackend.Controllers
         //}
 
         [HttpPost("CreatePurchaseOrderItemsToBeShippedRecords")]
-        public IActionResult CreatePurchaseOrderItemsToBeShippedRecords(string PoId, List<PurchaseOrderItemToBeShippedInput> itemsToBeShipped)
+        public IActionResult CreatePurchaseOrderItemsToBeShippedRecords(string PoId,
+            List<PurchaseOrderItemToBeShippedInput> itemsToBeShipped)
         {
             // Retrieve the Purchase Order based on the provided PoId
             var purchaseOrder = _context.PurchaseOrders.FirstOrDefault(po => po.PoId == PoId);
@@ -791,6 +843,8 @@ namespace PWMSBackend.Controllers
                 .ToList();
 
             var combinedList = (from poId in poIdList
+
+
                                 join grn in grnList on poId.PoId equals grn.PoId
                                 select new
                                 {
@@ -802,8 +856,11 @@ namespace PWMSBackend.Controllers
                      .OrderByDescending(item => item.Date);
 
 
+
             return Ok(combinedList);
         }
+
+
 
         [HttpGet("GetGRNItemDetails/{PoId}/{grnId}")]
         public IActionResult GetGRNItemDetails(string PoId, string grnId)
@@ -911,6 +968,226 @@ namespace PWMSBackend.Controllers
                 .FirstOrDefault();
 
             return Ok(new { result, vendorName, shippingDate, checkedBy });
+        }
+
+
+        
+
+        [HttpPost("RegisterVenderToSystem")]
+        public IActionResult RegisterVenderToSystem(
+            string address1,
+            string address2,
+            string address3,
+            string businessRegNo,
+            string city,
+            string companyName,
+            string email,
+            string fName,
+            string jobTitle,
+            string lName,
+            string noofEmployes,
+            string postalCode,
+            string registrationType,
+            string state,
+            string telNo,
+            string userName,
+            string password,
+            string salutation,
+            IFormFile businessRegistrationFile,
+            IFormFile taxIdentificationFile,
+            IFormFile insuranceCertificateFile,
+            IFormFile? otherDocumentsFile
+        )
+        {
+            string GenerateNewVendorId()
+            {
+                string newVendorId = null;
+                bool isUnique = false;
+
+                while (!isUnique)
+                {
+                    // Generate a new vendor ID
+                    newVendorId = GenerateNextVendorId(newVendorId);
+
+                    // Check if the vendor ID already exists in the database
+                    if (!IsVendorIdExists(newVendorId))
+                    {
+                        isUnique = true;
+                    }
+                }
+
+                return newVendorId;
+            }
+
+            string GenerateNextVendorId(string previousVendorId)
+            {
+                if (string.IsNullOrEmpty(previousVendorId))
+                {
+                    return "V001";
+                }
+
+                string prefix = "V";
+                int previousNumber = int.Parse(previousVendorId.Substring(1));
+                int nextNumber = previousNumber + 1;
+                string nextVendorId = prefix + nextNumber.ToString("D3");
+
+                return nextVendorId;
+            }
+
+            bool IsVendorIdExists(string vendorId)
+            {
+                bool isExists = _context.Vendors.Any(v => v.VendorId == vendorId);
+
+                return isExists;
+            }
+
+            Vendor vendor = new Vendor
+
+            {
+                VendorId = GenerateNewVendorId(),
+                Address1 = address1,
+                Address2 = address2,
+                Address3 = address3,
+                BusinessRegNo = businessRegNo,
+                City = city,
+                CompanyFullName = companyName,
+                EmailAddress = email,
+                FirstName = fName,
+                JobTitle = jobTitle,
+                LastName = lName,
+                NoOfEmployees = int.Parse(noofEmployes),
+                PostalCode = postalCode,
+                RegistrationType = registrationType,
+                State = state,
+                PhoneNumber = telNo,
+                Salutation = salutation,
+                UserName = userName,
+                Password = password
+            };
+
+
+            void HandleFileUpload(IFormFile? file, string destinationFolderPath, string fileNamePrefix)
+            {
+                if (file != null)
+                {
+                    string fileName = $"{vendor.VendorId}_{fileNamePrefix}{Path.GetExtension(file.FileName)}";
+                    string filePath = Path.Combine(destinationFolderPath,fileName);
+
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+
+
+                    if (fileNamePrefix == "businessRegistrationFile")
+                    {
+                        vendor.BusinessRegistrationDoc = filePath;
+                    }
+                    else if (fileNamePrefix == "taxIdentificationFile")
+                    {
+                        vendor.TaxIdentificationDoc = filePath;
+                    }
+                    else if (fileNamePrefix == "insuranceCertificateFile")
+                    {
+                        vendor.InsuaranceCertificate = filePath;
+                    }
+                    else if (fileNamePrefix == "otherDocumentsFile")
+                    {
+                        vendor.OtherDocs = filePath;
+                    }
+                }
+            }
+
+            // Handle file uploads
+            HandleFileUpload(businessRegistrationFile, "Uploads/Vendor_Required_Docs/BusinessRegistration",
+                "businessRegistrationFile");
+            HandleFileUpload(taxIdentificationFile, "Uploads/Vendor_Required_Docs/TaxIdentification",
+                "taxIdentificationFile");
+            HandleFileUpload(insuranceCertificateFile, "Uploads/Vendor_Required_Docs/InsuranceCertificate",
+                "insuranceCertificateFile");
+            HandleFileUpload(otherDocumentsFile, "Uploads/Vendor_Required_Docs/OtherDocuments", "otherDocumentsFile");
+
+
+            _context.Vendors.Add(vendor);
+            _context.SaveChanges();
+
+            return Ok("Vendor Added !");
+        }
+
+
+        
+        [HttpGet("GetVendorVerifyPdf/{vendorId}")]
+        public IActionResult GetVendorVerifyPdf(string vendorId)
+        {
+            var vendor = _context.Vendors
+                .Where(v => v.VendorId == vendorId)
+                .FirstOrDefault();
+            var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
+
+            if (vendor == null)
+            {
+                return NotFound("po not found.");
+            }
+            else if (vendor.BusinessRegistrationDoc == null && vendor.InsuaranceCertificate == null && vendor.TaxIdentificationDoc == null)
+            {
+                return NotFound("No documents uploaded.");
+            }
+            else
+            {
+
+
+                var pdfList = new List<object>();
+
+                if (vendor.BusinessRegistrationDoc != null)
+                {
+                    var BusinessRegistrationDocInfo = new
+                    {
+                        Name = $"{vendorId}_businessRegistrationFIle",
+                        Url = $"{baseUrl}/{vendor.BusinessRegistrationDoc}"
+                    };
+
+                    pdfList.Add(BusinessRegistrationDocInfo);
+                }
+
+                if (vendor.InsuaranceCertificate != null)
+                {
+                    var InsuaranceCertificateInfo = new
+                    {
+                        Name = $"{vendorId}_insuranceCertificateFIle",
+                        Url = $"{baseUrl}/{vendor.InsuaranceCertificate}"
+                    };
+
+                    pdfList.Add(InsuaranceCertificateInfo);
+                }
+
+                if (vendor.TaxIdentificationDoc != null)
+                {
+                    var TaxIdentificationDocInfo = new
+                    {
+                        Name = $"{vendorId}_taxIdentificationFile",
+                        Url = $"{baseUrl}/{vendor.TaxIdentificationDoc}"
+                    };
+
+                    pdfList.Add(TaxIdentificationDocInfo);
+                }
+
+                if (vendor.OtherDocs != null)
+                {
+                    var OtherDocsInfo = new
+                    {
+                        Name = $"{vendorId}_otherDocumentsFile",
+                        Url = $"{baseUrl}/{vendor.OtherDocs}"
+                    };
+
+                    pdfList.Add(OtherDocsInfo);
+                }
+
+                return Ok(pdfList);
+            }
+
+
+
+
         }
 
         [HttpGet("GetInvoiceItemDetails/{PoId}/{grnId}")]
@@ -1195,5 +1472,12 @@ namespace PWMSBackend.Controllers
         }
 
 
+
+
     }
 }
+
+
+
+
+    

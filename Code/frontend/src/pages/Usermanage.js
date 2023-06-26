@@ -8,7 +8,7 @@ const user = {
   lastname: "Doe",
   email: "johndoe@gmail.com",
   designation: "Procurement Officer",
-  userType: "Vendor",
+  userType: "ProcurementOfficer",
   department: "Finance",
   phone: "1234567890",
   address: "123, ABC Street, XYZ City, 123456",
@@ -192,7 +192,7 @@ switch (currentUser) {
       { displayName: "Bid Tender", path: "bid-tender/:vendorId" },
       { displayName: "Bid History", path: "bid-history/:vendorId" },
       { displayName: "Purchase Orders", path: "PurchaseOrder-vendor/:vendorId" },
-      { displayName: "Good Receive Note", path: "VGoodReceiveNote" },
+      { displayName: "Good Receive Note", path: "VGoodReceiveNote/:vendorId" },
     ];
 
     list2 = ["Settings"];
@@ -216,7 +216,7 @@ switch (currentUser) {
         path: "PurchaseOrder-vendor/:vendorId",
         number: "2",
       },
-      { displayName: "New GRN", path: "new-grn", number: "3" },
+      { displayName: "New GRN", path: "VGoodReceiveNote/:vendorId", number: "3" },
       {
         displayName: "Payment Received",
         path: "payment-received",

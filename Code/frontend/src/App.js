@@ -76,6 +76,7 @@ import IssueItem from "./pages/InventoryManager/IssueItem/IssueItem";
 import AssetRegistry from "./pages/Assets Registry/AssetRegistry";
 import LetterofAcceptance from "./pages/Vendor/Letter of Acceptance/LetterofAcceptance";
 import PDViewSubProcurementPlan from "./pages/Dicvision HOD/PDViewSubProcurementPlan/PDViewSubProcurementPlan"
+import Signup from "./pages/SignUp/SignUp";
 
 function App() {
   const baseState = useSelector((store) => store.base);
@@ -144,7 +145,7 @@ function App() {
           />
           <Route path="/PurchaseOrder" element={<PurchaseOrder />} />
           <Route path="/add-item-to-PO" element={<AddItemstoPO />} />
-          <Route path="/send-purchase-order" element={<SendPurchaseOrder />} />
+          <Route path="/send-purchase-order/:poId" element={<SendPurchaseOrder />} />
           <Route path="/GoodReceiveNote" element={<AddItemstoGRN />} />
           <Route path="/grn-view" element={<GoodsReceivedNote />} />
           <Route
@@ -277,14 +278,15 @@ function App() {
             path="/PurchaseOrder-vendor-view/:poId"
             element={<PurchaseOrderPreview />}
           />
-          <Route path="/VGoodReceiveNote" element={<ViewGRN />} />
-          <Route path="/grn" element={<GRN />} />
+          <Route path="/VGoodReceiveNote/:vendorId" element={<ViewGRN />} />
+          <Route path="/grn/:poId/:grnId" element={<GRN />} />
           <Route path="/create-invoice" element={<CreateInvoice2 />} />
           <Route path="/send-invoice" element={<SendInvoice />} />
           <Route path="/view-invoice" element={<ViewInvoices />} />
           <Route path="/invoice" element={<Invoicesvendorside />} />
           <Route path="/items-to-be-shipped" element={<ItemstobeShipped />} />
           <Route path="/bid-approved" element={<BidHistory />} />
+          <Route path="/signUp" element={<Signup/>} />
           <Route
             path="/verification-statuses-evaluated"
             element={<BidHistory />}

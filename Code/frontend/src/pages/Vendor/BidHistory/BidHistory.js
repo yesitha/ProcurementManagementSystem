@@ -31,48 +31,7 @@ const columns = [
   { id: "BidStatus", label: "Bid Status", Width: 300, align: "center" },
   { id: "LoA", label: "Letter of Acceptance", Width: 300, align: "center" },
 ];
-function createData(
-  ItemName,
-  Quantity,
-  Specification,
-  BidValue,
-  BidStatus,
-  Verification,
-  VerificationStatus
-) {
-  return {
-    ItemName,
-    Quantity,
-    Specification,
-    BidValue,
-    BidStatus,
-    Verification,
-    VerificationStatus,
-  };
-}
 
-const rows = [
-  createData(
-    "A4 Papers",
-    "45",
-    "GSM 80",
-    <Typography sx={{ color: "#227C70" }}>LKR 4000</Typography>,
-    <Typography sx={{ color: "#227C70" }}>Selected</Typography>,
-    <Routerlink to={"/bid-verification-submit"}>
-      <Button
-        variant="contained"
-        sx={{
-          width: 70,
-          height: 30,
-          borderRadius: "20px",
-        }}
-      >
-        Submit
-      </Button>
-    </Routerlink>,
-    <Typography sx={{ color: "#227C70" }}>Approveed</Typography>
-  ),
-];
 
 function BidHistory() {
   const [page, setPage] = React.useState(0);
@@ -85,7 +44,7 @@ function BidHistory() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-  const { vendorId } = useParams();
+  const vendorId  = 'BUW52' //this need to gte from the login
   const [data, setData] = useState(null);
 
   useEffect(() => {
@@ -190,7 +149,8 @@ function BidHistory() {
                           <TableCell align="center">{row.bidValue}</TableCell>
                           <TableCell align="center">{row.bidStatus}</TableCell>
                           <TableCell align="center">
-                            {!row.isLetterOfAcceptance ? (
+                            {row.bidStatus === "Selected" && !row.isletterOfAcceptance
+? (
                               <Routerlink
                                 to={`/letter-of-acceptance/${row.itemId}`}
                               >
@@ -201,6 +161,7 @@ function BidHistory() {
                                     height: 30,
                                     borderRadius: "20px",
                                   }}
+                                  
                                 >
                                   Submit
                                 </Button>
@@ -227,7 +188,7 @@ function BidHistory() {
             <TablePagination
               rowsPerPageOptions={[10, 25, 50, 100]}
               component="div"
-              count={rows.length}
+              count={10}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
