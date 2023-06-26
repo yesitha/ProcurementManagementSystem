@@ -27,6 +27,30 @@ function AddNewItemtoSubProcurementPlan() {
         handleSubmit,
         formState: {errors, isValid},
     } = useForm({mode: 'onChange'});
+    const [categoryList, setCategoryList] = useState([]);
+    const [selectedCategoryName, setSelectedCategoryName] = useState('');
+    const [categoryId, setCategoryId] = useState('');
+
+    const itemType = ['Asset', 'Stock'];
+    const [selectedItemType, setSelectedItemType] = useState('');
+
+
+    const handleItemTypeChange = (event) => {
+        setSelectedItemType(event.target.value);
+    }
+
+    const handleSearch = () => {
+        console.log(categoryList);
+        const category = categoryList.find(
+            (category) => category.categoryName === selectedCategoryName
+        );
+        setCategoryId(category.categoryId);
+    };
+    const handleCategoryIdChange = (event) => {
+        setSelectedCategoryName(event.target.value);
+        handleSearch();
+    };
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -41,35 +65,29 @@ function AddNewItemtoSubProcurementPlan() {
         fetchData();
     }, []);
 
-    const [categoryList, setCategoryList] = useState([]);
-    const [selectedCategoryName, setSelectedCategoryName] = useState('');
-    const [categoryId, setCategoryId] = useState('');
+    useEffect(() => {
+        console.log(selectedItemType);
+        setSelectedItemType(selectedItemType);
+    }, [selectedItemType]);
 
-    const handleCategoryIdChange = (event) => {
-        setSelectedCategoryName(event.target.value);
-        console.log(event.target.value);
-        
-    };
+    useEffect(() => {
+        console.log(selectedCategoryName);
+        setSelectedCategoryName(selectedCategoryName);
+    }, [selectedCategoryName]);
+
 
     const onSubmit = async () => {
         const data = getValues();
-        handleSearch();
+        await new Promise((resolve) => {
+            handleSearch();
+            resolve();
+        });
         console.log(categoryId);
-        addNewItemDb(data.itemName,data.itemSpecification,categoryId)
-        console.log(data);
+        console.log(selectedItemType);
+        console.log(data.itemName);
+        console.log(data.itemSpecification);
+        addNewItemDb(data.itemName, data.itemSpecification, categoryId, selectedItemType)
     };
-
-    const handleSearch = () => {
-        const category = categoryList.find(
-          (category) => category.categoryName === selectedCategoryName
-        );
-    
-        if (category) {
-          setCategoryId(category.categoryId);
-        } else {
-          console.log('Category not found.');
-        }
-      };
 
     return (
         <div style={{display: 'flex', overflow: 'hidden'}}>
@@ -103,6 +121,12 @@ function AddNewItemtoSubProcurementPlan() {
                                         list={categoryList.map((category) => category.categoryName)}
                                         value={selectedCategoryName}
                                         onChange={handleCategoryIdChange}
+                                    />
+                                    <Typography>Item Type</Typography>
+                                    <SelectDropDown
+                                        list={itemType.map((itemType) => itemType)}
+                                        value={selectedItemType}
+                                        onChange={handleItemTypeChange}
                                     />
                                     <TextField
                                         margin="normal"
