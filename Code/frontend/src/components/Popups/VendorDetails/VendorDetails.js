@@ -6,6 +6,7 @@ import { IconButton } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import DocumentDownload from "../../../images/DocumentDownload.png";
 import CloseIcon from "@mui/icons-material/Close";
+import { getVendorVerifyPdfs } from "../../../services/Vendor/Vendorservices";
 
 const style = {
   position: "absolute",
@@ -20,10 +21,34 @@ const style = {
   p: 3,
 };
 
-export default function BasicModal() {
+export default function BasicModal({ vendorId,vendorName}) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+ const [data, setData] = React.useState([]);
+
+  React.useEffect(() => { 
+    
+    const fetchData = async () => {
+      try {
+        const response = await getVendorVerifyPdfs(vendorId);
+        setData(response);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  
+
+  }, []);
+
+  const downloadFile = (url,name) => {
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = url;
+    link.target = {name};
+    link.click();
+  };
 
   return (
     <div>
@@ -65,7 +90,7 @@ export default function BasicModal() {
             fontFamily={"Inter"}
             align="center"
           >
-            Click here to Download Following Documents
+            Click here to Download Following Documents of <b>{vendorName}</b>
           </Typography>
           <div
             style={{
@@ -78,28 +103,28 @@ export default function BasicModal() {
             }}
           >
             <div>
-              <IconButton>
-                <img src={DocumentDownload} />
-              </IconButton>
-              <label>Bussiness Registration</label>
-            </div>
-            <div>
-              <IconButton>
-                <img src={DocumentDownload} />
-              </IconButton>
-              <label>Tax Identification</label>
-            </div>
-            <div>
-              <IconButton>
-                <img src={DocumentDownload} />
-              </IconButton>
-              <label>Insurance Certification</label>
-            </div>
-            <div>
-              <IconButton>
-                <img src={DocumentDownload} />
-              </IconButton>
-              <label>Other Documents</label>
+            <IconButton onClick={() => downloadFile(data[0].url,data[0].name)}>
+    <img src={DocumentDownload} />
+  </IconButton>
+  <label>Business Registration</label>
+</div>
+<div>
+  <IconButton onClick={() => downloadFile(data[2].url,data[1].name)}>
+    <img src={DocumentDownload} />
+  </IconButton>
+  <label>Tax Identification</label>
+</div>
+<div>
+  <IconButton onClick={() => downloadFile(data[1].url,data[2].name)}>
+    <img src={DocumentDownload} />
+  </IconButton>
+  <label>Insurance Certificate</label>
+</div>
+<div>
+  <IconButton onClick={() => downloadFile(data[3].url,data[3].name)}>
+    <img src={DocumentDownload} />
+  </IconButton>
+  <label>Other Documents</label>
             </div>
           </div>
         </Box>

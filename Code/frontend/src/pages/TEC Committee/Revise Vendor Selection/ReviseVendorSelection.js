@@ -153,7 +153,7 @@ function ReviseVendorSelection() {
                             {MoneyFormat(row.bidinfo[0].bidValue)}
                           </TableCell>
                           <TableCell align="center">
-                            {<VendorDetails />}
+                          { <VendorDetails vendorId={row.bidinfo[0].vendorId} vendorName={row.bidinfo[0].vendorName} />}
                           </TableCell>
                           <TableCell align="center">
                             {

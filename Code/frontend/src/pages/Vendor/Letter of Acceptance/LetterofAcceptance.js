@@ -21,7 +21,10 @@ import GavelIcon from "@mui/icons-material/Gavel";
 import axios from "axios";
 import DonePopup from "../../../components/Popups/DonePopup/DonePopup";
 import { Link as Routerlink } from "react-router-dom";
-
+import { GetApprovedItemDetailsitemId, GetLetterAcceptenceData, updateLetterOfAcceptance } from "../../../services/Vendor/Vendorservices";
+import { DateFormat, MoneyFormat } from "../../../services/dataFormats";
+import { PDFViewer, Document, Page, Text,pdf,StyleSheet,View } from '@react-pdf/renderer';
+import { saveAs } from 'file-saver';
 // const FileInput = () => {
 //     const [selectedImage, setSelectedImage] = useState(5);
 //     const [imageUrl, setImageUrl] = useState(5);
@@ -33,17 +36,7 @@ import { Link as Routerlink } from "react-router-dom";
 //     }, [selectedImage]);
 // }
 
-///////////////Add axios/////////////
-// async function getTenderItemDetails(id) {
-//   try {
-//     const response = await axios.get(`https://localhost:7102/api/Items/TenderItemDetails/${id}`);
-
-//     return response.data;
-//   } catch (error) {
-//     console.log(error);
-//     throw error;
-//   }
-// }
+const venderId ='BUW52'
 
 const columns = [
   { id: "DOC", Width: 200, align: "center" },
@@ -52,13 +45,13 @@ const columns = [
   { id: "del", Width: 200, align: "center" },
 ];
 
-function createData(DOC, view, upld, del) {
-  return { DOC, view, upld, del };
-}
+
 
 function LetterofAcceptance() {
   const [selectedFile, setSelectedFile] = useState(null);
   const fileInputRef = useRef(null);
+  
+
 
   function handleFileChange(event) {
     setSelectedFile(event.target.files[0]);
@@ -67,8 +60,116 @@ function LetterofAcceptance() {
   function handleBrowseClick() {
     fileInputRef.current.click();
   }
+  const {itemId} = useParams();
+  const [data, setData] = useState(null);
+  const [vendorDetails,setVendorDetails] = useState(null);
+  
+  
+
+
+    
+    
+  
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+      
+        const response = await GetLetterAcceptenceData(itemId,venderId);
+        const data = response;
+        setData(data.result2);
+        setVendorDetails(data.vendorD) ;
+        console.log(data.result2)
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const handleDownload =  async () => {
+
+
+    const stylesPDF = StyleSheet.create({
+      page: {
+        fontFamily: 'Helvetica',
+        fontSize: 13,
+        fontWeight: 400,
+        paddingTop: 30,
+        paddingLeft: 60,
+        paddingRight: 60,
+        paddingBottom: 30,
+        
+      },
+      pageContainer: {
+        border: '1pt solid black', 
+        flex: 1,
+        padding: 10,
+        paddingTop: 60,
+
+      },
+      spacing: {
+        marginBottom: 20, 
+      },
+      heading: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        marginBottom: 10,
+      },
+      content: {
+        marginBottom: 10,
+      },
+    });
+
+    const MyDocument = () => (
+      <Document>
+      <Page size="A4" style={stylesPDF.page}>
+        <View style={stylesPDF.pageContainer}>
+          <Text style={stylesPDF.heading}>Date: {new Date().toISOString().split('T')[0]}</Text>
+          <Text style={stylesPDF.content}>To: PUCSL</Text>
+          <Text style={stylesPDF.content}>From: {vendorDetails.companyName}</Text>
+          <Text style={stylesPDF.content}>Subject: Acceptance of Offer to Purchase Goods/Services</Text>
+          <Text style={stylesPDF.content}>Dear PUCSL,</Text>
+          <Text style={stylesPDF.content}>
+            We are pleased to confirm our acceptance of your offer to purchase the following goods/services:
+          </Text>
+          <Text style={stylesPDF.content}>• Item Name: {data.itemName}</Text>
+          <Text style={stylesPDF.content}>
+            The price for these goods/services is {MoneyFormat(data.bidValue)} and the total cost, including taxes and fees,
+            is {MoneyFormat(data.bidValue * data.totalQuantity)}.
+          </Text>
+          <Text style={stylesPDF.content}>
+            Delivery will be made on or before {DateFormat(data.expectedDeliveryDate)}.
+          </Text>
+          <Text style={stylesPDF.content}>Thank you for the opportunity to work with your company.</Text>
+          <Text style={stylesPDF.content}></Text>
+          <Text style={stylesPDF.signature}>Sincerely,</Text>
+          <Text style={stylesPDF.signatureLine}>___________________</Text>
+          <Text style={stylesPDF.signature}>{vendorDetails.vendorFullName}</Text>
+          <Text style={stylesPDF.signature}>{vendorDetails.companyName}</Text>
+        </View>
+      </Page>
+    </Document>
+    );
+  
+    const pdfBlob = await pdf(<MyDocument />).toBlob();
+    const url = URL.createObjectURL(pdfBlob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${data.itemId}_${venderId}.pdf`;
+    link.click();
+    URL.revokeObjectURL(url);
+  };
+  
+ 
+  
+
+  if(data==null){
+    return <></>
+  }
 
   return (
+    
     <div style={{ overflowX: "hidden" }}>
       <Container
         className={styles.main}
@@ -115,40 +216,47 @@ function LetterofAcceptance() {
                 <TextField
                   id="specification"
                   multiline
+                  readOnly
                   rows={4}
                   sx={{ width: 400 }}
-                  //   value={data.specification}
+                  value={data.specification}
                 />
                 <br />
                 ITEM NAME
                 <TextField
                   margin="normal"
-                  required
+                  readOnly
                   fullWidth
                   id="duedate"
                   name="duedate"
                   size="small"
                   sx={{ width: 300 }}
+                  value={data.itemName}
+                  
                 />
                 QUANTITY
                 <TextField
                   margin="normal"
-                  required
+                  
                   fullWidth
                   id="qty"
                   name="qty"
                   size="small"
                   sx={{ width: 300 }}
+                  value={data.totalQuantity
+                  }
                 />
                 BID VALUE
                 <TextField
                   margin="normal"
-                  required
+                  
                   fullWidth
                   id="bidvalue"
                   name="bidvalue"
                   size="small"
                   sx={{ width: 300 }}
+                  value={data.bidValue}
+                  
                 />
               </Paper>
             </div>
@@ -171,6 +279,7 @@ function LetterofAcceptance() {
                       backgroundColor: "white",
                       borderRadius: "9px",
                       marginRight: 15,
+                      marginBottom: 10,
                     }}
                     readOnly
                   />
@@ -189,6 +298,7 @@ function LetterofAcceptance() {
                         borderRadius: "9px",
                         color: "white",
                         height: 40,
+                        marginTop: 10,
                       }}
                       onClick={handleBrowseClick}
                     >
@@ -202,11 +312,16 @@ function LetterofAcceptance() {
               text={"Successfully Submitted"}
               title={"Submit"}
               sx={{
+                
                 bgcolor: "#205295",
                 borderRadius: 5,
                 height: 50,
                 width: 150,
                 marginTop: "10px",
+              }}
+              onClick={(e) => {
+                e.stopPropagation();
+                updateLetterOfAcceptance(data.itemId, venderId, selectedFile);
               }}
             />
           </div>
@@ -228,39 +343,44 @@ function LetterofAcceptance() {
                   borderRadius: "20px",
                 }}
               >
-                <Typography>
-                  Date:_____ <br />
-                  <br />
-                  To: [Company Name] <br />
-                  <br />
-                  From: [Vendor Name] <br />
-                  <br />
-                  Subject: Acceptance of Offer to Purchase Goods/Services
-                  <br />
-                  <br />
-                  Dear [Company Name],
-                  <br />
-                  <br />
-                  We are pleased to confirm our acceptance of your offer to
-                  purchase the following goods/services:
-                  <br />
-                  <br />
-                  [Description of goods/services] <br />
-                  <br />
-                  The price for these goods/services is [price] and the total
-                  cost, including taxes and fees, is [total cost]. <br />
-                  Delivery will be made on or before [delivery date]. <br />
-                  We are pleased to confirm that we are able to offer these
-                  goods for a period of [Number of Years] [years/months].
-                  <br />
-                  Thank you for the opportunity to work with your company.
-                  <br />
-                  <br />
-                  Sincerely, <br />
-                  ____
-                  <br />
-                  [Vendor Name]
-                </Typography>
+                 <Typography>
+        Date: {new Date().toISOString().split('T')[0]}
+        <br />
+        <br />
+        To: PUCSL
+        <br />
+        <br />
+        From: {vendorDetails.companyName}
+        <br />
+        <br />
+        Subject: Acceptance of Offer to Purchase Goods/Services
+        <br />
+        <br />
+        Dear PUCSL,
+        <br />
+        <br />
+        We are pleased to confirm our acceptance of your offer to purchase the following goods/services:
+        <br />
+        <br />
+        Item Name: {data.itemName}
+        <br />
+        <br />
+        The price for these goods/services is {MoneyFormat(data.bidValue)} and the total cost, including taxes and fees, is {MoneyFormat(data.bidValue * data.totalQuantity)}.
+        <br />
+        Delivery will be made on or before {DateFormat(data.expectedDeliveryDate)}.
+        <br />
+        <br />
+        Thank you for the opportunity to work with your company.
+        <br />
+        <br />
+        <br />
+        Sincerely,
+        <br />
+        ____________
+        <br />
+        {vendorDetails.vendorFullName} <br />
+        ({vendorDetails.companyName})
+      </Typography>
               </Paper>
               <Button
                 variant="contained"
@@ -274,6 +394,7 @@ function LetterofAcceptance() {
                   marginLeft: "200px",
                   marginTop: "20px",
                 }}
+                onClick={handleDownload}
               >
                 Download
               </Button>

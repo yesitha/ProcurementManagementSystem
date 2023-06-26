@@ -582,6 +582,10 @@ namespace PWMSBackend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("BusinessRegNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("BusinessRegistrationDoc")
                         .HasColumnType("nvarchar(max)");
 
@@ -604,9 +608,16 @@ namespace PWMSBackend.Migrations
                     b.Property<string>("InsuaranceCertificate")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("JobTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NoOfEmployees")
+                        .HasColumnType("int");
 
                     b.Property<string>("OtherDocs")
                         .HasColumnType("nvarchar(max)");
@@ -615,7 +626,15 @@ namespace PWMSBackend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PostalCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RegistrationType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

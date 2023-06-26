@@ -33,4 +33,10 @@
     <None Remove="DTOs\outgoing\NewFile.txt" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Uploads\Vendor_Required_Docs\Agreement\" />
+    <Folder Include="Uploads\Vendor_Required_Docs\BankGuarantee\" />
+    <Folder Include="Uploads\Vendor_Required_Docs\Bond\" />
+  </ItemGroup>
+
 </Project>

@@ -14,7 +14,11 @@
 
         public string EmailAddress { get; set; }
 
+        public string PhoneNumber { get; set; }
+
         public string Address1 { get; set; }
+
+        public string BusinessRegNo { get; set; }
 
         public string Address2 { get; set; }
 
@@ -29,6 +33,12 @@
         public string Salutation { get; set; }
 
         public string CompanyFullName { get; set; }
+
+        public string JobTitle { get; set; }
+
+        public string RegistrationType { get; set; }
+
+        public int  NoOfEmployees { get; set; }
 
         public string? BusinessRegistrationDoc { get; set; }
 

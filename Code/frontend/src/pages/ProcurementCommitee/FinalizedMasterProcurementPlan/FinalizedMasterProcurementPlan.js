@@ -29,13 +29,7 @@ const columns = [
   { id: "ItemName", label: "Item Name", Width: 300, align: "center" },
   { id: "Qty", label: "Quantity", Width: 300, align: "center" },
   { id: "Spe", label: "Specification", Width: 300, align: "center" },
-  {
-    id: "SppID",
-    label: "Sub Procurement Plan ID",
-    Width: 300,
-    align: "center",
-  },
-  { id: "Division", label: "Division", Width: 300, align: "center" },
+  
   {
     id: "EDdate",
     label: "Expected Delivery date",
@@ -189,8 +183,7 @@ function FinalizedMasterProcurementPlan() {
                           <TableCell align="center">
                             {row.specification}
                           </TableCell>
-                          <TableCell align="center">{row.sppId}</TableCell>
-                          <TableCell align="center">{row.division}</TableCell>
+                          
                           <TableCell align="center">
                             {DateFormat(row.expectedDeliverDate)}
                           </TableCell>
@@ -198,7 +191,8 @@ function FinalizedMasterProcurementPlan() {
                             {row.selectedVendor}
                           </TableCell>
                           <TableCell align="center">
-                            {<VendorDetails />}
+                          <VendorDetails vendorId={row.selectedVendorInfo.vendorId} vendorName={row.selectedVendor
+} />
                           </TableCell>
                           <TableCell align="center">
                             {MoneyFormat(row.bidValue)}

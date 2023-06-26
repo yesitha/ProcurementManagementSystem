@@ -160,12 +160,13 @@ namespace PWMSBackend.Controllers
         public IActionResult GetProcurementEmployees()
         {
             var employees = _context.ProcurementEmployees
+                .Where(e => !(e is HOD) && !(e is InternalAuditor) && !(e is DirectorGeneral))
                 .Include(e => e.Division)
                 .Select(e => new
                 {
                     e.EmployeeId,
                     e.EmployeeName,
-                    DivisionName = e.Division.DivisionName
+                    DivisionName = e.Division.DivisionName,
                 })
                 .ToList();
 
@@ -275,6 +276,7 @@ namespace PWMSBackend.Controllers
 
             // Retrieve all employees and their division information
             var allEmployees = _context.ProcurementEmployees
+                .Where(e => !(e is HOD) && !(e is InternalAuditor) && !(e is DirectorGeneral))
                 .Include(e => e.Division)
                 .Select(e => new
                 {
@@ -703,22 +705,11 @@ namespace PWMSBackend.Controllers
                                     .FirstOrDefault(),
                         SelectedVendorInfo = group.First().SelectedVendor != null ? new
                         {
-                            BusinessRegistrationDoc = _context.Vendors
+                            vendorId = _context.Vendors
                                     .Where(v => v.FirstName + " " + v.LastName == group.First().SelectedVendor)
-                                    .Select(v => v.BusinessRegistrationDoc)
+                                    .Select(v => v.VendorId)
                                     .FirstOrDefault(),
-                            TaxIdentificationDoc = _context.Vendors
-                                    .Where(v => v.FirstName + " " + v.LastName == group.First().SelectedVendor)
-                                    .Select(v => v.TaxIdentificationDoc)
-                                    .FirstOrDefault(),
-                            InsuranceCertificate = _context.Vendors
-                                    .Where(v => v.FirstName + " " + v.LastName == group.First().SelectedVendor)
-                                    .Select(v => v.InsuaranceCertificate)
-                                    .FirstOrDefault(),
-                            OtherDocs = _context.Vendors
-                                    .Where(v => v.FirstName + " " + v.LastName == group.First().SelectedVendor)
-                                    .Select(v => v.OtherDocs)
-                                    .FirstOrDefault()
+                            
                         } : null,
                         internalAuditorStatus = group.First().InternalAuditorStatus,
                         internalAuditorComment = group.First().InternalAuditorComment
@@ -832,8 +823,8 @@ namespace PWMSBackend.Controllers
             return Ok(selectedVendorList);
         }
 
-        [HttpPost("CreatePO/{mppId}/{vendorId}/{PODate}")]
-        public IActionResult CreatePO(string mppId, string vendorId, DateTime PODate)
+        [HttpPost("CreatePO/{mppId}/{vendorId}")]
+        public IActionResult CreatePO(string mppId, string vendorId)
         {
             var purchaseOrder = _context.PurchaseOrders
                 .FirstOrDefault(po => po.VendorId == vendorId && po.MppId == mppId);
@@ -842,7 +833,6 @@ namespace PWMSBackend.Controllers
             {
                 return Ok(purchaseOrder.PoId); // Purchase Order found
             }
-
 
             var selectedVendorList = _context.MasterProcurementPlans
                 .Where(mpp => mpp.MppId == mppId)
@@ -877,7 +867,7 @@ namespace PWMSBackend.Controllers
             var PO = new PurchaseOrder
             {
                 PoId = PoId,
-                Date = PODate,
+                Date = DateTime.Now,
                 TotalAmount = sumOfBidValue,
                 VendorId = vendorId,
                 MppId = mppId

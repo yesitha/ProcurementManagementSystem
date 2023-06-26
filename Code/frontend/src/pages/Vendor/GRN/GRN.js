@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect,useState} from "react";
 import styles from "./GRN.module.css";
 import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import { ButtonBase, Typography } from "@mui/material";
@@ -17,16 +17,20 @@ import "../../../users/vendors.js";
 import EnterNotePopup from "../../../components/Popups/DonePopup/EnterNotePopup";
 import { vendors } from "../../../users/vendors.js";
 import ViewNote from "../../../components/Popups/DonePopup/ViewNote";
-import { Link as Routerlink } from "react-router-dom";
+import { Link as Routerlink, useParams } from "react-router-dom";
+import { GetGRNItemDetails } from "../../../services/Vendor/Vendorservices";
+import { DateFormat } from "../../../services/dataFormats";
 
 const columns = [
   { id: "ItemID", label: "Item ID", Width: 150, align: "center" },
   { id: "ItemName", label: "Item Name", Width: 200, align: "center" },
-  { id: "Spe", label: "Specifications", Width: 200, align: "center" },
-  { id: "OrderQ", label: "Order Qty", Width: 150, align: "center" },
-  { id: "DeliveredQ", label: "Delivered Qty", Width: 150, align: "center" },
-  { id: "RemainingQ", label: "Remaining Qty", Width: 150, align: "center" },
+  { id: "OrderQ", label: "Ordered Qty", Width: 150, align: "center" },
+  { id: "ShippedQ", label: "Shipped Qty", Width: 150, align: "center" },
+  { id: "ReceivedQ", label: "Received Qty", Width: 150, align: "center" },
+  { id: "TReceivedQ", label: "Current Total Received Qty", Width: 200, align: "center" },
+  { id: "RemainingQ", label: "Remaining Qty", Width: 200, align: "center" },
   { id: "Note", label: "Note", Width: 200, align: "center" },
+
 ];
 
 function createData(
@@ -60,6 +64,28 @@ export default function GRN() {
   const supplier = vendors[0].name;
   const text = `Successfully sent GRN to vendor ${supplier}`;
 
+
+  const { poId,grnId } = useParams();
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const fetchdata = async () => {
+      try {
+        const response = await GetGRNItemDetails(poId,grnId);
+        const data = response;
+        setData(data);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchdata();
+  }, []);
+
+  if (data===null) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div style={{ overflowX: "hidden" }}>
       <div className={styles.afmpp_mainBody}>
@@ -69,21 +95,21 @@ export default function GRN() {
             <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
           </IconButton>
           </Routerlink>
-          [GRN NO]
+          Good Receive Note
         </div>
         <div className={styles.GRNno}>
           <Typography>
-            GRN No
+            GRN No : {grnId}
             <br />
-            PO # : [12321]
+            PO No  : {poId}
           </Typography>
         </div>
 
         <div className={styles.adjust}>
           <div className={styles.supplierdetails}>
             <Typography>
-              Supplier Name: <br />
-              Date :
+              Supplier Name  : {data.vendorName} <br />
+              Date : {DateFormat(data.shippingDate)}
             </Typography>
           </div>
 
@@ -121,30 +147,22 @@ export default function GRN() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows
+                {data.result &&
+                  data.result
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row) => {
-                      return (
-                        <TableRow
-                          hover
-                          role="checkbox"
-                          tabIndex={-1}
-                          key={row.code}
-                        >
-                          {columns.map((column) => {
-                            const value = row[column.id];
-                            return (
-                              <TableCell key={column.id} align={column.align}>
-                                {column.format && typeof value === "number"
-                                  ? column.format(value)
-                                  : value}
-                              </TableCell>
-                            );
-                          })}
-                        </TableRow>
-                      );
-                    })}
-                </TableBody>
+                    .map((row, index) => (
+                      <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                        <TableCell align="center">{row.itemId}</TableCell>
+                        <TableCell align="center">{row.itemName}</TableCell>
+                        <TableCell align="center">{row.orderedQuantity}</TableCell>
+                        <TableCell align="center">{row.shipped_Qty}</TableCell>
+                        <TableCell align="center">{row.received_Qty}</TableCell>
+                        <TableCell align="center">{row.totalReceived_Qty}</TableCell>
+                        <TableCell align="center">{row.orderedQuantity-row.totalReceived_Qty}</TableCell>
+                        <TableCell align="center">{<ViewNote />}</TableCell>
+                      </TableRow>
+                    ))}
+              </TableBody>
               </Table>
             </TableContainer>
             <TablePagination
@@ -160,10 +178,10 @@ export default function GRN() {
         </div>
         <div className={styles.divide}>
           <div className={styles.supplierName}>
-            <Typography>Supplier Name:</Typography>
           </div>
           <div className={styles.checkedBy}>
-            <Typography>Checked By:</Typography>
+            <Typography>Checked By: {data.checkedBy.checkedby}</Typography>
+            <Typography>Date: {DateFormat(data.checkedBy.date)}</Typography>
           </div>
 
           <div className={styles.divide2}>
@@ -182,7 +200,7 @@ export default function GRN() {
               </Button>
             </div>
             <div>
-              <Routerlink to={'/create-invoice'}>
+              <Routerlink to={`/create-invoice/${poId}/${grnId}`}>
               <Button
                 variant="contained"
                 style={{

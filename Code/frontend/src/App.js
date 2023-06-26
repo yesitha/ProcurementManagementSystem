@@ -112,19 +112,41 @@ function App() {
                         element={<CreateSubProcurementPlan/>}
                     />
 
-                    {/* Purchase Division HOD */}
-                    <Route
-                        path="/NewSubProcurmentPlan"
-                        element={<CreateMasterProcurementPlan/>}
-                    />
-                    <Route
-                        path="/RequesttoInitiateMasterProcurementPlan"
-                        element={<RequesttoInitiateSubProcurementPlan/>}
-                    />
-                    <Route
-                        path="/pd-view-sub-procurement-plan/:selectedSubId/:divisionName"
-                        element={<PDViewSubProcurementPlan/>}
-                    />
+          {/* ProcurementOfficer */}
+          <Route
+            path="/ViewSubProcurementPlan"
+            element={<ViewSubProcurementPlan />}
+          />
+          <Route
+            path="/MasterProcurmentPlan"
+            element={<ViewMasterProcurementPlanProc />}
+          />
+          <Route
+            path="/master-procurement-plan-status/:subId"
+            element={<MasterProcurementPlanStatus />}
+          />
+          <Route
+            path="/view-master-procurement-plan/:mppId"
+            element={<ViewMasterProcurementPlan />}
+          />
+          <Route path="/PurchaseOrder" element={<PurchaseOrder />} />
+          <Route path="/add-item-to-PO" element={<AddItemstoPO />} />
+          <Route path="/send-purchase-order/:poId" element={<SendPurchaseOrder />} />
+          <Route path="/GoodReceiveNote" element={<AddItemstoGRN />} />
+          <Route path="/grn-view" element={<GoodsReceivedNote />} />
+          <Route
+            path="/appoint-bidopening-committee"
+            element={<ViewMasterProcurementPlanProc />}
+          />
+          <Route
+            path="/create-modify-bidopeningC/:mppId"
+            element={<CreateModifyBidOpeningCommittee/>}
+          />
+          <Route
+            path="/evaluate-master-procurementplan"
+            element={<ViewMasterProcurementPlanProc />}
+          />
+          <Route path="/create-purchase-order" element={<PurchaseOrder />} />
 
                     {/* ProcurementOfficer */}
                     <Route
@@ -254,12 +276,38 @@ function App() {
                         element={<FinalizedMasterProcurementPlan/>}
                     />
 
-                    {/* CoparateCommunicationDivision */}
-                    <Route path="/publish-papaer-ad" element={<PublishPaperAd/>}/>
-                    <Route
-                        path="/publish-papaer-ad-view-item/:itemId"
-                        element={<ItemDetails/>}
-                    />
+          {/* Vendor */}
+          <Route path="/bid-tender/:vendorId" element={<BidTender />} />
+          <Route path="/tender-details/:itemId" element={<TenderDetails />} />
+          <Route path="/bid-history/:vendorId" element={<BidHistory />} />
+           <Route
+            path="/po-verification-submit/:poId"
+            element={<POVerificationSubmit />}
+          />
+          <Route path="/letter-of-acceptance/:itemId" element={<LetterofAcceptance/>}/>
+          <Route
+            path="/PurchaseOrder-vendor/:vendorId"
+            element={<PurchseOrdersVendor />}
+          />
+          <Route
+            path="/PurchaseOrder-vendor-view/:poId"
+            element={<PurchaseOrderPreview />}
+          />
+          <Route path="/VGoodReceiveNote/:vendorId" element={<ViewGRN />} />
+          <Route path="/grn/:poId/:grnId" element={<GRN />} />
+          <Route path="/create-invoice/:poId/:grnId" element={<CreateInvoice2 />} />
+          <Route path="/send-invoice" element={<SendInvoice />} />
+          <Route path="/view-invoice" element={<ViewInvoices />} />
+          <Route path="/invoice" element={<Invoicesvendorside />} />
+          <Route path="/items-to-be-shipped" element={<ItemstobeShipped />} />
+          <Route path="/bid-approved" element={<BidHistory />} />
+          <Route path="/signUp" element={<Signup/>} />
+          <Route
+            path="/verification-statuses-evaluated"
+            element={<BidHistory />}
+          />
+          <Route path="/new-grn" element={<ViewGRN />} />
+          <Route path="/payment-received" element={<ViewInvoices />} />
 
                     {/* Vendor */}
                     <Route path="/bid-tender/:vendorId" element={<BidTender/>}/>
