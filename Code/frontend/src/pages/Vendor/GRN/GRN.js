@@ -24,11 +24,13 @@ import { DateFormat } from "../../../services/dataFormats";
 const columns = [
   { id: "ItemID", label: "Item ID", Width: 150, align: "center" },
   { id: "ItemName", label: "Item Name", Width: 200, align: "center" },
-  { id: "Spe", label: "Specifications", Width: 200, align: "center" },
-  { id: "OrderQ", label: "Order Qty", Width: 150, align: "center" },
-  { id: "DeliveredQ", label: "Delivered Qty", Width: 150, align: "center" },
-  { id: "RemainingQ", label: "Remaining Qty", Width: 150, align: "center" },
+  { id: "OrderQ", label: "Ordered Qty", Width: 150, align: "center" },
+  { id: "ShippedQ", label: "Shipped Qty", Width: 150, align: "center" },
+  { id: "ReceivedQ", label: "Received Qty", Width: 150, align: "center" },
+  { id: "TReceivedQ", label: "Current Total Received Qty", Width: 200, align: "center" },
+  { id: "RemainingQ", label: "Remaining Qty", Width: 200, align: "center" },
   { id: "Note", label: "Note", Width: 200, align: "center" },
+
 ];
 
 function createData(
@@ -93,7 +95,7 @@ export default function GRN() {
             <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
           </IconButton>
           </Routerlink>
-          {grnId}
+          Good Receive Note
         </div>
         <div className={styles.GRNno}>
           <Typography>
@@ -145,30 +147,22 @@ export default function GRN() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows
+                {data.result &&
+                  data.result
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row) => {
-                      return (
-                        <TableRow
-                          hover
-                          role="checkbox"
-                          tabIndex={-1}
-                          key={row.code}
-                        >
-                          {columns.map((column) => {
-                            const value = row[column.id];
-                            return (
-                              <TableCell key={column.id} align={column.align}>
-                                {column.format && typeof value === "number"
-                                  ? column.format(value)
-                                  : value}
-                              </TableCell>
-                            );
-                          })}
-                        </TableRow>
-                      );
-                    })}
-                </TableBody>
+                    .map((row, index) => (
+                      <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                        <TableCell align="center">{row.itemId}</TableCell>
+                        <TableCell align="center">{row.itemName}</TableCell>
+                        <TableCell align="center">{row.orderedQuantity}</TableCell>
+                        <TableCell align="center">{row.shipped_Qty}</TableCell>
+                        <TableCell align="center">{row.received_Qty}</TableCell>
+                        <TableCell align="center">{row.totalReceived_Qty}</TableCell>
+                        <TableCell align="center">{row.orderedQuantity-row.totalReceived_Qty}</TableCell>
+                        <TableCell align="center">{<ViewNote />}</TableCell>
+                      </TableRow>
+                    ))}
+              </TableBody>
               </Table>
             </TableContainer>
             <TablePagination
@@ -186,7 +180,8 @@ export default function GRN() {
           <div className={styles.supplierName}>
           </div>
           <div className={styles.checkedBy}>
-            <Typography>Checked By:</Typography>
+            <Typography>Checked By: {data.checkedBy.checkedby}</Typography>
+            <Typography>Date: {DateFormat(data.checkedBy.date)}</Typography>
           </div>
 
           <div className={styles.divide2}>
@@ -205,7 +200,7 @@ export default function GRN() {
               </Button>
             </div>
             <div>
-              <Routerlink to={'/create-invoice'}>
+              <Routerlink to={`/create-invoice/${poId}/${grnId}`}>
               <Button
                 variant="contained"
                 style={{
