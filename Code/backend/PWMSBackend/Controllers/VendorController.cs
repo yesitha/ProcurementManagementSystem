@@ -1396,12 +1396,21 @@ namespace PWMSBackend.Controllers
 
             var result = combinedList.ToList();
 
-            return Ok(result);
+            var invoiceExists = _context.Invoices.Any(i => i.GrnId == grnId);
+
+            return Ok(new { result, invoiceExists });
         }
 
         [HttpPost("CreateInvoice")]
-        public IActionResult CreateInvoice(string grnId, DateTime date)
+        public IActionResult CreateInvoice(string grnId)
         {
+            // Check if an invoice already exists for the given GRN
+            bool invoiceExists = _context.Invoices.Any(i => i.GrnId == grnId);
+            if (invoiceExists)
+            {
+                return BadRequest("An invoice already exists for the provided GRN ID.");
+            }
+
             // Check if the associated GRN exists
             GRN grn = _context.GRNs.FirstOrDefault(g => g.GrnId == grnId);
             if (grn == null)
@@ -1415,7 +1424,7 @@ namespace PWMSBackend.Controllers
             var invoice = new InvoiceTobePay
             {
                 InvoiceId = invoiceId,
-                Date = date,
+                Date = DateTime.Now,
                 GRN = grn,
                 GrnId = grnId
                 // Set other properties of the invoice as needed
