@@ -80,7 +80,8 @@ import NoAccess403 from "./pages/No Access Page/NoAccess";
 import { Navigate } from "react-router-dom/dist";
 
 const PrivateRoute = ({ authorized, allowedUserTypes, ...props }) => {
-   const userType = sessionStorage.getItem("user.userType");
+  const userType = sessionStorage.getItem("user.userType");
+  
   
 
   if (!authorized) {
@@ -94,7 +95,8 @@ const PrivateRoute = ({ authorized, allowedUserTypes, ...props }) => {
 };
 
 function App() {
-  const isAuthenticated = !!sessionStorage.getItem("user");
+const isAuthenticated = !!sessionStorage.getItem("user");
+  
   
 
   return (
@@ -103,7 +105,7 @@ function App() {
       <div className="app-content">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/sign-up" element={<Signup />} />
+          
           <Route path="/sign-in" element={<Login />} />
           <Route path="*" element={<NotFound404/>}></Route>
           <Route path="/no-access" element={<NoAccess403 />} />
@@ -677,6 +679,17 @@ function App() {
             element={
               <PrivateRoute
                 component={<TenderDetails />}
+                authorized={isAuthenticated}
+                allowedUserTypes={["Vendor"]}
+              />
+            }
+          />
+         
+          <Route
+            path="/sign-up"
+            element={
+              <PrivateRoute
+                component={<Signup/>}
                 authorized={isAuthenticated}
                 allowedUserTypes={["Vendor"]}
               />
