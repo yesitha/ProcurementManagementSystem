@@ -225,3 +225,30 @@ export const GetApprovedItemsDetailsvendorId = async (vendorId) => {
       throw error;
     }
   }; 
+
+
+  export const  getPOVenderDetails = async (poId) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_HOST}/api/Vendor/GetPOVendorDetails/${poId}`
+      );
+      console.log(response);
+      return response.data;  
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }; 
+
+  export const  getPOItems = async (poId) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_HOST}/api/Vendor/GetPOItemDetails/${poId}`
+      );
+      console.log(response);
+      return response.data;  
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }; 

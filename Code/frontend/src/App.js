@@ -145,7 +145,7 @@ function App() {
           />
           <Route path="/PurchaseOrder" element={<PurchaseOrder />} />
           <Route path="/add-item-to-PO" element={<AddItemstoPO />} />
-          <Route path="/send-purchase-order" element={<SendPurchaseOrder />} />
+          <Route path="/send-purchase-order/:poId" element={<SendPurchaseOrder />} />
           <Route path="/GoodReceiveNote" element={<AddItemstoGRN />} />
           <Route path="/grn-view" element={<GoodsReceivedNote />} />
           <Route
