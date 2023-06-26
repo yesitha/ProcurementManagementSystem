@@ -13,8 +13,9 @@ const user = {
   phone: "1234567890",
   address: "123, ABC Street, XYZ City, 123456",
   gender: "Male",
-  profilePic: "https://www.w3schools.com/howto/img_avatar.png",
 };
+
+
 
 const currentUser = user.userType;
 switch (currentUser) {

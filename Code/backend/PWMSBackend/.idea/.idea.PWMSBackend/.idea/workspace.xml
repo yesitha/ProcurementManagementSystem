@@ -8,16 +8,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d049ec9e-f73f-48bc-8fa2-ae7b8fcedda0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../../frontend/src/AuthorizedRoutes.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../frontend/src/pages/No Access Page/NoAccess.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../frontend/src/pages/NotFoundPage/NotFound404.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../frontend/src/userSlice.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.PWMSBackend/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PWMSBackend/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/Procurement Officer/PurchaseOrder/PurchaseOrder.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/pages/Procurement Officer/PurchaseOrder/PurchaseOrder.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/Procurement Officer/PurchaseOrder/PurchaseOrder.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/pages/Procurement Officer/PurchaseOrder/PurchaseOrder.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/AddNewItemtoSubProcurementPlan/AddNewItemToSubProcurementPlan.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/pages/AddNewItemtoSubProcurementPlan/AddNewItemToSubProcurementPlan.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/Login/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/pages/Login/Login.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../frontend/src/pages/Usermanage.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/pages/Usermanage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/reducers/authReducer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/reducers/baseReducer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/src/services/ProcurementHOD/ProcurementHODServices.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/services/ProcurementHOD/ProcurementHODServices.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/services/DivisionHOD/deivisionHODServices.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/services/DivisionHOD/deivisionHODServices.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../frontend/src/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/store.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -88,7 +91,7 @@
       <workItem from="1687329841830" duration="782000" />
       <workItem from="1687330721169" duration="5058000" />
       <workItem from="1687518746096" duration="1224000" />
-      <workItem from="1687664243807" duration="682000" />
+      <workItem from="1687664243807" duration="1876000" />
     </task>
     <servers />
   </component>

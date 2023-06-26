@@ -5,14 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bef3c3fc-1eae-49f2-978e-a16cd54f3c7d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Code/frontend/src/AuthorizedRoutes.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Code/frontend/src/pages/Home/Home.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Code/frontend/src/pages/No Access Page/NoAccess.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Code/frontend/src/pages/NotFoundPage/NotFound404.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Code/frontend/src/userSlice.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Code/backend/PWMSBackend/.idea/.idea.PWMSBackend/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Code/backend/PWMSBackend/.idea/.idea.PWMSBackend/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Code/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Code/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/frontend/src/pages/Procurement Officer/PurchaseOrder/PurchaseOrder.js" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/src/pages/Procurement Officer/PurchaseOrder/PurchaseOrder.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/frontend/src/pages/Procurement Officer/PurchaseOrder/PurchaseOrder.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/src/pages/Procurement Officer/PurchaseOrder/PurchaseOrder.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/frontend/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/frontend/src/pages/AddNewItemtoSubProcurementPlan/AddNewItemToSubProcurementPlan.js" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/src/pages/AddNewItemtoSubProcurementPlan/AddNewItemToSubProcurementPlan.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/frontend/src/pages/Login/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/src/pages/Login/Login.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Code/frontend/src/pages/Usermanage.js" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/src/pages/Usermanage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/frontend/src/services/ProcurementHOD/ProcurementHODServices.js" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/src/services/ProcurementHOD/ProcurementHODServices.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/frontend/src/reducers/authReducer.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/frontend/src/reducers/baseReducer.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/frontend/src/services/DivisionHOD/deivisionHODServices.js" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/src/services/DivisionHOD/deivisionHODServices.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/frontend/src/services/authentication.js" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/src/services/authentication.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/frontend/src/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/src/store.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,6 +69,11 @@
       </map>
     </option>
   </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Code/frontend/src/pages" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -72,7 +88,7 @@
       <workItem from="1687421033971" duration="19204000" />
       <workItem from="1687664521721" duration="629000" />
       <workItem from="1687666728392" duration="4538000" />
-      <workItem from="1687673543751" duration="2564000" />
+      <workItem from="1687673543751" duration="33507000" />
     </task>
     <servers />
   </component>
