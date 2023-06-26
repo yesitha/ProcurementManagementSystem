@@ -267,3 +267,27 @@ export const fetchPreviewFromDB = async (selectedMppId,vendorId) => {
     throw error;
   }
 };
+
+export const GetPOItemDetailsForGRN = async (poId) => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/GetPOItemDetailsForGRN/PO39899`
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const GetGRNItemDetails = async (poId,grnId) => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/GetGRNItemDetails/PO39899/BUB86278`
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

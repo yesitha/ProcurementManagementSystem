@@ -1,11 +1,11 @@
 import styles from "./addItemstoGRN.module.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { Container } from "@mui/system";
 import { users } from "../../../users/SystemUsers";
 import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
-import {Link as Routerlink} from 'react-router-dom'
+import {Link as Routerlink, useParams} from 'react-router-dom'
 import DonePopup from "../../../components/Popups/DonePopup/DonePopup";
 import {
   IconButton,
@@ -21,36 +21,60 @@ import {
 } from "@mui/material";
 //import { Rotate90DegreesCcw } from "@mui/icons-material";
 import SelectDropDown from "../../../components/SelectDropDown/SelectDropDown";
+import { GetPOItemDetailsForGRN } from "../../../services/ProcurementHOD/ProcurementHODServices";
 
-// const useStyles = makeStyles({
-//   table: {
-//     minWidth: 650,
-//   },
-// });
-
-const rows = users;
 
 function AddItemstoGRN() {
   //   const classes = useStyles();
-  const [leftTableData, setLeftTableData] = useState(rows);
+  const {poId}=useParams();
+  const [leftTableData, setLeftTableData] = useState([]);
   const [rightTableData, setRightTableData] = useState([]);
+
+    useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await GetPOItemDetailsForGRN(poId);
+
+        const data = response;
+        setLeftTableData(data);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+// Retrieving arrays from sessionStorage
+const storedArray1 = JSON.parse(sessionStorage.getItem('leftTableData'));
+const storedArray2 = JSON.parse(sessionStorage.getItem('rightTableData'));
+
+// If arrays exist, we retrieve them from sessionStorage and set them to state.
+if(storedArray1 && storedArray2) {
+  setLeftTableData(storedArray1);
+  setRightTableData(storedArray2);
+}else{
+  fetchData();
+}
+
+    
+  }, []);
 
   const handleClickLeftToRight = (row) => {
     setRightTableData([...rightTableData, row]);
-    setLeftTableData(leftTableData.filter((data) => data.id !== row.id));
+    setLeftTableData(leftTableData.filter((data) => data.itemId !== row.itemId));
   };
 
   const handleClickRightToLeft = (row) => {
     setLeftTableData([...leftTableData, row]);
-    setRightTableData(rightTableData.filter((data) => data.id !== row.id));
+    setRightTableData(rightTableData.filter((data) => data.itemId !== row.itemId));
   };
+
   const masterProcurementId = "MP0001";
  
   const list = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
   const list3 = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
+  
   return (
     <div>
-
       <Container
         className={styles.main}
         sx={{
@@ -81,15 +105,7 @@ function AddItemstoGRN() {
               </label>
               <SelectDropDown list={list} />
             </div>
-
-            <div>
-              <label style={{ color: "white", marginLeft: "10px" }}>
-                GRN ID*
-              </label>
-              <SelectDropDown list={list3} />
             </div>
-          </div>
-
           <Container
             className={styles.MiddleSection}
             sx={{
@@ -120,16 +136,16 @@ function AddItemstoGRN() {
                     {leftTableData.map((row) => (
                       <TableRow
                         className={styles.TableRow}
-                        key={row.id}
+                        key={row.itemId}
                         onClick={() => handleClickLeftToRight(row)}
                       >
                         <TableCell component="th" scope="row">
-                          {row.id}
+                          {row.itemId}
                         </TableCell>
                         <TableCell>
-                          {row.firstname + " " + row.lastname}
+                          {row.itemName}
                         </TableCell>
-                        <TableCell>{row.department}</TableCell>
+                        <TableCell>{row.orderedQuantity}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -163,7 +179,6 @@ function AddItemstoGRN() {
                       <TableCell>Item Name</TableCell>
                       <TableCell>Order Quantity</TableCell>
                       <TableCell>Received Quantity</TableCell>
-                      <TableCell></TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -174,12 +189,12 @@ function AddItemstoGRN() {
                         onClick={() => handleClickRightToLeft(row)}
                       >
                         <TableCell component="th" scope="row">
-                          {row.id}
+                          {row.itemName}
                         </TableCell>
                         <TableCell>
-                          {row.firstname + " " + row.lastname}
+                          {row.orderedQuantity}
                         </TableCell>
-                        <TableCell>{row.department}</TableCell>
+                        <TableCell>{row.receivedQuantity}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -205,7 +220,7 @@ function AddItemstoGRN() {
                 minWidth: "50px",
               }}
             >
-              Next
+              Create GRN
             </Button>
             </Routerlink>
           </Container>

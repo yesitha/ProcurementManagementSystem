@@ -281,7 +281,7 @@ function App() {
           <Route path="/VGoodReceiveNote/:vendorId" element={<ViewGRN />} />
           <Route path="/grn/:poId/:grnId" element={<GRN />} />
           <Route path="/create-invoice/:poId/:grnId" element={<CreateInvoice2 />} />
-          <Route path="/send-invoice" element={<SendInvoice />} />
+          <Route path="/send-invoice/:grnId" element={<SendInvoice />} />
           <Route path="/view-invoice" element={<ViewInvoices />} />
           <Route path="/invoice" element={<Invoicesvendorside />} />
           <Route path="/items-to-be-shipped" element={<ItemstobeShipped />} />

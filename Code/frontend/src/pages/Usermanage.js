@@ -25,7 +25,7 @@ switch (currentUser) {
       { displayName: "Sub Procurment Plan", path: "ViewSubProcurementPlan" },
       { displayName: "Master Procurement Plan", path: "MasterProcurmentPlan" },
       { displayName: "Purchase Orders", path: "PurchaseOrder" },
-      { displayName: "Good Receive Note", path: "GoodReceiveNote" },
+      { displayName: "Good Receive Note", path: "GoodReceiveNote/:poId" },
       { displayName: "Payment Voucher", path: "PaymentVouchar" },
     ];
 
@@ -43,7 +43,7 @@ switch (currentUser) {
         path: "evaluate-master-procurementplan",
       },
       { displayName: "Create Purchase Order", path: "create-purchase-order" },
-      { displayName: "Create GRN", path: "create-grn" },
+      { displayName: "Create GRN", path: "GoodReceiveNote/:poId" },
       {
         displayName: "Evaluate Vendor Fianace Status",
         path: "evaluate-vendor-fianace-status",
