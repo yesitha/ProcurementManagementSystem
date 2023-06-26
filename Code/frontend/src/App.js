@@ -73,6 +73,7 @@ import AssetRegistry from "./pages/Assets Registry/AssetRegistry";
 import LetterofAcceptance from "./pages/Vendor/Letter of Acceptance/LetterofAcceptance";
 import PDViewSubProcurementPlan from "./pages/Dicvision HOD/PDViewSubProcurementPlan/PDViewSubProcurementPlan";
 import Signup from "./pages/SignUp/SignUp";
+import PDViewSubProcurementPlan from "./pages/Dicvision HOD/PDViewSubProcurementPlan/PDViewSubProcurementPlan"
 import NotFound404 from "./pages/NotFoundPage/NotFound404";
 import { Home } from "./pages/Home/Home";
 import NoAccess403 from "./pages/No Access Page/NoAccess";

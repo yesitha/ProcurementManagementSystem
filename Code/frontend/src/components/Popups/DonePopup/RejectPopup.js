@@ -28,7 +28,8 @@ export default function BasicModal(link) {
   const [open, setOpen] = React.useState(false);
   const [rejectComment, setRejectComment] = React.useState("");
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {setOpen(false);
+    window.location.reload();}
   const handleCommentChange = (event) => setRejectComment(event.target.value);
   const [commentAddedlink, setCommentAddedLink] = React.useState(link.link.toString());
   const manipulatedString = commentAddedlink.replace('$rejectedComment', rejectComment);
