@@ -160,12 +160,13 @@ namespace PWMSBackend.Controllers
         public IActionResult GetProcurementEmployees()
         {
             var employees = _context.ProcurementEmployees
+                .Where(e => !(e is HOD) && !(e is InternalAuditor) && !(e is DirectorGeneral))
                 .Include(e => e.Division)
                 .Select(e => new
                 {
                     e.EmployeeId,
                     e.EmployeeName,
-                    DivisionName = e.Division.DivisionName
+                    DivisionName = e.Division.DivisionName,
                 })
                 .ToList();
 
@@ -275,6 +276,7 @@ namespace PWMSBackend.Controllers
 
             // Retrieve all employees and their division information
             var allEmployees = _context.ProcurementEmployees
+                .Where(e => !(e is HOD) && !(e is InternalAuditor) && !(e is DirectorGeneral))
                 .Include(e => e.Division)
                 .Select(e => new
                 {

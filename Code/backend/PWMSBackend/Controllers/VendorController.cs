@@ -228,9 +228,117 @@ namespace PWMSBackend.Controllers
             }
         }
 
-        
+        //Bid history for vendor
 
-       
+        [HttpGet("GetBidHistory/{vendorId}")]
+        public async Task<ActionResult<IEnumerable<object>>> GetBidHistory(string vendorId)
+        {
+            DateTime currentDate = DateTime.Today;
+
+            var closestDate = _context.SubProcurementApprovedItems
+                .Where(a => a.PreBidMeetingDate.HasValue && a.PreBidMeetingDate.Value.Date <= currentDate)
+                .OrderByDescending(a => a.PreBidMeetingDate.Value)
+                .Select(a => a.PreBidMeetingDate.Value.Date)
+                .FirstOrDefault();
+
+            var items = await _context.SubProcurementApprovedItems
+                .Where(a => a.PreBidMeetingDate.HasValue && a.PreBidMeetingDate.Value.Date == closestDate)
+                .Select(a => new { a.SppId, a.ItemId })
+                .ToListAsync();
+
+            if (items == null)
+            {
+                return NotFound();
+            }
+
+            //join sppId and itemId from SubProcurementPlanItems and SubProcurementApprovedItems
+
+            var joinedData = from input in items
+                             join planItem in _context.SubProcurementPlanItems
+                             on new { input.SppId, input.ItemId } equals new { planItem.SppId, planItem.ItemId }
+                             select new
+                             {
+                                 sppId = input.SppId,
+                                 itemId = input.ItemId,
+                                 quantity = planItem.Quantity,
+                                 expectedDeliveryDate = planItem.ExpectedDeliveryDate
+                             };
+
+            //filter data by itemId and sum quantity
+
+            var filteredData = joinedData.GroupBy(x => x.itemId)
+                                     .Select(group => new
+                                     {
+                                         itemId = group.Key,
+                                         totalQuantity = group.Sum(x => x.quantity),
+                                         expectedDeliveryDate = group.Select(x => x.expectedDeliveryDate).Distinct().Min()
+                                     });
+
+            //get item names
+
+            var itemIds = filteredData.Select(x => x.itemId).Distinct().ToList();
+            var itemDetails = _context.Items.Where(item => itemIds.Contains(item.ItemId))
+                                            .Select(item => new { item.ItemId, item.ItemName, item.Specification })
+                                            .ToList();
+
+            //var result = from input in filteredData
+            //             join itemDetail in itemDetails
+            //             on input.itemId equals itemDetail.ItemId
+            //             select new
+            //             {
+            //                 itemId = input.itemId,
+            //                 itemName = itemDetail.ItemName,
+            //                 Specification = itemDetail.Specification,
+            //                 totalQuantity = input.totalQuantity,
+            //                 expectedDeliveryDate = input.expectedDeliveryDate,
+            //             };
+
+            //get vendor details
+
+            var vendorDetails = _context.VendorPlaceBidItems.Where(vendor => vendor.VendorId == vendorId && itemIds.Contains(vendor.ItemId))
+                                                            .Select(vendor => new { vendor.VendorId, vendor.ItemId, vendor.BidValue, vendor.BidStatus, vendor.LetterOfAcceptance })
+                                                            .ToList();
+
+            //var result2 = from input in result
+            //              join vendorDetail in vendorDetails
+            //              on input.itemId equals vendorDetail.ItemId into gj
+            //              from vendor in gj.DefaultIfEmpty()
+            //              select new
+            //              {
+            //                  itemId = input.itemId,
+            //                  itemName = input.itemName,
+            //                  Specification = input.Specification,
+            //                  totalQuantity = input.totalQuantity,
+            //                  expectedDeliveryDate = input.expectedDeliveryDate,
+            //                  bidValue = vendor?.BidValue,
+            //                  bidStatus = vendor?.BidStatus,
+            //                  isletterOfAcceptance = vendor != null && !string.IsNullOrEmpty(vendor.LetterOfAcceptance)
+            //              };
+
+            var result = from input in filteredData
+                         join itemDetail in itemDetails
+                         on input.itemId equals itemDetail.ItemId
+                         join vendorDetail in vendorDetails
+                         on input.itemId equals vendorDetail.ItemId into gj
+                         from vendor in gj.DefaultIfEmpty()
+                         where vendorDetails.Select(v => v.ItemId).Contains(input.itemId)
+                         select new
+                         {
+                             itemId = input.itemId,
+                             itemName = itemDetail.ItemName,
+                             Specification = itemDetail.Specification,
+                             totalQuantity = input.totalQuantity,
+                             expectedDeliveryDate = input.expectedDeliveryDate,
+                             bidValue = vendor?.BidValue,
+                             bidStatus = vendor?.BidStatus,
+                             isletterOfAcceptance = vendor != null && !string.IsNullOrEmpty(vendor.LetterOfAcceptance)
+                         };
+
+
+            return Ok(result);
+        }
+
+
 
         // Letter of Acceptance by itemId 
 
