@@ -52,7 +52,6 @@ import InvoicesneedtobePaid from "./pages/FinanceDivisionAccountant/Invoicesneed
 import ViewMasterProcurementPlanProc from "./pages/Procurement Officer/ViewMasterProcurementPlanProc/ViewMasterProcurementPlanProc";
 import PurchaseOrder from "./pages/Procurement Officer/PurchaseOrder/PurchaseOrder";
 import {useSelector} from "react-redux";
-import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import AddItemstoPO from "./pages/Procurement Officer/AddItemstoPO/AddItemstoPO";
 import AuditReport from "./pages/Procurement Officer/AuditReport/AuditReport";
@@ -73,11 +72,12 @@ import LetterofAcceptance from "./pages/Vendor/Letter of Acceptance/LetterofAcce
 import PDViewSubProcurementPlan from "./pages/Dicvision HOD/PDViewSubProcurementPlan/PDViewSubProcurementPlan"
 import NotFound404 from "./pages/NotFoundPage/NotFound404";
 import {Home} from "./pages/Home/Home";
+
 import NoAccess403 from "./pages/No Access Page/NoAccess";
 
 function App() {
-    const userType = sessionStorage.getItem("userType"); // Get userType from session storage
-
+    const userType = sessionStorage.getItem('userType');
+    console.log(userType);
 
     return (
         <div className="app-container">
@@ -301,7 +301,7 @@ function App() {
           <Route path="/invoice" element={<Invoicesvendorside />} />
           <Route path="/items-to-be-shipped" element={<ItemstobeShipped />} />
           <Route path="/bid-approved" element={<BidHistory />} />
-          <Route path="/signUp" element={<Signup/>} />
+          <Route path="/signUp" element={<SignUp/>} />
           <Route
             path="/verification-statuses-evaluated"
             element={<BidHistory />}
