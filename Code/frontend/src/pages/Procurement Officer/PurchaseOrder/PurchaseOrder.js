@@ -37,6 +37,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { Link as Routerlink } from "react-router-dom";
 import {
+    fetchPreviewFromDB,
   getItemDetailsForPo,
   getMasterProcurementPlanContentFromDB,
   getMasterProcurementPlanFromDB,
@@ -67,6 +68,7 @@ function PurchaseOrder() {
   const [vendorNameList, setVendorNameList] = useState([]);
   const [vendorDetailsList, setVendorDetailsList] = useState([]);
   const [itemDetailsList, setItemDetailsList] = useState([]);
+  const [poId, setpoId] = useState(null);
 
   const rows = itemDetailsList;
 
@@ -151,13 +153,26 @@ function PurchaseOrder() {
     setSelectedVendorName(event.target.value);
   };
 
+  useEffect(() => {
+    if (vendorId) {
+      const fetchData = async () => {
+        try {
+          const response = await fetchPreviewFromDB(selectedMppId, vendorId);
+          setpoId(response.data);
+        } catch (error) {
+          // Handle any error that occurred during the API request
+          console.error(error);
+        }
+      };
+  
+      fetchData();
+    }
+  }, [vendorId]);
+  
+  
+   
 
-  
-  
-    const handleDateChange = (date) => {
-      setSelectedDate(date);
-      console.log(date);
-    };
+    
   return (
     <div>
       <div className={styles.NotificationPageContainer__header}>
@@ -172,25 +187,7 @@ function PurchaseOrder() {
       </div>
       <div className={styles.divide}>
        
-        <div className={styles.dropdown1} style={{ marginTop: "60px", position:'absolute' ,right:'60px' }}>
-        <label style={{ color: "white", marginLeft: "10px" ,}}>Date</label>
-        <br/>
-        <TextField
-        id='date'
-        type='date'
-        value={selectedDate}
-        InputLabelProps={{
-          shrink: true,
-          style: { color: '#ffffff' },
-        }}
-        InputProps={{
-          style: { backgroundColor: '#ffffff' },
-        }}
-        onChange={(e) => {
-          handleDateChange(e.target.value);
-        }}
-      />
-        </div>
+       
 
         <div className={styles.dropdown1} style={{ marginTop: "60px" }}>
           <label style={{ color: "white", marginLeft: "10px" }}>
@@ -294,7 +291,7 @@ function PurchaseOrder() {
           />
         </Paper>
       </div>
-      <Routerlink to={"/send-purchase-order"}>
+      <Routerlink to={`/send-purchase-order/${poId}`} >
         <Button
           variant="contained"
           fontFamily={"Inter"}
@@ -306,10 +303,13 @@ function PurchaseOrder() {
             marginLeft: "75px",
             marginTop: "20px",
           }}
+          
         >
           PRINT PREVIEW
         </Button>
       </Routerlink>
+     
+      
     </div>
   );
 }
