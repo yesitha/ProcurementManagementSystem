@@ -787,7 +787,11 @@ namespace PWMSBackend.Controllers
                     ItemId = group.Key,
                     ItemName = group.First().Item.ItemName,
                     Specifications = group.First().Item.Specification,
-                    TotalQuantity = group.Sum(item => item.Quantity),
+                    ShippedQtyForNow = _context.PurchaseOrder_ItemTobeShippeds
+                        .Where(pobts => pobts.PoId == PoId && pobts.ItemId == group.Key)
+                        .Select(pobts => (int?)pobts.Shipped_Qty) // Use nullable int
+                        .FirstOrDefault() ?? 0, // Set default value as 0 if null
+                    TotalOrderedQuantity = group.Sum(item => item.Quantity),
                     BidValue = _context.VendorPlaceBidItems
                         .Where(vpb => vpb.Vendor.VendorId == vendorId && vpb.ItemId == group.Key)
                         .Select(vpb => vpb.BidValue)
