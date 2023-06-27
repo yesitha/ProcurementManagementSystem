@@ -189,6 +189,7 @@ namespace PWMSBackend.Controllers
                 .Where(po => po.PoId == PoId)
                 .Select(po => new
                 {
+                    vendorId = po.VendorId,
                     VendorName = po.Vendor.FirstName + " " + po.Vendor.LastName,
                     CompanyName = po.Vendor.CompanyFullName,
                     Contact = po.Vendor.EmailAddress,
