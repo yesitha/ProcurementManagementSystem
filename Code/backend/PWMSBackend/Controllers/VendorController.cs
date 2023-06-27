@@ -787,7 +787,11 @@ namespace PWMSBackend.Controllers
                     ItemId = group.Key,
                     ItemName = group.First().Item.ItemName,
                     Specifications = group.First().Item.Specification,
-                    TotalQuantity = group.Sum(item => item.Quantity),
+                    ShippedQtyForNow = _context.PurchaseOrder_ItemTobeShippeds
+                        .Where(pobts => pobts.PoId == PoId && pobts.ItemId == group.Key)
+                        .Select(pobts => (int?)pobts.Shipped_Qty) // Use nullable int
+                        .FirstOrDefault() ?? 0, // Set default value as 0 if null
+                    TotalOrderedQuantity = group.Sum(item => item.Quantity),
                     BidValue = _context.VendorPlaceBidItems
                         .Where(vpb => vpb.Vendor.VendorId == vendorId && vpb.ItemId == group.Key)
                         .Select(vpb => vpb.BidValue)
@@ -997,6 +1001,7 @@ namespace PWMSBackend.Controllers
                 {
                     ItemId = group.Key,
                     ItemName = group.First().Item.ItemName,
+                    Specification = group.First().Item.Specification,
                     OrderedQuantity = group.Sum(item => item.Quantity)
                 })
                 .ToList();
@@ -1050,10 +1055,12 @@ namespace PWMSBackend.Controllers
                                {
                                    item.ItemId,
                                    item.ItemName,
+                                   item.Specification,
                                    item.OrderedQuantity,
                                    Shipped_Qty = oi?.Shipped_Qty ?? 0,
                                    Received_Qty = gi?.Received_Qty ?? 0,
-                                   TotalReceived_Qty = gi0?.TotalReceived_Qty ?? 0
+                                   TotalReceived_Qty = gi0?.TotalReceived_Qty ?? 0,
+                                   GRNComment = gi?.GRNComment ?? ""
                                };
 
             var result = combinedList.ToList();
@@ -1393,12 +1400,21 @@ namespace PWMSBackend.Controllers
 
             var result = combinedList.ToList();
 
-            return Ok(result);
+            var invoiceExists = _context.Invoices.Any(i => i.GrnId == grnId);
+
+            return Ok(new { result, invoiceExists });
         }
 
         [HttpPost("CreateInvoice")]
-        public IActionResult CreateInvoice(string grnId, DateTime date)
+        public IActionResult CreateInvoice(string grnId)
         {
+            // Check if an invoice already exists for the given GRN
+            bool invoiceExists = _context.Invoices.Any(i => i.GrnId == grnId);
+            if (invoiceExists)
+            {
+                return BadRequest("An invoice already exists for the provided GRN ID.");
+            }
+
             // Check if the associated GRN exists
             GRN grn = _context.GRNs.FirstOrDefault(g => g.GrnId == grnId);
             if (grn == null)
@@ -1412,7 +1428,7 @@ namespace PWMSBackend.Controllers
             var invoice = new InvoiceTobePay
             {
                 InvoiceId = invoiceId,
-                Date = date,
+                Date = DateTime.Now,
                 GRN = grn,
                 GrnId = grnId
                 // Set other properties of the invoice as needed
