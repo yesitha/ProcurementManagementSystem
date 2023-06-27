@@ -886,7 +886,7 @@ const isAuthenticated = !!sessionStorage.getItem("user");
             }
           />
           <Route
-            path="/audit-finalized-master-procurementplan"
+            path="/audit-finalized-master-procurementplan/:mppId"
             element={
               <PrivateRoute
                 component={<AuditFinalizedMasterProcurementPlan />}
@@ -936,7 +936,7 @@ const isAuthenticated = !!sessionStorage.getItem("user");
             }
           />
           <Route
-            path="/evaluate-f-master-procurement-plan"
+            path="/evaluate-f-master-procurement-plan/:mppId"
             element={
               <PrivateRoute
                 component={<EvaluateFinalizedMasterProcurementPlan />}
@@ -966,7 +966,7 @@ const isAuthenticated = !!sessionStorage.getItem("user");
             }
           />
           <Route
-            path="/upload-payment-vouchar"
+            path="/upload-payment-vouchar/:invoiceId"
             element={
               <PrivateRoute
                 component={<UploadPaymentVoucher />}

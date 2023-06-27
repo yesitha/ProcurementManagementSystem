@@ -253,8 +253,6 @@ export const GetItemBidDetailsitemId = async (itemId) => {
 
 
 export const fetchPreviewFromDB = async (selectedMppId,vendorId) => {
-  
-  
   try {
     const response = await axios.post(
       `${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/CreatePO/${selectedMppId}/${vendorId}`
@@ -262,6 +260,19 @@ export const fetchPreviewFromDB = async (selectedMppId,vendorId) => {
    
     console.log(response.data);
     return response;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+// Evaluate Vendor Finance Status
+
+export const GetVendorFinanceStatedetails = async () => {
+  try {
+    const response = await axios.get(
+        `${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/GetVendorFinanceStatedetails`
+    );
+    return response.data;
   } catch (error) {
     console.log(error);
     throw error;

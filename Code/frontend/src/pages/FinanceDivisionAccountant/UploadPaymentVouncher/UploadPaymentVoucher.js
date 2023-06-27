@@ -11,7 +11,13 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
-import { Link as Routerlink } from "react-router-dom";
+import { Link as Routerlink, useParams } from "react-router-dom";
+import { GetInvoiceDetails } from "../../../services/FinanceDivision Accountant/FinanceDivisionAccountantServices";
+import { useState } from "react";
+import { useEffect } from "react";
+import { MoneyFormat } from "../../../services/dataFormats";
+import { DateFormat } from "../../../services/dataFormats";
+import { UpdateInvoicePaymentStatus } from "../../../services/FinanceDivision Accountant/FinanceDivisionAccountantServices";
 
 const columns = [
   { id: "ItemID", label: "Item ID", Width: 300, align: "center" },
@@ -19,29 +25,65 @@ const columns = [
   { id: "DQty", label: "Delivered QTY", Width: 300, align: "center" },
   { id: "Desc", label: "Description", Width: 300, align: "center" },
   { id: "Uprice", label: "Unit Price", Width: 300, align: "center" },
-  { id: "Taxed", label: "Taxed", Width: 300, align: "center" },
+
   { id: "amt", label: "Amount", Width: 300, align: "center" },
 ];
-function createData(ItemID, ItemName, DQty, Desc, Uprice, Taxed, amt) {
-  return { ItemID, ItemName, DQty, Desc, Uprice, Taxed, amt };
+function createData(ItemID, ItemName, DQty, Desc, Uprice, amt) {
+  return { ItemID, ItemName, DQty, Desc, Uprice, amt };
 }
-const rows = [
-  createData("I0014", "A4 Papers", "500", "GSm 80", "5", "400", "5000"),
-  createData("I0014", "A4 Papers", "500", "GSm 80", "5", "400", "5000"),
-  createData("I0014", "A4 Papers", "500", "GSm 80", "5", "400", "5000"),
-  createData("I0014", "A4 Papers", "500", "GSm 80", "5", "400", "5000"),
-  createData("I0014", "A4 Papers", "500", "GSm 80", "5", "400", "5000"),
-  createData("I0014", "A4 Papers", "500", "GSm 80", "5", "400", "5000"),
-  createData("I0014", "A4 Papers", "500", "GSm 80", "5", "400", "5000"),
-  createData("I0014", "A4 Papers", "500", "GSm 80", "5", "400", "5000"),
-];
 
 function UploadPaymentVoucher() {
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+
+  const [data, setData] = useState(null);
+  const { invoiceId } = useParams();
+
+  const vendorDetails = data?.vendorDetails;
+  const companyName = vendorDetails?.companyName;
+  const contact = vendorDetails?.contact;
+  const address = vendorDetails?.address;
+  const city = vendorDetails?.city;
+  const vendorName = vendorDetails?.vendorName;
+
+  const invoiceDto = data?.invoiceDto;
+  const date = invoiceDto?.date;
+  const totalAmount = invoiceDto?.totalAmount;
+  const tax = invoiceDto?.tax;
+
+  const result = data?.result;
+  const itemId = result?.itemId;
+  const itemName = result?.itemName;
+  const specification = result?.specification;
+  const received_Qty = result?.received_Qty;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await GetInvoiceDetails(invoiceId);
+
+        const data = response;
+        setData(data);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, [invoiceId]);
 
   return (
     <div style={{ overflowX: "hidden" }}>
-      <div className={styles.sideNavBar}>
-      </div>
+      <div className={styles.sideNavBar}></div>
 
       <Container
         className={styles.main}
@@ -56,13 +98,13 @@ function UploadPaymentVoucher() {
             <div className={styles.tag}>
               <div style={{ display: "flex", flexDirection: "row" }}>
                 <Routerlink to={-1}>
-                <IconButton
-                  sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
-                >
-                  <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
-                </IconButton>
+                  <IconButton
+                    sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
+                  >
+                    <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
+                  </IconButton>
                 </Routerlink>
-                <h1 className={styles.Header}>PUCSL</h1>
+                <h1 className={styles.Header}>{vendorName}</h1>
               </div>
               <Typography style={{ marginLeft: "35px" }}>
                 6TH FLOOR,<br></br>
@@ -74,22 +116,23 @@ function UploadPaymentVoucher() {
             </div>
             <Typography className={styles.tag}>
               <h1 className={styles.Header}>Invoice</h1>
-              Date - [2023-05-10]<br></br>
-              Invoice - #00012<br></br>
+              Date - {DateFormat(date)}
+              <br></br>
+              Invoice - {invoiceId}
+              <br></br>
               Customer ID - <br></br>
-              Due Date -
             </Typography>
           </div>
           <div className={styles.flex}>
-            <div style={{ marginLeft: "35px" }}>
+            <div style={{ marginLeft: "35px", textTransform: "uppercase" }}>
               <Typography className={styles.tag}>
-                <h1 className={styles.Header}>Bill To</h1>
-                [Company Name]<br></br>
-                [Contact or Department]<br></br>
-                [Street Address]<br></br>
-                [City, ZIP Code]<br></br>
-                [Phone]<br></br>
-                [Tax]
+                <h1 className={styles.Header}>PUCSL</h1>
+                {companyName},<br></br>
+                {vendorName},<br></br>
+                {address},<br></br>
+                {city},<br></br>
+                {contact}
+                <br></br>
               </Typography>
             </div>
             <div className={styles.payment}>
@@ -121,6 +164,7 @@ function UploadPaymentVoucher() {
                 lg: "68px",
                 xl: "70px",
               },
+              mt: "20px",
               alignItems: "center",
               borderRadius: "20px",
             }}
@@ -141,27 +185,37 @@ function UploadPaymentVoucher() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows.map((row) => {
-                    return (
-                      <TableRow
-                        hover
-                        role="checkbox"
-                        tabIndex={-1}
-                        key={row.code}
-                      >
-                        {columns.map((column) => {
-                          const value = row[column.id];
-                          return (
-                            <TableCell key={column.id} align={column.align}>
-                              {column.format && typeof value === "number"
-                                ? column.format(value)
-                                : value}
-                            </TableCell>
-                          );
-                        })}
-                      </TableRow>
-                    );
-                  })}
+                  {result &&
+                    result
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
+                      .map((row, index) => (
+                        <TableRow
+                          hover
+                          role="checkbox"
+                          tabIndex={-1}
+                          key={index}
+                        >
+                          <TableCell align="center">{row.itemId}</TableCell>
+                          <TableCell align="center">{row.itemName}</TableCell>
+                          <TableCell align="center">
+                            {row.received_Qty}
+                          </TableCell>
+                          <TableCell align="center">
+                            {row.specification}
+                          </TableCell>
+
+                          <TableCell align="center">
+                            {MoneyFormat(row.bidValue)}
+                          </TableCell>
+
+                          <TableCell align="center">
+                            {MoneyFormat(row.bidValue * row.received_Qty)}
+                          </TableCell>
+                        </TableRow>
+                      ))}
                 </TableBody>
               </Table>
             </TableContainer>
@@ -182,26 +236,33 @@ function UploadPaymentVoucher() {
             </Typography>
             <Typography>
               <h4>
-                Sub total<br></br>
-                Taxable<br></br>
-                Tax Rate<br></br>
-                Tax Due<br></br>
-                Other<br></br>
-                Total
+                Sub total &nbsp;{totalAmount}
+                <br></br>
+                Tax Rate &nbsp;&nbsp;{(tax * 100) / totalAmount}
+                <br></br>
+                Tax Due &nbsp;&nbsp;&nbsp;{tax}
+                <br></br>
+                Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                {totalAmount + tax}
               </h4>
             </Typography>
           </div>
           <center>
             <Typography>
               if you have any concern of this invoice, please contact<br></br>
-              [Name, Phone, Email]<br></br>
+              [Name, Email]<br></br>
               <b>Thank you for your Bussiness!</b>
             </Typography>
           </center>
           <div className={styles.btn}>
-            <Button variant="contained">PRINT</Button>
-            <Button variant="contained" style={{ marginLeft: 40 }}>
+            <Button
+              onClick={() => {UpdateInvoicePaymentStatus(invoiceId)}}
+              variant="contained"
+            >
               Mark as Paid
+            </Button>
+            <Button variant="contained" style={{ marginLeft: 40 }}>
+              Print
             </Button>
           </div>
         </div>

@@ -45,8 +45,8 @@ function createData(
 }
 
 const rows = [
-  createData("I0014", "A4 Papers", "2023-05-10", "A4 sized Papers", "2000lkr", "52"),
-  createData("I0015", "Staplers", "2023-03-12", "Atlas Staplers", "5000lkr", "63"),
+  createData("I0014", "A4 Papers", <TextField/>, "A4 sized Papers", "2000lkr", "52"),
+  createData("I0015", "Staplers", <TextField/>, "Atlas Staplers", "5000lkr", "63"),
 ];
 
 export default function ItemstobeShipped() {
@@ -64,14 +64,18 @@ export default function ItemstobeShipped() {
   return (
     <div>
 
-      <div className={styles.afmpp_heading}>
-        <Routerlink to={-1}>
-        <IconButton sx={{ pl: "15px", height: "34px", width: "34px" }}>
-          <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
-        </IconButton>
-        </Routerlink>
-        Items to be Shipped
-      </div>
+<div className={styles.upperSection}>
+          <div className={styles.ManageAuctionPageContainer__header} style={{marginLeft:"90px",display:"flex"}}>
+            <Routerlink to={-1}>
+              <IconButton
+                sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
+              >
+                <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
+              </IconButton>
+            </Routerlink>
+            <h1 style={{fontSize:"36px",color: "#ffffff",fontFamily:"Inter"}}>Items to be Shipped </h1>
+          </div>
+        </div>
 
       <div style={{ marginTop: "30px" }}>
         <h1 style={{ marginLeft: "100px", fontSize: "16px", color: "white" }}>

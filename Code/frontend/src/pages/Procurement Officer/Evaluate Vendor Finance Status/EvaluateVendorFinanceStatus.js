@@ -38,7 +38,8 @@ import { vendors } from "../../../users/vendors.js";
 import StatusBulb from "../../../components/StatusBulb/StatusBulb";
 import { Link as Routerlink } from "react-router-dom";
 import DonePopup from "../../../components/Popups/DonePopup/DonePopup";
-
+import { GetVendorFinanceStatedetails } from "../../../services/ProcurementHOD/ProcurementHODServices";
+import { useEffect, useState } from "react";
 const item = {
   "Sub Procurement ID": "SP-001",
   "Master Procurement ID": "MP-001",
@@ -52,12 +53,14 @@ const item = {
 };
 const Recomandedvendors1 = vendors;
 
+
 const columns = [
   { id: "Vendor", label: "Vendor", Width: 300, align: "center" },
-  { id: "Item", label: "Item", Width: 300, align: "center" },
-  { id: "Submit Document", label: "Submit Document", Width: 300, align: "center" },
+  { id: "Item", label: "Purhcase Order", Width: 300, align: "center" },
+  { id: "Submit Document", label: "Submit Documents", Width: 300, align: "center" },
   { id: "Action", label: "Action", Width: 300, align: "center" },
 ];
+
 
 function createData(
   SubProID,
@@ -82,6 +85,7 @@ function createData(
     Action,
   };
 }
+
 
 const rows = [
   createData(
@@ -128,7 +132,9 @@ const rows = [
   ),
 ];
 
+
 const creationDate = "2021-09-01";
+
 
 function EvaluateVendorFinanceStatus() {
   const [page, setPage] = React.useState(0);
@@ -137,15 +143,35 @@ function EvaluateVendorFinanceStatus() {
     setPage(newPage);
   };
 
+
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+
+  const [data, setData] = useState(null);
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await GetVendorFinanceStatedetails();
+        const data = response;
+        setData(data);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
   return (
     <div className={styles.outer}>
       <Container
         sx={{
           ml: { xs: "60px", sm: "65px", md: "65px", lg: "68px", xl: "70px" },
+
 
           display: "flex",
           flexDirection: "column",
@@ -164,6 +190,7 @@ function EvaluateVendorFinanceStatus() {
             <h1 className={styles.Header}>Evaluate Vendor Finance Status</h1>
           </div>
         </div>
+
 
         <div className={styles.MiddleSection}>
           <div className={styles.header2Section}>
@@ -202,7 +229,9 @@ function EvaluateVendorFinanceStatus() {
           </div>
         </div>
 
+
         {/* Add table data */}
+
 
         <div className={styles.downSection}>
           <Paper
@@ -237,36 +266,40 @@ function EvaluateVendorFinanceStatus() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row) => {
-                      return (
+                  {data &&
+                    data
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
+                      .map((row, index) => (
                         <TableRow
                           hover
                           role="checkbox"
                           tabIndex={-1}
-                          key={row.code}
+                          key={index}
                         >
-                          {columns.map((column) => {
-                            const value = row[column.id];
-                            return (
-                              <TableCell key={column.id} align={column.align}>
-                                {column.format && typeof value === "number"
-                                  ? column.format(value)
-                                  : value}
-                              </TableCell>
-                            );
-                          })}
+                          <TableCell align="center">{row.poId}</TableCell>
+                         
+                          <TableCell align="center">
+                            {row.vendorId}
+                          </TableCell>
+                          <TableCell align="center" >
+                          sdsdsds
+                          </TableCell>
+                          <TableCell align="center">
+                          
+                          </TableCell>
+                         
                         </TableRow>
-                      );
-                    })}
+                      ))}
                 </TableBody>
               </Table>
             </TableContainer>
             <TablePagination
               rowsPerPageOptions={[10, 25, 50, 100]}
               component="div"
-              count={rows.length}
+              // count={rows.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
@@ -294,5 +327,6 @@ function EvaluateVendorFinanceStatus() {
     </div>
   );
 }
+
 
 export default EvaluateVendorFinanceStatus;
