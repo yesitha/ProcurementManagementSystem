@@ -80,6 +80,10 @@ namespace PWMSBackend.Controllers
                 Date = invoice.Date,
                 TotalAmount = invoice.Total,
                 Tax = invoice.Tax,
+                isPaymentStatus = _context.InvoiceTobePays
+                                    .Where(i => i.InvoiceId == invoiceId)
+                                    .Select(i => i.PaymentStatus)
+                                    .FirstOrDefault() != "success" ? true : false,
             };
 
             var grnId = _context.Invoices
