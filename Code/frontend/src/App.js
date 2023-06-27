@@ -80,10 +80,8 @@ import NoAccess403 from "./pages/No Access Page/NoAccess";
 import { Navigate } from "react-router-dom/dist";
 
 const PrivateRoute = ({ authorized, allowedUserTypes, ...props }) => {
-  const userType = sessionStorage.getItem("user.userType");
-  
-  
-
+  const userType = sessionStorage.getItem('userType');
+ 
   if (!authorized) {
     return <Navigate to="/sign-in" />;
   }else if( !allowedUserTypes.includes(userType))
