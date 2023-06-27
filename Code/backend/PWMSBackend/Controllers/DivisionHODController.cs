@@ -362,7 +362,7 @@ namespace PWMSBackend.Controllers
             }
 
             // Create a new instance of the Item class
-            var newItem = new Item
+            var newItem = new ItemInStock
             {
                 ItemId = itemId,
                 ItemName = itemName,
