@@ -1052,6 +1052,17 @@ namespace PWMSBackend.Controllers
 
         // Create GRN
 
+        [HttpGet("GetPoIdList")]
+        public IActionResult GetPoIdList()
+        {
+            var poIdList = _context.PurchaseOrders
+                .Where(po => po.ProcumentOfficerStatus == "approve")
+                .Select(po => po.PoId)
+                .ToList();
+
+            return Ok(poIdList);
+        }
+
         [HttpGet("GetPOItemDetailsForGRN/{PoId}")]
         public IActionResult GetPOItemDetailsForGRN(string PoId)
         {
