@@ -1622,10 +1622,7 @@ namespace PWMSBackend.Controllers
                     inv.PaymentStatus,
                     PaymentVoucherEvidence = _context.PaymentVouchers
                                                 .Where(pve => pve.InvoiceTobePayId == inv.InvoiceId)
-                                                .Select(pve => new
-                                                {
-                                                    pve.PaymentVoucherEvidence
-                                                })
+                                                .Select(pve => pve.PaymentVoucherEvidence)
                                                 .FirstOrDefault()
 
                 })
