@@ -1,3 +1,4 @@
+
 let list1 = [];
 let list2 = [];
 let actions = [];
@@ -8,17 +9,17 @@ const user = {
   lastname: "Doe",
   email: "johndoe@gmail.com",
   designation: "Procurement Officer",
-  userType: "",
+  userType: "ProcurementOfficer",
   department: "Finance",
   phone: "1234567890",
   address: "123, ABC Street, XYZ City, 123456",
   gender: "Male",
 };
 
-const userType = sessionStorage.getItem('userType');
+const userType = sessionStorage.getItem("userType");
 console.log(userType);
 
-switch (userType) {
+switch (user.userType) {
   case "Admin":
     break;
   case "ProcurementOfficer":

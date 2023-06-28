@@ -53,17 +53,28 @@ function UploadPaymentVoucher() {
   const address = vendorDetails?.address;
   const city = vendorDetails?.city;
   const vendorName = vendorDetails?.vendorName;
+  const vendorId = vendorDetails?.vendorId;
 
   const invoiceDto = data?.invoiceDto;
   const date = invoiceDto?.date;
   const totalAmount = invoiceDto?.totalAmount;
   const tax = invoiceDto?.tax;
+  const isPaymentStatus = invoiceDto?.isPaymentStatus;
 
   const result = data?.result;
   const itemId = result?.itemId;
   const itemName = result?.itemName;
   const specification = result?.specification;
   const received_Qty = result?.received_Qty;
+
+ 
+  
+
+  const handleButtonClick = () => {
+    UpdateInvoicePaymentStatus(invoiceId);
+  };
+
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -106,12 +117,19 @@ function UploadPaymentVoucher() {
                 </Routerlink>
                 <h1 className={styles.Header}>{vendorName}</h1>
               </div>
-              <Typography style={{ marginLeft: "35px" }}>
-                6TH FLOOR,<br></br>
+              <Typography style={{ marginLeft: "35px" , textTransform: "uppercase"}}>
+                {/* 6TH FLOOR,<br></br>
                 BOC MERCHANT TOWER,<br></br>
                 ST.MICHAEL'S ROAD,<br></br>
                 COLOMBO 03,<br></br>
-                SRI LANKA
+                SRI LANKA */}
+                
+                {companyName},<br></br>
+                {vendorName},<br></br>
+                {address},<br></br>
+                {city},<br></br>
+                {contact}
+                <br></br>
               </Typography>
             </div>
             <Typography className={styles.tag}>
@@ -120,20 +138,20 @@ function UploadPaymentVoucher() {
               <br></br>
               Invoice - {invoiceId}
               <br></br>
-              Customer ID - <br></br>
+              Vendor ID - {vendorId}<br></br>
             </Typography>
           </div>
           <div className={styles.flex}>
             <div style={{ marginLeft: "35px", textTransform: "uppercase" }}>
               <Typography className={styles.tag}>
                 <h1 className={styles.Header}>PUCSL</h1>
-                {companyName},<br></br>
-                {vendorName},<br></br>
-                {address},<br></br>
-                {city},<br></br>
-                {contact}
-                <br></br>
+                6TH FLOOR,<br></br>
+                BOC MERCHANT TOWER,<br></br>
+                ST.MICHAEL'S ROAD,<br></br>
+                COLOMBO 03,<br></br>
+                SRI LANKA
               </Typography>
+              
             </div>
             <div className={styles.payment}>
               <div>
@@ -234,33 +252,39 @@ function UploadPaymentVoucher() {
               1.Total payment due in 30 days.<br></br>
               2.Please include the invoice number on your check.
             </Typography>
-            <Typography>
-              <h4>
-                Sub total &nbsp;{totalAmount}
+            <Typography sx={{marginLeft:"500px"}}>
+              <h3 >
+              Sub total &nbsp;{totalAmount}
                 <br></br>
-                Tax Rate &nbsp;&nbsp;{(tax * 100) / totalAmount}
+               Tax Rate &nbsp;&nbsp;{(tax * 100) / totalAmount}%
                 <br></br>
-                Tax Due &nbsp;&nbsp;&nbsp;{tax}
+              Tax Due &nbsp;&nbsp;&nbsp;{tax}
                 <br></br>
-                Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 {totalAmount + tax}
-              </h4>
+              </h3>
             </Typography>
           </div>
           <center>
             <Typography>
               if you have any concern of this invoice, please contact<br></br>
-              [Name, Email]<br></br>
+              {companyName}<br></br>{contact}<br></br>
               <b>Thank you for your Bussiness!</b>
             </Typography>
           </center>
           <div className={styles.btn}>
-            <Button
-              onClick={() => {UpdateInvoicePaymentStatus(invoiceId)}}
-              variant="contained"
-            >
-              Mark as Paid
-            </Button>
+          <div>
+      {isPaymentStatus==false ? (
+        null// Render nothing if the payment status is true
+      ) : (
+        <Button
+          onClick={handleButtonClick}
+          variant="contained"
+        >
+          Mark as Paid
+        </Button>
+      )}
+    </div>
             <Button variant="contained" style={{ marginLeft: 40 }}>
               Print
             </Button>

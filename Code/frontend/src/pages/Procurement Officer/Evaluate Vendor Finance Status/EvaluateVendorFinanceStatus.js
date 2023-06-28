@@ -40,6 +40,7 @@ import { Link as Routerlink } from "react-router-dom";
 import DonePopup from "../../../components/Popups/DonePopup/DonePopup";
 import { GetVendorFinanceStatedetails } from "../../../services/ProcurementHOD/ProcurementHODServices";
 import { useEffect, useState } from "react";
+import { approve } from "../../../services/ProcurementHOD/ProcurementHODServices";
 const item = {
   "Sub Procurement ID": "SP-001",
   "Master Procurement ID": "MP-001",
@@ -151,6 +152,8 @@ function EvaluateVendorFinanceStatus() {
 
 
   const [data, setData] = useState(null);
+  const [isApprovePopupVisible, setApprovePopupVisible] = useState(true);
+  const [isRejectPopupVisible, setRejectPopupVisible] = useState(true);
 
 
   useEffect(() => {
@@ -192,43 +195,7 @@ function EvaluateVendorFinanceStatus() {
         </div>
 
 
-        <div className={styles.MiddleSection}>
-          <div className={styles.header2Section}>
-            <Container
-              sx={{ mr: { xs: 4, sm: 5, lg: 1 }, py: 1, borderRadius: 5 }}
-              className={styles.detailsSection}
-            >
-              <Typography
-                sx={{
-                  fontFamily: "mulish",
-                  fontSize: { xs: "12px", sm: "15px", md: "16px" },
-                  color: "#ffffff",
-                }}
-              >
-                MASTER PROCUREMENT ID : {item["Master Procurement ID"]}
-              </Typography>
-              <Typography
-                sx={{
-                  fontFamily: "mulish",
-                  fontSize: { xs: "12px", sm: "15px", md: "16px" },
-                  color: "#ffffff",
-                }}
-              >
-                CREATED DATE : {creationDate}
-              </Typography>
-              <Typography
-                sx={{
-                  fontFamily: "mulish",
-                  fontSize: { xs: "12px", sm: "15px", md: "16px" },
-                  color: "#ffffff",
-                }}
-              >
-                ITEM ID : {item["Item ID"]}
-              </Typography>
-            </Container>
-          </div>
-        </div>
-
+        
 
         {/* Add table data */}
 
@@ -288,7 +255,65 @@ function EvaluateVendorFinanceStatus() {
                           sdsdsds
                           </TableCell>
                           <TableCell align="center">
-                          
+                            {
+                              <div className={styles.ActionButonsContainer}>
+                                {row.internalAuditorStatus === "approve" && (
+                                  <div>
+                                    <IconButton
+                                      sx={{
+                                        width: "40px",
+                                        height: "40px",
+                                        px: 0.5,
+                                      }}
+                                      className={styles.approveButton}
+                                    >
+                                      <DoneIcon />
+                                    </IconButton>
+                                  </div>
+                                )}
+                                {row.internalAuditorStatus === "reject" && (
+                                  <div>
+                                    <IconButton
+                                      sx={{
+                                        width: "40px",
+                                        height: "40px",
+                                        px: 0.5,
+                                      }}
+                                      className={styles.rejectButton}
+                                    >
+                                      <CloseIcon />
+                                    </IconButton>
+                                  </div>
+                                )}
+                                {row.internalAuditorStatus !== "approve" &&
+                                  row.internalAuditorStatus !== "reject" && (
+                                    <>
+                                      {isApprovePopupVisible && (
+                                        <div
+                                          onClick={() => {
+                                            approve(row.vendorId,row.poId);
+                                            // handleApproveClick(index);
+                                           
+                                          }}
+                                        >
+                                          <ApprovePopup />
+                                        </div>
+                                      )}
+                                      {isRejectPopupVisible && (
+                                        <div
+                                        //   onClick={() =>{
+                                        //     handleRejectClick(index);
+                                        //  }}
+                                        >
+                                          <RejectPopup
+                                            link={`${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/UpdateProcurementOfficerStatus/${row.vendorId}/${row.poId}?status=reject`}
+                                          />
+                                        </div>
+                                      )}
+                                    </>
+                                  )}
+                              </div>
+                            }
                           </TableCell>
                          
                         </TableRow>

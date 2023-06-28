@@ -278,3 +278,16 @@ export const GetVendorFinanceStatedetails = async () => {
     throw error;
   }
 };
+
+export const approve = async (vendorId,poId) => {
+  try {
+    const response = await axios.put(
+      `${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/UpdateProcurementOfficerStatus/${vendorId}/${poId}?status=approve`
+    );
+    console.log(response);
+    return response;  
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}; 

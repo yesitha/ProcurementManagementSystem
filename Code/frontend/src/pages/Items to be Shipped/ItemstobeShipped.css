@@ -89,3 +89,28 @@
   flex-direction: row;
   
 }
+
+.Ph3 {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  color: #ffffff;
+  font-size: 15px;
+  flex-direction: column;
+  display: flex;
+  margin-right: 20px;
+  align-self: center;
+  margin-left: 500px;
+}
+
+.h4m {
+  margin-bottom: 0px;
+  margin-left: 5px;
+  padding-left:50px;
+}
+
+.dropDownIconContainer{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  
+}
