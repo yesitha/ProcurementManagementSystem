@@ -23,7 +23,7 @@ import { getNotification } from "../../notification";
 
 function Dashboard() {
   const currentUser = user.userType;
-  const empId = "EMP00005";
+  const empId = "EMP00005"; // need to get from session storage
 
   const date = dayjs();
   const [quote, setQuote] = useState(null);
