@@ -145,6 +145,7 @@ function Dashboard() {
                 <h1 className={styles.welcomeHeader}>
                   Welcome, {user.firstname}!
                   <span className={styles.welcomeDesignation}>
+
                     {" "}
                     [{user.designation}]
                   </span>
@@ -163,6 +164,7 @@ function Dashboard() {
                 {quote && (
                   <h5 className={styles.confuciusName}>-{quote.author}-</h5>
                 )}
+
 
                 <Routerlink to={"/view-notification"}>
                   <Button
@@ -266,6 +268,7 @@ function Dashboard() {
                   </Button>
                 </Routerlink>
               ))}
+
             </div>
           </div>
         </div>

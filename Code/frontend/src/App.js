@@ -116,6 +116,7 @@ const PrivateRoute = ({ authorized, allowedUserTypes, ...props }) => {
   
   
 
+
   if (!authorized) {
     return <Navigate to="/sign-in" />;
   }else if( !allowedUserTypes.includes(userType))
