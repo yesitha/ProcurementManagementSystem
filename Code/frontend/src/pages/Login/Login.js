@@ -34,6 +34,7 @@ import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import {useState} from "react";
 
+
 const theme = createTheme({
     typography: {
         h5: {
@@ -59,14 +60,13 @@ const theme = createTheme({
 
 export default function Login() {
     const dispatch = useDispatch();
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const onSubmit = (data) => {
         console.log(data);
         setLoading(true);
-
         LoginService(data.email, data.password)
             .then((res) => {
-                console.log(res);
+                console.log(res.status);
                 if (res.status === 200) {
                     dispatch(setUserType(res.data.userType));
                     window.location.href = "/dashboard";
@@ -82,6 +82,9 @@ export default function Login() {
                 setLoading(false);
             });
     };
+
+
+
 
     const form = useForm({
         mode: "onTouched",
@@ -138,7 +141,7 @@ export default function Login() {
                                     {...register("password", {
                                         required: "Password Required",
                                         pattern: {
-                                            value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                                            value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[#@$])[A-Za-z\d#@$]{8,}$/,
                                             message:
                                                 "Password must contain Minimum eight characters, at least one letter and one number",
                                         },

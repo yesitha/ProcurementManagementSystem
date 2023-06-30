@@ -111,10 +111,12 @@ function SEO() {
 }
 
 const PrivateRoute = ({ authorized, allowedUserTypes, ...props }) => {
+
   // const userType = sessionStorage.getItem("user.userType");
   const userType = user.userType;
   
   
+
 
   if (!authorized) {
     return <Navigate to="/sign-in" />;

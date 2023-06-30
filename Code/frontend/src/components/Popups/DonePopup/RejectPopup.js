@@ -45,6 +45,7 @@ export default function BasicModal(link) {
       console.log(error);
       throw error;
     }
+    window.location.reload();
   };
 
   return (

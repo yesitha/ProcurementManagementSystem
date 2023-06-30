@@ -1,22 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import styles from "./Dashboard.module.css";
 import SideNavBar from "../../components/SideNavigationBar/SideNavBar";
 import {
-  Button,
-  ListItemIcon,
-  makeStyles,
-  Paper,
-  Typography,
-  withStyles,
+    Button,
+    ListItemIcon,
+    makeStyles,
+    Paper,
+    Typography,
+    withStyles,
 } from "@mui/material";
 
-import { CalendarPicker } from "@mui/x-date-pickers/CalendarPicker";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import {CalendarPicker} from "@mui/x-date-pickers/CalendarPicker";
+import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { borderRadius, display } from "@mui/system";
-import { styled } from "@mui/material/styles";
+import {LocalizationProvider} from "@mui/x-date-pickers";
+import {borderRadius, display} from "@mui/system";
+import {styled} from "@mui/material/styles";
 import ReactLoading from "react-loading";
+
 import { Link as Routerlink } from "react-router-dom";
 import { user, list1, list2, actions, actionButtons } from "../Usermanage";
 import { getNotification } from "../../notification";
@@ -99,28 +100,30 @@ function Dashboard() {
         setNewActions(list);
   }, [notifications]);
 
-  useEffect(() => {
-    fetch(`https://api.quotable.io/random?maxLength=100`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(
-            `This is an HTTP error: The status is ${response.status}`
-          );
-        }
-        return response.json();
-      })
-      .then((actualData) => {
-        setQuote(actualData);
-        setError(null);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setQuote(null);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
+
+    useEffect(() => {
+        fetch(`https://api.quotable.io/random?maxLength=100`)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(
+                        `This is an HTTP error: The status is ${response.status}`
+                    );
+                }
+                return response.json();
+            })
+            .then((actualData) => {
+                setQuote(actualData);
+                setError(null);
+            })
+            .catch((err) => {
+                setError(err.message);
+                setQuote(null);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    }, []);
+
 
 
 
@@ -148,24 +151,26 @@ function Dashboard() {
                 <h1 className={styles.welcomeHeader}>
                   Welcome, {user.firstname}!
                   <span className={styles.welcomeDesignation}>
-                    {" "}
-                    [{user.designation}]
-                  </span>
-                </h1>
-                {loading && <ReactLoading type="bubbles" color="black" />}
-                {error && (
-                  <h4 className={styles.welcomeText}>
-                    {" "}
-                    {`There is a problem fetching the quote - ${error}`}
-                  </h4>
-                )}
 
-                {quote && (
-                  <h4 className={styles.welcomeText}>{quote.content}</h4>
-                )}
-                {quote && (
-                  <h5 className={styles.confuciusName}>-{quote.author}-</h5>
-                )}
+                    {" "}
+                                        [{user.designation}]
+                  </span>
+                                </h1>
+                                {loading && <ReactLoading type="bubbles" color="black"/>}
+                                {error && (
+                                    <h4 className={styles.welcomeText}>
+                                        {" "}
+                                        {`There is a problem fetching the quote - ${error}`}
+                                    </h4>
+                                )}
+
+                                {quote && (
+                                    <h4 className={styles.welcomeText}>{quote.content}</h4>
+                                )}
+                                {quote && (
+                                    <h5 className={styles.confuciusName}>-{quote.author}-</h5>
+                                )}
+
 
                 <Routerlink to={"/view-notification"}>
                   <Button
@@ -269,12 +274,10 @@ function Dashboard() {
                   </Button>
                 </Routerlink>
               ))}
+
             </div>
-          </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 }
 
 export default Dashboard;

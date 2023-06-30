@@ -15,10 +15,10 @@ const user = {
   gender: "Male",
 };
 
+const userType = sessionStorage.getItem('userType');
+console.log(userType);
 
-
-const currentUser = user.userType;
-switch (currentUser) {
+switch (userType) {
   case "Admin":
     break;
   case "ProcurementOfficer":

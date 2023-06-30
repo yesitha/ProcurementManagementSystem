@@ -1016,14 +1016,19 @@ namespace PWMSBackend.Controllers
         public IActionResult GetVendorFinanceStatedetails()
         {
             var vendorFinanceStateDetails = _context.PurchaseOrders
-                .Where(po => po.ProcumentOfficerStatus != null)
+                .OrderByDescending(po => po.Date)
                 .Select(v => new
                 {
                     v.PoId,
                     v.VendorId,
+                    VendorName = _context.Vendors
+                                    .Where(vendor => vendor.VendorId == v.VendorId)
+                                    .Select(vendor => vendor.FirstName + " " + vendor.LastName)
+                                    .FirstOrDefault(),
                     v.Agreement,
                     v.Bond,
-                    v.BankGuarantee
+                    v.BankGuarantee,
+                    v.ProcumentOfficerStatus
                 }) 
                 .ToList();
 
@@ -1051,6 +1056,17 @@ namespace PWMSBackend.Controllers
         }
 
         // Create GRN
+
+        [HttpGet("GetPoIdList")]
+        public IActionResult GetPoIdList()
+        {
+            var poIdList = _context.PurchaseOrders
+                .Where(po => po.ProcumentOfficerStatus == "approve")
+                .Select(po => po.PoId)
+                .ToList();
+
+            return Ok(poIdList);
+        }
 
         [HttpGet("GetPOItemDetailsForGRN/{PoId}")]
         public IActionResult GetPOItemDetailsForGRN(string PoId)
