@@ -17,6 +17,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { borderRadius, display } from "@mui/system";
 import { styled } from "@mui/material/styles";
 import ReactLoading from "react-loading";
+
 import { Link as Routerlink } from "react-router-dom";
 import { user, list1, list2, actions, actionButtons } from "../Usermanage";
 import { getNotification } from "../../notification";
@@ -43,7 +44,6 @@ function Dashboard() {
 
         console.log(response);
         setNotifications(response);
-        
       } catch (err) {
         console.log(err);
       }
@@ -92,11 +92,10 @@ function Dashboard() {
   };
 
   useEffect(() => {
-
     const list = createNotificationList(sortedNotifications, actionButtons);
-        console.log(actionButtons);
-        console.log(list);
-        setNewActions(list);
+    console.log(actionButtons);
+    console.log(list);
+    setNewActions(list);
   }, [notifications]);
 
   useEffect(() => {
@@ -121,8 +120,6 @@ function Dashboard() {
         setLoading(false);
       });
   }, []);
-
-
 
   return (
     <div style={{ display: "flex", overflow: "hidden" }}>

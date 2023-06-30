@@ -212,12 +212,6 @@ namespace PWMSBackend.Controllers
                 Quantity = Quantity
             };
 
-            var subProcurementPlan = _context.SubProcurementPlanItems
-                .Where(spi => spi.SppId == SppId)
-                .FirstOrDefault();
-
-            subProcurementPlan.EstimatedBudget += Estimated_budget;
-
             if (file != null && file.Length > 0)
             {
                 // Generate a unique filename
@@ -237,6 +231,25 @@ namespace PWMSBackend.Controllers
 
             // Save changes to the database
             _context.SaveChanges();
+
+            var subProcurementPlanId = _context.SubProcurementPlanItems
+                .Where(spi => spi.SppId == SppId)
+                .FirstOrDefault();
+
+            var subProcurementPlan = _context.SubProcurementPlans
+                .Where(spp => spp.SppId == SppId)
+                .FirstOrDefault();
+
+            if (subProcurementPlan != null)
+            {
+                subProcurementPlan.EstimatedTotal += Estimated_budget;
+
+                // Update the entity in the context
+                _context.SubProcurementPlans.Update(subProcurementPlan);
+
+                // Save changes to the database
+                _context.SaveChanges();
+            }
 
             return Ok(newItem);
         }
@@ -349,7 +362,7 @@ namespace PWMSBackend.Controllers
             }
 
             // Create a new instance of the Item class
-            var newItem = new Item
+            var newItem = new ItemInStock
             {
                 ItemId = itemId,
                 ItemName = itemName,

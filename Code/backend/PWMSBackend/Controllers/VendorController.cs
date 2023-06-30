@@ -787,7 +787,11 @@ namespace PWMSBackend.Controllers
                     ItemId = group.Key,
                     ItemName = group.First().Item.ItemName,
                     Specifications = group.First().Item.Specification,
-                    TotalQuantity = group.Sum(item => item.Quantity),
+                    ShippedQtyForNow = _context.PurchaseOrder_ItemTobeShippeds
+                        .Where(pobts => pobts.PoId == PoId && pobts.ItemId == group.Key)
+                        .Select(pobts => (int?)pobts.Shipped_Qty) // Use nullable int
+                        .FirstOrDefault() ?? 0, // Set default value as 0 if null
+                    TotalOrderedQuantity = group.Sum(item => item.Quantity),
                     BidValue = _context.VendorPlaceBidItems
                         .Where(vpb => vpb.Vendor.VendorId == vendorId && vpb.ItemId == group.Key)
                         .Select(vpb => vpb.BidValue)
@@ -997,6 +1001,7 @@ namespace PWMSBackend.Controllers
                 {
                     ItemId = group.Key,
                     ItemName = group.First().Item.ItemName,
+                    Specification = group.First().Item.Specification,
                     OrderedQuantity = group.Sum(item => item.Quantity)
                 })
                 .ToList();
@@ -1050,10 +1055,12 @@ namespace PWMSBackend.Controllers
                                {
                                    item.ItemId,
                                    item.ItemName,
+                                   item.Specification,
                                    item.OrderedQuantity,
                                    Shipped_Qty = oi?.Shipped_Qty ?? 0,
                                    Received_Qty = gi?.Received_Qty ?? 0,
-                                   TotalReceived_Qty = gi0?.TotalReceived_Qty ?? 0
+                                   TotalReceived_Qty = gi0?.TotalReceived_Qty ?? 0,
+                                   GRNComment = gi?.GRNComment ?? ""
                                };
 
             var result = combinedList.ToList();
@@ -1393,12 +1400,21 @@ namespace PWMSBackend.Controllers
 
             var result = combinedList.ToList();
 
-            return Ok(result);
+            var invoiceExists = _context.Invoices.Any(i => i.GrnId == grnId);
+
+            return Ok(new { result, invoiceExists });
         }
 
         [HttpPost("CreateInvoice")]
-        public IActionResult CreateInvoice(string grnId, DateTime date)
+        public IActionResult CreateInvoice(string grnId)
         {
+            // Check if an invoice already exists for the given GRN
+            bool invoiceExists = _context.Invoices.Any(i => i.GrnId == grnId);
+            if (invoiceExists)
+            {
+                return BadRequest("An invoice already exists for the provided GRN ID.");
+            }
+
             // Check if the associated GRN exists
             GRN grn = _context.GRNs.FirstOrDefault(g => g.GrnId == grnId);
             if (grn == null)
@@ -1412,7 +1428,7 @@ namespace PWMSBackend.Controllers
             var invoice = new InvoiceTobePay
             {
                 InvoiceId = invoiceId,
-                Date = date,
+                Date = DateTime.Now,
                 GRN = grn,
                 GrnId = grnId
                 // Set other properties of the invoice as needed
@@ -1579,6 +1595,181 @@ namespace PWMSBackend.Controllers
             return Ok("Invoice details updated successfully.");
         }
 
+
+        // View invoice and payment vouchers
+
+        [HttpGet("GetInvoiceIdsForVendor/{vendorId}")]
+        public IActionResult GetInvoiceIdsForVendor(string vendorId)
+        {
+            // Find the PurchaseOrders associated with the provided vendorId
+            var purchaseOrders = _context.PurchaseOrders
+                .Where(po => po.VendorId == vendorId)
+                .ToList();
+
+            // Get the GRNIds associated with the PurchaseOrders
+            var grnIds = _context.GRNs
+                .Where(grn => purchaseOrders.Select(po => po.PoId).Contains(grn.PoId))
+                .Select(grn => grn.GrnId)
+                .ToList();
+
+            // Get the InvoiceIds associated with the GRNIds
+            var invoiceIds = _context.InvoiceTobePays
+                .Where(inv => grnIds.Contains(inv.GrnId))
+                .Select(inv => new
+                {
+                    inv.InvoiceId,
+                    inv.GrnId,
+                    inv.PaymentStatus,
+                    PaymentVoucherEvidence = _context.PaymentVouchers
+                                                .Where(pve => pve.InvoiceTobePayId == inv.InvoiceId)
+                                                .Select(pve => pve.PaymentVoucherEvidence)
+                                                .FirstOrDefault()
+
+                })
+                .ToList();
+
+            return Ok(invoiceIds);
+        }
+
+        [HttpGet("GetInvoice/{invoiceId}")]
+        public async Task<IActionResult> GetInvoice(string invoiceId)
+        {
+            // Retrieve the invoice based on the provided invoiceId
+            Invoice invoice = _context.Invoices.FirstOrDefault(i => i.InvoiceId == invoiceId);
+
+            if (invoice == null)
+            {
+                return NotFound("Invoice not found for the given invoiceId.");
+            }
+
+            // Create a DTO object with only the required properties
+            var invoiceDto = new
+            {
+                InvoiceId = invoice.InvoiceId,
+                Date = invoice.Date,
+                TotalAmount = invoice.Total,
+                Tax = invoice.Tax,
+            };
+
+            var grnId = _context.Invoices
+                .Where(i => i.InvoiceId == invoiceId)
+                .Select(i => i.GrnId)
+                .FirstOrDefault();
+
+
+            var PoId = _context.GRNs
+                .Where(grn => grn.GrnId == grnId)
+                .Select(grn => grn.PoId)
+                .FirstOrDefault();
+
+            var mppId = _context.PurchaseOrders
+                .Where(po => po.PoId == PoId)
+                .Select(po => po.MppId)
+                .FirstOrDefault();
+
+            var vendorId = _context.PurchaseOrders
+                .Where(po => po.PoId == PoId)
+                .Select(po => po.VendorId)
+                .FirstOrDefault();
+
+            var itemList = _context.MasterProcurementPlans
+                .Where(mpp => mpp.MppId == mppId)
+                .SelectMany(mpp => mpp.SubProcurementPlans)
+                .SelectMany(spp => spp.subProcurementPlanItems)
+                .Where(item => item.ProcuremnetCommitteeStatus == "approve" && item.DGStatus == "approve"
+                                && item.SelectedVendor == _context.Vendors
+                                                                .Where(v => v.VendorId == vendorId)
+                                                                .Select(v => v.FirstName + " " + v.LastName)
+                                                                .FirstOrDefault())
+                .GroupBy(item => item.ItemId)
+                .Select(group => new
+                {
+                    ItemId = group.Key,
+                    ItemName = group.First().Item.ItemName,
+                    Specification = group.First().Item.Specification,
+                    OrderedQuantity = group.Sum(item => item.Quantity),
+                    BidValue = _context.VendorPlaceBidItems
+                                    .Where(vpb => vpb.Vendor.VendorId == vendorId && vpb.ItemId == group.Key)
+                                    .Select(vpb => vpb.BidValue)
+                                    .FirstOrDefault(),
+                })
+                .ToList();
+
+            var itemList1 = _context.PurchaseOrder_ItemTobeShippeds
+                .Where(Ok => Ok.PoId == PoId)
+                .Select(Ok => new
+                {
+                    Ok.ItemId,
+                    Ok.Shipped_Qty
+                })
+                .ToList();
+
+            // Get total received quantity for each item
+
+            var grnIdList = _context.GRNs
+                .Where(grn => grn.PoId == PoId)
+                .Select(grn => grn.GrnId)
+                .ToList();
+
+            var itemList0 = _context.GRNItemsToBeShipped
+                    .Where(grn => grnIdList.Contains(grn.GrnId))
+                    .GroupBy(grn => grn.ItemId)
+                    .Select(group => new
+                    {
+                        ItemId = group.Key,
+                        TotalReceived_Qty = group.Sum(grn => grn.Received_Qty)
+                    })
+                    .ToList();
+
+            var itemList2 = _context.GRNItemsToBeShipped
+                .Where(Ok => Ok.GrnId == grnId)
+                .Select(Ok => new
+                {
+                    Ok.ItemId,
+                    Ok.Received_Qty,
+                    Ok.GRNComment
+                })
+                .ToList();
+
+
+            var combinedList = from item in itemList
+                               join orderItem in itemList1 on item.ItemId equals orderItem.ItemId into orderItems
+                               from oi in orderItems.DefaultIfEmpty()
+                               join grnItem in itemList2 on item.ItemId equals grnItem.ItemId into grnItems
+                               from gi in grnItems.DefaultIfEmpty()
+                               join grnItem0 in itemList0 on item.ItemId equals grnItem0.ItemId into grnItems0
+                               from gi0 in grnItems0.DefaultIfEmpty()
+                               where itemList2.Select(x => x.ItemId).Contains(item.ItemId)
+                               select new
+                               {
+                                   item.ItemId,
+                                   item.ItemName,
+                                   item.Specification,
+                                   item.OrderedQuantity,
+                                   Shipped_Qty = oi?.Shipped_Qty ?? 0,
+                                   Received_Qty = gi?.Received_Qty ?? 0,
+                                   TotalReceived_Qty = gi0?.TotalReceived_Qty ?? 0,
+                                   BidValue = item.BidValue,
+                               };
+
+            var result = combinedList.ToList();
+
+            var vendorDetails = _context.PurchaseOrders
+                .Where(po => po.PoId == PoId)
+                .Select(po => new
+                {
+                    vendorId = po.VendorId,
+                    VendorName = po.Vendor.FirstName + " " + po.Vendor.LastName,
+                    CompanyName = po.Vendor.CompanyFullName,
+                    Contact = po.Vendor.EmailAddress,
+                    address = po.Vendor.Address1 + "," + po.Vendor.State,
+                    city = po.Vendor.City + "," + po.Vendor.PostalCode
+
+                })
+                .FirstOrDefault();
+
+            return Ok(new { invoiceDto, vendorDetails, result });
+        }
 
 
 
