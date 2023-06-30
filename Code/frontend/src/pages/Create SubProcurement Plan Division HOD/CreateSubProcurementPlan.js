@@ -43,7 +43,7 @@ import { getSubProcurmentPlanPerDivision } from "../../services/DivisionHOD/deiv
 import { fetchDataForSubId } from "../../services/DivisionHOD/deivisionHODServices";
 import { deleteItemFromdb } from "../../services/DivisionHOD/deivisionHODServices";
 import { createNewSubProcurementPlan } from "../../services/DivisionHOD/deivisionHODServices";
-const hodId='HIP05185';//get from login user(HOD)
+const hodId='EMP00007';//get from login user(HOD)
 
 
 
@@ -76,6 +76,7 @@ function CreateSubProcurementPlan() {
   
 
   const [page, setPage] = React.useState(0);
+  const[notificationData,setNotificationData]=useState([]);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -202,6 +203,17 @@ function CreateSubProcurementPlan() {
      
     
   }, [selectedSubId]);
+
+  const dataNotification = [
+    {
+      message: 'New Sub Procurement Plan Created !',
+      type: 'New Sub Procurement Plans',
+      divisionName: 'Purchasing Division',
+    },
+  ];
+
+
+  
   
 
   return (
@@ -337,6 +349,7 @@ function CreateSubProcurementPlan() {
             <DonePopup
             text={"Successfully Submitted"}
             title={"Submit"}
+            notificationData={dataNotification[0]}
             styles={{
               mb: "10px",
               ml: "10px",

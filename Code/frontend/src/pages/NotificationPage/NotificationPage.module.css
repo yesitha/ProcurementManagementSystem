@@ -2,7 +2,9 @@
 .NotificationPageContainer {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 70%;
+  margin-left: 100px;
+  margin-right: 100px;
 }
 .upperSection {
   display: flex;

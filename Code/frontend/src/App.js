@@ -79,8 +79,40 @@ import NoAccess403 from "./pages/No Access Page/NoAccess";
 
 import { Navigate } from "react-router-dom/dist";
 
+
+import Helmet from 'react-helmet';
+
+function SEO() {
+  return (
+    <Helmet>
+      <link
+        rel="apple-touch-icon"
+        sizes="180x180"
+        href="/apple-touch-icon.png"
+      />
+      <link
+        rel="icon"
+        type="image/png"
+        sizes="32x32"
+        href="/favicon-32x32.png"
+      />
+      <link
+        rel="icon"
+        type="image/png"
+        sizes="16x16"
+        href="/favicon-16x16.png"
+      />
+      <link rel="manifest" href="/site.webmanifest" />
+      <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
+      <meta name="msapplication-TileColor" content="#da532c" />
+      <meta name="theme-color" content="#ffffff" />
+    </Helmet>
+  );
+}
+
 const PrivateRoute = ({ authorized, allowedUserTypes, ...props }) => {
-  const userType = sessionStorage.getItem("user.userType");
+  // const userType = sessionStorage.getItem("user.userType");
+  const userType = user.userType;
   
   
 
@@ -95,12 +127,14 @@ const PrivateRoute = ({ authorized, allowedUserTypes, ...props }) => {
 };
 
 function App() {
-const isAuthenticated = !!sessionStorage.getItem("user");
+// const isAuthenticated = !!sessionStorage.getItem("user");
+const isAuthenticated = true;
   
   
 
   return (
     <div className="app-container">
+        <SEO/>
       <SideNavBar list1={list1} list2={list2} user={user} />
       <div className="app-content">
         <Routes>
@@ -125,6 +159,9 @@ const isAuthenticated = !!sessionStorage.getItem("user");
                   "FinanceDivisionAccountant",
                   "TecCommitteeMember",
                   "CoparateCommunicationDivision",
+                  "PurchaseDivisionHOD",
+                  "BidOpeningCommittee",
+                  "InternalAuditor",
                 ]}
               />
             }
@@ -145,6 +182,10 @@ const isAuthenticated = !!sessionStorage.getItem("user");
                   "FinanceDivisionAccountant",
                   "TecCommitteeMember",
                   "CoparateCommunicationDivision",
+                  "PurchaseDivisionHOD",
+                  "BidOpeningCommittee",
+                  "InternalAuditor",
+
                 ]}
               />
             }

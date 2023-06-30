@@ -18,17 +18,86 @@ import { borderRadius, display } from "@mui/system";
 import { styled } from "@mui/material/styles";
 import ReactLoading from "react-loading";
 import { Link as Routerlink } from "react-router-dom";
-import { user, list1, list2, actions, actionButtons } from '../Usermanage';
-
+import { user, list1, list2, actions, actionButtons } from "../Usermanage";
+import { getNotification } from "../../notification";
 
 function Dashboard() {
-  
   const currentUser = user.userType;
+  const empId = "EMP00005";
 
   const date = dayjs();
   const [quote, setQuote] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [notifications, setNotifications] = useState([]);
+  const [newActions, setNewActions] = useState([]);
+
+  // Create the new list
+
+  // Display the new list
+
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const response = await getNotification(empId);
+
+        console.log(response);
+        setNotifications(response);
+        
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetch();
+  }, []);
+
+  const compareByTimestamp = (a, b) => {
+    return new Date(b.timeStamp) - new Date(a.timeStamp);
+  };
+
+  const unreadNotifications = notifications.filter(
+    (notification) => !notification.isRead
+  );
+  const sortedNotifications = unreadNotifications.sort(compareByTimestamp);
+
+  const createNotificationList = (notifications, actionButtons) => {
+    const notificationList = [];
+
+    notifications.forEach((notification) => {
+      const { type } = notification;
+      const matchingButton = actionButtons.find(
+        (button) => button.displayName == type
+      );
+
+      if (matchingButton) {
+        const existingNotification = notificationList.find(
+          (item) => item.type == type
+        );
+
+        if (existingNotification) {
+          existingNotification.count++;
+        } else {
+          const { displayName, path } = matchingButton;
+          notificationList.push({
+            type,
+            displayName,
+            path,
+            count: 1,
+          });
+        }
+      }
+    });
+
+    return notificationList;
+  };
+
+  useEffect(() => {
+
+    const list = createNotificationList(sortedNotifications, actionButtons);
+        console.log(actionButtons);
+        console.log(list);
+        setNewActions(list);
+  }, [notifications]);
 
   useEffect(() => {
     fetch(`https://api.quotable.io/random?maxLength=100`)
@@ -52,6 +121,8 @@ function Dashboard() {
         setLoading(false);
       });
   }, []);
+
+
 
   return (
     <div style={{ display: "flex", overflow: "hidden" }}>
@@ -96,8 +167,7 @@ function Dashboard() {
                   <h5 className={styles.confuciusName}>-{quote.author}-</h5>
                 )}
 
-
-                <Routerlink to={'/view-notification'}>
+                <Routerlink to={"/view-notification"}>
                   <Button
                     variant="contained"
                     sx={{
@@ -106,11 +176,11 @@ function Dashboard() {
                       mb: 2,
                       backgroundColor: "#205295",
                       color: "#ffffff",
-                    }}>
+                    }}
+                  >
                     View New <br /> Notifications
                   </Button>
                 </Routerlink>
-
               </div>
             </Paper>
           </div>
@@ -135,8 +205,6 @@ function Dashboard() {
           </div>
         </div>
 
-
-
         <div className={styles.middleSection}>
           {actions.map((x) => (
             <Routerlink to={`/${x.path}`}>
@@ -157,49 +225,48 @@ function Dashboard() {
                 {x.displayName}
               </Button>
             </Routerlink>
-
           ))}
         </div>
         <div className={styles.lowerSection}>
           <div className={styles.lowerSectionHeader}>
             <h1 className={styles.lowerSectionHeaderText}>Notifications</h1>
             <div className={styles.lowerActionButtons}>
-              {actionButtons.map((y) => (
+              {newActions.map((y) => (
                 <Routerlink to={`/${y.path}`}>
-                <Button
-                  className={styles.actionButton}
-                  variant="contained"
-                  sx={{
-                    borderRadius: 3,
-                    maxWidth: 150,
-                    height: 130,
-                    px: 1.5,
-                    backgroundColor: "#9C254D",
-                    color: "#ffffff",
-                    px: 10,
-                    mx: 4,
-                    "&:hover": { backgroundColor: "#b43b63" },
-                  }}
-                >
-                  <div className={styles.actionButtonText}>
-                    <Typography
-                      className={styles.actionButtonNumber}
-                      sx={{
-                        fontFamily: "Inter",
-                        fontSize: "34px",
-                        fontWeight: "400",
-                      }}
-                    >
-                      {y.number != null ? y.number : ""}
-                    </Typography>
-                    <Typography
-                      className={styles.actionButtonText}
-                      sx={{ fontFamily: "Inter", fontSize: "14px" }}
-                    >
-                      {y.displayName}
-                    </Typography>
-                  </div>
-                </Button>
+                  <Button
+                    className={styles.actionButton}
+                    variant="contained"
+                    sx={{
+                      borderRadius: 3,
+                      maxWidth: 150,
+                      height: 130,
+                      px: 1.5,
+                      backgroundColor: "#9C254D",
+                      color: "#ffffff",
+                      px: 10,
+                      mx: 4,
+                      "&:hover": { backgroundColor: "#b43b63" },
+                    }}
+                  >
+                    <div className={styles.actionButtonText}>
+                      <Typography
+                        className={styles.actionButtonNumber}
+                        sx={{
+                          fontFamily: "Inter",
+                          fontSize: "34px",
+                          fontWeight: "400",
+                        }}
+                      >
+                        {y.number != 1 ? y.count : ""}
+                      </Typography>
+                      <Typography
+                        className={styles.actionButtonText}
+                        sx={{ fontFamily: "Inter", fontSize: "14px" }}
+                      >
+                        {y.displayName}
+                      </Typography>
+                    </div>
+                  </Button>
                 </Routerlink>
               ))}
             </div>

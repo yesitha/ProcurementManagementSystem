@@ -7,8 +7,8 @@ const user = {
   firstname: "John",
   lastname: "Doe",
   email: "johndoe@gmail.com",
-  designation: "Procurement Officer",
-  userType: "",
+  designation: "PurchasingDivisionHOD",
+  userType: "PurchaseDivisionHOD",
   department: "Finance",
   phone: "1234567890",
   address: "123, ABC Street, XYZ City, 123456",
@@ -123,6 +123,7 @@ switch (currentUser) {
         path: "NewSubProcurmentPlan",
         number: "2",
       },
+      
     ];
     break;
 
