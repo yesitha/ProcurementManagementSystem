@@ -15,8 +15,9 @@ const user = {
   gender: "Male",
 };
 
-const userType = sessionStorage.getItem('userType');
-console.log(userType);
+//const userType = sessionStorage.getItem('userType');
+const userType = user.userType;
+//console.log(userType);
 
 switch (userType) {
   case "Admin":
