@@ -5,6 +5,13 @@ using PWMSBackend.CustomIdGenerator;
 using PWMSBackend.Data;
 using PWMSBackend.Models;
 using System.Drawing;
+using MailKit.Net.Smtp;
+using MailKit.Security;
+using MimeKit;
+using MimeKit.Text;
+using SendGrid.Helpers.Mail;
+using SendGrid;
+using SendGrid.Helpers.Mail.Model;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -115,7 +122,33 @@ namespace PWMSBackend.Controllers
             _context.UserNotifications.Add(userNotification);
             _context.SaveChanges();
 
+            //send emails
+            foreach (var employeeId in employeeIds)
+            {
+                // Get the employee's email address based on the employee ID
+                var employee = _context.ProcurementEmployees.Where(p => p.EmployeeId == employeeId).FirstOrDefault();
+
+                if (employee != null && !string.IsNullOrEmpty(employee.EmailAddress))
+                {
+                    sendEmail(notification.type,employee.EmailAddress,notification.message).Wait();
+                   
+                }
+            }
+
             return Ok("UserNotification created successfully.");
+        }
+
+        private async Task sendEmail(string subjectC, string toMail, string content)
+        {
+            var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
+            var client = new SendGridClient(apiKey);
+            var from = new EmailAddress("ml2252327@gmail.com", "PWMS System");
+            var subject = subjectC;
+            var to = new EmailAddress(toMail, "PWMS User");
+            var plainTextContent = content;
+            var htmlContent = $"<strong>{content}</strong>"; 
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+            var response = await client.SendEmailAsync(msg); 
         }
 
         [HttpGet("GetUserNotifications/{employeeId}")]
