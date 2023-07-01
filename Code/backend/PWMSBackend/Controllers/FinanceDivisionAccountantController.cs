@@ -80,6 +80,10 @@ namespace PWMSBackend.Controllers
                 Date = invoice.Date,
                 TotalAmount = invoice.Total,
                 Tax = invoice.Tax,
+                isPaymentStatus = _context.InvoiceTobePays
+                                    .Where(i => i.InvoiceId == invoiceId)
+                                    .Select(i => i.PaymentStatus)
+                                    .FirstOrDefault() != "success" ? true : false,
             };
 
             var grnId = _context.Invoices
@@ -189,6 +193,7 @@ namespace PWMSBackend.Controllers
                 .Where(po => po.PoId == PoId)
                 .Select(po => new
                 {
+                    vendorId = po.VendorId,
                     VendorName = po.Vendor.FirstName + " " + po.Vendor.LastName,
                     CompanyName = po.Vendor.CompanyFullName,
                     Contact = po.Vendor.EmailAddress,

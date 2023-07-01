@@ -482,6 +482,7 @@ namespace PWMSBackend.Controllers
                 .GroupBy(item => item.ItemId)
                 .Select(item => new
                 {
+                    qunatity = item.Sum(i => i.Quantity),
                     BidValue = _context.VendorPlaceBidItems
                                     .Where(vpb => vpb.Vendor.VendorId == _context.Vendors
                                                                             .Where(v => v.FirstName + " " + v.LastName == item.FirstOrDefault().SelectedVendor)
@@ -495,7 +496,7 @@ namespace PWMSBackend.Controllers
 
             // Add Total cost to FinalizedMasterProcurementPlan table
 
-            double sumBidValues = getBidValueList.Sum(r => r.BidValue);
+            double sumBidValues = getBidValueList.Sum(r => r.BidValue*r.qunatity);
 
             var fmpp = _context.FinalizedMasterProcurementPlans.FirstOrDefault(fmpp => fmpp.MppId == mppId);
             if (fmpp != null)

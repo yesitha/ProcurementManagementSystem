@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@fontsource/inter": "^5.0.3",
     "@gsebdev/react-simple-datepicker": "^1.0.21",
     "@mui/icons-material": "^5.11.0",
     "@mui/lab": "^5.0.0-alpha.134",
@@ -28,7 +29,8 @@
     "react-loading": "^2.0.3",
     "react-modal": "^3.16.1",
     "react-pdf": "^7.1.2",
-    "react-redux": "^8.0.7",
+   
+    "react-redux": "^8.1.1",
     "react-router-dom": "^6.12.1",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
