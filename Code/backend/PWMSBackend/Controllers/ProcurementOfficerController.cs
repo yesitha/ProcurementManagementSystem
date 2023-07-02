@@ -1540,7 +1540,7 @@ namespace PWMSBackend.Controllers
         public async Task<IActionResult> GetInvoiceDetails(string invoiceId)
         {
             // Retrieve the invoice based on the provided invoiceId
-            Invoice invoice = _context.Invoices.FirstOrDefault(i => i.InvoiceId == invoiceId);
+            InvoiceTobePay invoice = _context.InvoiceTobePays.FirstOrDefault(i => i.InvoiceId == invoiceId);
 
             if (invoice == null)
             {
@@ -1554,9 +1554,10 @@ namespace PWMSBackend.Controllers
                 Date = invoice.Date,
                 TotalAmount = invoice.Total,
                 Tax = invoice.Tax,
+                PaymentStatus = invoice.PaymentStatus
             };
 
-            var grnId = _context.Invoices
+            var grnId = _context.InvoiceTobePays
                 .Where(i => i.InvoiceId == invoiceId)
                 .Select(i => i.GrnId)
                 .FirstOrDefault();
