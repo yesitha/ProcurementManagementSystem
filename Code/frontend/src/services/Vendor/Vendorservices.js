@@ -288,4 +288,41 @@ export const CreateInvoice = async (grnId) => {
     }
   };
 
+  export const UpdateInvoiceDetails = async (invoiceId,total,tax) => {
+    try {
+      const response = await axios.put(
+        `${process.env.REACT_APP_API_HOST}/api/Vendor/UpdateInvoiceDetails?invoiceId=${invoiceId}&total=${total}&tax=${tax}`
+      );
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+
+  export const GetInvoiceIdsForVendor = async (vendorId) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_HOST}/api/Vendor/GetInvoiceIdsForVendor/HEL9863`
+      );
+      return response.data;  
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }; 
+
+  export const GetInvoice = async (invoiceId) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_HOST}/api/Vendor/GetInvoice/${invoiceId}`
+      );
+      return response.data;  
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }; 
+
 

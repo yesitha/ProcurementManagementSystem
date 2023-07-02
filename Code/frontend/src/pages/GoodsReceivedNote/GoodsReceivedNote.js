@@ -15,9 +15,12 @@ import { flexbox } from "@mui/system";
 import DonePopup from "../../components/Popups/DonePopup/DonePopup";
 import "../../users/vendors.js";
 import EnterNotePopup from "../../components/Popups/DonePopup/EnterNotePopup";
-import {Link as Routerlink, useParams} from 'react-router-dom'
+import { Link as Routerlink, useParams } from "react-router-dom";
 import { vendors } from "../../users/vendors.js";
-import { GetGRNItemDetails } from "../../services/ProcurementHOD/ProcurementHODServices";
+import {
+  GetGRNItemDetails,
+  UpdateGRNItemCommentAndCheckedBy,
+} from "../../services/ProcurementHOD/ProcurementHODServices";
 import { DateFormat } from "../../services/dataFormats";
 
 const columns = [
@@ -31,29 +34,7 @@ const columns = [
   { id: "Note", label: "Note", Width: 200, align: "center" },
 ];
 
-function createData(
-  ItemID,
-  ItemName,
-  Spe,
-  OrderQ,
-  DeliveredQ,
-  RemainingQ,
-  Note
-) {
-  return { ItemID, ItemName, Spe, OrderQ, DeliveredQ, RemainingQ, Note };
-}
 
-const rows = [
-  createData(
-    "I0014",
-    "A4 Papers",
-    "loerm",
-    "100 ",
-    "50",
-    "50",
-    <EnterNotePopup />
-  ),
-];
 export default function GoodsReceivedNote() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -66,13 +47,15 @@ export default function GoodsReceivedNote() {
     setPage(0);
   };
 
-  const {poId,grnId}= useParams();
+  const { poId, grnId } = useParams();
   const [data, setData] = useState(null);
+  const [checkedBy, setCheckedBy] = useState("");
+  const [grnComments, setComments] = useState(" ");
 
   useEffect(() => {
     const fetchdata = async () => {
       try {
-        const response = await GetGRNItemDetails(poId,grnId);
+        const response = await GetGRNItemDetails(poId, grnId);
         const data = response;
         setData(data);
         console.log(data);
@@ -83,7 +66,25 @@ export default function GoodsReceivedNote() {
     fetchdata();
   }, []);
 
-  if (data===null) {
+  const handleCommentChange = (itemId, value) => {
+    setComments((prevState) => ({
+      ...prevState,
+      [itemId]: value,
+    }));
+  };
+
+  const handleSendToVendorClick = () => {
+    const commentsWithItemId = Object.entries(grnComments).map(
+      ([itemId, grnComment]) => ({
+        itemId,
+        grnComment,
+      })
+    );
+    console.log(grnId, checkedBy,commentsWithItemId);
+    UpdateGRNItemCommentAndCheckedBy(grnId, checkedBy, commentsWithItemId);
+  };
+
+  if (data === null) {
     return <div>Loading...</div>;
   }
 
@@ -94,9 +95,9 @@ export default function GoodsReceivedNote() {
       <div className={styles.afmpp_mainBody}>
         <div className={styles.afmpp_heading}>
           <Routerlink to={-1}>
-          <IconButton sx={{ pl: "15px", height: "34px", width: "34px" }}>
-            <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
-          </IconButton>
+            <IconButton sx={{ pl: "15px", height: "34px", width: "34px" }}>
+              <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
+            </IconButton>
           </Routerlink>
           Good Receive Note
         </div>
@@ -111,7 +112,8 @@ export default function GoodsReceivedNote() {
         <div className={styles.adjust}>
           <div className={styles.supplierdetails}>
             <Typography>
-              Supplier Name: {data.vendorName}<br />
+              Supplier Name: {data.vendorName}
+              <br />
               Date : {DateFormat(data.shippingDate)}
             </Typography>
           </div>
@@ -165,12 +167,29 @@ export default function GoodsReceivedNote() {
                         >
                           <TableCell align="center">{row.itemId}</TableCell>
                           <TableCell align="center">{row.itemName}</TableCell>
-                          <TableCell align="center">{row.orderedQuantity}</TableCell>
-                          <TableCell align="center">{row.shipped_Qty}</TableCell>
-                          <TableCell align="center">{row.received_Qty}</TableCell>
-                          <TableCell align="center">{row.totalReceived_Qty}</TableCell>
-                          <TableCell align="center">{row.orderedQuantity-row.totalReceived_Qty}</TableCell>
-                          <TableCell align="center">{<EnterNotePopup />}</TableCell>
+                          <TableCell align="center">
+                            {row.orderedQuantity}
+                          </TableCell>
+                          <TableCell align="center">
+                            {row.shipped_Qty}
+                          </TableCell>
+                          <TableCell align="center">
+                            {row.received_Qty}
+                          </TableCell>
+                          <TableCell align="center">
+                            {row.totalReceived_Qty}
+                          </TableCell>
+                          <TableCell align="center">
+                            {row.orderedQuantity - row.totalReceived_Qty}
+                          </TableCell>
+                          <TableCell align="center">
+                            <EnterNotePopup
+                              value={grnComments[row.itemId]}
+                              onChange={(value) =>
+                                handleCommentChange(row.itemId, value)
+                              } 
+                            />
+                          </TableCell>
                         </TableRow>
                       ))}
                 </TableBody>
@@ -179,7 +198,7 @@ export default function GoodsReceivedNote() {
             <TablePagination
               rowsPerPageOptions={[10, 25, 50, 100]}
               component="div"
-              count={rows.length}
+              count={10}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
@@ -189,7 +208,23 @@ export default function GoodsReceivedNote() {
         </div>
         <div className={styles.divide}>
           <div className={styles.checkedby}>
-            <Typography>Checked by:</Typography>
+            <Typography>Checked by: </Typography>
+            <TextField
+              margin="none"
+              required
+              fullWidth
+              size="small"
+              id="checkedBy"
+              name="checkedBy"
+              sx={{
+                width: 100,
+                "& .MuiInputBase-input": {
+                  backgroundColor: "white",
+                },
+              }}
+              value={checkedBy}
+              onChange={(e) => setCheckedBy(e.target.value)}
+            />
           </div>
 
           <div className={styles.divide2}>
@@ -207,7 +242,12 @@ export default function GoodsReceivedNote() {
                 PRINT
               </Button>
             </div>
-            <div>
+            <div
+              onClick={(event) => {
+                handleSendToVendorClick();
+                event.stopPropagation();
+              }}
+            >
               <DonePopup
                 text={text}
                 title="SEND TO VENDORS"

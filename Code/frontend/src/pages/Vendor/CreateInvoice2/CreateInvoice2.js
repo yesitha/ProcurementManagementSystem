@@ -24,7 +24,6 @@ import { MoneyFormat } from "../../../services/dataFormats";
 const list = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
 
 const columns = [
-  { id: "ItemID", label: "Item ID", Width: 100, align: "center" },
   { id: "ItemName", label: "Item Name", Width: 150, align: "center" },
   { id: "specification", label: "Specification", Width: 150, align: "center" },
   { id: "OrderQ", label: "Ordered Qty", Width: 150, align: "center" },
@@ -94,7 +93,7 @@ export default function CreateInvoice2() {
               <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
             </IconButton>
           </Routerlink>
-          CREATE INVOICE
+          Create Invoice
         </div>
         <div className={styles.POID}>
           <Typography sx={{ marginLeft: "10px" }}>
@@ -148,7 +147,6 @@ export default function CreateInvoice2() {
                           tabIndex={-1}
                           key={index}
                         >
-                          <TableCell align="center">{row.itemId}</TableCell>
                           <TableCell align="center">{row.itemName}</TableCell>
                           <TableCell align="center">
                             {row.specification}

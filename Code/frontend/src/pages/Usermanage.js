@@ -26,7 +26,7 @@ switch (userType) {
       { displayName: "Sub Procurment Plan", path: "ViewSubProcurementPlan" },
       { displayName: "Master Procurement Plan", path: "MasterProcurmentPlan" },
       { displayName: "Purchase Orders", path: "PurchaseOrder" },
-      { displayName: "Good Receive Note", path: "GoodReceiveNote/:poId" },
+      { displayName: "Good Receive Note", path: "GoodReceiveNote" },
       { displayName: "Payment Voucher", path: "PaymentVouchar" },
     ];
 
@@ -44,7 +44,7 @@ switch (userType) {
         path: "evaluate-master-procurementplan",
       },
       { displayName: "Create Purchase Order", path: "create-purchase-order" },
-      { displayName: "Create GRN", path: "GoodReceiveNote/:poId" },
+      { displayName: "Create GRN", path: "GoodReceiveNote" },
       {
         displayName: "Evaluate Vendor Fianace Status",
         path: "evaluate-vendor-fianace-status",
@@ -200,7 +200,7 @@ switch (userType) {
     actions = [
       { displayName: "Bid Tender", path: "bid-tender/:vendorId" },
       { displayName: "Bid History", path: "bid-history/:vendorId" },
-      { displayName: "View Invoice", path: "view-invoice" },
+      { displayName: "View Invoice", path: "view-invoice-vendor/:venodrId" },
       { displayName: "Items to be Shipped", path: "items-to-be-shipped" },
     ];
 

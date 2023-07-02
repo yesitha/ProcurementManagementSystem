@@ -5,7 +5,7 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { Container } from "@mui/system";
 import { users } from "../../../users/SystemUsers";
 import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
-import {Link as Routerlink, useParams} from 'react-router-dom'
+import { Link as Routerlink, useParams } from "react-router-dom";
 import DonePopup from "../../../components/Popups/DonePopup/DonePopup";
 import {
   IconButton,
@@ -18,23 +18,44 @@ import {
   makeStyles,
   Paper,
   Button,
+  Typography,
+  TextField,
 } from "@mui/material";
 //import { Rotate90DegreesCcw } from "@mui/icons-material";
 import SelectDropDown from "../../../components/SelectDropDown/SelectDropDown";
-import { GetPOItemDetailsForGRN } from "../../../services/ProcurementHOD/ProcurementHODServices";
-
+import {
+  CreateGRN,
+  GetPOItemDetailsForGRN,
+  GetPoIdList,
+} from "../../../services/ProcurementHOD/ProcurementHODServices";
 
 function AddItemstoGRN() {
   //   const classes = useStyles();
-  const {poId}=useParams();
   const [leftTableData, setLeftTableData] = useState([]);
   const [rightTableData, setRightTableData] = useState([]);
+  const [poIds, setpoIds] = useState([]);
+  const [selectedpoId, setSelectedpoId] = useState("");
+  const [isGRNCreated, setIsGRNCreated] = useState(false);
+  const [grnId, setGrnId] = useState("");
 
-    useEffect(() => {
+  useEffect(() => {
+    const fetchdata = async () => {
+      try {
+        const response = await GetPoIdList();
+        const data = response;
+        setpoIds(data);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchdata();
+  }, []);
+
+  useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await GetPOItemDetailsForGRN(poId);
-
+        const response = await GetPOItemDetailsForGRN(selectedpoId);
         const data = response;
         setLeftTableData(data);
         console.log(data);
@@ -43,36 +64,59 @@ function AddItemstoGRN() {
       }
     };
 
-// Retrieving arrays from sessionStorage
-const storedArray1 = JSON.parse(sessionStorage.getItem('leftTableData'));
-const storedArray2 = JSON.parse(sessionStorage.getItem('rightTableData'));
+    // Retrieving arrays from sessionStorage
+    const storedArray1 = JSON.parse(sessionStorage.getItem("leftTableData"));
+    const storedArray2 = JSON.parse(sessionStorage.getItem("rightTableData"));
 
-// If arrays exist, we retrieve them from sessionStorage and set them to state.
-if(storedArray1 && storedArray2) {
-  setLeftTableData(storedArray1);
-  setRightTableData(storedArray2);
-}else{
-  fetchData();
-}
+    // If arrays exist, we retrieve them from sessionStorage and set them to state.
+    if (storedArray1 && storedArray2) {
+      setLeftTableData(storedArray1);
+      setRightTableData(storedArray2);
+    } else {
+      fetchData();
+    }
+  }, [selectedpoId]);
 
-    
-  }, []);
+  const handleCreateGRN = async () => {
+    try {
+      const createdGrnId = await CreateGRN(selectedpoId, rightTableData);
+      sessionStorage.clear();
+      setIsGRNCreated(true);
+      console.log(createdGrnId);
+      setGrnId(createdGrnId); // Set the grnId in state
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleClickLeftToRight = (row) => {
     setRightTableData([...rightTableData, row]);
-    setLeftTableData(leftTableData.filter((data) => data.itemId !== row.itemId));
+    setLeftTableData(
+      leftTableData.filter((data) => data.itemId !== row.itemId)
+    );
   };
 
   const handleClickRightToLeft = (row) => {
     setLeftTableData([...leftTableData, row]);
-    setRightTableData(rightTableData.filter((data) => data.itemId !== row.itemId));
+    setRightTableData(
+      rightTableData.filter((data) => data.itemId !== row.itemId)
+    );
   };
 
-  const masterProcurementId = "MP0001";
- 
-  const list = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
-  const list3 = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
-  
+  const handlepoIdChange = (event) => {
+    setSelectedpoId(event.target.value);
+  };
+
+  const handleReceivedQuantityChange = (itemId, event) => {
+    const value = event.target.value;
+    setRightTableData((prevData) =>
+      prevData.map((row) =>
+        row.itemId === itemId ? { ...row, receivedQty: parseInt(value)  } : row
+      )
+    );
+  };
+
+
   return (
     <div>
       <Container
@@ -82,30 +126,31 @@ if(storedArray1 && storedArray2) {
           display: "flex",
 
           flexDirection: "column",
-          //   overflowY: "hidden",
         }}
       >
         <div className={styles.upperSection}>
           <div className={styles.ManageAuctionPageContainer__header}>
             <Routerlink to={-1}>
-            <IconButton
-              sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
-            >
-              <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
-            </IconButton>
+              <IconButton
+                sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
+              >
+                <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
+              </IconButton>
             </Routerlink>
             <h1 className={styles.Header}>Goods Received Note</h1>
           </div>
         </div>
         <div className={styles.OuterMiddle}>
           <div className={styles.flexrow}>
-            <div>
-              <label style={{ color: "white", marginLeft: "10px" }}>
-                PURCHASE ORDER ID*
-              </label>
-              <SelectDropDown list={list} />
+            <div className={styles.header2}>
+              <Typography sx={{ marginLeft: 2 }}>PURCHASE ORDER ID*</Typography>
+              <SelectDropDown
+                list={poIds}
+                value={selectedpoId}
+                onChange={handlepoIdChange}
+              />
             </div>
-            </div>
+          </div>
           <Container
             className={styles.MiddleSection}
             sx={{
@@ -130,6 +175,7 @@ if(storedArray1 && storedArray2) {
                       <TableCell>Item ID</TableCell>
                       <TableCell>Item Name</TableCell>
                       <TableCell>Order Quantity</TableCell>
+                      <TableCell>Total Received Quantity</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -142,10 +188,9 @@ if(storedArray1 && storedArray2) {
                         <TableCell component="th" scope="row">
                           {row.itemId}
                         </TableCell>
-                        <TableCell>
-                          {row.itemName}
-                        </TableCell>
+                        <TableCell>{row.itemName}</TableCell>
                         <TableCell>{row.orderedQuantity}</TableCell>
+                        <TableCell>{row.receivedQuantity}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -185,16 +230,32 @@ if(storedArray1 && storedArray2) {
                     {rightTableData.map((row) => (
                       <TableRow
                         className={styles.TableRow}
-                        key={row.id}
+                        key={row.itemId}
                         onClick={() => handleClickRightToLeft(row)}
                       >
                         <TableCell component="th" scope="row">
                           {row.itemName}
                         </TableCell>
+                        <TableCell>{row.orderedQuantity}</TableCell>
                         <TableCell>
-                          {row.orderedQuantity}
+                          {
+                            <TextField
+                              margin="normal"
+                              required
+                              fullWidth
+                              size="small"
+                              id="bidvalue"
+                              name="bidvalue"
+                              sx={{ width: 100 }}
+                              value={row.receivedQty}
+                              onClick={(event) => event.stopPropagation()}
+                              onChange={(event) =>{
+                                event.stopPropagation();
+                                handleReceivedQuantityChange(row.itemId, event)
+                              }}
+                            />
+                          }
                         </TableCell>
-                        <TableCell>{row.receivedQuantity}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -207,21 +268,36 @@ if(storedArray1 && storedArray2) {
           <Container
             className={styles.rightButton}
             sx={{ justifyContent: { xs: "left", sm: "center", lg: "center" } }}
-          >
-            <Routerlink to={'/grn-view'}>
-            <Button
-              className={styles.TecAppointButton}
-              variant="contained"
-              sx={{
-                mt: 4,
-                ml: 110,
-                borderRadius: 4,
-                mb: 0.3,
-                minWidth: "50px",
-              }}
-            >
-              Create GRN
-            </Button>
+          ><Button
+                onClick={() =>{handleCreateGRN()}}
+                className={styles.TecAppointButton}
+                variant="contained"
+                sx={{
+                  mt: 4,
+                  ml: 110,
+                  borderRadius: 4,
+                  mb: 0.3,
+                  minWidth: "50px",
+                }}
+              >
+                Save
+              </Button>
+          
+            <Routerlink to={`/grn-view/${selectedpoId}/${grnId}`}>
+              <Button
+                // onClick={() =>{handleCreateGRN()}}
+                className={styles.TecAppointButton}
+                variant="contained"
+                sx={{
+                  mt: 4,
+                  ml: 110,
+                  borderRadius: 4,
+                  mb: 0.3,
+                  minWidth: "50px",
+                }}
+              >
+                Create GRN
+              </Button>
             </Routerlink>
           </Container>
         </div>
