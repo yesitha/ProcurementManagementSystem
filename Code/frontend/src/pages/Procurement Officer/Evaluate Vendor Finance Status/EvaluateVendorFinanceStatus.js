@@ -56,7 +56,7 @@ const Recomandedvendors1 = vendors;
 
 
 const columns = [
-  { id: "Vendor", label: "Vendor", Width: 300, align: "center" },
+  { id: "Vendor", label: "Vendor ID", Width: 300, align: "center" },
   { id: "Item", label: "Purhcase Order", Width: 300, align: "center" },
   { id: "Submit Document", label: "Submit Documents", Width: 300, align: "center" },
   { id: "Action", label: "Action", Width: 300, align: "center" },
@@ -257,7 +257,7 @@ function EvaluateVendorFinanceStatus() {
                           <TableCell align="center">
                             {
                               <div className={styles.ActionButonsContainer}>
-                                {row.internalAuditorStatus === "approve" && (
+                                {row.procumentOfficerStatus === "approve" && (
                                   <div>
                                     <IconButton
                                       sx={{
@@ -271,7 +271,7 @@ function EvaluateVendorFinanceStatus() {
                                     </IconButton>
                                   </div>
                                 )}
-                                {row.internalAuditorStatus === "reject" && (
+                                {row.procumentOfficerStatus === "reject" && (
                                   <div>
                                     <IconButton
                                       sx={{
@@ -285,8 +285,8 @@ function EvaluateVendorFinanceStatus() {
                                     </IconButton>
                                   </div>
                                 )}
-                                {row.internalAuditorStatus !== "approve" &&
-                                  row.internalAuditorStatus !== "reject" && (
+                                {row.procumentOfficerStatus !== "approve" &&
+                                  row.procumentOfficerStatus !== "reject" && (
                                     <>
                                       {isApprovePopupVisible && (
                                         <div

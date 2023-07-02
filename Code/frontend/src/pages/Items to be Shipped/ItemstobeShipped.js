@@ -218,7 +218,7 @@ export default function ItemstobeShipped() {
                           {MoneyFormat(row.bidValue)}
                         </TableCell>
                         <TableCell align="center">
-                          {row.totalOrderedQuantity -
+                          {row.totalOrderedQuantity -row.shippedQtyForNow-
                             (textFieldValues[row.itemId] ?? 0)}
                         </TableCell>
                       </TableRow>
@@ -245,6 +245,7 @@ export default function ItemstobeShipped() {
               selectedpoId,
               textFieldValues
             );
+            
           }}
         >
           <Successfullyinformed
