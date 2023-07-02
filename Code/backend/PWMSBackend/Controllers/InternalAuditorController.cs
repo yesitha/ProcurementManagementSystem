@@ -208,6 +208,11 @@ namespace PWMSBackend.Controllers
                     }
                 }
             }
+            //Update the status of the MasterProcurementPlan
+            var mpp = _context.MasterProcurementPlans
+                .FirstOrDefault(mpp => mpp.MppId == mppId);
+            mpp.Status = _context.Statuses.FirstOrDefault(s => s.StatusId == "STS00005");
+            mpp.StatusDate = DateTime.Now;
 
             _context.SaveChanges();
 
