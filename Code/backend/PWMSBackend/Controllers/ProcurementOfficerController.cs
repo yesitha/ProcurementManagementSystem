@@ -46,6 +46,25 @@ namespace PWMSBackend.Controllers
             return Ok(plans);
         }
 
+        // View Master Procurement Plan Status
+
+        [HttpGet("GetMasterProcurementPlanStatus")]
+        public IActionResult GetMasterProcurementPlanStatus(string mppId)
+        {
+            var masterProcurementPlanStatus = _context.MasterProcurementPlanStatuses
+                .Where(x => x.MppId == mppId)
+                .Select(x => new
+                {
+                    x.MppId,
+                    x.StatusId,
+                    x.Date,
+                    x.Status.StatusName
+                })
+                .FirstOrDefault();
+
+            return Ok(masterProcurementPlanStatus);
+        }
+
         [HttpPost("CreateNewTECCommitteeID")]
         public IActionResult CreateNewTECCommittee(string mppId)
         {
