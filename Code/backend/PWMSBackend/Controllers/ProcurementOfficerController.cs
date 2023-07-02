@@ -6,6 +6,7 @@ using PWMSBackend.CustomIdGenerator;
 using PWMSBackend.Data;
 using PWMSBackend.Models;
 using System.Drawing;
+using System.Net.WebSockets;
 
 namespace PWMSBackend.Controllers
 {
@@ -43,6 +44,25 @@ namespace PWMSBackend.Controllers
                 .ToList();
 
             return Ok(plans);
+        }
+
+        // View Master Procurement Plan Status
+
+        [HttpGet("GetMasterProcurementPlanStatus")]
+        public IActionResult GetMasterProcurementPlanStatus(string mppId)
+        {
+            var masterProcurementPlanStatus = _context.MasterProcurementPlanStatuses
+                .Where(x => x.MppId == mppId)
+                .Select(x => new
+                {
+                    x.MppId,
+                    x.StatusId,
+                    x.Date,
+                    x.Status.StatusName
+                })
+                .FirstOrDefault();
+
+            return Ok(masterProcurementPlanStatus);
         }
 
         [HttpPost("CreateNewTECCommitteeID")]
@@ -1203,6 +1223,47 @@ namespace PWMSBackend.Controllers
                     };
 
                     grn.GRNItemTobeShippeds.Add(grnItem);
+
+                    // Update records in Items table in inventory database
+
+                    var mppId = _context.PurchaseOrders
+                        .Where(po => po.PoId == poId)
+                        .Select(po => po.MppId)
+                        .FirstOrDefault();
+                    var vendorId = _context.PurchaseOrders
+                        .Where(po => po.PoId == poId)
+                        .Select(po => po.VendorId)
+                        .FirstOrDefault();
+                    var bidValue = _context.MasterProcurementPlans
+                        .Where(mpp => mpp.MppId == mppId)
+                        .SelectMany(mpp => mpp.SubProcurementPlans)
+                        .SelectMany(spp => spp.subProcurementPlanItems)
+                        .Where(itm => itm.ProcuremnetCommitteeStatus == "approve" && itm.DGStatus == "approve"
+                                        && itm.SelectedVendor == _context.Vendors
+                                                                    .Where(v => v.VendorId == vendorId)
+                                                                    .Select(v => v.FirstName + " " + v.LastName)
+                                                                    .FirstOrDefault()
+                                        && itm.ItemId == item.ItemId) // Add the filter for the specific ItemId
+                        .GroupBy(itm => itm.ItemId)
+                        .Select(group => _context.VendorPlaceBidItems
+                                            .Where(vpb => vpb.Vendor.VendorId == vendorId && vpb.ItemId == group.Key)
+                                            .Select(vpb => vpb.BidValue)
+                                            .FirstOrDefault())
+                        .FirstOrDefault();
+
+                    var updateItem = _context.ItemInStocks.FirstOrDefault(i => i.ItemId == item.ItemId);
+
+                    // Update the properties of the item with the values
+
+                    if (updateItem != null)
+                    {
+                        updateItem.Date = DateTime.Now;
+                        updateItem.UnitPrice = bidValue;
+                        updateItem.QuantityAvailable += item.ReceivedQty;
+                        updateItem.TotalPurchasePrice += bidValue * item.ReceivedQty;
+
+                        _context.ItemInStocks.Update(updateItem);
+                    }
                 }
             }
 
