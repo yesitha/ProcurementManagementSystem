@@ -227,7 +227,6 @@ export const GetApprovedItemsDetailsvendorId = async (vendorId) => {
     }
   }; 
 
-
   export const  getPOVenderDetails = async (poId) => {
     try {
       const response = await axios.get(
@@ -240,6 +239,29 @@ export const GetApprovedItemsDetailsvendorId = async (vendorId) => {
       throw error;
     }
   }; 
+  export const GetInvoiceItemDetails = async (poId,grnId) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_HOST}/api/Vendor/GetInvoiceItemDetails/${poId}/${grnId}`
+      );
+      return response.data;  
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }; 
+export const CreateInvoice = async (grnId) => {
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_HOST}/api/Vendor/CreateInvoice?grnId=${grnId}`
+      );
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
 
   export const  getPOItems = async (poId) => {
     try {
@@ -252,4 +274,55 @@ export const GetApprovedItemsDetailsvendorId = async (vendorId) => {
       console.log(error);
       throw error;
     }
+  };
+
+  export const GetInvoiceDetails = async (grnId) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_HOST}/api/Vendor/GetInvoiceDetails/${grnId}`
+      );
+      return response.data;  
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+
+  export const UpdateInvoiceDetails = async (invoiceId,total,tax) => {
+    try {
+      const response = await axios.put(
+        `${process.env.REACT_APP_API_HOST}/api/Vendor/UpdateInvoiceDetails?invoiceId=${invoiceId}&total=${total}&tax=${tax}`
+      );
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+
+  export const GetInvoiceIdsForVendor = async (vendorId) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_HOST}/api/Vendor/GetInvoiceIdsForVendor/HEL9863`
+      );
+      return response.data;  
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
   }; 
+
+  export const GetInvoice = async (invoiceId) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_HOST}/api/Vendor/GetInvoice/${invoiceId}`
+      );
+      return response.data;  
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }; 
+
+

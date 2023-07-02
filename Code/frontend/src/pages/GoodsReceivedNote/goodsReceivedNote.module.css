@@ -35,11 +35,11 @@
 }
 
 .checkedby {
+  display: flex;
   color: white;
   font-size: 20;
   margin-left: 100px;
   margin-top: 50px;
-  width: 750px;
 }
 
 .divide {

@@ -1,11 +1,9 @@
 import styles from "./InvoicestobePaidFin.module.css";
-import React, { useState } from "react";
-import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
+import React, { useEffect, useState } from "react";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { Container } from "@mui/system";
 import { users } from "../../../users/SystemUsers";
 import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
-import DonePopup from "../../../components/Popups/DonePopup/DonePopup";
 import {
   IconButton,
   TableRow,
@@ -14,62 +12,68 @@ import {
   TableCell,
   TableBody,
   Table,
-  makeStyles,
   Paper,
-  Button,
 } from "@mui/material";
-import { Rotate90DegreesCcw } from "@mui/icons-material";
-import SelectDropDown from "../../../components/SelectDropDown/SelectDropDown";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Link as Routerlink } from "react-router-dom";
+import { InvoicesPaid, InvoicesToBePay } from "../../../services/ProcurementHOD/ProcurementHODServices";
+import { MoneyFormat } from "../../../services/dataFormats";
 
-// const useStyles = makeStyles({
-//   table: {
-//     minWidth: 650,
-//   },
-// });
 
 const rows = users;
 
 function InvoicestobePaid() {
-  //   const classes = useStyles();
-  const [leftTableData, setLeftTableData] = useState(rows);
-  const [rightTableData, setRightTableData] = useState([]);
 
-  const handleClickLeftToRight = (row) => {
-    setRightTableData([...rightTableData, row]);
-    setLeftTableData(leftTableData.filter((data) => data.id !== row.id));
-  };
+  const [leftdata, setleftdata] = useState([]);
+  const [rightdata, setrightdata] = useState([]);
 
-  const handleClickRightToLeft = (row) => {
-    setLeftTableData([...leftTableData, row]);
-    setRightTableData(rightTableData.filter((data) => data.id !== row.id));
-  };
-  const masterProcurementId = "MP0001";
-  
+  useEffect(() => {
+    const fetchdata = async () => {
+      try {
+        const response = await InvoicesToBePay();
+        const leftdata = response;
+        setleftdata(leftdata);
+        console.log(leftdata);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchdata();
+  }, []);
 
-  const list = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
-  const list3 = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
+  useEffect(() => {
+    const fetchdata = async () => {
+      try {
+        const response = await InvoicesPaid();
+        const rightdata = response;
+        setrightdata(rightdata);
+        console.log(rightdata);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchdata();
+  }, []);
+
+
   return (
     <div>
-
       <Container
         className={styles.main}
         sx={{
           ml: { xs: "60px", sm: "65px", md: "65px", lg: "68px", xl: "70px" },
           display: "flex",
-
           flexDirection: "column",
-          //   overflowY: "hidden",
         }}
       >
         <div className={styles.upperSection}>
           <div className={styles.ManageAuctionPageContainer__header}>
             <Routerlink to={-1}>
-            <IconButton
-              sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
-            >
-              <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
-            </IconButton>
+              <IconButton
+                sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
+              >
+                <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
+              </IconButton>
             </Routerlink>
             <h1 className={styles.Header}>Invoices to be Paid</h1>
           </div>
@@ -97,26 +101,30 @@ function InvoicestobePaid() {
                   <TableHead>
                     <TableRow>
                       <TableCell>Invoice ID</TableCell>
+                      <TableCell>Grand Total</TableCell>
                       <TableCell>Vendor Name</TableCell>
                       <TableCell>Action</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {leftTableData.map((row) => (
-                      <TableRow
-                        className={styles.TableRow}
-                        key={row.id}
-                        onClick={() => handleClickLeftToRight(row)}
-                      >
-                        <TableCell component="th" scope="row">
-                          {row.id}
-                        </TableCell>
-                        <TableCell>
-                          {row.firstname + " " + row.lastname}
-                        </TableCell>
-                        <TableCell>{row.department}</TableCell>
-                      </TableRow>
-                    ))}
+                    {leftdata &&
+                      leftdata.map((row, index) => (
+                        <TableRow
+                          hover
+                          role="checkbox"
+                          tabIndex={-1}
+                          key={index}
+                        >
+                          <TableCell align="center">{row.invoiceId}</TableCell>
+                          <TableCell align="center">
+                            {MoneyFormat(row.total + row.tax)}
+                          </TableCell>
+                          <TableCell align="center">{row.vendorName}</TableCell>
+                          <TableCell align="center">
+                            {<Routerlink to={`/view-invoice/${row.invoiceId}`}><IconButton><VisibilityIcon sx={{ color: "#205295" }} /></IconButton></Routerlink>}
+                          </TableCell>
+                        </TableRow>
+                      ))}
                   </TableBody>
                 </Table>
               </TableContainer>
@@ -146,27 +154,30 @@ function InvoicestobePaid() {
                   <TableHead>
                     <TableRow>
                       <TableCell>Invoice ID</TableCell>
+                      <TableCell>Grand Total</TableCell>
                       <TableCell>Vendor Name</TableCell>
                       <TableCell>Payment status</TableCell>
                       <TableCell></TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {rightTableData.map((row) => (
-                      <TableRow
-                        className={styles.TableRow}
-                        key={row.id}
-                        onClick={() => handleClickRightToLeft(row)}
-                      >
-                        <TableCell component="th" scope="row">
-                          {row.id}
-                        </TableCell>
-                        <TableCell>
-                          {row.firstname + " " + row.lastname}
-                        </TableCell>
-                        <TableCell>{row.department}</TableCell>
-                      </TableRow>
-                    ))}
+                    {rightdata &&
+                      rightdata
+                      .map((row, index) => (
+                        <TableRow
+                          hover
+                          role="checkbox"
+                          tabIndex={-1}
+                          key={index}
+                        >
+                          <TableCell align="center">{row.invoiceId}</TableCell>
+                          <TableCell align="center">{MoneyFormat(row.total+row.tax)}</TableCell>
+                          <TableCell align="center">{row.vendorName}</TableCell>
+                          <TableCell align="center" style={{ color: '#227C70' }}>{row.paymentStatus}</TableCell>
+                          <TableCell align="center">
+                            {<IconButton>DownloadInvoice</IconButton>}</TableCell>
+                        </TableRow>
+                      ))}
                   </TableBody>
                 </Table>
               </TableContainer>
