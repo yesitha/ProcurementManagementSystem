@@ -20,20 +20,41 @@ import TablePagination from "@mui/material/TablePagination";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import Visibility from "./Visibility";
 import { Link as Routerlink } from "react-router-dom";
+import { GetInvoicesList } from "../../../services/FinanceDivision Accountant/FinanceDivisionAccountantServices";
+import { useState } from "react";
+import { useEffect } from "react";
+import { MoneyFormat } from "../../../services/dataFormats";
 
 const columns = [
   { id: "InvoiceID", label: "Invoice ID", Width: 300, align: "center" },
   { id: "VendorName", label: "Vendor Name", Width: 300, align: "center" },
+  { id: "tax", label: "Tax Amount", Width: 300, align: "center" },
+  { id: "total", label: "Total", Width: 300, align: "center" },
   { id: "Action", label: "Action", Width: 300, align: "center" },
   { id: "PaymentStatus", label: "Payment Status", Width: 300, align: "center" },
 ];
-function createData(InvoiceID, VendorName, Action, PaymentStatus) {
-  return { InvoiceID, VendorName, Action, PaymentStatus };
+function createData(InvoiceID, VendorName, tax, total, Action, PaymentStatus) {
+  return { InvoiceID, VendorName, tax, total, Action, PaymentStatus };
 }
 
-const rows = [createData("I0017", "Namal", <Routerlink to={'/upload-payment-vouchar'}><Visibility /></Routerlink>, "Success"),
-              createData("I0020", "Amal", <Routerlink to={'/upload-payment-vouchar'}><Visibility /></Routerlink>, "Pending")];
-
+const rows = [
+  createData(
+    "I0017",
+    "Namal",
+    <Routerlink to={"/upload-payment-vouchar"}>
+      <Visibility />
+    </Routerlink>,
+    "Success"
+  ),
+  createData(
+    "I0020",
+    "Amal",
+    <Routerlink to={"/upload-payment-vouchar"}>
+      <Visibility />
+    </Routerlink>,
+    "Pending"
+  ),
+];
 
 export default function InvoicesneedtobePaid() {
   const [page, setPage] = React.useState(0);
@@ -47,14 +68,32 @@ export default function InvoicesneedtobePaid() {
     setPage(0);
   };
 
+  const [data, setData] = useState();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await GetInvoicesList();
+
+        const data = response;
+        setData(data);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div style={{ overflowX: "hidden" }}>
       <div className={styles.afmpp_mainBody}>
         <div className={styles.afmpp_heading}>
           <Routerlink to={-1}>
-          <IconButton sx={{ pl: "15px", height: "34px", width: "34px" }}>
-            <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
-          </IconButton>
+            <IconButton sx={{ pl: "15px", height: "34px", width: "34px" }}>
+              <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
+            </IconButton>
           </Routerlink>
           Invoices To Be Paid
         </div>
@@ -86,29 +125,51 @@ export default function InvoicesneedtobePaid() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row) => {
-                      return (
+                  {data &&
+                    data
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
+                      .map((row, index) => (
                         <TableRow
                           hover
                           role="checkbox"
                           tabIndex={-1}
-                          key={row.code}
+                          key={index}
                         >
-                          {columns.map((column) => {
-                            const value = row[column.id];
-                            return (
-                              <TableCell key={column.id} align={column.align}>
-                                {column.format && typeof value === "number"
-                                  ? column.format(value)
-                                  : value}
-                              </TableCell>
-                            );
-                          })}
+                          <TableCell align="center">{row.invoiceId}</TableCell>
+                          <TableCell align="center">{row.vendorName}</TableCell>
+                          <TableCell align="center">
+                            {MoneyFormat(row.tax)}
+                          </TableCell>
+                          <TableCell align="center">
+                            {MoneyFormat(row.total)}
+                          </TableCell>
+
+                          <TableCell align="center">
+                          <Routerlink to={`/upload-payment-vouchar/${row.invoiceId}`}>
+                              <Visibility />
+                            </Routerlink>
+                          </TableCell>
+                          <TableCell
+                            align="center"
+                            style={{
+                              color:
+                                row.paymentStatus === "pending"
+                                  ? "red"
+                                  : row.paymentStatus === "success"
+                                  ? "green"
+                                  : "black",
+                            }}
+                          >
+                            {row.paymentStatus}
+                          </TableCell>
+                          <TableCell align="center">
+                            {row.expectedDeliveryDate}
+                          </TableCell>
                         </TableRow>
-                      );
-                    })}
+                      ))}
                 </TableBody>
               </Table>
             </TableContainer>

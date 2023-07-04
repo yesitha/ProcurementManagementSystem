@@ -31,17 +31,13 @@ namespace PWMSBackend.Controllers
         public IActionResult GetMasterProcurementPlans()
         {
             var plans = _context.MasterProcurementPlans
-                .Include(mpp => mpp.MasterProcurementPlanStatuses)
-                    .ThenInclude(mpps => mpps.Status)
                 .OrderByDescending(mpp => mpp.CreationDate)
                 .Select(mpp => new
                 {
                     mpp.MppId,
                     mpp.EstimatedGrandTotal,
                     mpp.CreationDate,
-                    StatusName = mpp.MasterProcurementPlanStatuses
-                        .Select(mpps => mpps.Status.StatusName)
-                        .FirstOrDefault()
+                    mpp.Status.StatusName,
                 })
                 .ToList();
 
@@ -60,6 +56,12 @@ namespace PWMSBackend.Controllers
                 MppId = mppId,
                 CreationDate = DateTime.Now,
                 EstimatedGrandTotal = 0,
+                ProcurementCommittee = new ProcurementCommittee
+                {
+                    CommitteeId = "COM00001"
+                },
+                StatusDate = DateTime.Now,
+                Status = _context.Statuses.FirstOrDefault(s => s.StatusId == "STS00001")
             };
 
             var fmpp = new FinalizedMasterProcurementPlan
@@ -121,7 +123,13 @@ namespace PWMSBackend.Controllers
             var mpp = new MasterProcurementPlan
             {
                 MppId = mppId,
-                CreationDate = DateTime.Now
+                CreationDate = DateTime.Now,
+                ProcurementCommittee = new ProcurementCommittee
+                {
+                    CommitteeId = "COM00001"
+                },
+                StatusDate = DateTime.Now,
+                Status = _context.Statuses.FirstOrDefault(s => s.StatusId == "STS00001")
             };
 
             // Create a new FinalizedlMasterProcurementPlan

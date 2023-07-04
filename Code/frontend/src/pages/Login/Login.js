@@ -29,7 +29,7 @@ import {LoginService} from "../../services/authentication"
 import {useForm} from "react-hook-form";
 import {DevTool} from "@hookform/devtools";
 import {useDispatch, useSelector} from "react-redux";
-import {setUserType} from "../../userSlice";
+import {setUser} from "../../userSlice";
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import {useState} from "react";
@@ -68,7 +68,7 @@ export default function Login() {
             .then((res) => {
                 console.log(res.status);
                 if (res.status === 200) {
-                    dispatch(setUserType(res.data.userType));
+                    dispatch(setUser(res.data));
                     window.location.href = "/dashboard";
                 } else {
                     alert("Invalid Credentials");

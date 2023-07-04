@@ -9,6 +9,8 @@ namespace PWMSBackend.Models
         public DateTime CreationDate { get; set; }
         public double EstimatedGrandTotal { get; set; }
 
+        public DateTime? StatusDate { get; set; }
+
         //One to one relationships
         public TecCommittee? TecCommittee { get; set; }
 
@@ -21,7 +23,9 @@ namespace PWMSBackend.Models
         public ICollection<SubProcurementPlan> SubProcurementPlans { get; set; }
 
         //Many to many relationships
-        public ICollection<MasterProcurementPlanStatus> MasterProcurementPlanStatuses { get; set; }
+        //public ICollection<MasterProcurementPlanStatus> MasterProcurementPlanStatuses { get; set; }
+
+        public Status ? Status { get; set; }
 
         [ForeignKey("TecCommittee")]
         public string? TecCommitteeId { get; set; }

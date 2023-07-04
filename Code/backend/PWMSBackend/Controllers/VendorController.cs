@@ -1436,6 +1436,20 @@ namespace PWMSBackend.Controllers
 
             // Add the invoice to the database
             _context.Invoices.Add(invoice);
+
+            //Update the status of the MasterProcurementPlan
+            var PoId = _context.GRNs
+                .Where(grn => grn.GrnId == grnId)
+                .Select(grn => grn.PoId)
+                .FirstOrDefault();
+            var mppId = _context.PurchaseOrders
+                .Where(po => po.PoId == PoId)
+                .Select(po => po.MppId)
+                .FirstOrDefault();
+            var mpp = _context.MasterProcurementPlans
+                .FirstOrDefault(mpp => mpp.MppId == mppId);
+            mpp.Status = _context.Statuses.FirstOrDefault(s => s.StatusId == "STS00009");
+            mpp.StatusDate = DateTime.Now;
             _context.SaveChanges();
 
             return Ok("Invoice created successfully.");

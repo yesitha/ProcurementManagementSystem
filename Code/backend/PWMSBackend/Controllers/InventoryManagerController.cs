@@ -29,7 +29,7 @@ namespace PWMSBackend.Controllers
                 .Where(x => x.Itemtype == "Stock")
                 .Select(x => new
                 {
-                    x.Date,
+                    Date = x.Date != null ? x.Date : new System.DateTime(),
                     x.ItemId,
                     x.ItemName,
                     x.Specification,
