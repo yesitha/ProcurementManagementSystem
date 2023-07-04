@@ -45,7 +45,7 @@ switch (user.userType) {
         path: "evaluate-master-procurementplan",
       },
       { displayName: "Create Purchase Order", path: "create-purchase-order" },
-      { displayName: "Create GRN", path: "create-grn" },
+      { displayName: "Create GRN", path: "GoodReceiveNote" },
       {
         displayName: "Evaluate Vendor Fianace Status",
         path: "evaluate-vendor-fianace-status",
@@ -201,7 +201,7 @@ switch (user.userType) {
     actions = [
       { displayName: "Bid Tender", path: "bid-tender/:vendorId" },
       { displayName: "Bid History", path: "bid-history/:vendorId" },
-      { displayName: "View Invoice", path: "view-invoice" },
+      { displayName: "View Invoice", path: "view-invoice-vendor/:venodrId" },
       { displayName: "Items to be Shipped", path: "items-to-be-shipped" },
     ];
 

@@ -1,9 +1,8 @@
 import React, {useEffect,useState} from "react";
 import styles from "./GRN.module.css";
-import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
-import { ButtonBase, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { Button, IconButton, Paper, Stack, TextField } from "@mui/material";
+import { Button, IconButton, Paper} from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -11,19 +10,15 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { flexbox } from "@mui/system";
-import DonePopup from "../../../components/Popups/DonePopup/DonePopup";
 import "../../../users/vendors.js";
-import EnterNotePopup from "../../../components/Popups/DonePopup/EnterNotePopup";
-import { vendors } from "../../../users/vendors.js";
 import ViewNote from "../../../components/Popups/DonePopup/ViewNote";
 import { Link as Routerlink, useParams } from "react-router-dom";
 import { GetGRNItemDetails } from "../../../services/Vendor/Vendorservices";
 import { DateFormat } from "../../../services/dataFormats";
 
 const columns = [
-  { id: "ItemID", label: "Item ID", Width: 150, align: "center" },
   { id: "ItemName", label: "Item Name", Width: 200, align: "center" },
+  { id: "spe", label: "Specification", Width: 150, align: "center" },
   { id: "OrderQ", label: "Ordered Qty", Width: 150, align: "center" },
   { id: "ShippedQ", label: "Shipped Qty", Width: 150, align: "center" },
   { id: "ReceivedQ", label: "Received Qty", Width: 150, align: "center" },
@@ -33,21 +28,6 @@ const columns = [
 
 ];
 
-function createData(
-  ItemID,
-  ItemName,
-  Spe,
-  OrderQ,
-  DeliveredQ,
-  RemainingQ,
-  Note
-) {
-  return { ItemID, ItemName, Spe, OrderQ, DeliveredQ, RemainingQ, Note };
-}
-
-const rows = [
-  createData("I0014", "A4 Papers", "loerm", "100 ", "50", "50", <ViewNote />),
-];
 
 export default function GRN() {
   const [page, setPage] = React.useState(0);
@@ -60,9 +40,6 @@ export default function GRN() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
-  const supplier = vendors[0].name;
-  const text = `Successfully sent GRN to vendor ${supplier}`;
 
 
   const { poId,grnId } = useParams();
@@ -115,7 +92,7 @@ export default function GRN() {
 
           <div className={styles.delivery}>
             <Typography>
-              Delivered by : <br />
+              Delivered by : PUCSL <br />
               Digital Signature:
             </Typography>
           </div>
@@ -152,14 +129,14 @@ export default function GRN() {
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) => (
                       <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                        <TableCell align="center">{row.itemId}</TableCell>
                         <TableCell align="center">{row.itemName}</TableCell>
+                        <TableCell align="center">{row.specification}</TableCell>
                         <TableCell align="center">{row.orderedQuantity}</TableCell>
                         <TableCell align="center">{row.shipped_Qty}</TableCell>
                         <TableCell align="center">{row.received_Qty}</TableCell>
                         <TableCell align="center">{row.totalReceived_Qty}</TableCell>
                         <TableCell align="center">{row.orderedQuantity-row.totalReceived_Qty}</TableCell>
-                        <TableCell align="center">{<ViewNote />}</TableCell>
+                        <TableCell align="center">{<ViewNote comment={row.grnComment}/>}</TableCell>
                       </TableRow>
                     ))}
               </TableBody>
@@ -168,7 +145,7 @@ export default function GRN() {
             <TablePagination
               rowsPerPageOptions={[10, 25, 50, 100]}
               component="div"
-              count={rows.length}
+              count={10}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}

@@ -47,7 +47,6 @@ import TenderDetails from "./pages/Vendor/Tender Details/TenderDetails";
 import BidHistory from "./pages/Vendor/BidHistory/BidHistory";
 import SideNavBar from "./components/SideNavigationBar/SideNavBar";
 import { user, list1, list2 } from "./pages/Usermanage";
-import Invoicesvendorside from "./pages/Vendor/Invoices(vendorside)/Invoices(vendorside)";
 import InvoicesneedtobePaid from "./pages/FinanceDivisionAccountant/InvoicesneedtobePaid/InvoicesneedtobePaid";
 import ViewMasterProcurementPlanProc from "./pages/Procurement Officer/ViewMasterProcurementPlanProc/ViewMasterProcurementPlanProc";
 import PurchaseOrder from "./pages/Procurement Officer/PurchaseOrder/PurchaseOrder";
@@ -59,9 +58,9 @@ import AuditReport from "./pages/Procurement Officer/AuditReport/AuditReport";
 import PurchseOrdersVendor from "./pages/Vendor/PurchaseOrdersVendor/PurchseOrdersVendor";
 import PurchaseOrderPreview from "./pages/Vendor/PurchaseOrderPreview/PurchaseOrderPreview";
 import SendPurchaseOrder from "./pages/Procurement Officer/SendPurchaseOrder/SendPurchaseOrder";
+import InvoiceVendorside from "./pages/Vendor/Invoice(vendorside)/Invoice(vendorside)";
 import CreateSubProcurementPlan from "./pages/Create SubProcurement Plan Division HOD/CreateSubProcurementPlan";
 import CreateMasterProcurementPlan from "./pages/CreateMasterProcurementPlan/CreateMasterProcurementPlan";
-
 import EvaluateVendorFinanceStatus from "./pages/Procurement Officer/Evaluate Vendor Finance Status/EvaluateVendorFinanceStatus";
 import MasterProcurementPlanTEC from "./pages/TEC Committee/MasterProcurementPlanTEC/MasterProcurementPlanTEC";
 import ViewItemTEC from "./pages/TEC Committee/ViewItemTEC/ViewItemTEC";
@@ -294,7 +293,6 @@ const isAuthenticated = true;
               />
             }
           />
-          ///////////
           <Route
             path="/GoodReceiveNote"
             element={
@@ -306,7 +304,7 @@ const isAuthenticated = true;
             }
           />
           <Route
-            path="/grn-view"
+            path="/grn-view/:poId/:grnId"
             element={
               <PrivateRoute
                 component={<GoodsReceivedNote />}
@@ -465,6 +463,19 @@ const isAuthenticated = true;
               />
             }
           />
+
+          <Route
+            path="/view-invoice/:invoiceId"
+            element={
+              <PrivateRoute
+                component={<Invoice />}
+                authorized={isAuthenticated}
+                allowedUserTypes={["ProcurementOfficer"]}
+              />
+            }
+          />
+
+
           {/*Tec Committee Member */}
           <Route
             path="/view-master-procurement-plan-tec"
@@ -778,7 +789,7 @@ const isAuthenticated = true;
             }
           />
           <Route
-            path="/send-invoice"
+            path="/send-invoice/:grnId"
             element={
               <PrivateRoute
                 component={<SendInvoice />}
@@ -788,7 +799,7 @@ const isAuthenticated = true;
             }
           />
           <Route
-            path="/view-invoice"
+            path="view-invoice-vendor/:venodrId"
             element={
               <PrivateRoute
                 component={<ViewInvoices />}
@@ -798,10 +809,10 @@ const isAuthenticated = true;
             }
           />
           <Route
-            path="/invoice"
+            path="/invoice-view/:invoiceId"
             element={
               <PrivateRoute
-                component={<Invoicesvendorside />}
+                component={<InvoiceVendorside />}
                 authorized={isAuthenticated}
                 allowedUserTypes={["Vendor"]}
               />

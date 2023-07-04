@@ -85,7 +85,7 @@ if(storedArray1 && storedArray2) {
           display: "flex",
 
           flexDirection: "column",
-          //   ]overflowY: "hidden",
+          //   overflowY: "hidden",
         }}
       >
         <div className={styles.upperSection}>

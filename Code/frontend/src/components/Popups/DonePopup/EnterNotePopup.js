@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
@@ -24,8 +24,11 @@ const style = {
   p: 3,
 };
 
-export default function BasicModal() {
-  const [open, setOpen] = React.useState(false);
+export default function EnterNotePopup({ value }) {
+  const [open, setOpen] = useState(false);
+  const [comment, setComment] = useState(value);
+
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -75,6 +78,8 @@ export default function BasicModal() {
               id="outlined-search"
               label="Enter Comment"
               type="search"
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
             />
             <Button
               onClick={handleClose}

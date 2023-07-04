@@ -265,6 +265,7 @@ export const fetchPreviewFromDB = async (selectedMppId,vendorId) => {
     throw error;
   }
 };
+
 // Evaluate Vendor Finance Status
 
 export const GetVendorFinanceStatedetails = async () => {
@@ -279,15 +280,132 @@ export const GetVendorFinanceStatedetails = async () => {
   }
 };
 
+export const GetPoIdList = async () => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/GetPoIdList`
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+
 export const approve = async (vendorId,poId) => {
   try {
     const response = await axios.put(
       `${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/UpdateProcurementOfficerStatus/${vendorId}/${poId}?status=approve`
     );
     console.log(response);
-    return response;  
+    return response;
+    } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const GetPOItemDetailsForGRN = async (poId) => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/GetPOItemDetailsForGRN/${poId}`
+    );
+    return response.data;
   } catch (error) {
     console.log(error);
     throw error;
   }
-}; 
+};
+
+export const CreateGRN = async (poId,data) => {
+
+  console.log(data);
+  try {
+    const response = await axios.post(
+      `${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/CreateGRN?poId=${poId}`,
+      data
+    );
+    console.log(response);
+    sessionStorage.clear();
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const GetGRNItemDetails = async (poId,grnId) => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/GetGRNItemDetails/${poId}/${grnId}`
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const UpdateGRNItemCommentAndCheckedBy = async (grnId,checkedBy,commentsWithItemId) => {
+  try {
+    const response = await axios.put(
+      `${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/UpdateGRNItemCommentAndCheckedBy/${grnId}?checkedBy=${checkedBy}`,
+      commentsWithItemId
+    );
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const InvoicesToBePay = async () => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/InvoicesToBePay`
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const InvoicesPaid = async () => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/InvoicesPaid`
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const GetInvoiceDetails = async (invoiceId) => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/GetInvoiceDetails/${invoiceId}`
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const UpdateInvoicePaymentStatus = async (invoiceId) => {
+  try {
+    const response = await axios.put(
+      `${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/UpdateInvoicePaymentStatus?invoiceId=${invoiceId}`
+    );
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
