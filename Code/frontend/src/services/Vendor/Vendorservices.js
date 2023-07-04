@@ -274,7 +274,23 @@ export const CreateInvoice = async (grnId) => {
       console.log(error);
       throw error;
     }
-  };
+
+  }; 
+
+  //Items to be Shipped
+
+  export const GetItemToBeShippedDetails = async (poId,vendorId) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_HOST}/api/Vendor/GetItemToBeShippedDetails/${poId}/${vendorId}`
+         );
+
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+};
 
   export const GetInvoiceDetails = async (grnId) => {
     try {
@@ -286,7 +302,34 @@ export const CreateInvoice = async (grnId) => {
       console.log(error);
       throw error;
     }
-  };
+ };
+
+  export const GetPOIdListByVendorId = async (vendorId) => {
+    try {
+        const response = await axios.get(
+            `${process.env.REACT_APP_API_HOST}/api/Vendor/GetPOIdListByVendorId/${vendorId}`
+        );
+
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+};
+
+export const CreatePurchaseOrderItemsToBeShippedRecords = async (poId,input) => {
+  const data = Object.keys(input).map((key) => ({
+    itemId: key,
+    shippedQuantity: Number(input[key])
+  }));
+  try {
+    const response = await axios.post(`${process.env.REACT_APP_API_HOST}/api/Vendor/CreatePurchaseOrderItemsToBeShippedRecords?PoId=${poId}`,data );
+
+    console.log(response.data); // Handle the response data here
+  } catch (error) {
+    console.error(error); // Handle error here
+  }
+};
 
   export const UpdateInvoiceDetails = async (invoiceId,total,tax) => {
     try {
@@ -324,5 +367,3 @@ export const CreateInvoice = async (grnId) => {
       throw error;
     }
   }; 
-
-

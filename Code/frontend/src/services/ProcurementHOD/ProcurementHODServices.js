@@ -253,8 +253,6 @@ export const GetItemBidDetailsitemId = async (itemId) => {
 
 
 export const fetchPreviewFromDB = async (selectedMppId,vendorId) => {
-  
-  
   try {
     const response = await axios.post(
       `${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/CreatePO/${selectedMppId}/${vendorId}`
@@ -268,6 +266,20 @@ export const fetchPreviewFromDB = async (selectedMppId,vendorId) => {
   }
 };
 
+// Evaluate Vendor Finance Status
+
+export const GetVendorFinanceStatedetails = async () => {
+  try {
+    const response = await axios.get(
+        `${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/GetVendorFinanceStatedetails`
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 export const GetPoIdList = async () => {
   try {
     const response = await axios.get(
@@ -275,6 +287,20 @@ export const GetPoIdList = async () => {
     );
     return response.data;
   } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+
+export const approve = async (vendorId,poId) => {
+  try {
+    const response = await axios.put(
+      `${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/UpdateProcurementOfficerStatus/${vendorId}/${poId}?status=approve`
+    );
+    console.log(response);
+    return response;
+    } catch (error) {
     console.log(error);
     throw error;
   }

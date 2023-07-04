@@ -11,17 +11,20 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { Link as Routerlink } from "react-router-dom";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import { useEffect, useState } from "react";
+import { MoneyFormat } from "../../services/dataFormats";
+import { DateFormat } from "../../services/dataFormats";
+import { GetAssetsDetails } from "../../services/InventoryManager/InventoryManagerServices";
 
 const columns = [
   { id: "Date", label: "Date", Width: 300, align: "center" },
   { id: "ItemID", label: "Item ID", Width: 300, align: "center" },
   { id: "ItemName", label: "Item Name", Width: 300, align: "center" },
-  { id: "VendorName", label: "Vendor Name", Width: 300, align: "center" },
+  { id: "VendorName", label: "Specifications", Width: 300, align: "center" },
   { id: "QtyAvailable", label: "QTY Available", Width: 300, align: "center" },
   { id: "UnitPrice", label: "Unit Price", Width: 300, align: "center" },
   { id: "TotalValue", label: "Total Value", Width: 300, align: "center" },
 ];
-
 function createData(
   Date,
   ItemID,
@@ -100,6 +103,9 @@ const rows = [
  
 
 ];
+
+
+
 export default function AssetRegistry() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -112,6 +118,39 @@ export default function AssetRegistry() {
     setPage(0);
   };
 
+  const [data, setData] = useState([]);
+const totalItems = data.length; 
+
+// Calculate the total value
+const totalValue = data.reduce((total, item) => {
+const itemValue = item.quantityAvailable * item.unitPrice;
+return total + itemValue;
+}, 0);
+
+const PurchasValue = data.reduce((total, item) => {
+return total + item.totalPurchasePrice;
+}, 0);
+
+const IssueValue = data.reduce((total, item) => {
+return total + item.totalIssuePrice;
+}, 0);
+
+
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const response = await GetAssetsDetails();
+      const data = response;
+      setData(data);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  fetchData();
+}, []);
+
+
   return (
     <div>
       <div
@@ -120,11 +159,13 @@ export default function AssetRegistry() {
           color: "white",
           fontSize: 36,
           fontFamily: "inter",
+          display:"flex",
+          flexDirection: "row"
         }}
       >
           <Routerlink to={-1}>
           <IconButton
-            sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}>
+            sx={{ pl: "15px", height: "34px", width: "34px", mt: 9 }}>
             <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
           </IconButton>
           </Routerlink>
@@ -154,19 +195,22 @@ export default function AssetRegistry() {
         </div>
         <div className={styles.note2}>
           <h1 style={{ color: "#205295", fontSize: 24, textAlign: "center" }}>
-            Assets Registry Summary
+            Assets Summary
           </h1>
           <h1 style={{ fontSize: 16, textAlign: "center", color: "#0A2647" }}>
             Total Items
           </h1>
-          <h1 style={{ fontSize: 32, textAlign: "center" }}>10</h1>
-          <h1 style={{ fontSize: 24, textAlign: "center" }}>LKR 10000</h1>
+          <h1 style={{ fontSize: 24, textAlign: "center" }}>{totalItems}</h1>
+          <h1 style={{ fontSize: 16, textAlign: "center", color: "#0A2647" }}>
+            Total Value
+          </h1>
+          <h1 style={{ fontSize: 24, textAlign: "center" }}>{MoneyFormat(totalValue)}</h1>
         </div>
         <div className={styles.note3}>
           <h1 style={{ color: "#205295", fontSize: 24, textAlign: "center" }}>
             Purchase <br /> Summary
           </h1>
-          <h1 style={{ fontSize: 24, textAlign: "center" }}>LKR 10000</h1>
+          <h1 style={{ fontSize: 24, textAlign: "center" }}>{MoneyFormat(PurchasValue)}</h1>
         </div>
       </div>
       <h1
@@ -210,30 +254,42 @@ export default function AssetRegistry() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => {
-                    return (
-                      <TableRow
-                        hover
-                        role="checkbox"
-                        tabIndex={-1}
-                        key={row.code}
-                      >
-                        {columns.map((column) => {
-                          const value = row[column.id];
-                          return (
-                            <TableCell key={column.id} align={column.align}>
-                              {column.format && typeof value === "number"
-                                ? column.format(value)
-                                : value}
-                            </TableCell>
-                          );
-                        })}
-                      </TableRow>
-                    );
-                  })}
-              </TableBody>
+                  {data &&
+                    data
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
+                      .map((row, index) => (
+                        <TableRow
+                          hover
+                          role="checkbox"
+                          tabIndex={-1}
+                          key={index}
+                        >
+                          <TableCell align="center">{DateFormat(row.date)}</TableCell>
+                          <TableCell align="center">
+                            {row.itemId}
+                          </TableCell>
+                          <TableCell align="center">
+                            {row.itemName}
+                          </TableCell>
+                          <TableCell align="center">
+                            {row.specification}
+                          </TableCell>
+                          <TableCell align="center">
+                            {row.quantityAvailable}
+                          </TableCell>
+                          <TableCell align="center">
+                            {MoneyFormat(row.unitPrice)}
+                          </TableCell>
+                          <TableCell align="center">
+                            {MoneyFormat(row.quantityAvailable*row.unitPrice)}
+                          </TableCell>
+                          
+                        </TableRow>
+                      ))}
+                </TableBody>
             </Table>
           </TableContainer>
           <TablePagination

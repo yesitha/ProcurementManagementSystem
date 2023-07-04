@@ -79,7 +79,10 @@ import NoAccess403 from "./pages/No Access Page/NoAccess";
 import { Navigate } from "react-router-dom/dist";
 
 const PrivateRoute = ({ authorized, allowedUserTypes, ...props }) => {
-  const userType = sessionStorage.getItem('userType');
+  // const userType = sessionStorage.getItem('userType');
+  const userType = user.userType;
+
+
  
   if (!authorized) {
     return <Navigate to="/sign-in" />;
@@ -92,7 +95,8 @@ const PrivateRoute = ({ authorized, allowedUserTypes, ...props }) => {
 };
 
 function App() {
-const isAuthenticated = !!sessionStorage.getItem("user");
+// const isAuthenticated = !!sessionStorage.getItem("user");
+const isAuthenticated = true;
   
   
 
@@ -895,7 +899,7 @@ const isAuthenticated = !!sessionStorage.getItem("user");
             }
           />
           <Route
-            path="/audit-finalized-master-procurementplan"
+            path="/audit-finalized-master-procurementplan/:mppId"
             element={
               <PrivateRoute
                 component={<AuditFinalizedMasterProcurementPlan />}
@@ -945,7 +949,7 @@ const isAuthenticated = !!sessionStorage.getItem("user");
             }
           />
           <Route
-            path="/evaluate-f-master-procurement-plan"
+            path="/evaluate-f-master-procurement-plan/:mppId"
             element={
               <PrivateRoute
                 component={<EvaluateFinalizedMasterProcurementPlan />}
@@ -975,7 +979,7 @@ const isAuthenticated = !!sessionStorage.getItem("user");
             }
           />
           <Route
-            path="/upload-payment-vouchar"
+            path="/upload-payment-vouchar/:invoiceId"
             element={
               <PrivateRoute
                 component={<UploadPaymentVoucher />}
