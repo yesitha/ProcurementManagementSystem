@@ -52,11 +52,11 @@ export default function EvidenceOfAuthorization(props) {
 
   // Update sppId and itemId if the props change
   React.useEffect(() => {
-    if (props.sppId.toString() !== null && props.itemId.toString() !== null){
-    setSppId(props.sppId);
-    setItemId(props.itemId);
-  }
-  }, [props]);
+    if (props.sppId !== null && props.itemId !== null && props.sppId !== undefined && props.itemId !== undefined) {
+      setSppId(props.sppId.toString());
+      setItemId(props.itemId.toString());
+    }
+  }, [props.sppId, props.itemId]);
   
   const handleDownload = () => {
     

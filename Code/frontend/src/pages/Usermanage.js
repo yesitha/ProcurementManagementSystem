@@ -19,13 +19,26 @@ const userTypes = {
       { displayName: "Appoint Bid Opening Committee", path: "appoint-bidopening-committee" },
       { displayName: "Evaluate Master Procurement Plan", path: "evaluate-master-procurementplan" },
       { displayName: "Create Purchase Order", path: "create-purchase-order" },
-      { displayName: "Create GRN", path: "create-grn" },
-      { displayName: "Evaluate Vendor Fianace Status", path: "evaluate-vendor-fianace-status" },
-      { displayName: "View Master Procurement Plan", path: "view-masterprocurement-plan" },
-    ],
-    actionButtons: [
-      { displayName: "New Master Procurement plan for Evaluate", path: "new-master-procurement-plan-for-evaluate", number: "2" },
-      { displayName: "Set Pre Bid Meeting Date" },
+      { displayName: "Create GRN", path: "GoodReceiveNote" },
+      {
+        displayName: "Evaluate Vendor Fianace Status",
+        path: "evaluate-vendor-fianace-status",
+      },
+      {
+        displayName: "View Master Procurement Plan",
+        path: "view-masterprocurement-plan",
+      },
+    ];
+
+    actionButtons = [
+      {
+        displayName: "New Master Procurement plan for Evaluate",
+        path: "new-master-procurement-plan-for-evaluate",
+        number: "2",
+      },
+      {
+        displayName: "Set Pre Bid Meeting Date"
+      },
       { displayName: "Auctions End", path: "auctions-end", number: "1/30" },
       { displayName: "Internal Auditor Report Availble", path: "internal-auditor-report-availble" },
       { displayName: "Approved Items from DG", path: "approved-items-from-dg", number: "10" },
@@ -88,7 +101,7 @@ const userTypes = {
     actions: [
       { displayName: "Bid Tender", path: "bid-tender/:vendorId" },
       { displayName: "Bid History", path: "bid-history/:vendorId" },
-      { displayName: "View Invoice", path: "view-invoice" },
+      { displayName: "View Invoice", path: "view-invoice-vendor/:venodrId" },
       { displayName: "Items to be Shipped", path: "items-to-be-shipped" },
     ],
     actionButtons: [

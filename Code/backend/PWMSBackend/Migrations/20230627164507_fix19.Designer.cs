@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PWMSBackend.Data;
 
@@ -11,9 +12,10 @@ using PWMSBackend.Data;
 namespace PWMSBackend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230627164507_fix19")]
+    partial class fix19
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -242,12 +244,6 @@ namespace PWMSBackend.Migrations
                     b.Property<string>("ProcurementCommitteeCommitteeId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime?>("StatusDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("StatusId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("TecCommitteeId")
                         .HasColumnType("nvarchar(450)");
 
@@ -259,13 +255,29 @@ namespace PWMSBackend.Migrations
 
                     b.HasIndex("ProcurementCommitteeCommitteeId");
 
-                    b.HasIndex("StatusId");
-
                     b.HasIndex("TecCommitteeId")
                         .IsUnique()
                         .HasFilter("[TecCommitteeId] IS NOT NULL");
 
                     b.ToTable("MasterProcurementPlans");
+                });
+
+            modelBuilder.Entity("PWMSBackend.Models.MasterProcurementPlanStatus", b =>
+                {
+                    b.Property<string>("MppId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("StatusId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("MppId", "StatusId");
+
+                    b.HasIndex("StatusId");
+
+                    b.ToTable("MasterProcurementPlanStatuses");
                 });
 
             modelBuilder.Entity("PWMSBackend.Models.PaymentVoucher", b =>
@@ -909,10 +921,6 @@ namespace PWMSBackend.Migrations
                         .WithMany("MasterProcurementPlans")
                         .HasForeignKey("ProcurementCommitteeCommitteeId");
 
-                    b.HasOne("PWMSBackend.Models.Status", "Status")
-                        .WithMany("MasterProcurementPlans")
-                        .HasForeignKey("StatusId");
-
                     b.HasOne("PWMSBackend.Models.TecCommittee", "TecCommittee")
                         .WithOne("MasterProcurementPlan")
                         .HasForeignKey("PWMSBackend.Models.MasterProcurementPlan", "TecCommitteeId");
@@ -921,9 +929,26 @@ namespace PWMSBackend.Migrations
 
                     b.Navigation("ProcurementCommittee");
 
-                    b.Navigation("Status");
-
                     b.Navigation("TecCommittee");
+                });
+
+            modelBuilder.Entity("PWMSBackend.Models.MasterProcurementPlanStatus", b =>
+                {
+                    b.HasOne("PWMSBackend.Models.MasterProcurementPlan", "MasterProcurementPlan")
+                        .WithMany("MasterProcurementPlanStatuses")
+                        .HasForeignKey("MppId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PWMSBackend.Models.Status", "Status")
+                        .WithMany("MasterProcurementPlanStatuses")
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MasterProcurementPlan");
+
+                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("PWMSBackend.Models.PaymentVoucher", b =>
@@ -1159,6 +1184,8 @@ namespace PWMSBackend.Migrations
                     b.Navigation("FinalizedMasterProcuementPlan")
                         .IsRequired();
 
+                    b.Navigation("MasterProcurementPlanStatuses");
+
                     b.Navigation("SubProcurementPlans");
                 });
 
@@ -1176,7 +1203,7 @@ namespace PWMSBackend.Migrations
 
             modelBuilder.Entity("PWMSBackend.Models.Status", b =>
                 {
-                    b.Navigation("MasterProcurementPlans");
+                    b.Navigation("MasterProcurementPlanStatuses");
                 });
 
             modelBuilder.Entity("PWMSBackend.Models.SubProcurementPlan", b =>

@@ -207,6 +207,8 @@ namespace PWMSBackend.Controllers
                         subProcurementPlanItem.RejectedVendor = subProcurementPlanItem.SelectedVendor;
 
                         subProcurementPlanItem.SelectedVendor = null;
+
+                        _context.SaveChanges();
                     }
 
                     //update rejected vendor
@@ -230,12 +232,19 @@ namespace PWMSBackend.Controllers
                             // Update the property
                             vendorPlaceBidItem.BidStatus = "Selected";
 
+                            subProcurementPlanItem.SelectedVendor = subProcurementPlanItem.RejectedVendor;
+
                             _context.SaveChanges();
                         }
-                        subProcurementPlanItem.SelectedVendor = subProcurementPlanItem.RejectedVendor;
                     }
                 }
             }
+
+            //Update the status of the MasterProcurementPlan
+            var mpp = _context.MasterProcurementPlans
+                .FirstOrDefault(mpp => mpp.MppId == mppId);
+            mpp.Status = _context.Statuses.FirstOrDefault(s => s.StatusId == "STS00006");
+            mpp.StatusDate = DateTime.Now;
 
             _context.SaveChanges();
 

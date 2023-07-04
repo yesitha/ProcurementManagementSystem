@@ -31,7 +31,7 @@ namespace PWMSBackend.Data
         public DbSet<ItemInStock> ItemInStocks { get; set; } = null!;
         public DbSet<ItemTobeShipped> ItemTobeShippeds { get; set; } = null!;
         public DbSet<MasterProcurementPlan> MasterProcurementPlans { get; set; } = null!;
-        public DbSet<MasterProcurementPlanStatus> MasterProcurementPlanStatuses { get; set; } = null!;
+        //public DbSet<MasterProcurementPlanStatus> MasterProcurementPlanStatuses { get; set; } = null!;
         public DbSet<PaymentVoucher> PaymentVouchers { get; set; } = null!;
         public DbSet<ProcurementCommittee> ProcurementCommittees { get; set; } = null!;
         public DbSet<ProcurementEmployee> ProcurementEmployees { get; set; } = null!;
@@ -85,16 +85,16 @@ namespace PWMSBackend.Data
                 .WithMany(ea => ea.GRNItemTobeShippeds)
                 .HasForeignKey(a => a.ItemId);
 
-            modelBuilder.Entity<MasterProcurementPlanStatus>()
-               .HasKey(fg => new { fg.MppId, fg.StatusId });
-            modelBuilder.Entity<MasterProcurementPlanStatus>()
-                .HasOne(f => f.MasterProcurementPlan)
-                .WithMany(fg => fg.MasterProcurementPlanStatuses)
-                .HasForeignKey(f => f.MppId);
-            modelBuilder.Entity<MasterProcurementPlanStatus>()
-                .HasOne(g => g.Status)
-                .WithMany(fg => fg.MasterProcurementPlanStatuses)
-                .HasForeignKey(g => g.StatusId);
+            //modelBuilder.Entity<MasterProcurementPlanStatus>()
+            //   .HasKey(fg => new { fg.MppId, fg.StatusId });
+            //modelBuilder.Entity<MasterProcurementPlanStatus>()
+            //    .HasOne(f => f.MasterProcurementPlan)
+            //    .WithMany(fg => fg.MasterProcurementPlanStatuses)
+            //    .HasForeignKey(f => f.MppId);
+            //modelBuilder.Entity<MasterProcurementPlanStatus>()
+            //    .HasOne(g => g.Status)
+            //    .WithMany(fg => fg.MasterProcurementPlanStatuses)
+            //    .HasForeignKey(g => g.StatusId);
                 
 
             modelBuilder.Entity<PurchaseOrder_ItemTobeShipped>()

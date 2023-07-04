@@ -60,3 +60,57 @@
   margin-left: 10px;
   margin-top: 135px;
 }
+
+.Header {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  color: #ffffff;
+  font-size: 36px;
+  position: relative;
+  margin-right: 12vw;
+}
+
+.upperSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 100%;
+  
+}
+
+.ManageAuctionPageContainer__header {
+  padding-right: 10px;
+  width: fit-content;
+  display: flex;
+  flex-direction: row;
+  
+}
+
+.Ph3 {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  color: #ffffff;
+  font-size: 15px;
+  flex-direction: column;
+  display: flex;
+  margin-right: 20px;
+  align-self: center;
+  margin-left: 500px;
+}
+
+.h4m {
+  margin-bottom: 0px;
+  margin-left: 5px;
+  padding-left:50px;
+}
+
+.dropDownIconContainer{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  
+}

@@ -14,7 +14,12 @@ import { Button, IconButton, Paper, Stack, TextField } from "@mui/material";
 import Successfullyinformed from "../../components/Popups/DonePopup/Successfullyinformed";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { Link as Routerlink } from "react-router-dom";
-
+import { useState } from "react";
+import { useEffect } from "react";
+import { GetItemToBeShippedDetails } from "../../services/Vendor/Vendorservices";
+import { GetPOIdListByVendorId } from "../../services/Vendor/Vendorservices";
+import { MoneyFormat } from "../../services/dataFormats";
+import { CreatePurchaseOrderItemsToBeShippedRecords } from "../../services/Vendor/Vendorservices";
 
 const list0 = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
 const list3 = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
@@ -27,7 +32,7 @@ const columns = [
   { id: "UnitPrice", label: "Unit Price", Width: 300, align: "center" },
   {
     id: "RemainingQty",
-    label: "Remaining Quantity",
+    label: "Remaining Quantity to ship",
     Width: 300,
     align: "center",
   },
@@ -45,8 +50,22 @@ function createData(
 }
 
 const rows = [
-  createData("I0014", "A4 Papers", "2023-05-10", "A4 sized Papers", "2000lkr", "52"),
-  createData("I0015", "Staplers", "2023-03-12", "Atlas Staplers", "5000lkr", "63"),
+  createData(
+    "I0014",
+    "A4 Papers",
+    <TextField />,
+    "A4 sized Papers",
+    "2000lkr",
+    "52"
+  ),
+  createData(
+    "I0015",
+    "Staplers",
+    <TextField />,
+    "Atlas Staplers",
+    "5000lkr",
+    "63"
+  ),
 ];
 
 export default function ItemstobeShipped() {
@@ -61,33 +80,84 @@ export default function ItemstobeShipped() {
     setPage(0);
   };
 
+  const [data, setData] = useState(null);
+  const [poIds, setpoIds] = useState([]);
+  const [selectedpoId, setSelectedpoId] = useState("");
+  const vendorId = "HEL9863";
+
+  const handlepoIdChange = (event) => {
+    setSelectedpoId(event.target.value);
+  };
+  const [textFieldValue, setTextFieldValue] = useState("");
+  const [textFieldValues, setTextFieldValues] = useState({});
+
+  const [isClicked, setIsClicked] = useState(false);
+
+ 
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const poIdsResponse = await GetPOIdListByVendorId(vendorId);
+        setpoIds(poIdsResponse.map((item) => item.poId));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, [vendorId]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await GetItemToBeShippedDetails(selectedpoId, vendorId);
+
+        setData(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+    console.log(selectedpoId);
+  }, [selectedpoId]);
+
   return (
     <div>
-
-      <div className={styles.afmpp_heading}>
-        <Routerlink to={-1}>
-        <IconButton sx={{ pl: "15px", height: "34px", width: "34px" }}>
-          <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
-        </IconButton>
-        </Routerlink>
-        Items to be Shipped
-      </div>
-
-      <div style={{ marginTop: "30px" }}>
-        <h1 style={{ marginLeft: "100px", fontSize: "16px", color: "white" }}>
-          PURCHASE ORDER ID
-        </h1>
-        <div style={{ marginLeft: "90px" }}>
-          <SelectDropDown list={list0} />
+      <div className={styles.upperSection}>
+        <div
+          className={styles.ManageAuctionPageContainer__header}
+          style={{ marginLeft: "90px", display: "flex" }}
+        >
+          <Routerlink to={-1}>
+            <IconButton
+              sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
+            >
+              <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
+            </IconButton>
+          </Routerlink>
+          <h1
+            style={{ fontSize: "36px", color: "#ffffff", fontFamily: "Inter" }}
+          >
+            Items to be Shipped{" "}
+          </h1>
         </div>
       </div>
 
-      <div style={{ marginTop: "30px" }}>
-        <h1 style={{ marginLeft: "100px", fontSize: "16px", color: "white" }}>
-          DATE
-        </h1>
-        <div style={{ marginLeft: "90px" }}>
-          <SelectDropDown list={list3} />
+      <div className={styles.Ph3} style={{ marginLeft: "100px" }}>
+        <h4
+          className={styles.h4}
+          style={{ marginLeft: "10px", color: "white" }}
+        >
+          SUB PROCUREMENT ID
+        </h4>
+        <div className={styles.dropDownIconContainer}>
+          <SelectDropDown
+            list={poIds}
+            value={selectedpoId}
+            onChange={handlepoIdChange}
+          />
         </div>
       </div>
 
@@ -120,29 +190,43 @@ export default function ItemstobeShipped() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => {
-                    return (
+                {data &&
+                  data
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row, index) => (
                       <TableRow
                         hover
                         role="checkbox"
                         tabIndex={-1}
-                        key={row.code}
+                        key={index}
+                        data-id={row.itemId}
                       >
-                        {columns.map((column) => {
-                          const value = row[column.id];
-                          return (
-                            <TableCell key={column.id} align={column.align}>
-                              {column.format && typeof value === "number"
-                                ? column.format(value)
-                                : value}
-                            </TableCell>
-                          );
-                        })}
+                        <TableCell align="center">{row.itemId}</TableCell>
+                        <TableCell align="center">{row.itemName}</TableCell>
+                        <TableCell align="center">
+                          <TextField
+                            value={textFieldValues[row.itemId] || ""}
+                            onChange={(e) => {
+                              const updatedValues = {
+                                ...textFieldValues,
+                                [row.itemId]: e.target.value,
+                              };
+                              setTextFieldValues(updatedValues);
+                            }}
+                          />
+                        </TableCell>
+                        <TableCell align="center">
+                          {row.specifications}
+                        </TableCell>
+                        <TableCell align="center">
+                          {MoneyFormat(row.bidValue)}
+                        </TableCell>
+                        <TableCell align="center">
+                          {row.totalOrderedQuantity -row.shippedQtyForNow-
+                            (textFieldValues[row.itemId] ?? 0)}
+                        </TableCell>
                       </TableRow>
-                    );
-                  })}
+                    ))}
               </TableBody>
             </Table>
           </TableContainer>
@@ -158,8 +242,19 @@ export default function ItemstobeShipped() {
         </Paper>
       </div>
 
-      <div classname={styles.Button}>
-        <div>
+      
+        <div classname={styles.Button}
+          onClick={() => {
+           
+            if (!isClicked) {
+              CreatePurchaseOrderItemsToBeShippedRecords(selectedpoId, textFieldValues);
+              setIsClicked(true);
+            }
+          }
+            
+            
+          }
+        >
           <Successfullyinformed
             styles={{
               position: "absolute",
@@ -174,7 +269,7 @@ export default function ItemstobeShipped() {
             title="Inform"
           />
         </div>
-      </div>
+      
     </div>
   );
 }

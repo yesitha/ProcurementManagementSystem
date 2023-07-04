@@ -23,7 +23,7 @@
   font-family: "Inter", sans-serif;
   font-weight: 500;
   color: #ffffff;
-  font-size: 34px;
+  font-size: 15px;
   position: relative;
   margin-right: 5vw;
 }
@@ -114,7 +114,7 @@
 }
 
 .rightButton {
-  display: flex !important;
+
 }
 
 .TecAppointButton {

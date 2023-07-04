@@ -6,6 +6,7 @@ using PWMSBackend.CustomIdGenerator;
 using PWMSBackend.Data;
 using PWMSBackend.Models;
 using System.Drawing;
+using System.Net.WebSockets;
 
 namespace PWMSBackend.Controllers
 {
@@ -45,6 +46,25 @@ namespace PWMSBackend.Controllers
             return Ok(plans);
         }
 
+        // View Master Procurement Plan Status
+
+        [HttpGet("GetMasterProcurementPlanStatus")]
+        public IActionResult GetMasterProcurementPlanStatus(string mppId)
+        {
+            var masterProcurementPlanStatus = _context.MasterProcurementPlans
+                .Where(x => x.MppId == mppId)
+                .Select(x => new
+                {
+                    x.MppId,
+                    x.StatusDate,
+                    x.Status.StatusId,
+                    x.Status.StatusName
+                })
+                .FirstOrDefault();
+
+            return Ok(masterProcurementPlanStatus);
+        }
+
         [HttpPost("CreateNewTECCommitteeID")]
         public IActionResult CreateNewTECCommittee(string mppId)
         {
@@ -73,6 +93,10 @@ namespace PWMSBackend.Controllers
             {
                 CommitteeId = committeeId
             };
+
+            //Update the MasterProcurementPlan Status
+            masterProcurementPlan.Status = _context.Statuses.FirstOrDefault(s => s.StatusId == "STS00002");
+            masterProcurementPlan.StatusDate = DateTime.Now;
 
             _context.Committees.Add(committee);
             _context.SaveChanges();
@@ -108,6 +132,10 @@ namespace PWMSBackend.Controllers
             {
                 CommitteeId = committeeId
             };
+
+            //Update the MasterProcurementPlan Status
+            masterProcurementPlan.Status = _context.Statuses.FirstOrDefault(s => s.StatusId == "STS00004");
+            masterProcurementPlan.StatusDate = DateTime.Now;
 
             _context.Committees.Add(committee);
             _context.SaveChanges();
@@ -874,6 +902,13 @@ namespace PWMSBackend.Controllers
             };
 
             _context.PurchaseOrders.Add(PO);
+
+            //Update the status of the MasterProcurementPlan
+            var mpp = _context.MasterProcurementPlans
+                .FirstOrDefault(mpp => mpp.MppId == mppId);
+            mpp.Status = _context.Statuses.FirstOrDefault(s => s.StatusId == "STS00007");
+            mpp.StatusDate = DateTime.Now;
+
             _context.SaveChanges();
 
             return Ok(PO.PoId);
@@ -1016,14 +1051,19 @@ namespace PWMSBackend.Controllers
         public IActionResult GetVendorFinanceStatedetails()
         {
             var vendorFinanceStateDetails = _context.PurchaseOrders
-                .Where(po => po.ProcumentOfficerStatus != null)
+                .OrderByDescending(po => po.Date)
                 .Select(v => new
                 {
                     v.PoId,
                     v.VendorId,
+                    VendorName = _context.Vendors
+                                    .Where(vendor => vendor.VendorId == v.VendorId)
+                                    .Select(vendor => vendor.FirstName + " " + vendor.LastName)
+                                    .FirstOrDefault(),
                     v.Agreement,
                     v.Bond,
-                    v.BankGuarantee
+                    v.BankGuarantee,
+                    v.ProcumentOfficerStatus
                 }) 
                 .ToList();
 
@@ -1198,11 +1238,63 @@ namespace PWMSBackend.Controllers
                     };
 
                     grn.GRNItemTobeShippeds.Add(grnItem);
+
+                    // Update records in Items table in inventory database
+
+                    var mppId = _context.PurchaseOrders
+                        .Where(po => po.PoId == poId)
+                        .Select(po => po.MppId)
+                        .FirstOrDefault();
+                    var vendorId = _context.PurchaseOrders
+                        .Where(po => po.PoId == poId)
+                        .Select(po => po.VendorId)
+                        .FirstOrDefault();
+                    var bidValue = _context.MasterProcurementPlans
+                        .Where(mpp => mpp.MppId == mppId)
+                        .SelectMany(mpp => mpp.SubProcurementPlans)
+                        .SelectMany(spp => spp.subProcurementPlanItems)
+                        .Where(itm => itm.ProcuremnetCommitteeStatus == "approve" && itm.DGStatus == "approve"
+                                        && itm.SelectedVendor == _context.Vendors
+                                                                    .Where(v => v.VendorId == vendorId)
+                                                                    .Select(v => v.FirstName + " " + v.LastName)
+                                                                    .FirstOrDefault()
+                                        && itm.ItemId == item.ItemId) // Add the filter for the specific ItemId
+                        .GroupBy(itm => itm.ItemId)
+                        .Select(group => _context.VendorPlaceBidItems
+                                            .Where(vpb => vpb.Vendor.VendorId == vendorId && vpb.ItemId == group.Key)
+                                            .Select(vpb => vpb.BidValue)
+                                            .FirstOrDefault())
+                        .FirstOrDefault();
+
+                    var updateItem = _context.ItemInStocks.FirstOrDefault(i => i.ItemId == item.ItemId);
+
+                    // Update the properties of the item with the values
+
+                    if (updateItem != null)
+                    {
+                        updateItem.Date = DateTime.Now;
+                        updateItem.UnitPrice = bidValue;
+                        updateItem.QuantityAvailable += item.ReceivedQty;
+                        updateItem.TotalPurchasePrice += bidValue * item.ReceivedQty;
+
+                        _context.ItemInStocks.Update(updateItem);
+                    }
                 }
             }
 
             // Save the GRN and associated GRNItemTobeShipped records to the database
             _context.GRNs.Add(grn);
+
+            //Update the status of the MasterProcurementPlan
+            var mpplanId = _context.PurchaseOrders
+                .Where(po => po.PoId == poId)
+                .Select(po => po.MppId)
+                .FirstOrDefault();
+            var mpplan = _context.MasterProcurementPlans
+                .FirstOrDefault(mpp => mpp.MppId == mpplanId);
+            mpplan.Status = _context.Statuses.FirstOrDefault(s => s.StatusId == "STS00008");
+            mpplan.StatusDate = DateTime.Now;
+
             _context.SaveChanges();
 
             return Ok(grn.GrnId);
@@ -1474,7 +1566,7 @@ namespace PWMSBackend.Controllers
         public async Task<IActionResult> GetInvoiceDetails(string invoiceId)
         {
             // Retrieve the invoice based on the provided invoiceId
-            Invoice invoice = _context.Invoices.FirstOrDefault(i => i.InvoiceId == invoiceId);
+            InvoiceTobePay invoice = _context.InvoiceTobePays.FirstOrDefault(i => i.InvoiceId == invoiceId);
 
             if (invoice == null)
             {
@@ -1488,9 +1580,10 @@ namespace PWMSBackend.Controllers
                 Date = invoice.Date,
                 TotalAmount = invoice.Total,
                 Tax = invoice.Tax,
+                PaymentStatus = invoice.PaymentStatus
             };
 
-            var grnId = _context.Invoices
+            var grnId = _context.InvoiceTobePays
                 .Where(i => i.InvoiceId == invoiceId)
                 .Select(i => i.GrnId)
                 .FirstOrDefault();
@@ -1622,6 +1715,24 @@ namespace PWMSBackend.Controllers
 
             // Update the invoice details
             invoice.PaymentStatus = "pending";
+
+            //Update the status of the MasterProcurementPlan
+            var grnId = _context.InvoiceTobePays
+                .Where(i => i.InvoiceId == invoiceId)
+                .Select(i => i.GrnId)
+                .FirstOrDefault();
+            var PoId = _context.GRNs
+                .Where(grn => grn.GrnId == grnId)
+                .Select(grn => grn.PoId)
+                .FirstOrDefault();
+            var mppId = _context.PurchaseOrders
+                .Where(po => po.PoId == PoId)
+                .Select(po => po.MppId)
+                .FirstOrDefault();
+            var mpp = _context.MasterProcurementPlans
+                .FirstOrDefault(mpp => mpp.MppId == mppId);
+            mpp.Status = _context.Statuses.FirstOrDefault(s => s.StatusId == "STS00010");
+            mpp.StatusDate = DateTime.Now;
 
             // Save the changes to the database
             _context.SaveChanges();
