@@ -1,12 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SideNavBar from "../../components/SideNavigationBar/SideNavBar";
 import styles from "./NotificationPage.module.css";
 import SearchIcon from "@mui/icons-material/Search";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
-import { user, list1, list2, actions, actionButtons } from '../Usermanage';
-
+import { user, list1, list2, actions, actionButtons } from "../Usermanage";
 
 import {
   Button,
@@ -32,67 +31,115 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import "../../fonts.css";
 import { Box } from "@mui/system";
 import SearchNoFilter from "../../components/SearchNoFilter/SearchNoFilter";
-import {Link as Routerlink} from 'react-router-dom';
+import { Navigate, Link as RouterLink, useNavigate } from "react-router-dom";
+import { getNotification, updateNotification } from "../../notification";
+
+//
+
+// const empId = sessionStorage.getItem("user.employeeId");
+const empId = "EMP00005"; // need to get from session storage
+
+const extractMessagesAndPaths = (notifications, elements) => {
+  const result = [];
+
+  notifications.forEach((notification) => {
+    const matchingElement = elements.find(
+      (element) => element.displayName === notification.type
+    );
+
+    result.push({
+      notificationId: notification.notificationId || "",
+      message: notification.message || "",
+      path: matchingElement ? matchingElement.path || "" : "",
+    });
+  });
+
+  return result;
+};
 
 function NotificationPage() {
-  return (
-    <div style={{ display: "flex", overflow: "hidden" }}>
-      <div className={styles.NotificationPageContainer}>
-        <div className={styles.supperSection}>
-          <div className={styles.NotificationPageContainer__header}>
-            <Routerlink to={-1}>
-            <IconButton
-              sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
-            >
-              <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
-            </IconButton>
-            </Routerlink>
-            <h1 className={styles.NotificationPageHeader}> Notifications</h1>
-          </div>
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const response = await getNotification(empId);
 
-          <SearchNoFilter />
-        </div>
-        <div className={styles.downSection}>
-          <div
-            className={styles.ArrowBackIosIconNotificationPageContainer__body}
-          >
-            <Paper
-              className={styles.paper}
-              elevation={6}
-              sx={{ borderRadius: 10, width: "50vw", pl: 3, pr: 6, ml: 5.5 }}
-            >
-              <List>
-                {actionButtons.map((notification, index) => (
-                  <ListItem divider={index < actionButtons.length - 1}>
-                    <ListItemText
-                      className={styles.ListItemText}
-                      sx={{ fontFamily: "Inter", fontWeight: "500" }}
-                    >
-                      <Typography className={styles.ListItemText}>
-                        {notification.number} - {notification.name}
-                      </Typography>
-                    </ListItemText>
-                    <Button
-                      variant="contained"
-                      sx={{
-                        borderRadius: 5,
-                        backgroundColor: "#205295",
-                        color: "#ffffff",
-                        fontSize: "20px",
-                        py: 1,
-                        px: 4,
-                        "&:hover": { backgroundColor: "#2C74B3" },
-                        textTransform: "none",
-                      }}
-                    >
-                      View
-                    </Button>
-                  </ListItem>
-                ))}
-              </List>
-            </Paper>
-          </div>
-        </div>
+        console.log(response);
+        setNotifications(response);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetch();
+  }, []);
+
+  const [notifications, setNotifications] = useState([]);
+  const navigate = useNavigate();
+
+  const compareByTimestamp = (a, b) => {
+    return new Date(b.timeStamp) - new Date(a.timeStamp);
+  };
+
+  const unreadNotifications = notifications.filter(
+    (notification) => !notification.isRead
+  );
+  const sortedNotifications = unreadNotifications.sort(compareByTimestamp);
+  const displayNotifications = extractMessagesAndPaths(
+    sortedNotifications,
+    actionButtons
+  );
+  console.log(sortedNotifications);
+  console.log(displayNotifications);
+
+  const handleClick = (id, path) => {
+    updateNotification(id);
+    navigate(`/${path}`);
+  };
+
+  return (
+    <div className={styles.NotificationPageContainer}>
+      <div
+        className={styles.upperSection}
+        style={{ display: "flex", alignItems: "center" }}
+      >
+        <RouterLink to={-1} className={styles.backButton}>
+          <IconButton>
+            <ArrowBackIosIcon />
+          </IconButton>
+        </RouterLink>
+        <h1 className={styles.NotificationPageHeader}>Notifications</h1>
+      </div>
+
+      {/* <div className={styles.searchSection} style={{ marginBottom: "50px" }}>
+        <SearchNoFilter />
+      </div> */}
+
+      <div className={styles.notificationList}>
+        <Paper className={styles.paper} elevation={6}>
+          <List>
+            {displayNotifications.map((notification, index) => (
+              <ListItem
+                key={index}
+                divider={index < displayNotifications.length - 1}
+                className={styles.listItem}
+              >
+                <ListItemText>
+                  <Typography className={styles.ListItemText}>
+                    {notification.message}
+                  </Typography>
+                </ListItemText>
+                <Button
+                  variant="contained"
+                  className={styles.viewButton}
+                  onClick={() =>
+                    handleClick(notification.notificationId, notification.path)
+                  }
+                >
+                  View
+                </Button>
+              </ListItem>
+            ))}
+          </List>
+        </Paper>
       </div>
     </div>
   );
