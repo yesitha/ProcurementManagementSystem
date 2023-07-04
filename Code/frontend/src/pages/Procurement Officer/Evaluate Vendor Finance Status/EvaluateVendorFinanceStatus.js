@@ -252,7 +252,7 @@ function EvaluateVendorFinanceStatus() {
                             {row.vendorId}
                           </TableCell>
                           <TableCell align="center" >
-                          sdsdsds
+                          <EvidenceOfAthorization />
                           </TableCell>
                           <TableCell align="center">
                             {

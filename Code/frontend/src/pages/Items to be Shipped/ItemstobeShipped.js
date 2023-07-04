@@ -91,6 +91,10 @@ export default function ItemstobeShipped() {
   const [textFieldValue, setTextFieldValue] = useState("");
   const [textFieldValues, setTextFieldValues] = useState({});
 
+  const [isClicked, setIsClicked] = useState(false);
+
+ 
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -238,15 +242,18 @@ export default function ItemstobeShipped() {
         </Paper>
       </div>
 
-      <div classname={styles.Button}>
-        <div
+      
+        <div classname={styles.Button}
           onClick={() => {
-            CreatePurchaseOrderItemsToBeShippedRecords(
-              selectedpoId,
-              textFieldValues
-            );
+           
+            if (!isClicked) {
+              CreatePurchaseOrderItemsToBeShippedRecords(selectedpoId, textFieldValues);
+              setIsClicked(true);
+            }
+          }
             
-          }}
+            
+          }
         >
           <Successfullyinformed
             styles={{
@@ -262,7 +269,7 @@ export default function ItemstobeShipped() {
             title="Inform"
           />
         </div>
-      </div>
+      
     </div>
   );
 }
