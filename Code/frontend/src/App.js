@@ -3,24 +3,32 @@ import ManageAuction from "./pages/BidOpeningCommitee/ManageAuction/ManageAuctio
 import Dashboard from "./pages/Dashboard/Dashboard";
 import NotificationPage from "./pages/NotificationPage/NotificationPage";
 import SignUp from "./pages/SignUp/SignUp";
-import FinalizedMasterProcurementPlan from "./pages/ProcurementCommitee/FinalizedMasterProcurementPlan/FinalizedMasterProcurementPlan";
+import FinalizedMasterProcurementPlan
+    from "./pages/ProcurementCommitee/FinalizedMasterProcurementPlan/FinalizedMasterProcurementPlan";
 import MasterProcurementPlanStatus from "./pages/MasterProcurementPlanStatus/MasterProcurementPlanStatus";
 import ViewMasterProcurementPlan from "./pages/ViewMasterProcurementPlan/ViewMasterProcurementPlan";
 import AddItemtoSubProcurementPlan from "./pages/AddItemtoSubProcurementPlan/AddItemtoSubProcurementPlan";
 import AddNewItemtoSubProcurementPlan from "./pages/AddNewItemtoSubProcurementPlan/AddNewItemToSubProcurementPlan";
 import Login from "./pages/Login/Login";
 import CreateModifyTECCommittee from "./pages/CreateModifyTECCommittee/CreateModifyTECCommittee";
-import ViewFinalizedMasterProcurementPlans from "./pages/Internal Auditor/ViewFinalizedMasterProcurementPlans/ViewFinalizedMasterProcurementPlans";
-import AuditFinalizedMasterProcurementPlan from "./pages/Internal Auditor/AuditFinalizedMasterProcurementPlan/AuditFinalizedMasterProcurementPlan";
+import ViewFinalizedMasterProcurementPlans
+    from "./pages/Internal Auditor/ViewFinalizedMasterProcurementPlans/ViewFinalizedMasterProcurementPlans";
+import AuditFinalizedMasterProcurementPlan
+    from "./pages/Internal Auditor/AuditFinalizedMasterProcurementPlan/AuditFinalizedMasterProcurementPlan";
 import ItemstobeShipped from "./pages/Items to be Shipped/ItemstobeShipped";
 import Stock from "./pages/Stock/Stock";
-import DGViewFinalizedMasterProcurementPlans from "./pages/Director General/DGViewFinalizedMasterProcurementPlans/DGViewFinalizedMasterProcurementPlans";
-import EvaluateFinalizedMasterProcurementPlan from "./pages/Director General/EvaluateFinalizedMasterProcurementPlan/EvaluateFinalizedMasterProcurementPlan";
-import ApprovalForMasterProcurementPlan from "./pages/TEC Committee/ApprovalForMasterProcurementPlan/ApprovalForMasterProcurementPlan";
-import CreateModifyBidOpeningCommittee from "./pages/Procurement Officer/CreateModifyBidOpeningCommittee/CreateModifyBidOpeningCommittee";
+import DGViewFinalizedMasterProcurementPlans
+    from "./pages/Director General/DGViewFinalizedMasterProcurementPlans/DGViewFinalizedMasterProcurementPlans";
+import EvaluateFinalizedMasterProcurementPlan
+    from "./pages/Director General/EvaluateFinalizedMasterProcurementPlan/EvaluateFinalizedMasterProcurementPlan";
+import ApprovalForMasterProcurementPlan
+    from "./pages/TEC Committee/ApprovalForMasterProcurementPlan/ApprovalForMasterProcurementPlan";
+import CreateModifyBidOpeningCommittee
+    from "./pages/Procurement Officer/CreateModifyBidOpeningCommittee/CreateModifyBidOpeningCommittee";
 import MasterProcurementPlan from "./pages/ProcurementCommitee/MasterProcurementPlan/MasterProcurementPlan";
 import BidTender from "./pages/Vendor/BidTender/BidTender";
-import RequesttoInitiateSubProcurementPlan from "./pages/RequesttoInitiateSubProcurementPlan/RequesttoInitiateSubProcurementPlan";
+import RequesttoInitiateSubProcurementPlan
+    from "./pages/RequesttoInitiateSubProcurementPlan/RequesttoInitiateSubProcurementPlan";
 import ViewSubProcurementPlan from "./pages/ViewSubProcurementPlan/ViewSubProcurementPlan";
 import ApprovedItemList from "./pages/ProcurementCommitee/ApprovedItemList/ApprovedItemList";
 import PublishPaperAd from "./pages/CoparateCommunicationDivision/PublishPaperAd/PublishPaperAd";
@@ -42,15 +50,17 @@ import UploadPaymentVoucher from "./pages/FinanceDivisionAccountant/UploadPaymen
 import AddItemstoGRN from "./pages/FinanceDivisionHOD/AddItemstoGRN/AddItemstoGRN";
 import InvoicestobePaid from "./pages/FinanceDivisionHOD/InvoicestobePaid/InvoicestobePaidFin";
 import ReviseVendorSelection from "./pages/TEC Committee/Revise Vendor Selection/ReviseVendorSelection";
-import { Route, Routes } from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import TenderDetails from "./pages/Vendor/Tender Details/TenderDetails";
 import BidHistory from "./pages/Vendor/BidHistory/BidHistory";
 import SideNavBar from "./components/SideNavigationBar/SideNavBar";
-import { user, list1, list2 } from "./pages/Usermanage";
+import {user, list1, list2} from "./pages/Usermanage";
+import Invoicesvendorside from "./pages/Vendor/Invoices(vendorside)/Invoices(vendorside)";
 import InvoicesneedtobePaid from "./pages/FinanceDivisionAccountant/InvoicesneedtobePaid/InvoicesneedtobePaid";
-import ViewMasterProcurementPlanProc from "./pages/Procurement Officer/ViewMasterProcurementPlanProc/ViewMasterProcurementPlanProc";
+import ViewMasterProcurementPlanProc
+    from "./pages/Procurement Officer/ViewMasterProcurementPlanProc/ViewMasterProcurementPlanProc";
 import PurchaseOrder from "./pages/Procurement Officer/PurchaseOrder/PurchaseOrder";
-import { useSelector } from "react-redux";
+import {useSelector} from "react-redux";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import AddItemstoPO from "./pages/Procurement Officer/AddItemstoPO/AddItemstoPO";
@@ -65,7 +75,8 @@ import EvaluateVendorFinanceStatus from "./pages/Procurement Officer/Evaluate Ve
 import MasterProcurementPlanTEC from "./pages/TEC Committee/MasterProcurementPlanTEC/MasterProcurementPlanTEC";
 import ViewItemTEC from "./pages/TEC Committee/ViewItemTEC/ViewItemTEC";
 import ViewItemPC from "./pages/ProcurementCommitee/ViewItemPC/ViewItemPC";
-import ApprovalForMasterProcurementPlanPC from "./pages/ProcurementCommitee/ApprovalForMasterProcurementPlanPC/ApprovalForMasterProcurementPlanPC";
+import ApprovalForMasterProcurementPlanPC
+    from "./pages/ProcurementCommitee/ApprovalForMasterProcurementPlanPC/ApprovalForMasterProcurementPlanPC";
 import POVerificationSubmit from "./pages/Vendor/POVerification Submit/POVerificationSubmit";
 import IssueItem from "./pages/InventoryManager/IssueItem/IssueItem";
 import AssetRegistry from "./pages/Assets Registry/AssetRegistry";
@@ -73,36 +84,32 @@ import LetterofAcceptance from "./pages/Vendor/Letter of Acceptance/LetterofAcce
 import PDViewSubProcurementPlan from "./pages/Dicvision HOD/PDViewSubProcurementPlan/PDViewSubProcurementPlan";
 import Signup from "./pages/SignUp/SignUp";
 import NotFound404 from "./pages/NotFoundPage/NotFound404";
-import { Home } from "./pages/Home/Home";
+import {Home} from "./pages/Home/Home";
 import NoAccess403 from "./pages/No Access Page/NoAccess";
-
-import { Navigate } from "react-router-dom/dist";
+import {Navigate} from "react-router-dom/dist";
 
 const PrivateRoute = ({ authorized, allowedUserTypes, ...props }) => {
-  // const userType = sessionStorage.getItem('userType');
-  const userType = user.userType;
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    console.log(user);
 
-
- 
   if (!authorized) {
     return <Navigate to="/sign-in" />;
-  }else if( !allowedUserTypes.includes(userType))
+  }else if( !allowedUserTypes.includes(user.userType))
   {
     return <Navigate to="/no-access" />;
   }
 
-  return props.component;
+    return props.component;
 };
-
 function App() {
 // const isAuthenticated = !!sessionStorage.getItem("user");
 const isAuthenticated = true;
-  
-  
 
   return (
     <div className="app-container">
-      <SideNavBar list1={list1} list2={list2} user={user} />
+      {user ? (
+                <SideNavBar list1={list1} list2={list2} user={user}/>
+            ) : null}
       <div className="app-content">
         <Routes>
           <Route path="/" element={<Home />} />

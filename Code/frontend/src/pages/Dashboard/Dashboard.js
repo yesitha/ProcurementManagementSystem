@@ -22,10 +22,9 @@ import {user, list1, list2, actions, actionButtons} from '../Usermanage';
 
 
 function Dashboard() {
-    const userType = sessionStorage.getItem('userType');
-    console.log(userType);
-    const currentUser = user.userType;
 
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    console.log(user);
     const date = dayjs();
     const [quote, setQuote] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -76,11 +75,7 @@ function Dashboard() {
                                 sx={{pr: {xs: "40px"}}}
                             >
                                 <h1 className={styles.welcomeHeader}>
-                                    Welcome, {user.firstname}!
-                                    <span className={styles.welcomeDesignation}>
-                    {" "}
-                                        [{user.designation}]
-                  </span>
+                                    Welcome, {user.salutation}{user.name}!
                                 </h1>
                                 {loading && <ReactLoading type="bubbles" color="black"/>}
                                 {error && (

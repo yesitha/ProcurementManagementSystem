@@ -6,13 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="bef3c3fc-1eae-49f2-978e-a16cd54f3c7d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/backend/PWMSBackend/.idea/.idea.PWMSBackend/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Code/backend/PWMSBackend/.idea/.idea.PWMSBackend/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Code/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/frontend/src/components/SideNavigationBar/SideNavBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/src/components/SideNavigationBar/SideNavBar.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Code/frontend/src/pages/Dashboard/Dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/src/pages/Dashboard/Dashboard.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Code/frontend/src/pages/Login/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/src/pages/Login/Login.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Code/frontend/src/pages/Usermanage.js" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/src/pages/Usermanage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/frontend/src/services/authentication.js" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/src/services/authentication.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/frontend/src/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/src/store.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/frontend/src/userSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/src/userSlice.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +78,8 @@
       <workItem from="1687664521721" duration="629000" />
       <workItem from="1687666728392" duration="4538000" />
       <workItem from="1687673543751" duration="36597000" />
-      <workItem from="1687779686855" duration="3581000" />
+      <workItem from="1687779686855" duration="14333000" />
+      <workItem from="1688109000540" duration="10683000" />
     </task>
     <servers />
   </component>
