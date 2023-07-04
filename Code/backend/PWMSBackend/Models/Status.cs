@@ -6,6 +6,8 @@
         public string StatusName { get; set; }
 
         //Many to many relationships
-        public ICollection<MasterProcurementPlanStatus> MasterProcurementPlanStatuses { get; set; }
+        //public ICollection<MasterProcurementPlanStatus> MasterProcurementPlanStatuses { get; set; }
+
+        public ICollection<MasterProcurementPlan> MasterProcurementPlans { get; set;}
     }
 }
