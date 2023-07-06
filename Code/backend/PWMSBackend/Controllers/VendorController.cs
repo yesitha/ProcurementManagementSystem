@@ -16,12 +16,14 @@ namespace PWMSBackend.Controllers
         private readonly DataContext _context;
         private readonly IMapper _mapper;
         private InvoiceIdGenerator _invoiceIdGenerator;
+        private VendorIdGenerator _vendorIdGenerator;
 
-        public VendorController(DataContext context, IMapper mapper, InvoiceIdGenerator invoiceIdGenerator)
+        public VendorController(DataContext context, IMapper mapper, InvoiceIdGenerator invoiceIdGenerator, VendorIdGenerator vendorIdGenerator)
         {
             _context = context;
             _mapper = mapper;
             _invoiceIdGenerator = invoiceIdGenerator;
+            _vendorIdGenerator = vendorIdGenerator;
         }
 
         [HttpGet("GetApprovedItemsDetails/{vendorId}")]
@@ -1114,52 +1116,54 @@ namespace PWMSBackend.Controllers
             IFormFile? otherDocumentsFile
         )
         {
-            string GenerateNewVendorId()
-            {
-                string newVendorId = null;
-                bool isUnique = false;
+            //string GenerateNewVendorId()
+            //{
+            //    string newVendorId = null;
+            //    bool isUnique = false;
 
-                while (!isUnique)
-                {
-                    // Generate a new vendor ID
-                    newVendorId = GenerateNextVendorId(newVendorId);
+            //    while (!isUnique)
+            //    {
+            //        // Generate a new vendor ID
+            //        newVendorId = GenerateNextVendorId(newVendorId);
 
-                    // Check if the vendor ID already exists in the database
-                    if (!IsVendorIdExists(newVendorId))
-                    {
-                        isUnique = true;
-                    }
-                }
+            //        // Check if the vendor ID already exists in the database
+            //        if (!IsVendorIdExists(newVendorId))
+            //        {
+            //            isUnique = true;
+            //        }
+            //    }
 
-                return newVendorId;
-            }
+            //    return newVendorId;
+            //}
 
-            string GenerateNextVendorId(string previousVendorId)
-            {
-                if (string.IsNullOrEmpty(previousVendorId))
-                {
-                    return "V001";
-                }
+            //string GenerateNextVendorId(string previousVendorId)
+            //{
+            //    if (string.IsNullOrEmpty(previousVendorId))
+            //    {
+            //        return "V001";
+            //    }
 
-                string prefix = "V";
-                int previousNumber = int.Parse(previousVendorId.Substring(1));
-                int nextNumber = previousNumber + 1;
-                string nextVendorId = prefix + nextNumber.ToString("D3");
+            //    string prefix = "V";
+            //    int previousNumber = int.Parse(previousVendorId.Substring(1));
+            //    int nextNumber = previousNumber + 1;
+            //    string nextVendorId = prefix + nextNumber.ToString("D3");
 
-                return nextVendorId;
-            }
+            //    return nextVendorId;
+            //}
 
-            bool IsVendorIdExists(string vendorId)
-            {
-                bool isExists = _context.Vendors.Any(v => v.VendorId == vendorId);
+            //bool IsVendorIdExists(string vendorId)
+            //{
+            //    bool isExists = _context.Vendors.Any(v => v.VendorId == vendorId);
 
-                return isExists;
-            }
+            //    return isExists;
+            //}
+
+            string vendorId = _vendorIdGenerator.GenerateVendorId();
 
             Vendor vendor = new Vendor
 
             {
-                VendorId = GenerateNewVendorId(),
+                VendorId = vendorId,
                 Address1 = address1,
                 Address2 = address2,
                 Address3 = address3,
