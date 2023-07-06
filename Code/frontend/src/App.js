@@ -55,7 +55,7 @@ import TenderDetails from "./pages/Vendor/Tender Details/TenderDetails";
 import BidHistory from "./pages/Vendor/BidHistory/BidHistory";
 import SideNavBar from "./components/SideNavigationBar/SideNavBar";
 import {user, list1, list2} from "./pages/Usermanage";
-import Invoicesvendorside from "./pages/Vendor/Invoices(vendorside)/Invoices(vendorside)";
+// import Invoicesvendorside from "./pages/Vendor/Invoices(vendorside)/Invoices(vendorside)";
 import InvoicesneedtobePaid from "./pages/FinanceDivisionAccountant/InvoicesneedtobePaid/InvoicesneedtobePaid";
 import ViewMasterProcurementPlanProc
     from "./pages/Procurement Officer/ViewMasterProcurementPlanProc/ViewMasterProcurementPlanProc";

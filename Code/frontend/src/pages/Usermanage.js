@@ -28,9 +28,9 @@ const userTypes = {
         displayName: "View Master Procurement Plan",
         path: "view-masterprocurement-plan",
       },
-    ];
+    ],
 
-    actionButtons = [
+    actionButtons : [
       {
         displayName: "New Master Procurement plan for Evaluate",
         path: "new-master-procurement-plan-for-evaluate",
