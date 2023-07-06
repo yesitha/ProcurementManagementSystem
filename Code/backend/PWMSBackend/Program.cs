@@ -36,6 +36,7 @@ builder.Services.AddScoped<GRNIdGenerator>();
 builder.Services.AddScoped<NotificationIdGenerator>();
 builder.Services.AddScoped<InvoiceIdGenerator>();
 builder.Services.AddScoped<PaymentVoucherIdGenerator>();
+builder.Services.AddScoped<VendorIdGenerator>();
 
 var app = builder.Build();
 
