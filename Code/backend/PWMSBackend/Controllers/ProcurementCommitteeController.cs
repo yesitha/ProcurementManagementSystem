@@ -449,6 +449,7 @@ namespace PWMSBackend.Controllers
                     division = item.SubProcurementPlan.HOD.Division.DivisionName,
                     expectedDeliverDate = item.ExpectedDeliveryDate,
                     selectedVendor = item.SelectedVendor,
+                    selectedVendorId = _context.Vendors.Where(v => v.FirstName + " " + v.LastName == item.SelectedVendor).Select(v => v.VendorId).FirstOrDefault(),
                     BidValue = _context.VendorPlaceBidItems
                                     .Where(vpb => vpb.Vendor.VendorId == _context.Vendors
                                                                             .Where(v => v.FirstName + " " + v.LastName == item.SelectedVendor)
@@ -457,26 +458,26 @@ namespace PWMSBackend.Controllers
                                                                       && vpb.ItemId == item.ItemId)
                                     .Select(vpb => vpb.BidValue)
                                     .FirstOrDefault(),
-                    SelectedVendorInfo = new
-                    {
-                        BusinessRegistrationDoc = _context.Vendors
-                                                    .Where(v => v.FirstName + " " + v.LastName == item.SelectedVendor)
-                                                    .Select(v => v.BusinessRegistrationDoc)
-                                                    .FirstOrDefault(),
-                        TaxIdentificationDoc = _context.Vendors
-                                                    .Where(v => v.FirstName + " " + v.LastName == item.SelectedVendor)
-                                                    .Select(v => v.TaxIdentificationDoc)
-                                                    .FirstOrDefault(),
-                        InsuranceCertificate = _context.Vendors
-                                                    .Where(v => v.FirstName + " " + v.LastName == item.SelectedVendor)
-                                                    .Select(v => v.InsuaranceCertificate)
-                                                    .FirstOrDefault(),
-                        OtherDocs = _context.Vendors
-                                                    .Where(v => v.FirstName + " " + v.LastName == item.SelectedVendor)
-                                                    .Select(v => v.OtherDocs)
-                                                    .FirstOrDefault(),
+                    //SelectedVendorInfo = new
+                    //{
+                    //    BusinessRegistrationDoc = _context.Vendors
+                    //                                .Where(v => v.FirstName + " " + v.LastName == item.SelectedVendor)
+                    //                                .Select(v => v.BusinessRegistrationDoc)
+                    //                                .FirstOrDefault(),
+                    //    TaxIdentificationDoc = _context.Vendors
+                    //                                .Where(v => v.FirstName + " " + v.LastName == item.SelectedVendor)
+                    //                                .Select(v => v.TaxIdentificationDoc)
+                    //                                .FirstOrDefault(),
+                    //    InsuranceCertificate = _context.Vendors
+                    //                                .Where(v => v.FirstName + " " + v.LastName == item.SelectedVendor)
+                    //                                .Select(v => v.InsuaranceCertificate)
+                    //                                .FirstOrDefault(),
+                    //    OtherDocs = _context.Vendors
+                    //                                .Where(v => v.FirstName + " " + v.LastName == item.SelectedVendor)
+                    //                                .Select(v => v.OtherDocs)
+                    //                                .FirstOrDefault(),
                         
-                    }
+                    //}
                 })
                 .ToList();
 

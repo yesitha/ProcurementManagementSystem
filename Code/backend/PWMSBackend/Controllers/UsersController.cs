@@ -118,8 +118,8 @@ namespace PWMSBackend.Controllers
                             committeeType = "TecCommittee";
                         else if (masterProcurementPlan.BidOpeningCommitteeId == committee.CommitteeId)
                             committeeType = "BidOpeningCommittee";
-                        else
-                            committeeType = "ProcurementCommittee";
+                        //else
+                        //    committeeType = "ProcurementCommittee";
                     }
                 }
 
