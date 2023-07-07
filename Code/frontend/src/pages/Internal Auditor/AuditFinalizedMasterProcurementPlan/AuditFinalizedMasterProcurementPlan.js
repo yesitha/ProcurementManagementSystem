@@ -66,7 +66,7 @@ function DisplayDate({ date }) {
     <Stack component="form" noValidate spacing={3} alignItems="center">
       <TextField
         id="date"
-        label="Expected Delivery Date"
+        label="Minimum Expected Delivery Date"
         type="date"
         align="center"
         value={formattedDate}
