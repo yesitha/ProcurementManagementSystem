@@ -34,42 +34,24 @@ const columns = [
   { id: "Action", label: "Action", Width: 300, align: "center" },
 ];
 
-function createData(MPPID, GTotal, estGrandTotal, CDate, Action) {
-  return { MPPID, GTotal, estGrandTotal, CDate, Action };
+function DisplayDate({ date }) {
+  const formattedDate = date?.substring(0, 10); // Extract only the date portion
+  return (
+    <Stack component="form" noValidate spacing={3} alignItems="center">
+      <TextField
+        id="date"
+        label="Creation Date"
+        type="date"
+        align="center"
+        value={formattedDate}
+        sx={{ width: 200, height: 50 }}
+        InputLabelProps={{
+          shrink: true,
+        }}
+      />
+    </Stack>
+  );
 }
-
-const rows = [
-  createData(
-    "MPPID1000",
-    "Rs.650000",
-    "Rs.650000",
-    "2021/01/01",
-    <Routerlink to={"/audit-finalized-master-procurementplan"}>
-      <Button
-        variant="contained"
-        fontFamily={"Inter"}
-        sx={{ bgcolor: "#205295", borderRadius: 5, height: 50, width: 100 }}
-      >
-        View
-      </Button>
-    </Routerlink>
-  ),
-  createData(
-    "MPPID1001",
-    "Rs.400000",
-    "Rs.400000",
-    "2021/06/02",
-    <Routerlink to={"/audit-finalized-master-procurementplan"}>
-      <Button
-        variant="contained"
-        fontFamily={"Inter"}
-        sx={{ bgcolor: "#205295", borderRadius: 5, height: 50, width: 100 }}
-      >
-        View
-      </Button>
-    </Routerlink>
-  ),
-];
 
 function ViewFinalizedMasterProcurementPlans() {
   const [data, setData] = useState(null);
@@ -87,8 +69,6 @@ function ViewFinalizedMasterProcurementPlans() {
     };
     fetchData();
   }, []);
-
-  const list = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -156,6 +136,10 @@ function ViewFinalizedMasterProcurementPlans() {
                           role="checkbox"
                           tabIndex={-1}
                           key={index}
+                          style={{
+                            backgroundColor:
+                              index % 2 === 0 ? "#FFFFFF" : "#F2F2F2",
+                          }}
                         >
                           <TableCell align="center">{row.mppId}</TableCell>
                           <TableCell align="center">
@@ -165,7 +149,7 @@ function ViewFinalizedMasterProcurementPlans() {
                             {MoneyFormat(row.estimatedGrandTotal)}
                           </TableCell>
                           <TableCell align="center">
-                            {DateFormat(row.creationDate)}
+                            <DisplayDate date={row.creationDate}/>
                           </TableCell>
                           <TableCell align="center">
                             {" "}
@@ -198,7 +182,7 @@ function ViewFinalizedMasterProcurementPlans() {
             <TablePagination
               rowsPerPageOptions={[10, 25, 50, 100]}
               component="div"
-              count={rows.length}
+              count={data ? data.length : 0}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}

@@ -64,7 +64,7 @@ const columns = [
 function DisplayDate({ date }) {
   const formattedDate = date?.substring(0, 10); // Extract only the date portion
   return (
-    <Stack component="form" noValidate spacing={3}>
+    <Stack component="form" noValidate spacing={3} alignItems="center">
       <TextField
         id="date"
         label="Expected Delivery Date"
@@ -245,7 +245,7 @@ function FinalizedMasterProcurementPlan() {
             <TablePagination
               rowsPerPageOptions={[10, 25, 50, 100]}
               component="div"
-              count={10}
+              count={data ? data.length : 0}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
