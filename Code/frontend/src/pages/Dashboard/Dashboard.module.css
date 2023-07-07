@@ -22,7 +22,7 @@
   margin-left: 3%;
   padding-left: 3px;
   padding-right: 3px;
-  flex-grow: 1;
+  /* flex-grow: 1; */
 }
 .DashboardHeader {
   font-family: "Inter", sans-serif;
