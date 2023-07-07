@@ -52,9 +52,22 @@ export default function BasicModal({ vendorId,vendorName}) {
 
   return (
     <div>
-      <IconButton onClick={handleOpen}>
+      {/* <IconButton onClick={handleOpen}>
         <VisibilityIcon sx={{ color: "#205295", fontSize: 35 }} />
+      </IconButton> */}
+      <IconButton
+        onClick={handleOpen}
+        disabled={!vendorId || !vendorName}
+      >
+        <VisibilityIcon 
+          sx={{
+            color: !vendorId || !vendorName ? "#888888" : "#205295",
+            fontSize: 35,
+            pointerEvents: !vendorId || !vendorName ? "none" : "auto",
+          }}
+        />
       </IconButton>
+
       <Modal
         open={open}
         // onClose={handleClose}

@@ -4,6 +4,7 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import SelectDropDown from "../../../components/SelectDropDown/SelectDropDown";
 import SearchNoFilter from "../../../components/Search/Search";
 import { IconButton, Paper, Stack, TextField } from "@mui/material";
+import { Tooltip } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -21,15 +22,17 @@ import {
   GetMasterProcurementPlansIDList,
 } from "../../../services/ProcurementCommittee/ProcurementCommitteeServices";
 import { DateFormat, MoneyFormat } from "../../../services/dataFormats";
+import { setDate } from "date-fns";
 
 //===============Applicable for table data===================================
 
 const columns = [
   { id: "ItemID", label: "Item ID", Width: 300, align: "center" },
   { id: "ItemName", label: "Item Name", Width: 300, align: "center" },
-  { id: "Qty", label: "Quantity", Width: 300, align: "center" },
   { id: "Spe", label: "Specification", Width: 300, align: "center" },
-  
+  { id: "Qty", label: "Quantity", Width: 300, align: "center" },
+  { id: "SppId", label: "SppId", Width: 300, align: "center" },
+  { id: "Division", label: "Division", Width: 300, align: "center" },
   {
     id: "EDdate",
     label: "Expected Delivery date",
@@ -41,15 +44,33 @@ const columns = [
   { id: "tenderValue", label: "Tender Value", Width: 300, align: "center" },
 ];
 
-function Setdate() {
+// function Setdate() {
+//   return (
+//     <Stack component="form" noValidate spacing={3}>
+//       <TextField
+//         id="date"
+//         label="Set Date"
+//         type="date"
+//         align="center"
+//         defaultValue={new Date().toISOString().substr(0, 10)}
+//         sx={{ width: 200, height: 50 }}
+//         InputLabelProps={{
+//           shrink: true,
+//         }}
+//       />
+//     </Stack>
+//   );
+// }
+function DisplayDate({ date }) {
+  const formattedDate = date?.substring(0, 10); // Extract only the date portion
   return (
     <Stack component="form" noValidate spacing={3}>
       <TextField
         id="date"
-        label="Set Date"
+        label="Expected Delivery Date"
         type="date"
         align="center"
-        defaultValue={new Date().toISOString().substr(0, 10)}
+        value={formattedDate}
         sx={{ width: 200, height: 50 }}
         InputLabelProps={{
           shrink: true,
@@ -156,7 +177,7 @@ function FinalizedMasterProcurementPlan() {
                       <TableCell
                         key={column.id}
                         align={column.align}
-                        style={{ maxWidth: column.Width }}
+                        style={{ maxWidth: column.Width}}
                       >
                         {column.label}
                       </TableCell>
@@ -176,23 +197,42 @@ function FinalizedMasterProcurementPlan() {
                           role="checkbox"
                           tabIndex={-1}
                           key={index}
+                          style={{
+                            backgroundColor:
+                              index % 2 === 0 ? "#FFFFFF" : "#F2F2F2",
+                          }}
                         >
                           <TableCell align="center">{row.itemId}</TableCell>
                           <TableCell align="center">{row.itemName}</TableCell>
+                          <TableCell align="center">
+                            <Tooltip title={row.specification}>
+                              <span
+                                style={{
+                                  display: "inline-block",
+                                  maxWidth: "150px",
+                                  overflow: "hidden",
+                                  textOverflow: "ellipsis",
+                                  whiteSpace: "nowrap",
+                                }}
+                              >
+                                {row.specification}
+                              </span>
+                            </Tooltip>
+                          </TableCell>
                           <TableCell align="center">{row.quantity}</TableCell>
+                          <TableCell align="center">{row.sppId}</TableCell>
+                          <TableCell align="center">{row.division}</TableCell>
                           <TableCell align="center">
-                            {row.specification}
-                          </TableCell>
-                          
-                          <TableCell align="center">
-                            {DateFormat(row.expectedDeliverDate)}
+                            <DisplayDate date={row.expectedDeliverDate} />
                           </TableCell>
                           <TableCell align="center">
-                            {row.selectedVendor}
+                            {row.selectedVendor ? row.selectedVendor : "----"}
                           </TableCell>
                           <TableCell align="center">
-                          <VendorDetails vendorId={row.selectedVendorInfo.vendorId} vendorName={row.selectedVendor
-} />
+                            <VendorDetails
+                              vendorId={row.selectedVendorId}
+                              vendorName={row.selectedVendor}
+                            />
                           </TableCell>
                           <TableCell align="center">
                             {MoneyFormat(row.bidValue)}
