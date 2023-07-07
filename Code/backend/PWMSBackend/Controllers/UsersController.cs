@@ -108,8 +108,8 @@ namespace PWMSBackend.Controllers
                     var masterProcurementPlan = _context.MasterProcurementPlans
                         .Where(c =>
                                     c.TecCommitteeId == committee.CommitteeId ||
-                                    c.BidOpeningCommitteeId == committee.CommitteeId ||
-                                    c.ProcurementCommittee.CommitteeId == committee.CommitteeId)
+                                    c.BidOpeningCommitteeId == committee.CommitteeId)
+                                    //c.ProcurementCommittee.CommitteeId == committee.CommitteeId)
                         .FirstOrDefault();
 
                     if (masterProcurementPlan != null)
@@ -257,21 +257,34 @@ namespace PWMSBackend.Controllers
                             Designation = "Corporate Committee Member",
                             Department = "PUCSL"
                         });
-                    default:
-                        if (committeeType == "ProcurementEmployee")
+                    case "EMP00013":
+                    case "EMP00014":
+                    case "EMP00015":
+                        return Ok(new
                         {
-                            return Ok(new
-                            {
-                                ID = user.EmployeeId,
-                                Name = user.EmployeeName,
-                                Email = user.EmailAddress,
-                                Salutation = user.Salutation,
-                                UserType = "ProcurementEmployee",
-                                Designation = "Procurement Employee",
-                                Department = "PUCSL"
-                            });
-                        }
-                        else if (committeeType == "TecCommittee")
+                            ID = user.EmployeeId,
+                            Name = user.EmployeeName,
+                            Email = user.EmailAddress,
+                            Salutation = user.Salutation,
+                            UserType = "ProcurementCommittee",
+                            Designation = "Procurement Committee Member",
+                            Department = "PUCSL"
+                        });
+                    default:
+                        //if (committeeType == "ProcurementEmployee")
+                        //{
+                        //    return Ok(new
+                        //    {
+                        //        ID = user.EmployeeId,
+                        //        Name = user.EmployeeName,
+                        //        Email = user.EmailAddress,
+                        //        Salutation = user.Salutation,
+                        //        UserType = "ProcurementEmployee",
+                        //        Designation = "Procurement Employee",
+                        //        Department = "PUCSL"
+                        //    });
+                        //}
+                        if (committeeType == "TecCommittee")
                         {
                             return Ok(new
                             {
@@ -299,17 +312,21 @@ namespace PWMSBackend.Controllers
                         }
                         else
                         {
-                            return Ok(new
-                            {
-                                ID = user.EmployeeId,
-                                Name = user.EmployeeName,
-                                Email = user.EmailAddress,
-                                Salutation = user.Salutation,
-                                UserType = "ProcurementCommittee",
-                                Designation = "Procurement Committee Member",
-                                Department = "PUCSL"
-                            });
+                            return BadRequest("User Not Found");
                         }
+                        //else
+                        //{
+                        //    return Ok(new
+                        //    {
+                        //        ID = user.EmployeeId,
+                        //        Name = user.EmployeeName,
+                        //        Email = user.EmailAddress,
+                        //        Salutation = user.Salutation,
+                        //        UserType = "ProcurementCommittee",
+                        //        Designation = "Procurement Committee Member",
+                        //        Department = "PUCSL"
+                        //    });
+                        //}
                 }
 
             }
