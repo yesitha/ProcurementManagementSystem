@@ -1245,7 +1245,7 @@ namespace PWMSBackend.Controllers
 
             if (vendor == null)
             {
-                return NotFound("po not found.");
+                return NotFound("Vendor not found.");
             }
             else if (vendor.BusinessRegistrationDoc == null && vendor.InsuaranceCertificate == null && vendor.TaxIdentificationDoc == null)
             {

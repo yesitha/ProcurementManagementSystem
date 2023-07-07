@@ -4,7 +4,14 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import SelectDropDown from "../../../components/SelectDropDown/SelectDropDown";
 import SearchNoFilter from "../../../components/Search/Search";
-import { Button, IconButton, Paper, Stack, TextField } from "@mui/material";
+import {
+  Button,
+  IconButton,
+  Paper,
+  Stack,
+  TextField,
+  Tooltip,
+} from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -33,31 +40,19 @@ import CloseIcon from "@mui/icons-material/Close";
 const columns = [
   { id: "ItemID", label: "Item ID", Width: 300, align: "center" },
   { id: "ItemName", label: "Item Name", Width: 300, align: "center" },
-  { id: "Qty", label: "Quantity", Width: 300, align: "center" },
   { id: "Spe", label: "Specification", Width: 300, align: "center" },
-
-  { id: "Vendor", label: "Vendor", Width: 300, align: "center" },
+  { id: "Qty", label: "Quantity", Width: 300, align: "center" },
   {
     id: "EDdate",
     label: "Expected Delivery date",
     Width: 300,
     align: "center",
   },
+  { id: "Vendor", label: "Selected Vendor", Width: 300, align: "center" },
+  { id: "VendorDetails", label: "Vendor Details", Width: 300, align: "center" },
+  { id: "tenderValue", label: "Tender Value", Width: 300, align: "center" },
   { id: "Action", label: "Action", Width: 300, align: "center" },
 ];
-
-function createData(
-  ItemID,
-  ItemName,
-  Qty,
-  Spe,
-
-  Vendor,
-  EDdate,
-  Action
-) {
-  return { ItemID, ItemName, Qty, Spe, Vendor, EDdate, Action };
-}
 
 //   const ApproveRejctButton = (
 //     <>
@@ -65,43 +60,26 @@ function createData(
 //       <IconButton><img src={Reject}/></IconButton>
 //     </>
 //   )
-
-const rows = [
-  createData(
-    "I0014",
-    "A4 Papers",
-    "500",
-    "loerm",
-    "IT Department",
-    <VendorDetails />,
-    "2023/01/01",
-    <div className={styles.afmpp_ActionButonsContainer}>
-      <ApprovePopup />
-      {/* <RejectPopup /> */}
-    </div>
-  ),
-  createData(
-    "I0028",
-    "Ruler",
-    "10",
-    "loerm",
-    "IT Department",
-    <VendorDetails />,
-    "2023/01/01",
-    <div className={styles.afmpp_ActionButonsContainer}>
-      <ApprovePopup />
-      {/* <RejectPopup /> */}
-    </div>
-  ),
-];
+function DisplayDate({ date }) {
+  const formattedDate = date?.substring(0, 10); // Extract only the date portion
+  return (
+    <Stack component="form" noValidate spacing={3} alignItems="center">
+      <TextField
+        id="date"
+        label="Expected Delivery Date"
+        type="date"
+        align="center"
+        value={formattedDate}
+        sx={{ width: 200, height: 50 }}
+        InputLabelProps={{
+          shrink: true,
+        }}
+      />
+    </Stack>
+  );
+}
 
 function AuditFinalizedMasterProcurementPlan() {
-  //=======values for 'SelectDropDown.js' as an array=======
-
-  const list = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
-
-  //========================================================
-
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const handleChangePage = (event, newPage) => {
@@ -210,19 +188,43 @@ function AuditFinalizedMasterProcurementPlan() {
                           role="checkbox"
                           tabIndex={-1}
                           key={index}
+                          style={{
+                            backgroundColor:
+                              index % 2 === 0 ? "#FFFFFF" : "#F2F2F2",
+                          }}
                         >
                           <TableCell align="center">{row.itemId}</TableCell>
                           <TableCell align="center">{row.itemName}</TableCell>
+                          <TableCell align="center">
+                            <Tooltip title={row.specification}>
+                              <span
+                                style={{
+                                  display: "inline-block",
+                                  maxWidth: "150px",
+                                  overflow: "hidden",
+                                  textOverflow: "ellipsis",
+                                  whiteSpace: "nowrap",
+                                }}
+                              >
+                                {row.specification}
+                              </span>
+                            </Tooltip>
+                          </TableCell>
                           <TableCell align="center">{row.quantity}</TableCell>
                           <TableCell align="center">
-                            {row.specification}
-                          </TableCell>
-
-                          <TableCell>
-                            <VendorDetails />
+                            <DisplayDate date={row.minExpectedDeliveryDate} />
                           </TableCell>
                           <TableCell align="center">
-                            {DateFormat(row.minExpectedDeliveryDate)}
+                            {row.selectedVendor ? row.selectedVendor : "----"}
+                          </TableCell>
+                          <TableCell align="center">
+                            <VendorDetails
+                              vendorId={row.selectedVendorId}
+                              vendorName={row.selectedVendor}
+                            />
+                          </TableCell>
+                          <TableCell align="center">
+                            {MoneyFormat(row.bidValue)}
                           </TableCell>
                           <TableCell align="center">
                             {
@@ -251,7 +253,9 @@ function AuditFinalizedMasterProcurementPlan() {
                                       }}
                                       className={styles.rejectButton}
                                     >
-                                      <CloseIcon />
+                                      <Tooltip title={row.internalAuditorComment}>
+                                        <CloseIcon />
+                                      </Tooltip>
                                     </IconButton>
                                   </div>
                                 )}
@@ -292,7 +296,7 @@ function AuditFinalizedMasterProcurementPlan() {
             <TablePagination
               rowsPerPageOptions={[10, 25, 50, 100]}
               component="div"
-              count={rows.length}
+              count={data ? data.length : 0}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
