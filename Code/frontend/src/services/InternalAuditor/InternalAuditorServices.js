@@ -28,18 +28,6 @@ export const GetFinalizedMasterProcurementPlan = async () => {
     }
   };
 
-  export const GetIdListForAuditFinalizedMPP = async () => {
-    try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/GetMasterProcurementPlansIDList`
-      );
-      return response.data;
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
-  };
-
   export const approve = async (mppId,itemId) => {
     try {
       const response = await axios.put(

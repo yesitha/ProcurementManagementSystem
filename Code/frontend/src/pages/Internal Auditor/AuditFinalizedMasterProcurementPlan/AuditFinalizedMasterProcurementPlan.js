@@ -168,7 +168,7 @@ function AuditFinalizedMasterProcurementPlan() {
                       <TableCell
                         key={column.id}
                         align={column.align}
-                        style={{ maxWidth: column.Width }}
+                        style={{ maxWidth: column.Width, fontWeight: "bold" }}
                       >
                         {column.label}
                       </TableCell>
@@ -279,7 +279,7 @@ function AuditFinalizedMasterProcurementPlan() {
                                         //  }}
                                         >
                                           <RejectPopup
-                                            link={`${process.env.REACT_APP_API_HOST}/api/InternalAuditor/UpdateInternalAuditorStatus?mppId=${mppId}&itemId=${row.itemId}&internalAuditorStatus=reject&internalAuditorComment=$rejectedComment}`}
+                                            link={`${process.env.REACT_APP_API_HOST}/api/InternalAuditor/UpdateInternalAuditorStatus?mppId=${mppId}&itemId=${row.itemId}&internalAuditorStatus=reject&internalAuditorComment=$rejectedComment`}
                                           />
                                         </div>
                                       )}

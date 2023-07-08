@@ -11,6 +11,7 @@ import {
   Stack,
   TextField,
   Typography,
+  Tooltip,
 } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -31,7 +32,7 @@ import { Link as Routerlink, useParams } from "react-router-dom";
 import { GetFinalizedMasterProcurementPlan2 } from "../../../services/DirectorGeneral/DirectorGeneralServices";
 import { useEffect, useState } from "react";
 import { approve } from "../../../services/DirectorGeneral/DirectorGeneralServices";
-import { DateFormat } from "../../../services/dataFormats";
+import { DateFormat, MoneyFormat } from "../../../services/dataFormats";
 import DoneIcon from "@mui/icons-material/Done";
 import CloseIcon from "@mui/icons-material/Close";
 //===============Applicable for table data===================================
@@ -39,15 +40,17 @@ import CloseIcon from "@mui/icons-material/Close";
 const columns = [
   { id: "ItemID", label: "Item ID", Width: 300, align: "center" },
   { id: "ItemName", label: "Item Name", Width: 300, align: "center" },
-  { id: "Qty", label: "Quantity", Width: 300, align: "center" },
   { id: "Spe", label: "Specification", Width: 300, align: "center" },
-  { id: "Vendor", label: "Vendor", Width: 300, align: "center" },
+  { id: "Qty", label: "Quantity", Width: 300, align: "center" },
   {
     id: "EDdate",
     label: "Expected Delivery date",
     Width: 300,
     align: "center",
   },
+  { id: "Vendor", label: "Selected Vendor", Width: 300, align: "center" },
+  { id: "VendorDetails", label: "Vendor Details", Width: 300, align: "center" },
+  { id: "tenderValue", label: "Tender Value", Width: 300, align: "center" },
   {
     id: "AuditReview",
     label: "Inernal Auditors Review",
@@ -56,30 +59,6 @@ const columns = [
   },
   { id: "Action", label: "Action", Width: 300, align: "center" },
 ];
-
-function createData(
-  ItemID,
-  ItemName,
-  Qty,
-  Spe,
-
-  Vendor,
-  EDdate,
-  AuditReview,
-  Action
-) {
-  return {
-    ItemID,
-    ItemName,
-    Qty,
-    Spe,
-
-    Vendor,
-    EDdate,
-    AuditReview,
-    Action,
-  };
-}
 
 //   const ApproveRejctButton = (
 //     <>
@@ -91,7 +70,7 @@ function createData(
 const auditApproved = (
   <>
     <Typography sx={{ color: "#227C70", "&:hover": { cursor: "pointer" } }}>
-      Approved
+      APPROVED
     </Typography>
   </>
 );
@@ -99,7 +78,7 @@ const auditApproved = (
 const auditRejected = (
   <>
     <Typography sx={{ color: "#9C254D", "&:hover": { cursor: "pointer" } }}>
-      Rejected
+      RRJECTED
     </Typography>
   </>
 );
@@ -107,53 +86,33 @@ const auditRejected = (
 const auditPending = (
   <>
     <Typography sx={{ color: "#D29D04", "&:hover": { cursor: "pointer" } }}>
-      Pending
+      PENDING
     </Typography>
   </>
 );
 
-const rows = [
-  createData(
-    "I0014",
-    "A4 Papers",
-    "500",
-    "loerm",
-    "IT Department",
-    <VendorDetails />,
-    "2023/01/01",
-    auditApproved,
-    <div className={styles.efmpp_ActionButonsContainer}>
-      <ApprovePopup />
-      {/* <RejectPopup /> */}
-    </div>
-  ),
-  createData(
-    "I0028",
-    "Ruler",
-    "10",
-    "loerm",
-    "IT Department",
-    <VendorDetails />,
-    "2023/01/01",
-    auditRejected,
-    <div className={styles.efmpp_ActionButonsContainer}>
-      <ApprovePopup />
-      {/* <RejectPopup /> */}
-    </div>
-  ),
-];
-
-//===========================================================================
+function DisplayDate({ date }) {
+  const formattedDate = date?.substring(0, 10); // Extract only the date portion
+  return (
+    <Stack component="form" noValidate spacing={3} alignItems="center">
+      <TextField
+        id="date"
+        label="Minimum Expected Delivery Date"
+        type="date"
+        align="center"
+        value={formattedDate}
+        sx={{ width: 200, height: 50 }}
+        InputLabelProps={{
+          shrink: true,
+        }}
+      />
+    </Stack>
+  );
+}
 
 // Here in class names, efmmp=EvaluateFinalizedMasterProcurementPlan
 
 function EvaluateFinalizedMasterProcurementPlan() {
-  //=======values for 'SelectDropDown.js' as an array=======
-
-  const list = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
-
-  //========================================================
-
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const handleChangePage = (event, newPage) => {
@@ -237,7 +196,7 @@ function EvaluateFinalizedMasterProcurementPlan() {
                       <TableCell
                         key={column.id}
                         align={column.align}
-                        style={{ maxWidth: column.Width }}
+                        style={{ maxWidth: column.Width, fontWeight: "bold"}}
                       >
                         {column.label}
                       </TableCell>
@@ -257,19 +216,43 @@ function EvaluateFinalizedMasterProcurementPlan() {
                           role="checkbox"
                           tabIndex={-1}
                           key={index}
+                          style={{
+                            backgroundColor:
+                              index % 2 === 0 ? "#FFFFFF" : "#F2F2F2",
+                          }}
                         >
                           <TableCell align="center">{row.itemId}</TableCell>
                           <TableCell align="center">{row.itemName}</TableCell>
+                          <TableCell align="center">
+                            <Tooltip title={row.specification}>
+                              <span
+                                style={{
+                                  display: "inline-block",
+                                  maxWidth: "150px",
+                                  overflow: "hidden",
+                                  textOverflow: "ellipsis",
+                                  whiteSpace: "nowrap",
+                                }}
+                              >
+                                {row.specification}
+                              </span>
+                            </Tooltip>
+                          </TableCell>
                           <TableCell align="center">{row.quantity}</TableCell>
                           <TableCell align="center">
-                            {row.specification}
-                          </TableCell>
-
-                          <TableCell>
-                            <VendorDetails />
+                            <DisplayDate date={row.minExpectedDeliveryDate} />
                           </TableCell>
                           <TableCell align="center">
-                            {DateFormat(row.minExpectedDeliveryDate)}
+                            {row.selectedVendor ? row.selectedVendor : "----"}
+                          </TableCell>
+                          <TableCell align="center">
+                            <VendorDetails
+                              vendorId={row.selectedVendorId}
+                              vendorName={row.selectedVendor}
+                            />
+                          </TableCell>
+                          <TableCell align="center">
+                            {MoneyFormat(row.bidValue)}
                           </TableCell>
                           <TableCell
                             align="center"
@@ -284,12 +267,29 @@ function EvaluateFinalizedMasterProcurementPlan() {
                                   : "black",
                             }}
                           >
-                            {row.internalAuditorStatus}
+                            {row.internalAuditorStatus === "approve" &&
+                              auditApproved}
+                            {row.internalAuditorStatus === "reject" && (
+                              <Tooltip title={row.internalAuditorComment}>
+                                <span
+                                  style={{
+                                    color: "#9C254D",
+                                    cursor: "pointer",
+                                    fontSize: "17px",
+                                  }}
+                                  onClick={(e) => e.stopPropagation()}
+                                >
+                                  REJECTED
+                                </span>
+                              </Tooltip>
+                            )}
+                            {row.internalAuditorStatus === "pending" &&
+                              auditPending}
                           </TableCell>
                           <TableCell align="center">
                             {
                               <div className={styles.ActionButonsContainer}>
-                                {row.internalAuditorStatus === "approve" && (
+                                {row.dgStatus === "approve" && (
                                   <div>
                                     <IconButton
                                       sx={{
@@ -303,7 +303,7 @@ function EvaluateFinalizedMasterProcurementPlan() {
                                     </IconButton>
                                   </div>
                                 )}
-                                {row.internalAuditorStatus === "reject" && (
+                                {row.dgStatus === "reject" && (
                                   <div>
                                     <IconButton
                                       sx={{
@@ -313,17 +313,18 @@ function EvaluateFinalizedMasterProcurementPlan() {
                                       }}
                                       className={styles.rejectButton}
                                     >
-                                      <CloseIcon />
+                                      <Tooltip title={row.dgComment}>
+                                        <CloseIcon />
+                                      </Tooltip>
                                     </IconButton>
                                   </div>
                                 )}
-                                {row.internalAuditorStatus !== "approve" &&
-                                  row.internalAuditorStatus !== "reject" && (
+                                {row.dgStatus !== "approve" &&
+                                  row.dgStatus !== "reject" && (
                                     <>
                                       {isApprovePopupVisible && (
                                         <div
                                           onClick={() => {
-                                           
                                             approve(mppId, row.itemId);
                                           }}
                                         >
@@ -331,13 +332,9 @@ function EvaluateFinalizedMasterProcurementPlan() {
                                         </div>
                                       )}
                                       {isRejectPopupVisible && (
-                                        <div
-                                          onClick={() => {
-                                            
-                                          }}
-                                        >
+                                        <div onClick={() => {}}>
                                           <RejectPopup
-                                            link={`${process.env.REACT_APP_API_HOST}/api/InternalAuditor/UpdateInternalAuditorStatus?mppId=${mppId}&itemId=${row.itemId}&internalAuditorStatus=reject&internalAuditorComment=$rejectedComment}`}
+                                            link={`${process.env.REACT_APP_API_HOST}/api/DirectorGeneral/UpdateDGStatus?mppId=${mppId}&itemId=${row.itemId}&DGStatus=reject&DGComment=$rejectedComment`}
                                           />
                                         </div>
                                       )}
@@ -354,7 +351,7 @@ function EvaluateFinalizedMasterProcurementPlan() {
             <TablePagination
               rowsPerPageOptions={[10, 25, 50, 100]}
               component="div"
-              count={rows.length}
+              count={data ? data.length : 0}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
