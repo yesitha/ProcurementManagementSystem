@@ -43,3 +43,26 @@
   flex-direction: row;
   justify-content: center;
 }
+
+.approveButton {
+  background-color: #227c70 !important;
+
+  margin-left: 2.5px !important;
+  margin-right: 2.5px !important;
+  color: #ffffff !important;
+}
+.approveButton:hover {
+  background-color: #2da393 !important;
+  color: #ffffff !important;
+}
+
+.rejectButton {
+  background-color: #a62c55 !important;
+  margin-left: 2.5px !important;
+  margin-right: 2.5px !important;
+  color: #ffffff !important;
+}
+.rejectButton:hover {
+  background-color: #b23e65 !important;
+  color: #ffffff !important;
+}
