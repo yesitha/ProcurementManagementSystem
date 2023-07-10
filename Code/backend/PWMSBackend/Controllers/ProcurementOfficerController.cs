@@ -723,6 +723,10 @@ namespace PWMSBackend.Controllers
                         Quantity = group.Sum(item => item.Quantity), // Calculate the sum of Quantity within the group
                         MinExpectedDeliveryDate = group.Min(item => item.ExpectedDeliveryDate), // Get the min expected Delivery Date within the group
                         SelectedVendor = group.First().SelectedVendor, // Use First() to retrieve the SelectedVendor (assuming it's the same within the group)
+                        SelectedVendorId = _context.Vendors
+                                                    .Where(v => v.FirstName + " " + v.LastName == group.First().SelectedVendor)
+                                                    .Select(v => v.VendorId)
+                                                    .FirstOrDefault(),
                         BidValue = _context.VendorPlaceBidItems
                                     .Where(vpb => vpb.Vendor.VendorId == _context.Vendors
                                                                             .Where(v => v.FirstName + " " + v.LastName == group.FirstOrDefault().SelectedVendor)
@@ -731,14 +735,14 @@ namespace PWMSBackend.Controllers
                                                                       && vpb.ItemId == group.FirstOrDefault().ItemId)
                                     .Select(vpb => vpb.BidValue)
                                     .FirstOrDefault(),
-                        SelectedVendorInfo = group.First().SelectedVendor != null ? new
-                        {
-                            vendorId = _context.Vendors
-                                    .Where(v => v.FirstName + " " + v.LastName == group.First().SelectedVendor)
-                                    .Select(v => v.VendorId)
-                                    .FirstOrDefault(),
+                        //SelectedVendorInfo = group.First().SelectedVendor != null ? new
+                        //{
+                        //    vendorId = _context.Vendors
+                        //            .Where(v => v.FirstName + " " + v.LastName == group.First().SelectedVendor)
+                        //            .Select(v => v.VendorId)
+                        //            .FirstOrDefault(),
                             
-                        } : null,
+                        //} : null,
                         internalAuditorStatus = group.First().InternalAuditorStatus,
                         internalAuditorComment = group.First().InternalAuditorComment
                     })

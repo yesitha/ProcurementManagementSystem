@@ -25,8 +25,12 @@ import { getNotification } from "../../notification";
 function Dashboard() {
   const currentUser = user.userType;
   const empId = "EMP00005"; // need to get from session storage
+  
+  const currentDate = dayjs();
 
-  const date = dayjs();
+    const shouldDisableDate = (date) => {
+        return true;
+    };
   const [quote, setQuote] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -192,14 +196,18 @@ function Dashboard() {
                 mr: { md: 3 },
                 width: "384px",
                 alignItems: "center",
-                height: "315px",
+                height: "fit-content",
                 display: { xs: "none", lg: "block", md: "block" },
                 borderRadius: 10,
               }}
             >
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <CalendarPicker className={styles.calender} date={date} />
-              </LocalizationProvider>
+            <CalendarPicker
+                className={styles.calender}
+                date={currentDate}
+                shouldDisableDate={shouldDisableDate}
+            />
+        </LocalizationProvider>
             </Paper>
           </div>
         </div>

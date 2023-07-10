@@ -28,9 +28,9 @@ const userTypes = {
         displayName: "View Master Procurement Plan",
         path: "view-masterprocurement-plan",
       },
-    ];
+    ],
 
-    actionButtons = [
+    actionButtons : [
       {
         displayName: "New Master Procurement plan for Evaluate",
         path: "new-master-procurement-plan-for-evaluate",
@@ -126,7 +126,9 @@ const userTypes = {
       { displayName: "Finalized Master Procurement Plan", path: "IAFinalizedMasterProcurementPlan" },
     ],
     list2: ["Vendors and Items", "Budgets", "Inventory", "Settings"],
-    actions: [],
+    actions: [
+      { displayName: "Audit Finalized Master Procurement Plans", path: "IAFinalizedMasterProcurementPlan" },
+    ],
     actionButtons: [
       { displayName: "New Master Procurement plan for Evaluate", path: "ia-new-master-procurement-plan-for-evaluate", number: "2" },
     ],
@@ -137,7 +139,7 @@ const userTypes = {
     ],
     list2: ["Vendors and Items", "Budgets", "Inventory", "Settings"],
     actions: [
-      { displayName: "View Finalized Master Procurement Plan", path: "view-finalized-master-procurement-plan" },
+      { displayName: "View Finalized Master Procurement Plans", path: "view-finalized-master-procurement-plan" },
     ],
     actionButtons: [
       { displayName: "New Items to Evaluate", path: "new-items-to-evaluate", number: "2" },

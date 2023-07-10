@@ -121,7 +121,7 @@ export const GetMasterProcurementPlans = async () => {
   export const GetFinalizedMasterProcurementPlan = async (selectedmppId) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/GetFinalizedMasterProcurementPlan/${selectedmppId}`
+        `${process.env.REACT_APP_API_HOST}/api/ProcurementCommittee/GetFinalizedMasterProcurementPlan/${selectedmppId}`
       );
       console.log(response.data);
       return response.data;

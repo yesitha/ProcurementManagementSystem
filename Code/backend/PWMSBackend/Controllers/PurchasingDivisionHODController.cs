@@ -56,10 +56,11 @@ namespace PWMSBackend.Controllers
                 MppId = mppId,
                 CreationDate = DateTime.Now,
                 EstimatedGrandTotal = 0,
-                ProcurementCommittee = new ProcurementCommittee
-                {
-                    CommitteeId = "COM00001"
-                },
+                ProcurementCommittee = _context.ProcurementCommittees.FirstOrDefault(c => c.CommitteeId == "COM00001"),
+                //ProcurementCommittee = new ProcurementCommittee
+                //{
+                //    CommitteeId = "COM00001"
+                //},
                 StatusDate = DateTime.Now,
                 Status = _context.Statuses.FirstOrDefault(s => s.StatusId == "STS00001")
             };
@@ -124,10 +125,11 @@ namespace PWMSBackend.Controllers
             {
                 MppId = mppId,
                 CreationDate = DateTime.Now,
-                ProcurementCommittee = new ProcurementCommittee
-                {
-                    CommitteeId = "COM00001"
-                },
+                ProcurementCommittee = _context.ProcurementCommittees.FirstOrDefault(pc => pc.CommitteeId == "COM00001"),
+                //ProcurementCommittee = new ProcurementCommittee
+                //{
+                //    CommitteeId = "COM00001"
+                //},
                 StatusDate = DateTime.Now,
                 Status = _context.Statuses.FirstOrDefault(s => s.StatusId == "STS00001")
             };

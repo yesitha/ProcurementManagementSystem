@@ -14,7 +14,7 @@ export const GetFinalizedMasterProcurementPlan = async () => {
     }
   };
 
-  // Director General evaluayes finalized master procurement plan
+  // Director General evaluates finalized master procurement plan
 
   export const GetFinalizedMasterProcurementPlan2 = async (mppId) => {
     try {
@@ -31,7 +31,7 @@ export const GetFinalizedMasterProcurementPlan = async () => {
   export const approve = async (mppId,itemId) => {
     try {
       const response = await axios.put(
-        `${process.env.REACT_APP_API_HOST}/api/DirectorGeneral/UpdateDGStatus?mppId=${mppId}&itemId=${itemId}&DGStatus=approve&DGStatusComment=null`
+        `${process.env.REACT_APP_API_HOST}/api/DirectorGeneral/UpdateDGStatus?mppId=${mppId}&itemId=${itemId}&DGStatus=approve&DGComment=null`
       );
       console.log(response);
       return response;  
