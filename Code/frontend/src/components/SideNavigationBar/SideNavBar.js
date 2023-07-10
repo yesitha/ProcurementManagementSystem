@@ -80,7 +80,6 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function SideNavBar({list1, list2, user}) {
-    console.log(user);
     const [open, setOpen] = React.useState(false);
 
     const handleDrawerOpen = () => {
@@ -96,9 +95,7 @@ export default function SideNavBar({list1, list2, user}) {
                 className={styles.Drawer} variant="permanent" open={open}>
             <DrawerHeader>
                 <Toolbar
-                    sx={{
-                        ...(open && {display: "none"}),
-                    }}
+                    sx={{...(open && {display: "none"}),}}
                 >
                     <IconButton
                         sx={{padding: 0, marginRight: 0}}
@@ -110,28 +107,30 @@ export default function SideNavBar({list1, list2, user}) {
                         <MenuIcon/>
                     </IconButton>
                 </Toolbar>
-                <div className={styles.headerFlexWrapper}>
-                    <Avatar
-                        className={styles.logo}
-                        alt="Avatar"
-                        src={logo}
-                        sx={{
-                            width: 35,
-                            height: 35,
-                            alignSelf: "center",
-                            ...(!open && {display: "none"}),
-                        }}
-                    />
-                    <Typography
-                        className={styles.HeaderTitle}
-                        variant="h8"
-                        noWrap
-                        component="div"
-                    >
-                        Procurement <br/>
-                        Management System
-                    </Typography>
-                </div>
+                <Routerlink to={"/Dashboard"}>
+                    <div className={styles.headerFlexWrapper}>
+                        <Avatar
+                            className={styles.logo}
+                            alt="Avatar"
+                            src={logo}
+                            sx={{
+                                width: 35,
+                                height: 35,
+                                alignSelf: "center",
+                                ...(!open && {display: "none"}),
+                            }}
+                        />
+                        <Typography
+                            className={styles.HeaderTitle}
+                            variant="h8"
+                            noWrap
+                            component="div"
+                        >
+                            Procurement <br/>
+                            Management System
+                        </Typography>
+                    </div>
+                </Routerlink>
                 <IconButton className={styles.closeIcon} onClick={handleDrawerClose}>
                     <ChevronLeftIcon/>
                 </IconButton>
@@ -255,7 +254,7 @@ export default function SideNavBar({list1, list2, user}) {
                                 />
 
                                 <ListItemText
-                                    primary={`${user.firstname} ${user.lastname}`}
+                                    primary={`${user.name}`}
                                     secondary={user.email}
                                     sx={{opacity: open ? 1 : 0}}
                                     primaryTypographyProps={{

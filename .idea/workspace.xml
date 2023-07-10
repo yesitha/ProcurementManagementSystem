@@ -5,14 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bef3c3fc-1eae-49f2-978e-a16cd54f3c7d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Code/frontend/.idea/.name" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Code/frontend/src/test.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/backend/PWMSBackend/.idea/.idea.PWMSBackend/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Code/backend/PWMSBackend/.idea/.idea.PWMSBackend/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Code/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Code/frontend/src/components/SideNavigationBar/SideNavBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/src/components/SideNavigationBar/SideNavBar.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Code/frontend/src/pages/Dashboard/Dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/src/pages/Dashboard/Dashboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/frontend/src/pages/Login/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/src/pages/Login/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/frontend/src/pages/Usermanage.js" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/src/pages/Usermanage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/frontend/src/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/src/store.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/frontend/src/userSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/Code/frontend/src/userSlice.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +39,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;development-Nelaka&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/nelakagunawardhana/Documents/GitHub/ProcurementManagementSystem&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -79,7 +79,10 @@
       <workItem from="1687666728392" duration="4538000" />
       <workItem from="1687673543751" duration="36597000" />
       <workItem from="1687779686855" duration="14333000" />
-      <workItem from="1688109000540" duration="10683000" />
+      <workItem from="1688109000540" duration="11332000" />
+      <workItem from="1688407123279" duration="6152000" />
+      <workItem from="1688703590041" duration="30000" />
+      <workItem from="1689007269904" duration="3404000" />
     </task>
     <servers />
   </component>
