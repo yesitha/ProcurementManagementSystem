@@ -74,7 +74,13 @@ function ViewMasterProcurementPlan() {
     fetchdata();
   }, []);
 
-
+  const dataNotification = [
+    {
+      message: 'Publish Paper Ad !',
+      type: 'Publish Paper Ad',
+      divisionName: 'CoparateCommunication',
+    },
+  ];
   return (
     <div className={styles.outer}>
       <Container
@@ -172,7 +178,7 @@ function ViewMasterProcurementPlan() {
                           <TableCell align="center">
                             {row.recommendedVendors}
                           </TableCell>
-                          <TableCell align="center">{<Sucessfullyinformed name="Vendor" title="Notify Vendor"/>}</TableCell>
+                          <TableCell align="center">{<Sucessfullyinformed name="Vendor" title="Notify Vendor" notificationData={dataNotification[0]}/>}</TableCell>
                         </TableRow>
                       ))}
                 </TableBody>

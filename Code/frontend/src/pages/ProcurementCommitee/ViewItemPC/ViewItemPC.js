@@ -224,6 +224,11 @@ function ViewItemPC() {
                                   <ApprovePopup />
                                 </div>
                                 <RejectPopup
+                                   notificationData={{
+                                    message: 'Item Rejected !',
+                                    type: 'Item Rejected',
+                                    divisionName: row.divisionName,
+                                  }}
                                   link={`${process.env.REACT_APP_API_HOST}/api/ProcurementCommittee/UpdateProcurementCommitteeStatus?sppId=${row.sppId}&itemId=${itemId}&procurementCommitteeStatus=reject&procurementCommitteeComment=$rejectedComment`}
                                 />
                               </div>

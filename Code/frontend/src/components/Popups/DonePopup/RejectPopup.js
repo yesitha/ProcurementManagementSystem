@@ -10,6 +10,7 @@ import { Button } from "@mui/material";
 import styles from "./RejectPopup.module.css";
 import { Container } from "@mui/system";
 import axios from "axios";
+import { addNotification } from "../../../notification";
 
 const style = {
   position: "absolute",
@@ -24,18 +25,21 @@ const style = {
   p: 3,
 };
 
-export default function BasicModal(link) {
+export default function BasicModal(props) {
   const [open, setOpen] = React.useState(false);
   const [rejectComment, setRejectComment] = React.useState("");
   const handleOpen = () => setOpen(true);
   const handleClose = () => {setOpen(false);
     window.location.reload();}
   const handleCommentChange = (event) => setRejectComment(event.target.value);
-  const [commentAddedlink, setCommentAddedLink] = React.useState(link.link.toString());
+  const [commentAddedlink, setCommentAddedLink] = React.useState(props.link.toString());
   const manipulatedString = commentAddedlink.replace('$rejectedComment', rejectComment);
   
   const handleOkClick = async () => {
     setCommentAddedLink(manipulatedString);
+    if(props.notificationData){
+    addNotification(props.notificationData);
+    }
     try {
       const response = await axios.put(manipulatedString);
       console.log(manipulatedString);
@@ -45,10 +49,10 @@ export default function BasicModal(link) {
       console.log(error);
       throw error;
     }
-    window.location.reload();
-    handleClose();
+  window.location.reload();
+   handleClose();
   };
-
+  
   return (
     <div>
       <IconButton

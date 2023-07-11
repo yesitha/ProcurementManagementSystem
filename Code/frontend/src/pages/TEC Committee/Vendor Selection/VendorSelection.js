@@ -34,6 +34,15 @@ const columns = [
   { id: "act", label: "Action", Width: 300, align: "center" },
 ];
 
+const dataNotification = [
+  {
+    message: 'New TEC Report Created!',
+    type: 'New TEC Report',
+    mppId: 'MPP00001',
+  committeeType: 'Procurement'
+  },
+];
+
 function VendorSelection() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -161,6 +170,8 @@ function VendorSelection() {
                                   }}
                                 >
                               <DonePopup
+                                notificationData={dataNotification[0]}
+                                CommitteeNotification={true}
                                 text={"Vendor Selection Successfully"}
                                 title={"Select"}
                                 styles={{

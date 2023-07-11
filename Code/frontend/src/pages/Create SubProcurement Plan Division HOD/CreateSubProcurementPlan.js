@@ -208,7 +208,7 @@ function CreateSubProcurementPlan() {
     {
       message: 'New Sub Procurement Plan Created !',
       type: 'New Sub Procurement Plans',
-      divisionName: 'Purchasing Division',
+      divisionName: 'Purchasing',
     },
   ];
 

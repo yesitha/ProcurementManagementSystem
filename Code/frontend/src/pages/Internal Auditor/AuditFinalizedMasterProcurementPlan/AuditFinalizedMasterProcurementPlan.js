@@ -124,6 +124,13 @@ function AuditFinalizedMasterProcurementPlan() {
   const handleRejectClick = (index) => {
     setApprovePopupVisible(false);
   };
+  const dataNotification = [
+    {
+      message: 'Internal Auditor Report Available !',
+      type: 'Internal Auditor Report Available',
+      divisionName: 'Finance',
+    },
+  ];
 
   if (data === null) {
     return <p style={{ marginLeft: "20px" }}>Loading...</p>;
@@ -306,6 +313,7 @@ function AuditFinalizedMasterProcurementPlan() {
         </div>
         <div className={styles.afmpp_button}>
           <DonePopup
+            notificationData={dataNotification[0]}
             text={"Successfully submitted your status"}
             title={"Submit"}
             styles={{
