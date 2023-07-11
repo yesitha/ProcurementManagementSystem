@@ -17,7 +17,7 @@ import {
   GetSubProcurementApprovedItems,
   UpdateAuctionDates,
 } from "../../../services/BidOpeningCommittee/BidOpeningCommitteeServices";
-
+import {user} from "../../Usermanage"
 
 const emplyoeeId ='ZAC43913'; //This need to get from login
 const columns = [
@@ -37,10 +37,13 @@ function ManageAuction() {
   const [data, setData] = useState(null);
   const[copyData,setCopyData]=useState(null);
 
+  const committeeMemberId=user.id
+  // console.log(employeeId)
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await GetSubProcurementApprovedItems(emplyoeeId);
+        const response = await GetSubProcurementApprovedItems(committeeMemberId);
         const data = response;
         // console.log(data);
         setData(data);
@@ -138,7 +141,6 @@ const handleClosingDateChange = (itemId, event) => {
 
         <div className={styles.MiddleSection}>
           <h1 className={styles.header2}>Items to Auction</h1>
-          <SearchNoFilter className={styles.search} />
         </div>
 
         <div className={styles.downSection}>
