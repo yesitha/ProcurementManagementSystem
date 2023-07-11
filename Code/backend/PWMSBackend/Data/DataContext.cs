@@ -48,6 +48,7 @@ namespace PWMSBackend.Data
 
         public DbSet<UserNotification> UserNotifications { get; set; } = null!;
         public DbSet<UserNotificationProcurementEmployee> UserNotificationProcurementEmployees { get; set; } = null!;
+        public DbSet<UserNotificationsVendor> UserNotificationsVendors { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -166,6 +167,17 @@ namespace PWMSBackend.Data
                 .HasOne(a => a.ProcurementEmployee)
                 .WithMany(ia => ia.UserNotificationProcurementEmployees)
                 .HasForeignKey(a => a.ProcurementEmployeeId);
+
+            modelBuilder.Entity<UserNotificationsVendor>()
+                .HasKey(ia => new { ia.NotificationId, ia.VendorId });
+            modelBuilder.Entity<UserNotificationsVendor>()
+                .HasOne(i => i.UserNotification)
+                .WithMany(ia => ia.UserNotificationsVendors)
+                .HasForeignKey(i => i.NotificationId);
+            modelBuilder.Entity<UserNotificationsVendor>()
+                .HasOne(a => a.Vendor)
+                .WithMany(ia => ia.UserNotificationsVendors)
+                .HasForeignKey(a => a.VendorId);
                 
 
             //modelBuilder.Entity<MasterProcurementPlan>()

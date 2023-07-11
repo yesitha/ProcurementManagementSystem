@@ -12,6 +12,7 @@ using MimeKit.Text;
 using SendGrid.Helpers.Mail;
 using SendGrid;
 using SendGrid.Helpers.Mail.Model;
+using static PWMSBackend.Controllers.UserNotificationsController;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -213,7 +214,7 @@ namespace PWMSBackend.Controllers
             }
             else
             {
-                committeeId = _context.MasterProcurementPlans.Where(c => c.MppId == notification.mppId).FirstOrDefault().ProcurementCommittee.CommitteeId;
+                committeeId = "COM00001";
             }
 
             var employeeIds = _context.CommitteeMemberCommittees
@@ -243,6 +244,162 @@ namespace PWMSBackend.Controllers
             _context.SaveChanges();
 
             return Ok("UserNotifications created successfully.");
+        }
+
+        public class VendorNotification
+        {
+            public string message { get; set; }
+            public string type { get; set; }
+        }
+
+
+        [HttpPost("NotifyVendor")]
+        public IActionResult NotifyVendor(VendorNotification vendorNotification)
+        {
+            var vendorIds = _context.Vendors
+                .Select(v => v.VendorId)
+                .ToList();
+
+            string notificationId = _NotificationIdGenerator.GenerateNotificationId();
+
+            var userNotification = new UserNotification
+            {
+                notificationId = notificationId,
+                message = vendorNotification.message,
+                type = vendorNotification.type,
+                isRead = false,
+                timeStamp = DateTime.Now,
+                UserNotificationsVendors = vendorIds.Select(v => new UserNotificationsVendor
+                {
+                    VendorId = v,
+                    NotificationId = notificationId
+                }).ToList()
+            };
+
+            // Your code to save the userNotification to the database using your data access layer
+            _context.UserNotifications.Add(userNotification);
+            _context.SaveChanges();
+
+            //send emails
+            //foreach (var vendorId in vendorIds)
+            //{
+            //    // Get the vendor's email address based on the vendor ID
+            //    var vendor = _context.Vendors.Where(p => p.VendorId == vendorId).FirstOrDefault();
+
+            //    if (vendor != null && !string.IsNullOrEmpty(vendor.EmailAddress))
+            //    {
+            //        sendEmail(vendorNotification.type, vendor.EmailAddress, vendorNotification.message).Wait();
+
+            //    }
+            //}
+
+            return Ok("UserNotification created successfully.");
+        }
+
+        public class VendorNotificationById
+        {
+            public string message { get; set; }
+            public string type { get; set; }
+            public string VendorId { get; set; }
+        }
+
+
+        [HttpPost("NotifyVendornById")]
+        public IActionResult NotifyVendorByID(VendorNotificationById vendorNotificationById)
+        {
+            //var vendorIds = _context.Vendors
+            //    .Select(v => v.VendorId)
+            //    .ToList();
+
+            string notificationId = _NotificationIdGenerator.GenerateNotificationId();
+
+            var userNotification = new UserNotification
+            {
+                notificationId = notificationId,
+                message = vendorNotificationById.message,
+                type = vendorNotificationById.type,
+                isRead = false,
+                timeStamp = DateTime.Now,
+                UserNotificationsVendors = new List<UserNotificationsVendor> // Use a collection type, such as List<T>
+                {
+                        new UserNotificationsVendor
+                        {
+                            VendorId = vendorNotificationById.VendorId,
+                            NotificationId = notificationId
+                        }
+                }
+            };
+
+            // Your code to save the userNotification to the database using your data access layer
+            _context.UserNotifications.Add(userNotification);
+            _context.SaveChanges();
+
+            //send emails
+            //foreach (var vendorId in vendorIds)
+            //{
+                // Get the vendor's email address based on the vendor ID
+                var vendor = _context.Vendors.Where(p => p.VendorId == vendorNotificationById.VendorId).FirstOrDefault();
+
+                if (vendor != null && !string.IsNullOrEmpty(vendor.EmailAddress))
+                {
+                    sendEmail(vendorNotificationById.type, vendor.EmailAddress, vendorNotificationById.message).Wait();
+                }
+            //}
+
+            return Ok("UserNotification created successfully.");
+        }
+
+        public class EmployeeeNotificationById
+        {
+            public string message { get; set; }
+            public string type { get; set; }
+            public string employeeId { get; set; }
+        }
+
+
+        [HttpPost("EmployeeeNotificationById")]
+        public IActionResult EmployeeeNotification(EmployeeeNotificationById employeeeNotificationById)
+        {
+            //var vendorIds = _context.Vendors
+            //    .Select(v => v.VendorId)
+            //    .ToList();
+
+            string notificationId = _NotificationIdGenerator.GenerateNotificationId();
+
+            var userNotification = new UserNotification
+            {
+                notificationId = notificationId,
+                message = employeeeNotificationById.message,
+                type = employeeeNotificationById.type,
+                isRead = false,
+                timeStamp = DateTime.Now,
+                UserNotificationProcurementEmployees = new List<UserNotificationProcurementEmployee> // Use a collection type, such as List<T>
+                {
+                        new UserNotificationProcurementEmployee
+                        {
+                            ProcurementEmployeeId = employeeeNotificationById.employeeId,
+                            NotificationId = notificationId
+                        }
+                }
+            };
+
+            // Your code to save the userNotification to the database using your data access layer
+            _context.UserNotifications.Add(userNotification);
+            _context.SaveChanges();
+
+            //send emails
+            //foreach (var vendorId in vendorIds)
+            //{
+            // Get the vendor's email address based on the vendor ID
+            var employee = _context.ProcurementEmployees.Where(p => p.EmployeeId == employeeeNotificationById.employeeId).FirstOrDefault();
+
+            if (employee != null && !string.IsNullOrEmpty(employee.EmailAddress))
+            {
+                sendEmail(employeeeNotificationById.type, employee.EmailAddress, employeeeNotificationById.message).Wait();
+            }
+            //}
+
+            return Ok("UserNotification created successfully.");
         }
 
     }
