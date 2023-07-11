@@ -50,5 +50,7 @@
         public ICollection<VendorPlaceBidItem> VendorPlaceBidItems { get; set; }
         public ICollection<VendorhasItem> VendorhasItems { get; set; }
         public ICollection<PurchaseOrder> PurchaseOrders { get; set; }
+        public ICollection<UserNotificationsVendor> UserNotificationsVendors { get; set; }
+
     }
 }
