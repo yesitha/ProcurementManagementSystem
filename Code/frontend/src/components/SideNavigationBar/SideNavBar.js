@@ -108,7 +108,7 @@ export default function SideNavBar({list1, list2, user}) {
                     </IconButton>
                 </Toolbar>
                 <Routerlink to={"/Dashboard"}>
-                    <div className={styles.headerFlexWrapper}>
+                    <div className={styles.headerFlexWrapper} onClick={handleDrawerClose}>
                         <Avatar
                             className={styles.logo}
                             alt="Avatar"
@@ -138,8 +138,8 @@ export default function SideNavBar({list1, list2, user}) {
 
             <List>
                 {list1.map((text, index) => (
-                    <ListItem key={text} disablePadding sx={{display: "block"}}>
-                        <Routerlink to={`/${text.path}`}>
+                    <ListItem key={text} disablePadding sx={{display: "block"}} onClick={handleDrawerClose}>
+                        <Routerlink to={`/${text.path}`} >
                             <ListItemButton
                                 sx={{
                                     minHeight: 48,
@@ -201,7 +201,6 @@ export default function SideNavBar({list1, list2, user}) {
                     </ListItem>
                 ))}
             </List>
-
             <div className={styles.OuterLogoutUser}>
                 <div style={{}}>
                     <List>

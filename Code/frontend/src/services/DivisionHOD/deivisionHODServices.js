@@ -51,9 +51,10 @@ export const createNewSubProcurementPlan = async (hodId) => {
 };
 
 export const deleteItemFromdb = (itemId, sppId) => {
+    console.log(itemId, sppId)
     try {
         axios.delete(
-            `${process.env.REACT_APP_API_HOST}/api/DivisionHOD/${itemId}?sppId=${sppId}`
+            `${process.env.REACT_APP_API_HOST}/api/DivisionHOD/${itemId}/${sppId}`
         );
     } catch (error) {
         console.log(error);

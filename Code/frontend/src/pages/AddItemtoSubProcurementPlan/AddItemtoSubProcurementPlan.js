@@ -29,8 +29,9 @@ function AddItemtoSubProcurementPlan() {
         register,
         handleSubmit,
         formState: {errors},
-    } = useForm();
+    } = useForm({mode: "onTouched"});
     const [list, setList] = useState([]);
+    const [vendorList, setVendorList] = useState([]);
     const [itemName, setItemName] = useState("");
     const [itemDetails, setItemDetails] = useState([]);
     const [selectedItemId, setSelectedItemId] = useState("");
@@ -52,6 +53,8 @@ function AddItemtoSubProcurementPlan() {
             try {
                 const vendorList = await getVendorList();
                 console.log(vendorList);
+                const vendorNames = vendorList.map((vendor) => vendor.firstName+" "+vendor.lastName);
+                setVendorList(vendorNames);
             } catch (error) {
                 console.log(error);
             }
@@ -66,6 +69,10 @@ function AddItemtoSubProcurementPlan() {
         handleSelectItem(event.target.value);
     };
 
+    const handleVendorChange = (event) => {
+        setRecommendedVendor(event.target.value);
+        console.log(recommendedVendor)
+    };
     const handleSelectItem = (itemName) => {
         const selectedItem = itemDetails.find((item) => item.itemName === itemName);
         if (selectedItem) {
@@ -91,9 +98,10 @@ function AddItemtoSubProcurementPlan() {
 
     const onSubmit = async () => {
         const data=getValues();
-        const {expectedDeliveryDate, estimatedBudget, quantity,recommendedVendor} = data;
-        const dateParts = expectedDeliveryDate.split("/");
-        const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}T00:00:00Z`;
+        const {expectedDeliveryDate, estimatedBudget, quantity} = data;
+
+        const dateParts = expectedDeliveryDate.split("-");
+        const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}Z`;
         const formData = {
             SppId: selectedSubId,
             ItemId: selectedItemId,
@@ -106,16 +114,14 @@ function AddItemtoSubProcurementPlan() {
         try {
             console.log("formData: " + JSON.stringify(formData));
             await pushNewItemSubProcurementPlan(formData, selectedFile);
-            // Handle success
         } catch (error) {
             console.log(error);
-            // Handle error
         }
     };
 
     return (
         <div style={{display: "flex", overflow: "hidden"}}>
-            <Container sx={{ml: {xs: "20px", sm: "20px", md: "20px", lg: "21px", xl: "22px"},}}>
+            <Container sx={{ml: {xs: "30px", sm: "30px", md: "30px", lg: "31px", xl: "32px"},}}>
                 <div>
                     <div className={Styles.headTitle}>
                         <RouterLink to={`/SubProcurmentPlan/${selectedSubId}`}>
@@ -126,7 +132,7 @@ function AddItemtoSubProcurementPlan() {
                             </IconButton>
                         </RouterLink>
                         <h1 className={Styles.headTitleName}>
-                            [ Add / Modify / Modify Rejected ] Item to Sub Procurement Plan{" "}
+                            Add Item to Sub Procurement Plan{" "}
                         </h1>
                     </div>
                 </div>
@@ -161,7 +167,15 @@ function AddItemtoSubProcurementPlan() {
                                                 onChange={handleItemNameChange}
                                             />
                                         )}
-
+                                        <Typography sx={{mt: 2, mb: 1}}>Recommended Vendor</Typography>
+                                        {list !== null && (
+                                            <SelectDropDown
+                                                name="recommendedVendor"
+                                                register={register}
+                                                list={vendorList}
+                                                onChange={handleVendorChange}
+                                            />
+                                        )}
                                         <Typography sx={{mt: 1}}>Item Id</Typography>
                                         <TextField
                                             margin="normal"
@@ -182,19 +196,18 @@ function AddItemtoSubProcurementPlan() {
                                             id="quantity"
                                             label="Quantity"
                                             name="quantity"
-                                            type="number"
                                             {...register("quantity", {
-                                                required: {
-                                                    value: true,
-                                                    message: "Quantity is required"
-                                                }
-                                            }, {
+                                                required: "Quantity Cant be Empty!",
+                                                min: {
+                                                    value: 1,
+                                                    message: "Quantity should be greater than 0"},
                                                 pattern: {
                                                     value: /^[0-9]+$/,
-                                                    message: "Quantity should be a number"
-                                                }
-                                            }, {min: {value: 1, message: "Quantity should be greater than 0"}})}
+                                                    message: "Quantity should be a  number",
+                                                },
+                                            })}
                                         />
+                                        <p className="error">{errors.quantity?.message}</p>
 
                                         <TextField
                                             margin="normal"
@@ -203,40 +216,19 @@ function AddItemtoSubProcurementPlan() {
                                             id="estimatedBudget"
                                             label="Estimated Budget"
                                             name="estimatedBudget"
-                                            type="number"
                                             {...register("estimatedBudget", {
-                                                required: {
-                                                    value: true,
-                                                    message: "Estimated Budget is required"
-                                                }
-                                            }, {
-                                                pattern: {
-                                                    value: /^[0-9]+$/,
-                                                    message: "Estimated Budget should be a number"
-                                                }
-                                            }, {
+                                                required: "Estimated budget Cant be Empty!",
                                                 min: {
                                                     value: 1,
-                                                    message: "Estimated Budget should be greater than 0"
-                                                }
-                                            })}
-                                        />
-
-                                        <TextField
-                                            margin="normal"
-                                            required
-                                            fullWidth
-                                            id="recommendedVendor"
-                                            label="Recommended Vendor"
-                                            name="recommendedVendor"
-                                            {...register("recommendedVendor", {
+                                                    message: "Estimated budget should be greater than 0"},
                                                 pattern: {
-                                                    value: /^[a-zA-Z ]+$/i,
-                                                    message: "Recommended Vendor should be a name"
-                                                }
+                                                    value: /^[0-9]+(\.[0-9]+)?$/,
+                                                    message: "Estimated budget should be a  number",
+                                                },
+
                                             })}
-                                            autoComplete="email"
                                         />
+                                        <p className="error">{errors.estimatedBudget?.message}</p>
 
                                         <TextField
                                             margin="normal"
@@ -245,8 +237,15 @@ function AddItemtoSubProcurementPlan() {
                                             id="expectedDeliveryDate"
                                             label="Expected date"
                                             name="expectedDeliveryDate"
-                                            {...register("expectedDeliveryDate")}
+                                            {...register("expectedDeliveryDate", {
+                                                required: 'Date is required',
+                                                pattern: {
+                                                    value: /^\d{4}-\d{2}-\d{2}$/,
+                                                    message: 'Invalid date format (yyyy-mm-dd)',
+                                                }})}
                                         />
+                                        <p className="error">{errors.expectedDeliveryDate?.message}</p>
+
                                     </div>
                                     <div className={Styles.bodyRight}>
                                         <Typography sx={{mt: 2, mb: 2}}>

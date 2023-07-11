@@ -161,7 +161,7 @@ export default function Signup() {
                     </Grid>
                     <Grid item md={5} xs={11}>
                       <TextField
-                        {...register("noofEmployes")}
+                        {...register("noofEmployes", {pattern: /^[0-9]*$/})}
                         margin="normal"
                         fullWidth
                         id="noofEmployes"
