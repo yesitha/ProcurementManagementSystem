@@ -290,7 +290,7 @@ function App() {
                         }
                     />
                     <Route
-                        path="/master-procurement-plan-status/:subId"
+                        path="/master-procurement-plan-status/:mppId"
                         element={
                             <PrivateRoute
                                 component={<MasterProcurementPlanStatus/>}
