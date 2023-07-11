@@ -291,6 +291,7 @@ namespace PWMSBackend.Controllers
                              {
                                  vendor.VendorId,
                                  vendor.BidValue,
+                                 vendor.BidStatus,
                                  vendorInfo.FirstName,
                                  vendorInfo.LastName,
                                  vendorInfo.BusinessRegistrationDoc,
@@ -306,6 +307,7 @@ namespace PWMSBackend.Controllers
                                      vendorId = v.VendorId,
                                      vendorName = v.FirstName + " " + v.LastName,
                                      bidValue = v.BidValue,
+                                     bidStatus = v.BidStatus,
                                      vendorInfo = new
                                      {
                                          v.BusinessRegistrationDoc,
@@ -497,6 +499,7 @@ namespace PWMSBackend.Controllers
                              {
                                  vendor.VendorId,
                                  vendor.BidValue,
+                                 vendor.BidStatus,
                                  vendorInfo.FirstName,
                                  vendorInfo.LastName,
                                  vendorInfo.BusinessRegistrationDoc,
@@ -512,6 +515,7 @@ namespace PWMSBackend.Controllers
                                      vendorId = v.VendorId,
                                      vendorName = v.FirstName + " " + v.LastName,
                                      bidValue = v.BidValue,
+                                     bidStatus = v.BidStatus,
                                      vendorInfo = new
                                      {
                                          v.BusinessRegistrationDoc,
