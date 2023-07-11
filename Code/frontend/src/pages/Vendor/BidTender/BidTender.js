@@ -9,12 +9,12 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import SearchNoFilter from "../../../components/Search/Search";
 import { Container } from "@mui/system";
 import GavelIcon from "@mui/icons-material/Gavel";
 import { Link as Routerlink, useParams} from "react-router-dom";
 import { GetApprovedItemsDetailsvendorId } from "../../../services/Vendor/Vendorservices";
 import { DateFormat, MoneyFormat } from "../../../services/dataFormats";
+import {user} from "../../Usermanage";
 
 
 const columns = [
@@ -40,9 +40,11 @@ function BidTender() {
     setPage(0);
   };
 
+const vendorId = user.id;
+console.log(vendorId);
 
-const { vendorId } = useParams();
 const [data, setData] = useState(null);
+
 
 useEffect(() => {
   const fetchdata = async () => {
@@ -84,7 +86,6 @@ useEffect(() => {
         </div>
 
         <div className={styles.MiddleSection}>
-          <SearchNoFilter className={styles.search} />
         </div>
 
         <div className={styles.downSection}>
@@ -141,22 +142,55 @@ useEffect(() => {
                             {DateFormat(row.expectedDeliveryDate)}
                           </TableCell>
                           <TableCell align="center">
-                            {MoneyFormat(row.bidValue)}
+                            {
+                              row.bidValue === null ? (
+                                <Typography
+                                  variant="subtitle1"
+                                  color="#9C254D"
+                                >
+                                  Not Bided
+                                </Typography>
+                              ) : (
+                                <Typography
+                                  variant="subtitle1"
+                                  color="#227C70"
+                                >
+                                  {MoneyFormat(row.bidValue)}
+                                </Typography>
+                              )
+                            }
                           </TableCell>
                           <TableCell align="center">
-                            {<Routerlink to={`/tender-details/${row.itemId}`}>
-                              <Button
-                                variant="contained"
-                                sx={{
-                                  backgroundColor: "#227C70",
-                                  width: 50,
-                                  height: 50,
-                                  borderRadius: "20px",
-                                }}
-                              >
-                                <GavelIcon style={{ fontSize: 30 }} />
-                              </Button>
-                              </Routerlink>}
+                            {
+                              row.bidValue === null ? (
+                                <Routerlink to={`/tender-details/${row.itemId}`}>
+                                  <Button
+                                    variant="contained"
+                                    sx={{
+                                      backgroundColor: "#227C70",
+                                      width: 50,
+                                      height: 50,
+                                      borderRadius: "20px",
+                                    }}
+                                  >
+                                    <GavelIcon style={{ fontSize: 30 }} />
+                                  </Button>
+                                </Routerlink>
+                              ) : (
+                                  <Button
+                                    variant="contained"
+                                    disabled
+                                    sx={{
+                                      backgroundColor: "#9C254D",
+                                      width: 50,
+                                      height: 50,
+                                      borderRadius: "20px",
+                                    }}
+                                  >
+                                    <GavelIcon style={{ fontSize: 30 }} />
+                                  </Button>
+                              )
+                            }
                           </TableCell>
                         </TableRow>
                       ))}

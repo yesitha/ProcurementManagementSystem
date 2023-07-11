@@ -409,3 +409,16 @@ export const UpdateInvoicePaymentStatus = async (invoiceId) => {
     throw error;
   }
 };
+
+export const GetMasterProcurementPlanStatus = async (mppId) => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/GetMasterProcurementPlanStatus?mppId=${mppId}`
+    );
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

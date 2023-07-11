@@ -116,7 +116,7 @@ const userTypes = {
   },
   BidOpeningCommittee: {
     list1: [
-      { displayName: "Auctions", path: "Auctions-BOC" },
+      { displayName: "Auctions", path: "manage-auction" },
     ],
     list2: ["Settings"],
     actions: [{ displayName: "Manage Auction", path: "manage-auction" }],

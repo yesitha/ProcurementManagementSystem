@@ -1,24 +1,57 @@
-import { Grid, IconButton, Paper } from "@mui/material";
+import { Grid, IconButton, Paper, Step } from "@mui/material";
 import { Container, display } from "@mui/system";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import React from "react";
-import SideNavBar from "../../components/SideNavigationBar/SideNavBar";
+import React, { useEffect, useState } from "react";
 import styles from "./MasterProcurementPlanStatus.module.css";
-import { Link as Routerlink } from "react-router-dom";
+import { Link as Routerlink, useParams } from "react-router-dom";
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
+import { GetMasterProcurementPlanStatus } from "../../services/ProcurementHOD/ProcurementHODServices";
 
 const steps = [
   "Initiating Procurement Process",
-  "Approval for Specification",
-  "Approval for Procurement",
+  "TEC Committee Approval",
+  "Procurement Committee Approval",
+  "Tendor",
   "Audit Verification",
-  "DG Approval for PO",
-  "Issuing Purchase Order",
-  "Initiating Procurement Process",
-  "Good Receive Note",
-  "Payment Voucher",
+  "DG Approval",
+  "Purchase Order",
+  "GRN",
+  "Invoice",
+  "Payment"
 ];
+
 function MasterProcurementPlanStatus() {
+
+  const {mppId} = useParams();
+  const [data,setData] = useState();
+  let stepNo = 0;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await GetMasterProcurementPlanStatus(mppId);
+        const data = response;
+        setData(data.statusId);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
+  
+for (let i = 0; i <= 10; i++) {
+  if (data=== `STS00010`) {
+    stepNo = 10;
+    break;
+  }  
+  else if (data=== `STS0000${i}`) {
+      stepNo = i;
+      break;
+    }
+  }
+  console.log(stepNo);
+  stepNo = parseInt(stepNo);
+
   return (
     <div style={{ overflowX: "hidden" }}>
 
@@ -51,7 +84,7 @@ function MasterProcurementPlanStatus() {
             elevation={6}
             sx={{ py: 4, borderRadius: 5, mr: 8, px: 1 }}
           >
-            <ProgressBar step="2" steps={steps} />
+            <ProgressBar step={stepNo} steps={steps} />
           </Paper>
         </div>
       </Container>

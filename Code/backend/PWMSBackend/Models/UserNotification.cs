@@ -16,5 +16,6 @@ namespace PWMSBackend.Models
         //Many to many relationships
         //[JsonIgnore]
         public ICollection<UserNotificationProcurementEmployee> UserNotificationProcurementEmployees { get; set; }
+        public ICollection<UserNotificationsVendor> UserNotificationsVendors { get; set; }
     }
 }
