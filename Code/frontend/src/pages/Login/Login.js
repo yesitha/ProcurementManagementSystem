@@ -32,7 +32,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {setUser} from "../../userSlice";
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 
 const theme = createTheme({
@@ -91,6 +91,10 @@ export default function Login() {
     });
     const {register, getValues, handleSubmit, control, formState} = form;
     const {errors, isValid} = formState;
+
+    useEffect(() => {
+        sessionStorage.clear();
+    }, []);
 
     return (
         <ThemeProvider theme={theme}>
