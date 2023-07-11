@@ -20,8 +20,12 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Link as Routerlink } from "react-router-dom";
-import { CreateVendorPlaceBidItem, GetApprovedItemDetailsitemId } from "../../../services/Vendor/Vendorservices";
+import {
+  CreateVendorPlaceBidItem,
+  GetApprovedItemDetailsitemId,
+} from "../../../services/Vendor/Vendorservices";
 import { DateFormat, MoneyFormat } from "../../../services/dataFormats";
+import { user } from "../../Usermanage";
 
 function TenderDetails() {
   const [bidValue, setbidValue] = useState(null);
@@ -32,7 +36,8 @@ function TenderDetails() {
 
   const calculateTenderValue = () => {
     if (bidValue && data && data[0]) {
-      const tenderValue = parseFloat(bidValue) * parseFloat(data[0].totalQuantity);
+      const tenderValue =
+        parseFloat(bidValue) * parseFloat(data[0].totalQuantity);
       return isNaN(tenderValue) ? "" : MoneyFormat(tenderValue);
     }
     return "";
@@ -40,6 +45,8 @@ function TenderDetails() {
 
   const { itemId } = useParams();
   const [data, setData] = useState(null);
+  const vendorId = user.id;
+  // console.log(vendorId);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -58,15 +65,9 @@ function TenderDetails() {
     return <p style={{ marginLeft: "20px" }}>Loading...</p>;
   }
 
-  const vendorId = "HEL9863";
-
   const handlePlaceBid = async () => {
     try {
-      await CreateVendorPlaceBidItem(
-        vendorId,
-        itemId,
-        bidValue
-      );
+      await CreateVendorPlaceBidItem(vendorId, itemId, bidValue);
     } catch (error) {
       console.log(error);
     }
@@ -208,7 +209,7 @@ function TenderDetails() {
         <div className={styles.downSection}>
           <h3 className={styles.header2}></h3>
           <div className={styles.tableNbutton}>
-          <div onClick={handlePlaceBid}>
+            <div onClick={handlePlaceBid}>
               <Routerlink to={-1}>
                 <Button
                   variant="contained"

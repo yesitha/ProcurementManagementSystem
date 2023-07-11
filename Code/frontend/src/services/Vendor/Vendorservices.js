@@ -29,7 +29,7 @@ export const GetApprovedItemsDetailsvendorId = async (vendorId) => {
 
   export const CreateVendorPlaceBidItem = async (vendorId, itemId, bidValue) => {
     try {
-      const response = await axios.put(
+      const response = await axios.post(
         `${process.env.REACT_APP_API_HOST}/api/Vendor/CreateVendorPlaceBidItem?vendorId=${vendorId}&itemId=${itemId}&bidValue=${bidValue}`
       );
       console.log(response);
