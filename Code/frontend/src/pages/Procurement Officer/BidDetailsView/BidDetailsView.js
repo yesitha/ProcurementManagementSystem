@@ -9,7 +9,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import SearchNoFilter from "../../../components/Search/Search";
 import { Container } from "@mui/system";
 import { Link as Routerlink, useParams } from "react-router-dom";
 import { GetItemBidDetailsitemId } from "../../../services/ProcurementHOD/ProcurementHODServices";
@@ -78,10 +77,6 @@ function BidDetailsView() {
             </Routerlink>
           <h1 className={styles.Header}>{data.itemName}</h1>
           </div>
-        </div>
-
-        <div className={styles.MiddleSection}>
-          <SearchNoFilter className={styles.search} />
         </div>
 
         <div className={styles.downSection}>
