@@ -174,8 +174,6 @@ export const GetApprovedItemsDetailsvendorId = async (vendorId) => {
       data.append('taxIdentificationFile', taxIdentificationFile);
       data.append('insuranceCertificateFile', insuranceCertificateFile);
       data.append('otherDocumentsFile', otherDocumentsFile);
-      
-
       ;
       
       const response = await fetch(`${process.env.REACT_APP_API_HOST}/api/Vendor/RegisterVenderToSystem?address1=${Formdata.address1}&address2=${Formdata.address2}&address3=${Formdata.address3}&businessRegNo=${Formdata.businessRegNo}&city=${Formdata.city}&companyName=${Formdata.companyName}&email=${Formdata.email}&fName=${Formdata.fName}&jobTitle=${Formdata.jobTitle}&lName=${Formdata.lName}&noofEmployes=${Formdata.noofEmployes}&postalCode=${Formdata.postalCode}&registrationType=${Formdata.registrationType}&state=${Formdata.state}&telNo=${Formdata.telNo}&userName=${Formdata.userName}&password=${Formdata.password}&salutation=${Formdata.salutation}`, {

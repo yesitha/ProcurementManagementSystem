@@ -159,7 +159,6 @@ export const fetchAlreadyMembersInTecCommittee = async (mppId) => {
     );
     console.log(response.data);
     return response.data;
-
   } catch (error) {
     console.log(error);
   }
@@ -197,7 +196,25 @@ export const modifyTECCommitteeToDb = async (mppId,data) => {
   }
 };
 
-//Create/Modify BidOpeningCommittee
+export const fetchSppDataFromDb = async () => {
+  try {
+    const response = await axios.get(
+        `${process.env.REACT_APP_API_HOST}/api/PurchasingDivisionHOD/GetSubProcurementPlans`
+    );
+    console.log(response.data);
+    return response;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+
+export const fetchSubProcurementPlanDetails = async (id) => {
+  return await axios.get(
+      `${process.env.REACT_APP_API_HOST}/api/DivisionHOD/SubProcurementPlanItems/${id}`
+  );
+};
 
 export const fetchAlreadyMembersInBidOpCommittee = async (mppId) => {
   try{
