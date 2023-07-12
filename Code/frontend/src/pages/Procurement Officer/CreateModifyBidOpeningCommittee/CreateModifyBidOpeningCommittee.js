@@ -89,6 +89,15 @@ function CreateModifyBidOpeningCommittee() {
       handleSubmit();
     }
   };
+
+  const dataNotification = [
+    {
+      message: 'Pre Bid Meeting Date Scheduled !',
+      type: 'Pre Bid Meeting Date Scheduled',
+      mppId: mppId,
+      committeeType: 'BidOpening'
+    },
+  ];
   
   return (
     <div>
@@ -227,6 +236,8 @@ function CreateModifyBidOpeningCommittee() {
           onClick={handleDivClick}
           >
             <DonePopup
+            CommitteeNotification={true}
+            notificationData={dataNotification[0]}
             text={`Successfully ${value}`}
             title={value}
             styles={{

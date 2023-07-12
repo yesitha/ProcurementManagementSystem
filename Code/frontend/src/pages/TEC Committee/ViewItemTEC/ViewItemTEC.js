@@ -19,6 +19,7 @@ import {
   approve,
 } from "../../../services/TecCommitte/TecCommitteeservices";
 import { DateFormat } from "../../../services/dataFormats";
+import { addNotificationCommittee } from "../../../notification";
 
 const columns = [
   { id: "SubProID", label: "Sub Procurement ID", Width: 300, align: "center" },
@@ -55,6 +56,14 @@ function ViewItemTEC() {
 
   const { itemId, mppId } = useParams();
   const [data, setData] = useState(null);
+  const dataNotification = [
+    {
+      message: 'New Master Procurement plan for Evaluate !',
+      type: 'New Master Procurement plan for Evaluate',
+      mppId: mppId,
+      committeeType :'Procurement'
+    },
+  ];
 
   useEffect(() => {
     const fetchdata = async () => {
@@ -223,12 +232,18 @@ function ViewItemTEC() {
                                 <div
                                   onClick={(event) => {
                                     approve(row.sppId, itemId);
+                                    addNotificationCommittee(dataNotification[0])
                                     event.stopPropagation();
                                   }}
                                 >
                                   <ApprovePopup />
                                 </div>
                                 <RejectPopup
+                                  notificationData={{
+                                    message: 'Item Rejected !',
+                                    type: 'Item Rejected',
+                                    divisionName: row.divisionName,
+                                  }}
                                   link={`${process.env.REACT_APP_API_HOST}/api/TECCommittee/UpdateTecCommitteeStatus?sppId=${row.sppId}&itemId=${itemId}&tecCommitteeStatus=reject&tecCommitteeComment=$rejectedComment`}
                                 />
                               </div>

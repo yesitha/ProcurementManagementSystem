@@ -151,6 +151,19 @@ function EvaluateFinalizedMasterProcurementPlan() {
     setApprovePopupVisible(false);
   };
 
+  const dataNotification = [
+    {
+      message: 'Revise Procurement Plan!',
+      type: 'Revise Procurement Plan',
+      employeeId: 'EMP00003',
+    },
+    {
+      message: 'Approved Items from DG !',
+      type: 'Approved Items from DG',
+      divisionName: 'Finance',
+    }
+  ];
+
   if (data === null) {
     return <p style={{ marginLeft: "20px" }}>Loading...</p>;
   }
@@ -334,6 +347,8 @@ function EvaluateFinalizedMasterProcurementPlan() {
                                       {isRejectPopupVisible && (
                                         <div onClick={() => {}}>
                                           <RejectPopup
+                                            EmployeeeNotification={true}
+                                            notificationData={dataNotification[0]}
                                             link={`${process.env.REACT_APP_API_HOST}/api/DirectorGeneral/UpdateDGStatus?mppId=${mppId}&itemId=${row.itemId}&DGStatus=reject&DGComment=$rejectedComment`}
                                           />
                                         </div>
@@ -361,6 +376,7 @@ function EvaluateFinalizedMasterProcurementPlan() {
         </div>
         <div className={styles.efmpp_button}>
           <DonePopup
+             notificationData={dataNotification[1]}
             text={"Successfully informed Procurement Officer"}
             title={"Permission For Raising PO"}
             styles={{

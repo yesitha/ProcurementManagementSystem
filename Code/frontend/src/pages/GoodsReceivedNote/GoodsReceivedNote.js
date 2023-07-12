@@ -88,7 +88,14 @@ export default function GoodsReceivedNote() {
     return <div>Loading...</div>;
   }
 
-  const text = `Successfully sent GRN to vendor ${data.vendorName}`;
+  const text = `Successfully sent GRN to vendor ${data.vendorName}`; 
+  const dataNotification = [
+    {
+      message: 'New GRN Created !',
+      type: 'New GRN',
+      vendorId: data.vendorId,
+    },
+  ];
 
   return (
     <div style={{ overflowX: "hidden" }}>
@@ -249,6 +256,8 @@ export default function GoodsReceivedNote() {
               }}
             >
               <DonePopup
+                vendorByID={true}
+                notificationData={dataNotification[0]}
                 text={text}
                 title="SEND TO VENDORS"
                 styles={{

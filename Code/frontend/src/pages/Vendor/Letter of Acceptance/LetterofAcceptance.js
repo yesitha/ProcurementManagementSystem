@@ -25,6 +25,7 @@ import { GetApprovedItemDetailsitemId, GetLetterAcceptenceData, updateLetterOfAc
 import { DateFormat, MoneyFormat } from "../../../services/dataFormats";
 import { PDFViewer, Document, Page, Text,pdf,StyleSheet,View } from '@react-pdf/renderer';
 import { saveAs } from 'file-saver';
+import {user} from "../../Usermanage";
 // const FileInput = () => {
 //     const [selectedImage, setSelectedImage] = useState(5);
 //     const [imageUrl, setImageUrl] = useState(5);
@@ -36,7 +37,7 @@ import { saveAs } from 'file-saver';
 //     }, [selectedImage]);
 // }
 
-const venderId ='BUW52'
+const venderId =user?user.id:"";
 
 const columns = [
   { id: "DOC", Width: 200, align: "center" },
@@ -160,6 +161,14 @@ function LetterofAcceptance() {
     link.click();
     URL.revokeObjectURL(url);
   };
+
+  const dataNotification = [
+    {
+      message: 'New Letter of Acceptance Submited !',
+      type: 'New Letter of Acceptance',
+      divisionName: 'Finance',
+    },
+  ];
   
  
   
@@ -309,6 +318,7 @@ function LetterofAcceptance() {
               </div>
             </div>
             <DonePopup
+              notificationData={dataNotification[0]}
               text={"Successfully Submitted"}
               title={"Submit"}
               sx={{

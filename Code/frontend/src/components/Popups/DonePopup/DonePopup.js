@@ -8,7 +8,7 @@ import DocumentDownload from "../../../images/DocumentDownload.png";
 import CloseIcon from "@mui/icons-material/Close";
 import { Button } from "@mui/material";
 import { Link as Routerlink } from "react-router-dom";
-import { addNotification } from "../../../notification";
+import { addNotification, addNotificationCommittee, addNotificationEmpId, addNotificationVendorByID } from "../../../notification";
 
 const style = {
   position: "absolute",
@@ -23,7 +23,7 @@ const style = {
   p: 3,
 };
 
-export default function BasicModal({ text, title, styles, notificationData }) {
+export default function BasicModal(props) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
     setOpen(true);
@@ -38,8 +38,8 @@ export default function BasicModal({ text, title, styles, notificationData }) {
 
   return (
     <div>
-      <Button onClick={handleOpen} variant="contained" sx={styles}>
-        {title}
+      <Button onClick={handleOpen} variant="contained" sx={props.styles}>
+        {props.title}
       </Button>
       <Modal
         open={open}
@@ -75,7 +75,7 @@ export default function BasicModal({ text, title, styles, notificationData }) {
             sx={{ mt: 1, color: "#A3A3A3" }}
             align="center"
           >
-            {text}
+            {props.text}
           </Typography>
           <div
             style={{
@@ -86,10 +86,33 @@ export default function BasicModal({ text, title, styles, notificationData }) {
             }}
           >
             <Button
-              onClick={() => {
+              onClick={async () => {
+
+          if(!props.dualWithTwoTypes){
+            if(props.CommitteeNotification){
+              addNotificationCommittee(props.notificationData);
+              
+            }else if(props.EmployeeeNotification){
+              addNotificationEmpId(props.notificationData);
+            }else if(props.vendorByID){
+              addNotificationVendorByID(props.notificationData);
+            }
+            
+            else{
+              addNotification(props.notificationData);
+              
+            }
+          }else{
+            
+            await addNotificationCommittee(props.notificationData2);
+            await addNotification(props.notificationData)
+            
+          }
+
                 
-               addNotification(notificationData);
-                    handleClose();
+                
+              
+                   handleClose();
                
                
               }}
