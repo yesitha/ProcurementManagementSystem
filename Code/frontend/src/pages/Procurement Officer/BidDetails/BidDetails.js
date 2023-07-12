@@ -1,6 +1,5 @@
 import React, { useState ,useEffect} from "react";
 import styles from "./BidDetails.module.css";
-import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { Button, IconButton, Paper } from "@mui/material";
 import Table from "@mui/material/Table";
@@ -10,7 +9,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import SearchNoFilter from "../../../components/Search/Search";
 import { Container } from "@mui/system";
 import { Link as Routerlink } from "react-router-dom";
 import { GetBidDetails } from "../../../services/ProcurementHOD/ProcurementHODServices";
@@ -79,10 +77,7 @@ function BidDetails() {
           </div>
         </div>
 
-        <div className={styles.MiddleSection}>
-          <SearchNoFilter className={styles.search} />
-        </div>
-
+        
         <div className={styles.downSection}>
           <Paper
             className={styles.baseTableContainer}

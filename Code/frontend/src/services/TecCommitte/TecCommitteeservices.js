@@ -1,9 +1,9 @@
 import axios from "axios";
 
-export const GetMasterProcurementPlan = async (userId) => {
+export const GetMasterProcurementPlan = async (committeeMemberId) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_HOST}/api/TECCommittee/GetMasterProcurementPlans/${userId}`
+        `${process.env.REACT_APP_API_HOST}/api/TECCommittee/GetMasterProcurementPlans/${committeeMemberId}`
       );
       console.log(response);
       return response.data;
@@ -16,7 +16,7 @@ export const GetMasterProcurementPlan = async (userId) => {
   export const GetMasterProcurementPlanmppid = async (mppId) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_HOST}/api/TECCommittee/GetMasterProcurementPlans${mppId}`
+        `${process.env.REACT_APP_API_HOST}/api/TECCommittee/GetMasterProcurementPlans/${mppId}`
       );
       console.log(response);
       return response.data;  

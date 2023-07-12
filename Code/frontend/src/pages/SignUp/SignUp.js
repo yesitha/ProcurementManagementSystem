@@ -278,7 +278,8 @@ export default function Signup() {
                         {...register("password", {
                           required: "Password Required",
                           pattern: {
-                            value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                            value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d#@$]{8,}$/
+                            ,
                             message:
                                 "Password must contain Minimum eight characters, at least one letter and one number",
                           },

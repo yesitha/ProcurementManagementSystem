@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./ViewItemTEC.module.css";
-import { Container, IconButton, Paper, Typography } from "@mui/material";
+import { Container, IconButton, Paper, Tooltip, Typography } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import "../../../fonts.css";
 import Table from "@mui/material/Table";
@@ -19,6 +19,7 @@ import {
   approve,
 } from "../../../services/TecCommitte/TecCommitteeservices";
 import { DateFormat } from "../../../services/dataFormats";
+import { addNotificationCommittee } from "../../../notification";
 
 const columns = [
   { id: "SubProID", label: "Sub Procurement ID", Width: 300, align: "center" },
@@ -55,6 +56,14 @@ function ViewItemTEC() {
 
   const { itemId, mppId } = useParams();
   const [data, setData] = useState(null);
+  const dataNotification = [
+    {
+      message: 'New Master Procurement plan for Evaluate !',
+      type: 'New Master Procurement plan for Evaluate',
+      mppId: mppId,
+      committeeType :'Procurement'
+    },
+  ];
 
   useEffect(() => {
     const fetchdata = async () => {
@@ -71,7 +80,7 @@ function ViewItemTEC() {
   }, []);
 
   if (data === null) {
-    return <p></p>;
+    return <p>Loading...</p>;
   }
 
   return (
@@ -189,7 +198,19 @@ function ViewItemTEC() {
                           </TableCell>
                           <TableCell align="center">{row.quantity}</TableCell>
                           <TableCell align="center">
-                            {row.specification}
+                            <Tooltip title={row.specification}>
+                              <span
+                                style={{
+                                  display: "inline-block",
+                                  maxWidth: "150px",
+                                  overflow: "hidden",
+                                  textOverflow: "ellipsis",
+                                  whiteSpace: "nowrap",
+                                }}
+                              >
+                                {row.specification}
+                              </span>
+                            </Tooltip>
                           </TableCell>
                           <TableCell align="center">
                             {row.recommendedVendors}
@@ -198,7 +219,12 @@ function ViewItemTEC() {
                             {DateFormat(row.expectedDeliveryDate)}
                           </TableCell>
                           <TableCell align="center">
-                            {<EvidenceOfAthorization sppId={row.sppId} itemId={itemId}/>}
+                            {
+                              <EvidenceOfAthorization
+                                sppId={row.sppId}
+                                itemId={itemId}
+                              />
+                            }
                           </TableCell>
                           <TableCell align="center">
                             {
@@ -206,12 +232,18 @@ function ViewItemTEC() {
                                 <div
                                   onClick={(event) => {
                                     approve(row.sppId, itemId);
+                                    addNotificationCommittee(dataNotification[0])
                                     event.stopPropagation();
                                   }}
                                 >
                                   <ApprovePopup />
                                 </div>
                                 <RejectPopup
+                                  notificationData={{
+                                    message: 'Item Rejected !',
+                                    type: 'Item Rejected',
+                                    divisionName: row.divisionName,
+                                  }}
                                   link={`${process.env.REACT_APP_API_HOST}/api/TECCommittee/UpdateTecCommitteeStatus?sppId=${row.sppId}&itemId=${itemId}&tecCommitteeStatus=reject&tecCommitteeComment=$rejectedComment`}
                                 />
                               </div>

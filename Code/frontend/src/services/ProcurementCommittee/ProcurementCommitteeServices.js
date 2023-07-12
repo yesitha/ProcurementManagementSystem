@@ -20,7 +20,7 @@ export const GetMasterProcurementPlans = async () => {
   export const GetMasterProcurementPlanmppid = async (mppId) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_HOST}/api/ProcurementCommittee/GetMasterProcurementPlans${mppId}`
+        `${process.env.REACT_APP_API_HOST}/api/ProcurementCommittee/GetMasterProcurementPlans/${mppId}`
       );
       console.log(response);
       return response.data;  
@@ -29,6 +29,19 @@ export const GetMasterProcurementPlans = async () => {
       throw error;
     }
   }; 
+
+  export const GetMasterProcurementPlanmppidPC = async (mppId) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_HOST}/api/ProcurementCommittee/GetMasterProcurementPlans${mppId}`
+      );
+      console.log(response);
+      return response.data;  
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
 
   export const GetItemListmppid = async (mppId) => {
     try {

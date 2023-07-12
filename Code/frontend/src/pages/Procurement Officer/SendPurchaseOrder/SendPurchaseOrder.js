@@ -78,6 +78,15 @@ function SendPurchaseOrder() {
     fetchData();
   }, []);
 
+  const dataNotification = [
+    {
+      message: 'New Purchase Order Created !',
+      type: 'New Purchase Order',
+      vendorId: poVenderDetails.vendorId,
+    },
+  ];
+
+
   const handlePrint = () => {
     const printContent = document.getElementById("print-area");
     if (printContent) {
@@ -316,6 +325,8 @@ function SendPurchaseOrder() {
                                             specialComment(poId, comment);
                                           }}>
             <DonePopup
+            vendorByID={true}
+            notificationData={dataNotification[0]}
               text={"Successfully sent PO to Vendor"}
               title={"SEND TO VENDOR"}
               styles={{

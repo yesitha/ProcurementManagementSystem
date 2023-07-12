@@ -29,6 +29,7 @@ import { vendors } from "../../users/vendors.js";
 import { Link as Routerlink } from "react-router-dom";
 import { fetchDatafromDB } from "../../services/PurchasingDivisionHOD/PurchasingDivisionHOD.js";
 import { useEffect } from "react";
+import { addNotification } from "../../notification";
 
 
 function RequesttoInitiateSubProcurementPlan() {
@@ -169,6 +170,14 @@ function RequesttoInitiateSubProcurementPlan() {
     setAge(event.target.value);
   };
 
+  const dataNotification = [
+    {
+      message: 'New Master Procurement plan Created !',
+      type: 'New Master Procurement plan for Evaluate',
+      divisionName: 'Finance',
+    },
+  ];
+
   return (
     <div>
       <Container
@@ -252,6 +261,7 @@ function RequesttoInitiateSubProcurementPlan() {
                         <TableCell align="center">{row.statusName}</TableCell>
                         <TableCell align="center">
                           <Button
+                            onClick={() => addNotification(dataNotification[0])}
                             type="submit"
                             variant="contained"
                             sx={{ mt: 2, mb: 2, borderRadius: 4 }}

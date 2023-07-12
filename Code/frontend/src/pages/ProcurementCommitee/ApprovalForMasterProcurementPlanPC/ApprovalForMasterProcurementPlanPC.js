@@ -17,7 +17,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { Link as Routerlink, useParams } from "react-router-dom";
-import {GetMasterProcurementPlanmppid} from "../../../services/ProcurementCommittee/ProcurementCommitteeServices";
+import {GetMasterProcurementPlanmppid, GetMasterProcurementPlanmppidPC} from "../../../services/ProcurementCommittee/ProcurementCommitteeServices";
 import {GetItemListmppid} from "../../../services/ProcurementCommittee/ProcurementCommitteeServices";
 import { DateFormat, MoneyFormat } from "../../../services/dataFormats";
 
@@ -50,7 +50,7 @@ function ApprovalForMasterProcurementPlan() {
   useEffect(() => {
     const fetchdata = async () => {
       try {
-        const response = await GetMasterProcurementPlanmppid(mppId);
+        const response = await GetMasterProcurementPlanmppidPC(mppId);
         const title = response;
         settitle(title);
       } catch (error) {

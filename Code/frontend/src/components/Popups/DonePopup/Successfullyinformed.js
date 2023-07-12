@@ -8,6 +8,8 @@ import DocumentDownload from "../../../images/DocumentDownload.png";
 import CloseIcon from "@mui/icons-material/Close";
 import { Button } from "@mui/material";
 import { Link as Routerlink } from "react-router-dom";
+import { add } from "date-fns";
+import { addNotification, addNotificationVendors } from "../../../notification";
 
 const style = {
   position: "absolute",
@@ -23,15 +25,31 @@ const style = {
 
 };
 
-export default function Sucessfullyinformed({ name, title, styles }) {
+export default function Sucessfullyinformed(props) {
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
+  const handleOpen = async  () => {
+    
+    setOpen(true);
+    if(props.notificationData){
+
+      if( props.notifyVendors){
+        await addNotification(props.notificationData);
+        await addNotificationVendors(props.notificationData2);
+
+      }else{
+        await addNotification(props.notificationData);
+      }
+       //notify corparate communication devision
+      //notify vendors notification + email
+    }
+      
+  }
   const handleClose = () => setOpen(false);
 
   return (
     <div>
-      <Button onClick={handleOpen} variant="contained" sx={styles}>
-        {title}
+      <Button onClick={handleOpen} variant="contained" sx={props.styles}>
+        {props.title}
       </Button>
       <Modal
         open={open}
@@ -67,7 +85,7 @@ export default function Sucessfullyinformed({ name, title, styles }) {
             sx={{ mt: 1, color: "#A3A3A3" }}
             align="center"
           >
-            Successfully informed {name}
+            Successfully informed {props.name}
           </Typography>
           <div
             style={{

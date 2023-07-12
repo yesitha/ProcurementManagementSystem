@@ -41,38 +41,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 function SearchNoFilter() {
   return (
-    <Search
-      className={styles.search}
-      sx={{ borderRadius: 6, flexDirection: "row" }}
-    >
-      <div className={styles.searchArea}>
-        <div className={styles.searchInput}>
-          <StyledInputBase
-            color="black"
-            placeholder="Search…"
-            inputProps={{ "aria-label": "search" }}
-          />
-        </div>
-        <div className={styles.searchIcons}>
-          <IconButton
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              borderRadius: 50,
-              backgroundColor: "#205295",
-              height: { xs: 25, md: 30, lg: 50 },
-              width: { xs: 25, md: 30, lg: 50 },
-              mt: 1,
-              mr: 1,
-              px: 2,
-              "&:hover": { backgroundColor: "#2c74b3" },
-            }}
-          >
-            <SearchIcon sx={{ color: "#ffffff" }} />
-          </IconButton>
-        </div>
-      </div>
-    </Search>
+   <></>
   );
 }
 

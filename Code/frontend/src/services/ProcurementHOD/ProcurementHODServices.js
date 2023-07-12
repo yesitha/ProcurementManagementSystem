@@ -159,7 +159,6 @@ export const fetchAlreadyMembersInTecCommittee = async (mppId) => {
     );
     console.log(response.data);
     return response.data;
-
   } catch (error) {
     console.log(error);
   }
@@ -181,8 +180,41 @@ export const submitTECCommitteeToDb = async (mppId,data) => {
     throw error;
   }
 };
+export const modifyTECCommitteeToDb = async (mppId,data) => {
+  console.log(data);
+  
+  try {
+    const response = await axios.post(
+      `${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/ModifyTECCommitteeMembers/${mppId}`,data
+    );
+   
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
 
-//Create/Modify BidOpeningCommittee
+export const fetchSppDataFromDb = async () => {
+  try {
+    const response = await axios.get(
+        `${process.env.REACT_APP_API_HOST}/api/PurchasingDivisionHOD/GetSubProcurementPlans`
+    );
+    console.log(response.data);
+    return response;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+
+export const fetchSubProcurementPlanDetails = async (id) => {
+  return await axios.get(
+      `${process.env.REACT_APP_API_HOST}/api/DivisionHOD/SubProcurementPlanItems/${id}`
+  );
+};
 
 export const fetchAlreadyMembersInBidOpCommittee = async (mppId) => {
   try{
@@ -432,6 +464,27 @@ export const GetMasterProcurementPlanStatus = async (mppId) => {
     return response.data;
   } catch (error) {
     console.log(error);
+    throw error;
+  }
+};
+
+export const SetPreBidMeetingDatePO = async (selectedDate) => {
+  console.log(selectedDate);
+  try {
+    const response = await fetch('https://localhost:7102/api/ProcurementOfficer/SetPreBidMeetingDate', {
+      method: 'POST',
+      headers: {
+        'Accept': '*/*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(selectedDate)
+    });
+
+    if (response.ok) {
+      console.log('Date successfully posted!');
+    } else {
+      console.error('Failed to post date:', response.status);
+    } }catch (error) {
     throw error;
   }
 };
