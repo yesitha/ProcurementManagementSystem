@@ -20,7 +20,7 @@ import {
   Button,
 } from "@mui/material";
 import { Rotate90DegreesCcw } from "@mui/icons-material";
-import {fetchMembersForTecCommitee} from "../../services/ProcurementHOD/ProcurementHODServices";
+import {fetchMembersForTecCommitee, modifyTECCommitteeToDb} from "../../services/ProcurementHOD/ProcurementHODServices";
 import{submitTECCommitteeToDb} from "../../services/ProcurementHOD/ProcurementHODServices";
 import {fetchAlreadyMembersInTecCommittee} from "../../services/ProcurementHOD/ProcurementHODServices";
 
@@ -70,11 +70,18 @@ function CreateModifyTECCommittee() {
     setRightTableData(rightTableData.filter((data) => data.employeeId !== row.employeeId));
   };
   const handleSubmit = () => {
-    // Handle form submission or any other logic here
-    submitTECCommitteeToDb(mppId,rightTableData.filter(item => item !== null).map((item) => {
-      return item.employeeId
-      
-    }));
+    if(rightTableData.length>0){
+      modifyTECCommitteeToDb(mppId,rightTableData.filter(item => item !== null).map((item) => {
+        return item.employeeId
+        
+      }));
+    }else{
+      submitTECCommitteeToDb(mppId,rightTableData.filter(item => item !== null).map((item) => {
+        return item.employeeId
+        
+      }));
+    }
+    
     setIsFormSubmitted(true);
   };
 

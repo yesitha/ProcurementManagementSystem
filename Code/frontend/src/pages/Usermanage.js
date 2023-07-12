@@ -165,7 +165,10 @@ const userTypes = {
       { displayName: "View Stock", path: "view-stock" },
       { displayName: "View Assets Registry", path: "view-assets-registry" },
     ],
-    actionButtons: [],
+    actionButtons: [
+     
+      
+    ],
   },
   TecCommitteeMember: {
     list1: [
