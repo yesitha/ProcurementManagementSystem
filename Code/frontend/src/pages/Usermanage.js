@@ -39,11 +39,15 @@ const userTypes = {
       {
         displayName: "Set Pre Bid Meeting Date"
       },
-      { displayName: "Auctions End", path: "auctions-end", number: "1/30" },
-      { displayName: "Internal Auditor Report Availble", path: "internal-auditor-report-availble" },
+      { displayName: "Auctions Scheduled", path: "auctions-end" },
+      { displayName: "Internal Auditor Report Available", path: "internal-auditor-report-availble" },
       { displayName: "Approved Items from DG", path: "approved-items-from-dg", number: "10" },
       { displayName: "Items Shipped By Vendors", path: "item-rejected-by-vendors", number: "10" },
       { displayName: "New Invoices Available", path: "new-invoices-available", number: "10" },
+      {
+        displayName: "New Letter of Acceptance",
+        path: "evaluate-vendor-fianace-status",
+      }
     ],
   },
   HOD: {
@@ -83,6 +87,7 @@ const userTypes = {
       { displayName: "View Minutes of Procurement Committee", path: "view-minutes-of-procurement-committee" },
     ],
     actionButtons: [
+      { displayName: "New TEC Report", path: "view-tec-report"},
       { displayName: "New Master Procurement plan for Evaluate", path: "new-master-procurement-plan-for-evaluate-PC", number: "2" },
       { displayName: "New Finalized Master Procurement plan", path: "new-finalized-master-procurement-plan-PC", number: "3" },
     ],
@@ -91,7 +96,7 @@ const userTypes = {
     list1: [],
     list2: ["Vendors and Items", "Budgets", "Committee Members", "Inventory", "Settings"],
     actions: [{ displayName: "Publish Paper Ad", path: "publish-papaer-ad" }],
-    actionButtons: [],
+    actionButtons: [{ displayName: "Publish Paper Ad", path: "publish-papaer-ad" }],
   },
   Vendor: {
     list1: [
@@ -122,7 +127,7 @@ const userTypes = {
     ],
     list2: ["Settings"],
     actions: [{ displayName: "Manage Auction", path: "manage-auction" }],
-    actionButtons: [{ displayName: "Pre Bid Meeting Date - 2023/06/14" }],
+    actionButtons: [{ displayName: "Pre Bid Meeting Date Scheduled" }],
   },
   InternalAuditor: {
     list1: [
@@ -134,6 +139,7 @@ const userTypes = {
     ],
     actionButtons: [
       { displayName: "New Master Procurement plan for Evaluate", path: "ia-new-master-procurement-plan-for-evaluate", number: "2" },
+      { displayName: "Revise Procurement Plan", path: "IAFinalizedMasterProcurementPlan" },
     ],
   },
   DirectorGeneral: {
@@ -178,7 +184,7 @@ const userTypes = {
     actionButtons: [
       { displayName: "New Master Procurement plan for Evaluate", path: "new-master-procurement-plan-for-evaluate-tec", number: "2" },
       { displayName: "Rejected Item Modified", path: "rejected-item-modified-tec", number: "2" },
-      { displayName: "Auction End", path: "auction-end=tec", number: "2" },
+      { displayName: "Auctions Scheduled", path: "auction-end=tec", number: "2" },
       { displayName: "Vendor Rejected", path: "vendor-rejected-tec", number: "2" },
     ],
   },

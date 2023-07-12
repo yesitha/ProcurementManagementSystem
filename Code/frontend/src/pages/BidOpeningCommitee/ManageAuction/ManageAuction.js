@@ -19,7 +19,7 @@ import {
 } from "../../../services/BidOpeningCommittee/BidOpeningCommitteeServices";
 import {user} from "../../Usermanage"
 
-const emplyoeeId ='ZAC43913'; //This need to get from login
+const emplyoeeId ='EMP00019'; //This need to get from login
 const columns = [
   { id: "ItemID", label: "Item ID", width: 300, align: "center" },
   { id: "ItemName", label: "Item Name", width: 300, align: "center" },
@@ -45,7 +45,7 @@ function ManageAuction() {
       try {
         const response = await GetSubProcurementApprovedItems(committeeMemberId);
         const data = response;
-        // console.log(data);
+        console.log(data);
         setData(data);
         setCopyData(data);
       } catch (error) {
@@ -67,7 +67,7 @@ function ManageAuction() {
   const handleOpeningDateChange = (itemId, event) => {
   const selectedDate = new Date(event.target.value);
   const today = new Date();
-  
+
   // Check if the selected date is from today onwards
   
     const newD = selectedDate.toISOString();
@@ -115,6 +115,20 @@ const handleClosingDateChange = (itemId, event) => {
       return "- -";
     }
   };
+  const dataNotification= [
+    {
+      message: 'Auctions Scheduled !',
+      type: 'Auctions Scheduled',
+      divisionName: 'Finance',
+    },
+    {
+      message: 'Auctions Scheduled !',
+      type: 'Auctions Scheduled',
+      mppId:'MPP00001',
+      committeeType: 'Tec',
+    },
+
+  ];
 
   return (
     <div>
@@ -258,6 +272,9 @@ const handleClosingDateChange = (itemId, event) => {
                               }}
                             >
                               <DonePopup
+                                notificationData={dataNotification[0]}
+                                notificationData2={dataNotification[1]}
+                                dualWithTwoTypes={true}
                                 text={"Successfully Scheduled"}
                                 title={"Schedule"}
                                 color="primary"

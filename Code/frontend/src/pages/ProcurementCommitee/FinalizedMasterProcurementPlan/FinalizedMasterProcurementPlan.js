@@ -119,6 +119,14 @@ function FinalizedMasterProcurementPlan() {
     }
   }, []);
 
+  const dataNotification = [
+    {
+      message: 'New Sub Procurement Plan Created !',
+      type: 'New Sub Procurement Plans',
+      employeeId: 'EMP00003'
+    },
+  ];
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -256,6 +264,8 @@ function FinalizedMasterProcurementPlan() {
         <div className={styles.fmpp_button}>
           {/* <SetPreBidMeetingDate title={"Send to Internal Auditor"} styles={{position: 'absolute', right:'0', bgcolor: '#205295', borderRadius: 5, height: 60, width: 300}}/> */}
           <DonePopup
+            notificationData= {dataNotification[0]}
+            EmployeeeNotification={true}
             text={"Successfully Sent to Internal Auditor"}
             title={"Send to Internal Auditor"}
             styles={{

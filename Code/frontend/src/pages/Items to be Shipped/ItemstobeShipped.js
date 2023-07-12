@@ -108,6 +108,14 @@ export default function ItemstobeShipped() {
     fetchData();
   }, [vendorId]);
 
+  const dataNotification = [
+    {
+      message: 'Items Shipped By Vendors !',
+      type: 'Items Shipped By Vendors',
+      divisionName: 'Finance',
+    },
+  ];
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -256,6 +264,7 @@ export default function ItemstobeShipped() {
           }
         >
           <Successfullyinformed
+            notificationData = {dataNotification[0]}
             styles={{
               position: "absolute",
               right: "5%",

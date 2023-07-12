@@ -17,6 +17,7 @@ import {
   VendorSelectionVidIid,
 } from "../../../services/TecCommitte/TecCommitteeservices";
 import { DateFormat, MoneyFormat } from "../../../services/dataFormats";
+import { addNotificationCommittee } from "../../../notification";
 
 const columns = [
   { id: "ItemId", label: "Item ID", Width: 300, align: "center" },
@@ -34,6 +35,15 @@ const columns = [
   { id: "bidvalue", label: "Bid Value", Width: 300, align: "center" },
   { id: "Venveri", label: "Vendor Verification", Width: 300, align: "center" },
   { id: "act", label: "Action", Width: 300, align: "center" },
+];
+
+const dataNotification = [
+  {
+    message: 'New TEC Report Created!',
+    type: 'New TEC Report',
+    mppId: 'MPP00002',
+    committeeType: 'Procurement'
+  },
 ];
 
 function VendorSelection() {
@@ -213,6 +223,7 @@ function VendorSelection() {
                                     vendor.vendorId,
                                     row.itemId
                                   );
+                                  addNotificationCommittee(dataNotification[0]);
                                   event.stopPropagation();
                                 }}
                                 disabled={

@@ -68,6 +68,14 @@ function Invoice() {
     setTotalAmount(subtotal + taxAmount);
   };
 
+  const dataNotification = [
+    {
+      message: 'New Invoices Available !',
+      type: 'New Invoices Available',
+      divisionName: 'Finance',
+    },
+  ];
+
   let taxAmount = (subtotal * taxRate) / 100;
 
   if (data === null) {
@@ -235,6 +243,7 @@ function Invoice() {
               }}
             >
               <DonePopup
+                notificationDData={dataNotification[0]}
                 text={"Successfully Sent Invoice to Procurement Officer"}
                 title={"SEND INVOICE"}
                 className={styles.btn}

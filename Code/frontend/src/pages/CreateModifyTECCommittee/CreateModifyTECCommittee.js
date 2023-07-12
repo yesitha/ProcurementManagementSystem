@@ -84,6 +84,15 @@ function CreateModifyTECCommittee() {
       handleSubmit();
     }
   };
+  const dataNotification = [
+    {
+      message: 'You have New Master Procurement plan to Evaluate !',
+      type: 'New Master Procurement plan for Evaluate',
+      mppId: mppId,
+      committeeType: 'Tec'
+    },
+  ];
+
   
   return (
     <div>
@@ -223,7 +232,8 @@ function CreateModifyTECCommittee() {
           
           >
             <DonePopup
-            
+            CommitteeNotification={true}
+            notificationData={dataNotification[0]}
             text={`Successfully ${value}`}
             title={value}
             styles={{
