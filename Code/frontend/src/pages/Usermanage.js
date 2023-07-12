@@ -55,7 +55,10 @@ const userTypes = {
       { displayName: "Sub Procurment Plan", path: "SubProcurmentPlan" },
     ],
     list2: ["Vendors and Items", "Budgets", "Inventory", "Settings"],
-    actions: [],
+    actions: [
+      { displayName: "Create Sub Procurment Plan", path:"SubProcurmentPlan" },
+
+    ],
     actionButtons: [
       { displayName: "Item Rejected", path: "item-rejected", number: "1" },
     ],

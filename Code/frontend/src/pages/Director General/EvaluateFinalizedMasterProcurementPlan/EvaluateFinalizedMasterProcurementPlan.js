@@ -78,7 +78,7 @@ const auditApproved = (
 const auditRejected = (
   <>
     <Typography sx={{ color: "#9C254D", "&:hover": { cursor: "pointer" } }}>
-      RRJECTED
+      REJECTED
     </Typography>
   </>
 );
