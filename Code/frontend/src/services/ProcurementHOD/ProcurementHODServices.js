@@ -242,6 +242,22 @@ export const submitBidOpCommitteeToDb = async (mppId,data) => {
   }
 };
 
+export const modifyBIDCommitteeToDb = async (mppId,data) => {
+  console.log(data);
+  
+  try {
+    const response = await axios.post(
+      `${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/ModifyBidOpeningCommitteeMembers/${mppId}`,data
+    );
+   
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 export const GetBidDetails = async () => {
   try {
     const response = await axios.get(
