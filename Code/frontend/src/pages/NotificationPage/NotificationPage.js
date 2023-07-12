@@ -36,8 +36,8 @@ import { getNotification, updateNotification } from "../../notification";
 
 //
 
-// const empId = sessionStorage.getItem("user.employeeId");
-const empId = "EMP00005"; // need to get from session storage
+ const empId = user.id;
+
 
 const extractMessagesAndPaths = (notifications, elements) => {
   const result = [];
