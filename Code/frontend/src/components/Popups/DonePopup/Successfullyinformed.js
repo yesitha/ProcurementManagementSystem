@@ -9,7 +9,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { Button } from "@mui/material";
 import { Link as Routerlink } from "react-router-dom";
 import { add } from "date-fns";
-import { addNotification } from "../../../notification";
+import { addNotification, addNotificationVendors } from "../../../notification";
 
 const style = {
   position: "absolute",
@@ -27,11 +27,19 @@ const style = {
 
 export default function Sucessfullyinformed(props) {
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
+  const handleOpen = async  () => {
     
     setOpen(true);
     if(props.notificationData){
-      addNotification(props.notificationData); //notify corparate communication devision
+
+      if( props.notifyVendors){
+        await addNotification(props.notificationData);
+        await addNotificationVendors(props.notificationData2);
+
+      }else{
+        await addNotification(props.notificationData);
+      }
+       //notify corparate communication devision
       //notify vendors notification + email
     }
       

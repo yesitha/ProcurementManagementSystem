@@ -86,6 +86,14 @@ function AuditReport() {
     { id: "Action", label: "Action", Width: 300, align: "center" },
   ];
 
+  const dataNotification = [
+    {
+      message: 'New Items to Evaluate !',
+      type: 'New Items to Evaluate',
+      employeeId: 'EMP00004',
+    },
+  ];
+
   //=======values for 'SelectDropDown.js' as an array=======
   const [mpplist, setMppList] = useState([]);
   const [selectedMppId, setSelectedMppId] = useState("");
@@ -319,6 +327,8 @@ function AuditReport() {
         </div>
         <div className={styles.afmpp_button}>
           <DonePopup
+            notificationData={dataNotification[0]}
+            EmployeeeNotification={true}
             text={"Successfully fowarded to Director General"}
             title={"Forward to DG"}
             styles={{

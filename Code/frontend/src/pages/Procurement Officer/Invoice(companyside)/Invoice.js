@@ -41,6 +41,14 @@ function Invoice() {
     fetchdata();
   }, []);
 
+  const dataNotification = [
+    {
+      message: 'New Sub Procurement Plan Created !',
+      type: 'New Sub Procurement Plans',
+      employeeIdId: 'EMP00005'
+    },
+  ];
+
   if (data === null) {
     return <div>Loading...</div>;
   }
@@ -198,6 +206,8 @@ function Invoice() {
               }}
             >
               <DonePopup
+                EmployeeeNotification={true}
+                notificationData={dataNotification[0]}
                 text={"Invoice Payment Status Updated Successfully."}
                 title={"Mark to Pay"}
                 className={styles.btn}

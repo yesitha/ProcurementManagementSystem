@@ -8,7 +8,7 @@ import DocumentDownload from "../../../images/DocumentDownload.png";
 import CloseIcon from "@mui/icons-material/Close";
 import { Button } from "@mui/material";
 import { Link as Routerlink } from "react-router-dom";
-import { addNotification, addNotificationCommittee } from "../../../notification";
+import { addNotification, addNotificationCommittee, addNotificationEmpId, addNotificationVendorByID } from "../../../notification";
 
 const style = {
   position: "absolute",
@@ -89,10 +89,17 @@ export default function BasicModal(props) {
               onClick={async () => {
 
           if(!props.dualWithTwoTypes){
-            if(!props.CommitteeNotification){
-              addNotification(props.notificationData);
-            }else{
+            if(props.CommitteeNotification){
               addNotificationCommittee(props.notificationData);
+              
+            }else if(props.EmployeeeNotification){
+              addNotificationEmpId(props.notificationData);
+            }else if(props.vendorByID){
+              addNotificationVendorByID(props.notificationData);
+            }
+            
+            else{
+              addNotification(props.notificationData);
               
             }
           }else{

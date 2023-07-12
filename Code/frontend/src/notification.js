@@ -13,6 +13,19 @@ export const addNotification = async (data) => {
     }
     };
 
+    export const addNotificationVendors = async (data) => {
+      console.log(data);
+      if (data) {
+        try {
+            const response = await axios.post(`${process.env.REACT_APP_API_HOST}/api/UserNotifications/NotifyVendor`,data);
+        
+            console.log(response); // Handle the response data here
+          } catch (error) {
+            console.error(error); // Handle error here
+          }
+        }
+        };
+
     export const addNotificationCommittee = async (data) => {
       console.log(data);
       if (data) {
@@ -25,6 +38,32 @@ export const addNotification = async (data) => {
           }
         }
         };
+
+        export const addNotificationEmpId = async (data) => {
+          console.log(data);
+          if (data) {
+            try {
+                const response = await axios.post(`${process.env.REACT_APP_API_HOST}/api/UserNotifications/EmployeeeNotificationById`,data);
+            
+                console.log(response); // Handle the response data here
+              } catch (error) {
+                console.error(error); // Handle error here
+              }
+            }
+            };
+
+            export const addNotificationVendorByID = async (data) => {
+              console.log(data);
+              if (data) {
+                try {
+                    const response = await axios.post(`${process.env.REACT_APP_API_HOST}/api/UserNotifications/NotifyVendornById`,data);
+                
+                    console.log(response); // Handle the response data here
+                  } catch (error) {
+                    console.error(error); // Handle error here
+                  }
+                }
+                };
     
 export const getNotification = async (empId) => {
   try {

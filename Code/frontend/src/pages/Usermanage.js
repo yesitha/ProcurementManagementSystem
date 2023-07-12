@@ -44,6 +44,10 @@ const userTypes = {
       { displayName: "Approved Items from DG", path: "approved-items-from-dg", number: "10" },
       { displayName: "Items Shipped By Vendors", path: "item-rejected-by-vendors", number: "10" },
       { displayName: "New Invoices Available", path: "new-invoices-available", number: "10" },
+      {
+        displayName: "New Letter of Acceptance",
+        path: "evaluate-vendor-fianace-status",
+      }
     ],
   },
   HOD: {
@@ -132,6 +136,7 @@ const userTypes = {
     ],
     actionButtons: [
       { displayName: "New Master Procurement plan for Evaluate", path: "ia-new-master-procurement-plan-for-evaluate", number: "2" },
+      { displayName: "Revise Procurement Plan", path: "IAFinalizedMasterProcurementPlan" },
     ],
   },
   DirectorGeneral: {

@@ -80,6 +80,12 @@ function ViewMasterProcurementPlan() {
       type: 'Publish Paper Ad',
       divisionName: 'CoparateCommunication',
     },
+    {
+      message: 'Publish Paper Ad !',
+      type: 'Publish Paper Ad',
+      
+    },
+
   ];
   return (
     <div className={styles.outer}>
@@ -178,7 +184,7 @@ function ViewMasterProcurementPlan() {
                           <TableCell align="center">
                             {row.recommendedVendors}
                           </TableCell>
-                          <TableCell align="center">{<Sucessfullyinformed name="Vendor" title="Notify Vendor" notificationData={dataNotification[0]}/>}</TableCell>
+                          <TableCell align="center">{<Sucessfullyinformed notifyVendors={true} notificationData={dataNotification[0]} name="Vendor" title="Notify Vendor" notificationData2={dataNotification[1]}/>}</TableCell>
                         </TableRow>
                       ))}
                 </TableBody>

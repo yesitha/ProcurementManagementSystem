@@ -10,7 +10,7 @@ import { Button } from "@mui/material";
 import styles from "./RejectPopup.module.css";
 import { Container } from "@mui/system";
 import axios from "axios";
-import { addNotification } from "../../../notification";
+import { addNotification, addNotificationEmpId } from "../../../notification";
 
 const style = {
   position: "absolute",
@@ -38,7 +38,13 @@ export default function BasicModal(props) {
   const handleOkClick = async () => {
     setCommentAddedLink(manipulatedString);
     if(props.notificationData){
-    addNotification(props.notificationData);
+      if(props.EmployeeeNotification){
+       
+        await addNotificationEmpId(props.notificationData);
+      }else{
+        await addNotification(props.notificationData);
+      }
+    
     }
     try {
       const response = await axios.put(manipulatedString);
