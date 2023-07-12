@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./VendorSelection.module.css";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { IconButton, Paper } from "@mui/material";
+import { Button, IconButton, Paper, Tooltip } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -12,8 +12,10 @@ import TableRow from "@mui/material/TableRow";
 import { Container } from "@mui/system";
 import VendorDetails from "../../../components/Popups/VendorDetails/VendorDetails";
 import { Link as Routerlink } from "react-router-dom";
-import DonePopup from "../../../components/Popups/DonePopup/DonePopup";
-import { GetVendorSelectionBidDetails, VendorSelectionVidIid } from "../../../services/TecCommitte/TecCommitteeservices";
+import {
+  GetVendorSelectionBidDetails,
+  VendorSelectionVidIid,
+} from "../../../services/TecCommitte/TecCommitteeservices";
 import { DateFormat, MoneyFormat } from "../../../services/dataFormats";
 
 const columns = [
@@ -61,6 +63,15 @@ function VendorSelection() {
     fetchData();
   }, []);
 
+  const isAnyVendorSelected = (bidinfo) => {
+    return bidinfo.some((vendor) => vendor.bidStatus === "Selected");
+  };
+
+  const handleSelect = async (vendorId, itemId) => {
+    await VendorSelectionVidIid(vendorId, itemId);
+    window.location.reload(); // Refresh the page after updating the backend
+  };
+
   return (
     <div>
       <Container
@@ -86,7 +97,6 @@ function VendorSelection() {
 
         <div className={styles.downSection}>
           <Paper
-            className={styles.baseTableContainer}
             elevation={6}
             sx={{
               mr: {
@@ -108,7 +118,7 @@ function VendorSelection() {
                       <TableCell
                         key={column.id}
                         align={column.align}
-                        style={{ maxWidth: column.Width }}
+                        style={{ maxWidth: column.Width, fontWeight: "bold" }}
                       >
                         {column.label}
                       </TableCell>
@@ -122,57 +132,119 @@ function VendorSelection() {
                         page * rowsPerPage,
                         page * rowsPerPage + rowsPerPage
                       )
-                      .map((row, index) => (
-                        <TableRow
-                          hover
-                          role="checkbox"
-                          tabIndex={-1}
-                          key={index}
-                        >
-                          <TableCell align="center">{row.itemId}</TableCell>
-                          <TableCell align="center">{row.itemName}</TableCell>
-                          <TableCell align="center">
-                            {row.totalQuantity}
-                          </TableCell>
-                          <TableCell align="center">
-                            {row.specification}
-                          </TableCell>
-                          <TableCell align="center">
-                            {DateFormat(row.expectedDeliveryDate)}
-                          </TableCell>
-                          <TableCell align="center">
-                            {row.bidinfo[0].vendorId}
-                          </TableCell>
-                          <TableCell align="center">
-                            {row.bidinfo[0].vendorName}
-                          </TableCell>
-                          <TableCell align="center">
-                            {MoneyFormat(row.bidinfo[0].bidValue)}
-                          </TableCell>
-                          <TableCell align="center">
-                            { <VendorDetails vendorId={row.bidinfo[0].vendorId} vendorName={row.bidinfo[0].vendorName} />}
-                          </TableCell>
-                          <TableCell align="center">
-                            {
-                              <div
-                                  onClick={(event) => {
-                                    VendorSelectionVidIid(row.bidinfo[0].vendorId, row.itemId);
-                                    event.stopPropagation();
-                                  }}
+                      .map((row, index) =>
+                        row.bidinfo.map((vendor, vendorIndex) => (
+                          <TableRow
+                            hover
+                            role="checkbox"
+                            tabIndex={-1}
+                            key={`${index}-${vendorIndex}`}
+                            style={{
+                              backgroundColor:
+                                index % 2 === 0 ? "#FFFFFF" : "#F2F2F2",
+                            }}
+                          >
+                            {vendorIndex === 0 && (
+                              <>
+                                <TableCell
+                                  rowSpan={row.bidinfo.length}
+                                  align="center"
                                 >
-                              <DonePopup
-                                text={"Vendor Selection Successfully"}
-                                title={"Select"}
-                                styles={{
-                                  mb: "10px",
-                                  ml: "10px",
-                                }}
+                                  {row.itemId}
+                                </TableCell>
+                                <TableCell
+                                  rowSpan={row.bidinfo.length}
+                                  align="center"
+                                >
+                                  {row.itemName}
+                                </TableCell>
+                                <TableCell
+                                  rowSpan={row.bidinfo.length}
+                                  align="center"
+                                >
+                                  {row.totalQuantity}
+                                </TableCell>
+                                <TableCell
+                                  rowSpan={row.bidinfo.length}
+                                  align="center"
+                                >
+                                  <Tooltip title={row.specification}>
+                                    <span
+                                      style={{
+                                        display: "inline-block",
+                                        maxWidth: "150px",
+                                        overflow: "hidden",
+                                        textOverflow: "ellipsis",
+                                        whiteSpace: "nowrap",
+                                      }}
+                                    >
+                                      {row.specification}
+                                    </span>
+                                  </Tooltip>
+                                </TableCell>
+                                <TableCell
+                                  rowSpan={row.bidinfo.length}
+                                  align="center"
+                                >
+                                  {DateFormat(row.expectedDeliveryDate)}
+                                </TableCell>
+                              </>
+                            )}
+                            <TableCell align="center">
+                              {vendor.vendorId}
+                            </TableCell>
+                            <TableCell align="center">
+                              {vendor.vendorName}
+                            </TableCell>
+                            <TableCell align="center">
+                              {MoneyFormat(vendor.bidValue)}
+                            </TableCell>
+                            <TableCell align="center">
+                              <VendorDetails
+                                vendorId={vendor.vendorId}
+                                vendorName={vendor.vendorName}
                               />
-                              </div>
-                            }
-                          </TableCell>
-                        </TableRow>
-                      ))}
+                            </TableCell>
+                            <TableCell align="center">
+                              <Button
+                                variant="contained"
+                                onClick={(event) => {
+                                  VendorSelectionVidIid(
+                                    vendor.vendorId,
+                                    row.itemId
+                                  );
+                                  event.stopPropagation();
+                                }}
+                                disabled={
+                                  vendor.bidStatus === "Selected" ||
+                                  isAnyVendorSelected(row.bidinfo)
+                                }
+                                style={{
+                                  backgroundColor:
+                                    vendor.bidStatus === "Selected"
+                                      ? "#227C70"
+                                      : "#205295",
+                                  color: "#ffffff",
+                                  pointerEvents:
+                                    vendor.bidStatus === "Selected" ||
+                                    isAnyVendorSelected(row.bidinfo)
+                                      ? "none"
+                                      : "auto",
+                                  opacity:
+                                    vendor.bidStatus === "Selected" ||
+                                    isAnyVendorSelected(row.bidinfo)
+                                      ? "0.5"
+                                      : "1",
+                                }}
+                              >
+                                {vendor.bidStatus === "Selected"
+                                  ? "Selected"
+                                  : "Select"}
+                              </Button>
+                            </TableCell>
+                          </TableRow>
+                        ))
+                      )}
                 </TableBody>
               </Table>
             </TableContainer>
