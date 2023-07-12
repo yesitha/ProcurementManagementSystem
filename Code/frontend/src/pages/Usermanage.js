@@ -24,10 +24,6 @@ const userTypes = {
         displayName: "Evaluate Vendor Fianace Status",
         path: "evaluate-vendor-fianace-status",
       },
-      {
-        displayName: "View Master Procurement Plan",
-        path: "view-masterprocurement-plan",
-      },
     ],
 
     actionButtons : [

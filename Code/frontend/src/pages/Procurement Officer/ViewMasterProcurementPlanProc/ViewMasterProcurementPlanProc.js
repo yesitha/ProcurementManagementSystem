@@ -3,26 +3,7 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import styles from "./ViewMasterProcurementPlanProc.module.css";
 import { DateFormat } from "../../../services/dataFormats";
 import { MoneyFormat } from "../../../services/dataFormats";
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  FormControl,
-  FormControlLabel,
-  IconButton,
-  InputLabel,
-  List,
-  ListItem,
-  ListItemText,
-  MenuItem,
-  Paper,
-  Select,
-  Switch,
-  Typography,
-} from "@mui/material";
+import { Button, IconButton, Paper } from "@mui/material";
 import SearchNoFilter from "../../../components/SearchNoFilter/SearchNoFilter";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -50,23 +31,6 @@ const columns = [
   { id: "Action2", label: "Action", Width: 200, align: "center" },
   { id: "Action3", label: "Action", Width: 200, align: "center" },
 ];
-function createData(
-  MasterProcurementPlanID,
-  GrandTotal,
-  CreationDate,
-  Status,
-  Action1,
-  Action2
-) {
-  return {
-    MasterProcurementPlanID,
-    GrandTotal,
-    CreationDate,
-    Status,
-    Action1,
-    Action2,
-  };
-}
 
 function ViewMasterProcurementPlanProc() {
   const [page, setPage] = React.useState(0);
@@ -99,7 +63,6 @@ function ViewMasterProcurementPlanProc() {
     console.log(data);
   }, []);
 
-
   useEffect(() => {
     if (Array.isArray(data)) {
       const fetchData = async () => {
@@ -113,12 +76,11 @@ function ViewMasterProcurementPlanProc() {
         console.log(newData);
         setDataWithStatus(newData);
       };
-  
+
       fetchData();
     }
   }, [data]);
 
-  
   return (
     <div>
       <div className={styles.NotificationPageContainer__header}>
@@ -133,9 +95,6 @@ function ViewMasterProcurementPlanProc() {
           {" "}
           Master Procurement Plan
         </h1>
-      </div>
-      <div className={styles.MiddleSection}>
-        <SearchNoFilter className={styles.search} />
       </div>
       <div className={styles.table}>
         <Paper
@@ -162,7 +121,7 @@ function ViewMasterProcurementPlanProc() {
                     <TableCell
                       key={column.id}
                       align={column.align}
-                      style={{ maxWidth: column.Width }}
+                      style={{ maxWidth: column.Width, fontWeight: "bold" }}
                     >
                       {column.label}
                     </TableCell>
@@ -174,7 +133,17 @@ function ViewMasterProcurementPlanProc() {
                   dataWithStatus
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) => (
-                      <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={index}
+                        style={{
+                          backgroundColor:
+                            index % 2 === 0 ? "#FFFFFF" : "#F2F2F2",
+                        }}
+                      >
+                        {" "}
                         <TableCell align="center">{row.mppId}</TableCell>
                         <TableCell align="center">
                           {MoneyFormat(row.estimatedGrandTotal)}
@@ -183,12 +152,16 @@ function ViewMasterProcurementPlanProc() {
                           {DateFormat(row.creationDate)}
                         </TableCell>
                         <TableCell align="center">
-                          <Routerlink to={`/master-procurement-plan-status/${row.mppId}`}>
+                          <Routerlink
+                            to={`/master-procurement-plan-status/${row.mppId}`}
+                          >
                             <Visibility />
                           </Routerlink>
                         </TableCell>
                         <TableCell>
-                          <Routerlink to={`/view-master-procurement-plan/${row.mppId}`}>
+                          <Routerlink
+                            to={`/view-master-procurement-plan/${row.mppId}`}
+                          >
                             <Button
                               className={styles.ViewButton}
                               variant="contained"
@@ -199,60 +172,78 @@ function ViewMasterProcurementPlanProc() {
                             </Button>
                           </Routerlink>
                         </TableCell>
-                        
                         <TableCell align="center">
-                        {!row.status ? ( <Routerlink to={`/create-modify-teccommittee/${row.mppId}`}>
-                            <Button
-                              className={styles.ViewButton}
-                              variant="contained"
-                              sx={{ borderRadius: 8, px: { xs: 2, md: 5 },backgroundColor: "#227C70" ,':hover': {
-                                backgroundColor: '#227C70',
-                              }, }}
+                          {!row.status ? (
+                            <Routerlink
+                              to={`/create-modify-teccommittee/${row.mppId}`}
                             >
-                              {" "}
-                              Modify Tec <br />
-                              Committee{" "}
-                            </Button>
-                          </Routerlink>) : ( <Routerlink to={`/create-modify-teccommittee/${row.mppId}`}>
-                            <Button
-                              className={styles.ViewButton}
-                              variant="contained"
-                              sx={{ borderRadius: 8, px: { xs: 2, md: 5 }}}
+                              <Button
+                                className={styles.ViewButton}
+                                variant="contained"
+                                sx={{
+                                  borderRadius: 8,
+                                  px: { xs: 2, md: 5 },
+                                  backgroundColor: "#227C70",
+                                  ":hover": {
+                                    backgroundColor: "#227C70",
+                                  },
+                                }}
+                              >
+                                {" "}
+                                Modify Tec <br />
+                                Committee{" "}
+                              </Button>
+                            </Routerlink>
+                          ) : (
+                            <Routerlink
+                              to={`/create-modify-teccommittee/${row.mppId}`}
                             >
-                              {" "}
-                              Appoint Tec <br />
-                              Committee{" "}
-                            </Button>
-                          </Routerlink>)}
-                         
+                              <Button
+                                className={styles.ViewButton}
+                                variant="contained"
+                                sx={{ borderRadius: 8, px: { xs: 2, md: 5 } }}
+                              >
+                                {" "}
+                                Appoint Tec <br />
+                                Committee{" "}
+                              </Button>
+                            </Routerlink>
+                          )}
                         </TableCell>
                         <TableCell align="center">
-                        {!row.status ? (
-  <Routerlink to={`/create-modify-bidopeningC/${row.mppId}`}>
-    <Button
-      className={styles.ViewButton}
-      variant="contained"
-      sx={{ borderRadius: 8, px: { xs: 2, md: 5 },backgroundColor: "#227C70",':hover': {
-        backgroundColor: '#227C70',
-      }, }}
-    >
-      Modify BidOpening
-      <br />
-      Committee
-    </Button>
-  </Routerlink>
-) : (
-  <Button
-    className={styles.ViewButton}
-    variant="contained"
-    sx={{ borderRadius: 8, px: { xs: 2, md: 5 } }}
-    disabled
-  >
-    Appoint BidOpening
-    <br />
-    Committee
-  </Button>
-)}
+                          {!row.status ? (
+                            <Routerlink
+                              to={`/create-modify-bidopeningC/${row.mppId}`}
+                            >
+                              <Button
+                                className={styles.ViewButton}
+                                variant="contained"
+                                sx={{
+                                  borderRadius: 8,
+                                  px: { xs: 2, md: 5 },
+                                  backgroundColor: "#227C70",
+                                  ":hover": {
+                                    backgroundColor: "#227C70",
+                                  },
+                                }}
+                              >
+                                Modify BidOpening
+                                <br />
+                                Committee
+                              </Button>
+                            </Routerlink>
+                          ) : (
+                            <Button
+                              className={styles.ViewButton}
+                              variant="contained"
+                              sx={{ borderRadius: 8, px: { xs: 2, md: 5 } }}
+                              disabled
+                            >
+                              Appoint BidOpening
+                              <br />
+                              Committee
+                            </Button>
+                          )}
                         </TableCell>
                       </TableRow>
                     ))}

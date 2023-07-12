@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./ViewItemTEC.module.css";
-import { Container, IconButton, Paper, Typography } from "@mui/material";
+import { Container, IconButton, Paper, Tooltip, Typography } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import "../../../fonts.css";
 import Table from "@mui/material/Table";
@@ -71,7 +71,7 @@ function ViewItemTEC() {
   }, []);
 
   if (data === null) {
-    return <p></p>;
+    return <p>Loading...</p>;
   }
 
   return (
@@ -189,7 +189,19 @@ function ViewItemTEC() {
                           </TableCell>
                           <TableCell align="center">{row.quantity}</TableCell>
                           <TableCell align="center">
-                            {row.specification}
+                            <Tooltip title={row.specification}>
+                              <span
+                                style={{
+                                  display: "inline-block",
+                                  maxWidth: "150px",
+                                  overflow: "hidden",
+                                  textOverflow: "ellipsis",
+                                  whiteSpace: "nowrap",
+                                }}
+                              >
+                                {row.specification}
+                              </span>
+                            </Tooltip>
                           </TableCell>
                           <TableCell align="center">
                             {row.recommendedVendors}
@@ -198,7 +210,12 @@ function ViewItemTEC() {
                             {DateFormat(row.expectedDeliveryDate)}
                           </TableCell>
                           <TableCell align="center">
-                            {<EvidenceOfAthorization sppId={row.sppId} itemId={itemId}/>}
+                            {
+                              <EvidenceOfAthorization
+                                sppId={row.sppId}
+                                itemId={itemId}
+                              />
+                            }
                           </TableCell>
                           <TableCell align="center">
                             {

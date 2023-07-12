@@ -420,16 +420,6 @@ function App() {
                         }
                     />
                     <Route
-                        path="/view-masterprocurement-plan"
-                        element={
-                            <PrivateRoute
-                                component={<ViewMasterProcurementPlan/>}
-                                authorized={isAuthenticated}
-                                allowedUserTypes={["ProcurementOfficer"]}
-                            />
-                        }
-                    />
-                    <Route
                         path="/create-modify-teccommittee/:mppId"
                         element={
                             <PrivateRoute
