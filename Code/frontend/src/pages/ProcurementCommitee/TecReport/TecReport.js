@@ -89,10 +89,6 @@ function TecReport() {
           </div>
         </div>
 
-        <div className={styles.MiddleSection}>
-          <SearchNoFilter className={styles.search} />
-        </div>
-
         <div className={styles.downSection}>
           <Paper
             className={styles.baseTableContainer}

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styles from "./MasterProcurementPlanTEC.module.css";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import SearchNoFilter from "../../../components/Search/Search";
 import { Button, IconButton, Paper } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -14,8 +13,8 @@ import { Link as Routerlink } from "react-router-dom";
 import { useEffect } from "react";
 import { GetMasterProcurementPlan } from "./../../../services/TecCommitte/TecCommitteeservices";
 import { DateFormat, MoneyFormat } from "../../../services/dataFormats";
+import {user} from "../../Usermanage";
 
-const userId='BEC18324'; //need to come from login
 
 const columns = [
   {
@@ -42,10 +41,12 @@ function MasterProcurementPlans() {
     setPage(0);
   };
 
+  const committeeMemberId = user.id;
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await GetMasterProcurementPlan(userId);
+        const response = await GetMasterProcurementPlan(committeeMemberId);
 
         const data = response;
         setData(data);
@@ -69,7 +70,6 @@ function MasterProcurementPlans() {
         </div>
 
         <div className={styles.vfmpp_search}>
-          <SearchNoFilter />
         </div>
 
         {/* Add table data */}

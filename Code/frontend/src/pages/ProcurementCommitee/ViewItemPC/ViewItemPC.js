@@ -5,6 +5,7 @@ import {
   Container,
   IconButton,
   Paper,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -23,9 +24,11 @@ import ViewRecomandedVendors from "../../../components/Popups/ViewRecomandedVend
 import { vendors } from "../../../users/vendors.js";
 import StatusBulb from "../../../components/StatusBulb/StatusBulb";
 import { Link as Routerlink, useParams } from "react-router-dom";
-import {GetItemDetails, approve} from "../../../services/ProcurementCommittee/ProcurementCommitteeServices";
+import {
+  GetItemDetails,
+  approve,
+} from "../../../services/ProcurementCommittee/ProcurementCommitteeServices";
 import { DateFormat } from "../../../services/dataFormats";
-
 
 const columns = [
   { id: "SubProID", label: "Sub Procurement ID", Width: 300, align: "center" },
@@ -48,7 +51,6 @@ const columns = [
   { id: "Evidence", label: "Evidence", Width: 200, align: "center" },
   { id: "Action", label: "Action", Width: 300, align: "center" },
 ];
-
 
 function ViewItemPC() {
   const [page, setPage] = React.useState(0);
@@ -97,11 +99,11 @@ function ViewItemPC() {
         <div className={styles.upperSection}>
           <div className={styles.PageContainer__header}>
             <Routerlink to={-1}>
-            <IconButton
-              sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
-            >
-              <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
-            </IconButton>
+              <IconButton
+                sx={{ pl: "15px", height: "34px", width: "34px", mt: 3.7 }}
+              >
+                <ArrowBackIosIcon sx={{ color: "#ffffff" }} />
+              </IconButton>
             </Routerlink>
             <h1 className={styles.Header}>{data.itemName}</h1>
           </div>
@@ -198,7 +200,19 @@ function ViewItemPC() {
                           </TableCell>
                           <TableCell align="center">{row.quantity}</TableCell>
                           <TableCell align="center">
-                            {row.specification}
+                            <Tooltip title={row.specification}>
+                              <span
+                                style={{
+                                  display: "inline-block",
+                                  maxWidth: "150px",
+                                  overflow: "hidden",
+                                  textOverflow: "ellipsis",
+                                  whiteSpace: "nowrap",
+                                }}
+                              >
+                                {row.specification}
+                              </span>
+                            </Tooltip>
                           </TableCell>
                           <TableCell align="center">
                             {row.recommendedVendors}
@@ -210,7 +224,12 @@ function ViewItemPC() {
                             {row.tecCommitteeStatus}
                           </TableCell>
                           <TableCell align="center">
-                          {<EvidenceOfAthorization sppId={row.sppId} itemId={itemId}/>}
+                            {
+                              <EvidenceOfAthorization
+                                sppId={row.sppId}
+                                itemId={itemId}
+                              />
+                            }
                           </TableCell>
                           <TableCell align="center">
                             {
@@ -254,19 +273,19 @@ function ViewItemPC() {
             sx={{ justifyContent: { xs: "center", md: "right" } }}
           >
             <Routerlink to={`/ApprovedItemList/${mppId}`}>
-            <Button
-              className={styles.TecAppointButton}
-              variant="contained"
-              sx={{
-                mt: 1.2,
-                mr: { xs: 6, sm: 4, md: 6 },
-                borderRadius: 8,
-                mb: 0.3,
-                width: 170,
-              }}
-            >
-              View All Approved Items
-            </Button>
+              <Button
+                className={styles.TecAppointButton}
+                variant="contained"
+                sx={{
+                  mt: 1.2,
+                  mr: { xs: 6, sm: 4, md: 6 },
+                  borderRadius: 8,
+                  mb: 0.3,
+                  width: 170,
+                }}
+              >
+                View All Approved Items
+              </Button>
             </Routerlink>
           </Container>
         </div>

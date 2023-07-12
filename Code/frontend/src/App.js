@@ -91,6 +91,7 @@ import {Navigate} from "react-router-dom/dist";
 
 
 import Helmet from 'react-helmet';
+import SetPreBidMeetingDate from "./pages/Procurement Officer/SetPreBidMeetingDate/SetPreBidMeetingDate";
 
 function SEO() {
     return (
@@ -360,6 +361,16 @@ function App() {
                         }
                     />
                     <Route
+                        path="/set-pre-bid-meeting-date"
+                        element={
+                            <PrivateRoute
+                                component={<SetPreBidMeetingDate/>}
+                                authorized={isAuthenticated}
+                                allowedUserTypes={["ProcurementOfficer"]}
+                            />
+                        }
+                    />
+                    <Route
                         path="/appoint-bidopening-committee"
                         element={
                             <PrivateRoute
@@ -414,16 +425,6 @@ function App() {
                         element={
                             <PrivateRoute
                                 component={<EvaluateVendorFinanceStatus/>}
-                                authorized={isAuthenticated}
-                                allowedUserTypes={["ProcurementOfficer"]}
-                            />
-                        }
-                    />
-                    <Route
-                        path="/view-masterprocurement-plan"
-                        element={
-                            <PrivateRoute
-                                component={<ViewMasterProcurementPlan/>}
                                 authorized={isAuthenticated}
                                 allowedUserTypes={["ProcurementOfficer"]}
                             />
