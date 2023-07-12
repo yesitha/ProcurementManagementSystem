@@ -130,7 +130,13 @@ function AuditFinalizedMasterProcurementPlan() {
       type: 'Internal Auditor Report Available',
       divisionName: 'Finance',
     },
+    {
+      message: 'New Sub Procurement Plan Created !',
+      type: 'New Sub Procurement Plans',
+      employeeId: 'EMP00003'
+    },
   ];
+ 
 
   if (data === null) {
     return <p style={{ marginLeft: "20px" }}>Loading...</p>;
@@ -286,6 +292,8 @@ function AuditFinalizedMasterProcurementPlan() {
                                         //  }}
                                         >
                                           <RejectPopup
+                                           notificationData= {dataNotification[1]}
+                                           EmployeeeNotification={true}
                                             link={`${process.env.REACT_APP_API_HOST}/api/InternalAuditor/UpdateInternalAuditorStatus?mppId=${mppId}&itemId=${row.itemId}&internalAuditorStatus=reject&internalAuditorComment=$rejectedComment`}
                                           />
                                         </div>
