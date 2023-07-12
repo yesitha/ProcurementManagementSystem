@@ -266,6 +266,19 @@ export const fetchPreviewFromDB = async (selectedMppId,vendorId) => {
   }
 };
 
+export const specialComment = async (poId, comment) => {
+  try {
+    const response = await axios.put(
+      `${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/AddComment?poId=${poId}&comment=${comment}`
+    );
+    console.log(response);
+    return response;  
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 // Evaluate Vendor Finance Status
 
 export const GetVendorFinanceStatedetails = async () => {

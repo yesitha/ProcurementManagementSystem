@@ -82,7 +82,7 @@ export const GetApprovedItemsDetailsvendorId = async (vendorId) => {
   export const GetPurchaseOrdersByVendorId = async (vendorId) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_HOST}/api/Vendor/GetPurchaseOrdersByVendorId/LAH23201`
+        `${process.env.REACT_APP_API_HOST}/api/Vendor/GetPurchaseOrdersByVendorId/${vendorId}`
       );
       return response.data;  
     } catch (error) {
@@ -154,10 +154,10 @@ export const GetApprovedItemsDetailsvendorId = async (vendorId) => {
   
 
 
-  export const GetPOItemDetailspoIdvendorId = async (poId,vendorId) => {
+  export const GetPOItemDetails = async (poId) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_HOST}/api/Vendor/GetPOItemDetails/${poId}/LAH23201`
+        `${process.env.REACT_APP_API_HOST}/api/Vendor/GetPOItemDetails/${poId}`
       );
       return response.data;  
     } catch (error) {
@@ -206,7 +206,7 @@ export const GetApprovedItemsDetailsvendorId = async (vendorId) => {
   export const GetGRNIdListByVendorId = async (vendorId) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_HOST}/api/Vendor/GetGRNIdListByVendorId/HEL9863`
+        `${process.env.REACT_APP_API_HOST}/api/Vendor/GetGRNIdListByVendorId/${vendorId}`
       );
       return response.data;  
     } catch (error) {

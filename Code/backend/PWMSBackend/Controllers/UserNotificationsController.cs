@@ -152,24 +152,67 @@ namespace PWMSBackend.Controllers
             var response = await client.SendEmailAsync(msg); 
         }
 
-        [HttpGet("GetUserNotifications/{employeeId}")]
+        //[HttpGet("GetUserNotifications/{employeeId}")]
 
+        //public IActionResult GetUserNotifications(string employeeId)
+        //{
+        //    var userNotifications = _context.UserNotifications
+        //        .Where(u => u.UserNotificationProcurementEmployees.FirstOrDefault().ProcurementEmployeeId == employeeId && u.isRead == false)
+        //        .Select(u => new
+        //        {
+        //            u.notificationId,
+        //            u.message,
+        //            u.type,
+        //            u.isRead,
+        //            u.timeStamp
+        //        })
+        //        .ToList();
+
+        //    return Ok(userNotifications);
+        //}
+        [HttpGet("GetUserNotifications/{employeeId}")]
         public IActionResult GetUserNotifications(string employeeId)
         {
-            var userNotifications = _context.UserNotifications
-                .Where(u => u.UserNotificationProcurementEmployees.FirstOrDefault().ProcurementEmployeeId == employeeId && u.isRead == false)
-                .Select(u => new
-                {
-                    u.notificationId,
-                    u.message,
-                    u.type,
-                    u.isRead,
-                    u.timeStamp
-                })
-                .ToList();
+            IQueryable<object> query;
+
+            if (employeeId.StartsWith("EMP"))
+            {
+                query = _context.UserNotifications
+                    .Where(u => u.UserNotificationProcurementEmployees
+                        .FirstOrDefault().ProcurementEmployeeId == employeeId && u.isRead == false)
+                    .Select(u => new
+                    {
+                        u.notificationId,
+                        u.message,
+                        u.type,
+                        u.isRead,
+                        u.timeStamp
+                    });
+            }
+            else if (employeeId.StartsWith("VEN"))
+            {
+                query = _context.UserNotifications
+                    .Where(u => u.UserNotificationsVendors
+                        .FirstOrDefault().VendorId == employeeId && u.isRead == false)
+                    .Select(u => new
+                    {
+                        u.notificationId,
+                        u.message,
+                        u.type,
+                        u.isRead,
+                        u.timeStamp
+                    });
+            }
+            else
+            {
+                return BadRequest("Invalid employeeId");
+            }
+
+            var userNotifications = query.ToList();
 
             return Ok(userNotifications);
         }
+
 
         [HttpPut("UpdateUserNotification/{notificationId}")]
         public IActionResult UpdateUserNotification(string notificationId)

@@ -15,6 +15,7 @@ import ViewNote from "../../components/Popups/DonePopup/ViewNote";
 import { Link as Routerlink, useParams } from "react-router-dom";
 import { GetGRNIdListByVendorId } from "../../services/Vendor/Vendorservices";
 import { DateFormat } from "../../services/dataFormats";
+import { user } from "../Usermanage";
 
 const columns = [
   { id: "GRNID", label: "GRN ID", Width: 200, align: "center" },
@@ -22,6 +23,9 @@ const columns = [
   { id: "Date", label: "Date", Width: 200, align: "center" },
   { id: "Action", label: "Action", Width: 200, align: "center" },
 ];
+
+// const vendorId = user ? user.id : "";
+const vendorId = "VEN00001";
 
 export default function ViewGRN() {
   const [page, setPage] = React.useState(0);
@@ -35,7 +39,7 @@ export default function ViewGRN() {
     setPage(0);
   };
 
-  const { vendorId } = useParams();
+  // const { vendorId } = useParams();
   const [data, setData] = useState(null);
 
   useEffect(() => {

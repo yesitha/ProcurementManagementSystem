@@ -18,8 +18,10 @@ const userTypes = {
       { displayName: "Set Pre Bid Meeting Date" },
       { displayName: "Appoint Bid Opening Committee", path: "appoint-bidopening-committee" },
       { displayName: "Evaluate Master Procurement Plan", path: "evaluate-master-procurementplan" },
+      { displayName: "Internal Auditor Report", path: "internal-auditor-report-availble" },
       { displayName: "Create Purchase Order", path: "create-purchase-order" },
       { displayName: "Create GRN", path: "GoodReceiveNote" },
+      { displayName: "New Invoices Available", path: "new-invoices-available"},
       {
         displayName: "Evaluate Vendor Fianace Status",
         path: "evaluate-vendor-fianace-status",
@@ -106,6 +108,7 @@ const userTypes = {
       { displayName: "Bid History", path: "bid-history/:vendorId" },
       { displayName: "View Invoice", path: "view-invoice-vendor/:venodrId" },
       { displayName: "Items to be Shipped", path: "items-to-be-shipped" },
+      { displayName: "View GRN", path: "VGoodReceiveNote/:vendorId"},
     ],
     actionButtons: [
       { displayName: "Pre Bid Meeting Date -2023/06/14" },

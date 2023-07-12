@@ -8,6 +8,7 @@ import {
   Paper,
   TextField,
   Typography,
+  Tooltip,
 } from "@mui/material";
 import { Container } from "@mui/system";
 import Table from "@mui/material/Table";
@@ -23,6 +24,7 @@ import {
   getPOItems,
   getPOVenderDetails,
 } from "../../../services/Vendor/Vendorservices";
+import { specialComment} from "../../../services/ProcurementHOD/ProcurementHODServices";
 import { useState } from "react";
 import { useEffect } from "react";
 import { DateFormat, MoneyFormat } from "../../../services/dataFormats";
@@ -36,22 +38,13 @@ const columns = [
   { id: "Uprice", label: "Unit Price", Width: 300, align: "center" },
   { id: "Total", label: "Total", Width: 300, align: "center" },
 ];
-function createData(ItemID, ItemName, Desc, Qty, Uprice, Total) {
-  return { ItemID, ItemName, Desc, Qty, Uprice, Total };
-}
-const rows = [
-  createData("I0014", "A4 Papers", "GSm 80", "500", "400", 200000),
-  createData("I0023", "Pen Set", "Blue ink", "100", "10", 1000),
-  createData("I0031", "Notebooks", "Spiral bound", "200", "50", 10000),
-  createData("I0042", "Markers", "Assorted colors", "50", "5", 250),
-  createData("I0055", "Sticky Notes", "Yellow", "300", "2", 600),
-];
 
 function SendPurchaseOrder() {
   const { poId } = useParams();
   const [poVenderDetails, setPoVenderDetails] = useState([]);
   const [poItems, setPoItems] = useState([]);
   const [page, setPage] = React.useState(0);
+  const [comment, setComment] = useState("");
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -61,6 +54,11 @@ function SendPurchaseOrder() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  const handleChange = (event) => {
+    setComment(event.target.value);
+  };
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -122,7 +120,7 @@ function SendPurchaseOrder() {
                 <h1 className={styles.Header}>Purchase Order</h1>
               </div>
 
-              <Typography style={{ marginLeft: "35px" }}>
+              <Typography style={{ marginLeft: "5px" }}>
                 Date: {DateFormat(poVenderDetails.date)}
                 <br />
                 PO# : {poId}
@@ -146,7 +144,7 @@ function SendPurchaseOrder() {
               <div style={{ display: "flex", flexDirection: "row" }}>
                 <h1 className={styles.Header}>Vendor</h1>
               </div>
-              <Typography style={{ marginLeft: "35px" }}>
+              <Typography style={{ marginLeft: "5px", marginBottom : "20px" }}>
                 {poVenderDetails.vendorFullName}
                 <br></br>
                 {poVenderDetails.companyName}
@@ -186,7 +184,7 @@ function SendPurchaseOrder() {
                       <TableCell
                         key={column.id}
                         align={column.align}
-                        style={{ maxWidth: column.Width }}
+                        style={{ maxWidth: column.Width, fontWeight: "bold" }}
                       >
                         {column.label}
                       </TableCell>
@@ -206,11 +204,27 @@ function SendPurchaseOrder() {
                           role="checkbox"
                           tabIndex={-1}
                           key={index}
+                          style={{
+                            backgroundColor:
+                              index % 2 === 0 ? "#FFFFFF" : "#F2F2F2",
+                          }}
                         >
                           <TableCell align="center">{row.itemId}</TableCell>
                           <TableCell align="center">{row.itemName}</TableCell>
                           <TableCell align="center">
-                            {row.specifications}
+                            <Tooltip title={row.specifications}>
+                              <span
+                                style={{
+                                  display: "inline-block",
+                                  maxWidth: "150px",
+                                  overflow: "hidden",
+                                  textOverflow: "ellipsis",
+                                  whiteSpace: "nowrap",
+                                }}
+                              >
+                                {row.specifications}
+                              </span>
+                            </Tooltip>
                           </TableCell>
                           <TableCell align="center">
                             {row.totalQuantity}
@@ -253,6 +267,7 @@ function SendPurchaseOrder() {
                   borderRadius: "10px",
                   width: "300px",
                 }}
+                onChange={handleChange}
               />
             </div>
             <Typography>
@@ -297,7 +312,9 @@ function SendPurchaseOrder() {
             </Button>
           </div>
 
-          <div className={styles.afmpp_button}>
+          <div className={styles.afmpp_button}  onClick={() => {
+                                            specialComment(poId, comment);
+                                          }}>
             <DonePopup
               text={"Successfully sent PO to Vendor"}
               title={"SEND TO VENDOR"}

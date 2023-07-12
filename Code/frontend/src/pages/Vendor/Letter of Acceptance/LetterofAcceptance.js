@@ -25,6 +25,7 @@ import { GetApprovedItemDetailsitemId, GetLetterAcceptenceData, updateLetterOfAc
 import { DateFormat, MoneyFormat } from "../../../services/dataFormats";
 import { PDFViewer, Document, Page, Text,pdf,StyleSheet,View } from '@react-pdf/renderer';
 import { saveAs } from 'file-saver';
+import { user } from "../../Usermanage";
 // const FileInput = () => {
 //     const [selectedImage, setSelectedImage] = useState(5);
 //     const [imageUrl, setImageUrl] = useState(5);
@@ -36,7 +37,7 @@ import { saveAs } from 'file-saver';
 //     }, [selectedImage]);
 // }
 
-const venderId ='BUW52'
+const venderId = user ? user.id : "";
 
 const columns = [
   { id: "DOC", Width: 200, align: "center" },
@@ -77,6 +78,7 @@ function LetterofAcceptance() {
       
         const response = await GetLetterAcceptenceData(itemId,venderId);
         const data = response;
+        console.log(data);
         setData(data.result2);
         setVendorDetails(data.vendorD) ;
         console.log(data.result2)

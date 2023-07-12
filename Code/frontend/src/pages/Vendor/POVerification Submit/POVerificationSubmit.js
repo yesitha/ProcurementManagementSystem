@@ -374,7 +374,7 @@ function BidVerificationSubmit() {
                 </Container>
               </Container>
             </Paper>
-            <Routerlink to={"/letter-of-acceptance"}>
+            {/* <Routerlink to={"/letter-of-acceptance"}> */}
               <Button
                 variant="contained"
                 sx={{
@@ -383,7 +383,7 @@ function BidVerificationSubmit() {
                   height: 50,
                   width: 150,
                 }}
-                onClick={sendFilesToDB(
+                onClick={()=>sendFilesToDB(
                   poId,
                   selectedAgreement,
                   selectedBankGuarantee,
@@ -392,7 +392,7 @@ function BidVerificationSubmit() {
               >
                 Submit
               </Button>
-            </Routerlink>
+            {/* </Routerlink> */}
           </div>
         </div>
       </Container>

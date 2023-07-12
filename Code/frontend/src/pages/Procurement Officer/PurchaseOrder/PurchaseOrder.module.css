@@ -16,6 +16,7 @@
 
   .dropdown1{
     margin-left: 75px;
+    margin-bottom: 20px;
   }
   .divide{
     display:flex;
@@ -24,6 +25,8 @@
 
 .block{
     margin-left: 75px;
+    margin-top: 10px;
+    margin-bottom: 20px;
     color: white;
     padding: 10px;
     background-color: #205295;

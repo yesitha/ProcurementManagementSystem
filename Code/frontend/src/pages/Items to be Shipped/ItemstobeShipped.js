@@ -10,7 +10,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { Button, IconButton, Paper, Stack, TextField } from "@mui/material";
+import { Button, IconButton, Paper, Stack, TextField,Tooltip } from "@mui/material";
 import Successfullyinformed from "../../components/Popups/DonePopup/Successfullyinformed";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { Link as Routerlink } from "react-router-dom";
@@ -20,6 +20,7 @@ import { GetItemToBeShippedDetails } from "../../services/Vendor/Vendorservices"
 import { GetPOIdListByVendorId } from "../../services/Vendor/Vendorservices";
 import { MoneyFormat } from "../../services/dataFormats";
 import { CreatePurchaseOrderItemsToBeShippedRecords } from "../../services/Vendor/Vendorservices";
+import {user} from "../Usermanage"
 
 const list0 = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
 const list3 = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
@@ -83,7 +84,7 @@ export default function ItemstobeShipped() {
   const [data, setData] = useState(null);
   const [poIds, setpoIds] = useState([]);
   const [selectedpoId, setSelectedpoId] = useState("");
-  const vendorId = "HEL9863";
+  const vendorId = user ?  user.id : "";
 
   const handlepoIdChange = (event) => {
     setSelectedpoId(event.target.value);
@@ -150,7 +151,7 @@ export default function ItemstobeShipped() {
           className={styles.h4}
           style={{ marginLeft: "10px", color: "white" }}
         >
-          SUB PROCUREMENT ID
+          PURCHASE ORDER ID
         </h4>
         <div className={styles.dropDownIconContainer}>
           <SelectDropDown
@@ -182,7 +183,7 @@ export default function ItemstobeShipped() {
                     <TableCell
                       key={column.id}
                       align={column.align}
-                      style={{ maxWidth: column.Width }}
+                      style={{ maxWidth: column.Width, fontWeight: "bold" }}
                     >
                       {column.label}
                     </TableCell>
@@ -199,6 +200,10 @@ export default function ItemstobeShipped() {
                         role="checkbox"
                         tabIndex={-1}
                         key={index}
+                        style={{
+                          backgroundColor:
+                            index % 2 === 0 ? "#FFFFFF" : "#F2F2F2",
+                        }}
                         data-id={row.itemId}
                       >
                         <TableCell align="center">{row.itemId}</TableCell>
@@ -216,8 +221,20 @@ export default function ItemstobeShipped() {
                           />
                         </TableCell>
                         <TableCell align="center">
-                          {row.specifications}
-                        </TableCell>
+                            <Tooltip title={row.specifications}>
+                              <span
+                                style={{
+                                  display: "inline-block",
+                                  maxWidth: "150px",
+                                  overflow: "hidden",
+                                  textOverflow: "ellipsis",
+                                  whiteSpace: "nowrap",
+                                }}
+                              >
+                                {row.specifications}
+                              </span>
+                            </Tooltip>
+                          </TableCell>
                         <TableCell align="center">
                           {MoneyFormat(row.bidValue)}
                         </TableCell>
