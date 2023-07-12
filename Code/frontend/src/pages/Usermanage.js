@@ -15,7 +15,7 @@ const userTypes = {
     ],
     list2: ["Vendors and Items", "Budgets", "Inventory", "Settings"],
     actions: [
-      { displayName: "Set Pre Bid Meeting Date" },
+      { displayName: "Set Pre Bid Meeting Date", path: "set-pre-bid-meeting-date"  },
       { displayName: "Appoint Bid Opening Committee", path: "appoint-bidopening-committee" },
       { displayName: "Evaluate Master Procurement Plan", path: "evaluate-master-procurementplan" },
       { displayName: "Create Purchase Order", path: "create-purchase-order" },
@@ -23,10 +23,6 @@ const userTypes = {
       {
         displayName: "Evaluate Vendor Fianace Status",
         path: "evaluate-vendor-fianace-status",
-      },
-      {
-        displayName: "View Master Procurement Plan",
-        path: "view-masterprocurement-plan",
       },
     ],
 
