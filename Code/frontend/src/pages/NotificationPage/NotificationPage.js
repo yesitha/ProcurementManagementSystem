@@ -36,8 +36,7 @@ import { getNotification, updateNotification } from "../../notification";
 
 //
 
- const empId = user.id;
-
+const empId = user ? user.id : "";
 
 const extractMessagesAndPaths = (notifications, elements) => {
   const result = [];

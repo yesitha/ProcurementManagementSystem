@@ -181,6 +181,21 @@ export const submitTECCommitteeToDb = async (mppId,data) => {
     throw error;
   }
 };
+export const modifyTECCommitteeToDb = async (mppId,data) => {
+  console.log(data);
+  
+  try {
+    const response = await axios.post(
+      `${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/ModifyTECCommitteeMembers/${mppId}`,data
+    );
+   
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
 
 //Create/Modify BidOpeningCommittee
 
