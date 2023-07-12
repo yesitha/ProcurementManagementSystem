@@ -74,11 +74,7 @@ export const getCategoryList = async () => {
     }
 };
 
-export const addNewItemDb = async (
-    itemName,
-    itemSpecification,
-    selectedItemType,
-    selectedCategoryId
+export const addNewItemDb = async (itemName, itemSpecification, selectedCategoryId, selectedItemType
 ) => {
     try {
         await axios.post(
