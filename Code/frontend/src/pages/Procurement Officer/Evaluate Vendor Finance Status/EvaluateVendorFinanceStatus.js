@@ -225,7 +225,7 @@ function EvaluateVendorFinanceStatus() {
                       <TableCell
                         key={column.id}
                         align={column.align}
-                        style={{ maxWidth: column.Width }}
+                        style={{ maxWidth: column.Width, fontWeight: "bold" }}
                       >
                         {column.label}
                       </TableCell>
@@ -245,11 +245,15 @@ function EvaluateVendorFinanceStatus() {
                           role="checkbox"
                           tabIndex={-1}
                           key={index}
+                          style={{
+                            backgroundColor:
+                              index % 2 === 0 ? "#FFFFFF" : "#F2F2F2",
+                          }}
                         >
-                          <TableCell align="center">{row.poId}</TableCell>
+                          <TableCell align="center">{row.vendorId}</TableCell>
                          
                           <TableCell align="center">
-                            {row.vendorId}
+                            {row.poId}
                           </TableCell>
                           <TableCell align="center" >
                           <EvidenceOfAthorization />
@@ -324,7 +328,7 @@ function EvaluateVendorFinanceStatus() {
             <TablePagination
               rowsPerPageOptions={[10, 25, 50, 100]}
               component="div"
-              // count={rows.length}
+              count={data ? data.length : 0}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}

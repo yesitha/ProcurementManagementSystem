@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./styles.module.css";
 import SideNavBar from "../../components/SideNavigationBar/SideNavBar";
-import { Button, IconButton, Paper, Stack, TextField } from "@mui/material";
+import { Button, IconButton, Paper, Stack, TextField,Tooltip } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -24,6 +24,25 @@ const columns = [
   { id: "UnitPrice", label: "Unit Price", Width: 300, align: "center" },
   { id: "TotalValue", label: "Total Value", Width: 300, align: "center" },
 ];
+
+function DisplayDate({ date }) {
+  const formattedDate = date?.substring(0, 10); // Extract only the date portion
+  return (
+    <Stack component="form" noValidate spacing={3} alignItems="center">
+      <TextField
+        id="date"
+        label="Minimum Expected Delivery Date"
+        type="date"
+        align="center"
+        value={formattedDate}
+        sx={{ width: 200, height: 50 }}
+        InputLabelProps={{
+          shrink: true,
+        }}
+      />
+    </Stack>
+  );
+}
 
 function createData(
   Date,
@@ -347,7 +366,7 @@ const IssueValue = data.reduce((total, item) => {
                     <TableCell
                       key={column.id}
                       align={column.align}
-                      style={{ maxWidth: column.Width }}
+                      style={{ maxWidth: column.Width, fontWeight: "bold" }}
                     >
                       {column.label}
                     </TableCell>
@@ -367,8 +386,14 @@ const IssueValue = data.reduce((total, item) => {
                           role="checkbox"
                           tabIndex={-1}
                           key={index}
+                          style={{
+                            backgroundColor:
+                              index % 2 === 0 ? "#FFFFFF" : "#F2F2F2",
+                          }}
                         >
-                          <TableCell align="center">{DateFormat(row.date)}</TableCell>
+                          <TableCell align="center">
+                            <DisplayDate date={row.date} />
+                          </TableCell>
                           <TableCell align="center">
                             {row.itemId}
                           </TableCell>
@@ -376,7 +401,19 @@ const IssueValue = data.reduce((total, item) => {
                             {row.itemName}
                           </TableCell>
                           <TableCell align="center">
-                            {row.specification}
+                            <Tooltip title={row.specification}>
+                              <span
+                                style={{
+                                  display: "inline-block",
+                                  maxWidth: "150px",
+                                  overflow: "hidden",
+                                  textOverflow: "ellipsis",
+                                  whiteSpace: "nowrap",
+                                }}
+                              >
+                                {row.specification}
+                              </span>
+                            </Tooltip>
                           </TableCell>
                           <TableCell align="center">
                             {row.quantityAvailable}

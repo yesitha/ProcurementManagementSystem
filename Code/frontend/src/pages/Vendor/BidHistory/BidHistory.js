@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./BidHistory.module.css";
 import { Container, IconButton, Paper } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Typography,Stack,TextField,Tooltip } from "@mui/material";
 import SearchNoFilter from "../../../components/Search/Search";
 import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import "../../../fonts.css";
@@ -16,6 +16,8 @@ import TableRow from "@mui/material/TableRow";
 import { Link as Routerlink, useParams } from "react-router-dom";
 import { GetBidHistory } from "../../../services/Vendor/Vendorservices";
 import { DateFormat } from "../../../services/dataFormats";
+import { user } from "../../Usermanage";
+import { MoneyFormat } from "../../../services/dataFormats";
 
 const columns = [
   { id: "ItemName", label: "Item Name", Width: 300, align: "center" },
@@ -32,6 +34,24 @@ const columns = [
   { id: "LoA", label: "Letter of Acceptance", Width: 300, align: "center" },
 ];
 
+function DisplayDate({ date }) {
+  const formattedDate = date?.substring(0, 10); // Extract only the date portion
+  return (
+    <Stack component="form" noValidate spacing={3} alignItems="center">
+      <TextField
+        id="date"
+        label="Minimum Expected Delivery Date"
+        type="date"
+        align="center"
+        value={formattedDate}
+        sx={{ width: 200, height: 50 }}
+        InputLabelProps={{
+          shrink: true,
+        }}
+      />
+    </Stack>
+  );
+}
 
 function BidHistory() {
   const [page, setPage] = React.useState(0);
@@ -44,7 +64,7 @@ function BidHistory() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-  const vendorId  = 'BUW52' //this need to gte from the login
+  const vendorId  = user ? user.id : ""; //this need to get from the login
   const [data, setData] = useState(null);
 
   useEffect(() => {
@@ -115,7 +135,7 @@ function BidHistory() {
                       <TableCell
                         key={column.id}
                         align={column.align}
-                        style={{ maxWidth: column.Width }}
+                        style={{ maxWidth: column.Width, fontWeight: "bold" }}
                       >
                         {column.label}
                       </TableCell>
@@ -135,18 +155,34 @@ function BidHistory() {
                           role="checkbox"
                           tabIndex={-1}
                           key={index}
+                          style={{
+                            backgroundColor:
+                              index % 2 === 0 ? "#FFFFFF" : "#F2F2F2",
+                          }}
                         >
                           <TableCell align="center">{row.itemName}</TableCell>
                           <TableCell align="center">
                             {row.totalQuantity}
                           </TableCell>
                           <TableCell align="center">
-                            {row.specification}
+                            <Tooltip title={row.specification}>
+                              <span
+                                style={{
+                                  display: "inline-block",
+                                  maxWidth: "150px",
+                                  overflow: "hidden",
+                                  textOverflow: "ellipsis",
+                                  whiteSpace: "nowrap",
+                                }}
+                              >
+                                {row.specification}
+                              </span>
+                            </Tooltip>
                           </TableCell>
                           <TableCell align="center">
-                            {DateFormat(row.expectedDeliveryDate)}
+                            <DisplayDate date={row.expectedDeliveryDate} />
                           </TableCell>
-                          <TableCell align="center">{row.bidValue}</TableCell>
+                          <TableCell align="center">{MoneyFormat(row.bidValue)}</TableCell>
                           <TableCell align="center">{row.bidStatus}</TableCell>
                           <TableCell align="center">
                             {row.bidStatus === "Selected" && !row.isletterOfAcceptance

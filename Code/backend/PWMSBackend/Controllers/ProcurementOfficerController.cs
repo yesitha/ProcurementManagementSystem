@@ -886,10 +886,14 @@ namespace PWMSBackend.Controllers
                                     .Where(vpb => vpb.Vendor.VendorId == vendorId && vpb.ItemId == group.Key)
                                     .Select(vpb => vpb.BidValue)
                                     .FirstOrDefault(),
+                    TotalAmount = group.Sum(item => item.Quantity) * _context.VendorPlaceBidItems
+                                                                            .Where(vpb => vpb.Vendor.VendorId == vendorId && vpb.ItemId == group.Key)
+                                                                            .Select(vpb => vpb.BidValue)
+                                                                            .FirstOrDefault()
                 })
                 .ToList();
 
-            double sumOfBidValue = selectedVendorList.Sum(item => item.BidValue);
+            double sumOfBidValue = selectedVendorList.Sum(item => item.TotalAmount);
 
             // Generate a new PoId
             string PoId = _poIdGenerator.GeneratePOId();
@@ -914,6 +918,60 @@ namespace PWMSBackend.Controllers
             mpp.StatusDate = DateTime.Now;
 
             _context.SaveChanges();
+
+            //CreateApprovedItemsPurchaseOrderRecords
+
+            List<string> itemIds = selectedVendorList.Select(item => item.ItemId).ToList();
+
+            // Retrieve the Purchase Order based on the provided PoId
+            var purchaseOrder0 = _context.PurchaseOrders.FirstOrDefault(po => po.PoId == PO.PoId);
+
+            // Check if the Purchase Order exists
+            if (purchaseOrder0 == null)
+            {
+                return BadRequest("Invalid PoId. Purchase Order not found.");
+            }
+
+            // Create a list to store the duplicate itemIds
+            var duplicateItemIds = new List<string>();
+
+            // Iterate through the list of ItemIds and create ApprovedItemPurchaseOrder records
+            foreach (string itemId in itemIds)
+            {
+                // Check if the ApprovedItemPurchaseOrder record already exists
+                bool recordExists = _context.ApprovedItemPurchaseOrders.Any(aipo =>
+                    aipo.PoId == PoId && aipo.ItemId == itemId);
+
+                if (recordExists)
+                {
+                    // Add the duplicate itemId to the list
+                    duplicateItemIds.Add(itemId);
+                    continue; // Skip to the next iteration
+                }
+
+                // Retrieve the Approved Item based on the ItemId
+                var approvedItem = _context.Items.FirstOrDefault(item => item.ItemId == itemId);
+
+                // Check if the Approved Item exists
+                if (approvedItem == null)
+                {
+                    return BadRequest($"Invalid ItemId '{itemId}'. Approved Item not found.");
+                }
+
+                // Create a new ApprovedItemPurchaseOrder record
+                var approvedItemPurchaseOrder = new ApprovedItemPurchaseOrder
+                {
+                    ItemId = itemId,
+                    PoId = PoId
+                };
+
+                // Add the record to the context
+                _context.ApprovedItemPurchaseOrders.Add(approvedItemPurchaseOrder);
+            }
+
+            // Save the changes to the database
+            _context.SaveChanges();
+
 
             return Ok(PO.PoId);
         }
@@ -990,6 +1048,7 @@ namespace PWMSBackend.Controllers
                     po.PoId,
                     po.Date,
                     po.TotalAmount,
+                    po.VendorId,
                     VendorFullName = po.Vendor.FirstName + " " + po.Vendor.LastName,
                     CompanyName = po.Vendor.CompanyFullName,
                     Contact = po.Vendor.EmailAddress,
