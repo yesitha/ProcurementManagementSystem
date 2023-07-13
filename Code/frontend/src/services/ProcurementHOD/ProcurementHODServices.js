@@ -7,7 +7,9 @@ export const fetchDataFromDb = async () => {
     const response = await axios.get(
       `${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/GetMasterProcurementPlans`
     );
+    console.log(response.data);
     return response.data;
+    
   } catch (error) {
     console.log(error);
     throw error;

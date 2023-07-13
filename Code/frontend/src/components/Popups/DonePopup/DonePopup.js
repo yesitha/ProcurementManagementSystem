@@ -123,7 +123,7 @@ export default function BasicModal(props) {
                 
                 
               
-                  // handleClose();
+                   handleClose();
                
                
               }}
