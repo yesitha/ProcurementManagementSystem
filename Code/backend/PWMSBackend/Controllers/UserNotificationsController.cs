@@ -97,10 +97,10 @@ namespace PWMSBackend.Controllers
         [HttpPost("CreateUserNotification")]
         public IActionResult CreateUserNotification(Notification notification)
         {
-            var employeeIds = _context.ProcurementEmployees
+            var employeeId = _context.ProcurementEmployees
                 .Where(p => p.Division.DivisionName == notification.DivisionName)
                 .Select(p => p.EmployeeId)
-                .ToList();
+                .FirstOrDefault();
 
             string notificationId = _NotificationIdGenerator.GenerateNotificationId();
 
@@ -112,11 +112,19 @@ namespace PWMSBackend.Controllers
                 isRead = false,
                 timeStamp = DateTime.Now,
                 //ProcurementEmployee = _context.ProcurementEmployees.Where(p => p.Division.DivisionName == notification.DivisionName).FirstOrDefault()
-                UserNotificationProcurementEmployees = employeeIds.Select(e => new UserNotificationProcurementEmployee
+                //UserNotificationProcurementEmployees = employeeIds.Select(e => new UserNotificationProcurementEmployee
+                //{
+                //    ProcurementEmployeeId = e,
+                //    NotificationId = notificationId
+                //}).ToList()
+                UserNotificationProcurementEmployees = new List<UserNotificationProcurementEmployee>
                 {
-                    ProcurementEmployeeId = e,
-                    NotificationId = notificationId
-                }).ToList()
+                    new UserNotificationProcurementEmployee
+                    {
+                        ProcurementEmployeeId = employeeId,
+                        NotificationId = notificationId
+                    }
+                }
             };
 
             // Your code to save the userNotification to the database using your data access layer
@@ -124,8 +132,8 @@ namespace PWMSBackend.Controllers
             _context.SaveChanges();
 
             //send emails
-            foreach (var employeeId in employeeIds)
-            {
+            //foreach (var employeeId in employeeIds)
+            //{
                 // Get the employee's email address based on the employee ID
                 var employee = _context.ProcurementEmployees.Where(p => p.EmployeeId == employeeId).FirstOrDefault();
 
@@ -134,7 +142,7 @@ namespace PWMSBackend.Controllers
                     sendEmail(notification.type,employee.EmailAddress,notification.message).Wait();
                    
                 }
-            }
+            //}
 
             return Ok("UserNotification created successfully.");
         }

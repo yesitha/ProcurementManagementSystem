@@ -200,6 +200,7 @@ export const GetApprovedItemsDetailsvendorId = async (vendorId) => {
         `${process.env.REACT_APP_API_HOST}/api/Vendor/GetVendorVerifyPdf/${vendorId}`
       );
       console.log(response);
+      return response.data;
     } catch (error) {
       console.log(error);
       throw error;
@@ -351,7 +352,7 @@ export const CreatePurchaseOrderItemsToBeShippedRecords = async (poId,input) => 
   export const GetInvoiceIdsForVendor = async (vendorId) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_HOST}/api/Vendor/GetInvoiceIdsForVendor/HEL9863`
+        `${process.env.REACT_APP_API_HOST}/api/Vendor/GetInvoiceIdsForVendor/${vendorId}`
       );
       return response.data;  
     } catch (error) {

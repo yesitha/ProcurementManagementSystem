@@ -18,6 +18,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Link as Routerlink } from "react-router-dom";
 import { InvoicesPaid, InvoicesToBePay } from "../../../services/ProcurementHOD/ProcurementHODServices";
 import { MoneyFormat } from "../../../services/dataFormats";
+import DownloadIcon from '@mui/icons-material/Download';
 
 
 const rows = users;
@@ -175,7 +176,7 @@ function InvoicestobePaid() {
                           <TableCell align="center">{row.vendorName}</TableCell>
                           <TableCell align="center" style={{ color: '#227C70' }}>{row.paymentStatus}</TableCell>
                           <TableCell align="center">
-                            {<IconButton>DownloadInvoice</IconButton>}</TableCell>
+                            {<IconButton><DownloadIcon/></IconButton>}</TableCell>
                         </TableRow>
                       ))}
                   </TableBody>

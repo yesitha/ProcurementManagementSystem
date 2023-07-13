@@ -28,6 +28,7 @@ import {
   GetPOItemDetailsForGRN,
   GetPoIdList,
 } from "../../../services/ProcurementHOD/ProcurementHODServices";
+import {user} from "../../Usermanage"
 
 function AddItemstoGRN() {
   //   const classes = useStyles();
@@ -79,10 +80,14 @@ function AddItemstoGRN() {
 
   const handleCreateGRN = async () => {
     try {
+     
       const createdGrnId = await CreateGRN(selectedpoId, rightTableData);
-      sessionStorage.clear();
+      sessionStorage.removeItem("leftTableData");
+      sessionStorage.removeItem("rightTableData");
+      console.log(user.id);
       setIsGRNCreated(true);
       console.log(createdGrnId);
+      console.log(rightTableData);
       setGrnId(createdGrnId); // Set the grnId in state
     } catch (error) {
       console.log(error);
