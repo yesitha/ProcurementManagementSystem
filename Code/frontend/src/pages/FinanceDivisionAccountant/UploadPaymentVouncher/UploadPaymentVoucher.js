@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import styles from "./uploadPaymentVoucher.module.css";
 import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import AttachFileIcon from "@mui/icons-material/AttachFile";
 import { Button, IconButton, Paper, Typography } from "@mui/material";
 import { Container } from "@mui/system";
 import Table from "@mui/material/Table";
@@ -32,6 +33,7 @@ function createData(ItemID, ItemName, DQty, Desc, Uprice, amt) {
   return { ItemID, ItemName, DQty, Desc, Uprice, amt };
 }
 
+
 function UploadPaymentVoucher() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -45,7 +47,7 @@ function UploadPaymentVoucher() {
   
   const handleFileSelect = (event) => {
     const file = event.target.files[0];
-    // Handle the selected file here
+    setSelectedFile(file);
     console.log('Selected file:', file);
   };
   
@@ -106,6 +108,7 @@ function UploadPaymentVoucher() {
 
     fetchData();
   }, [invoiceId]);
+  const [selectedFile, setSelectedFile] = useState(null);
 
   return (
     <div style={{ overflowX: "hidden" }}>
@@ -179,9 +182,15 @@ function UploadPaymentVoucher() {
         sx={{ marginLeft: '60px', width: '60px' }}
         onClick={handleBrowseClick}
       >
-        <ControlPointIcon
-          sx={{ marginLeft: '5px', fontSize: 40, color: '#0A2647' }}
-        />
+           {selectedFile ? (
+          <AttachFileIcon
+            sx={{ marginLeft: '5px', fontSize: 40, color: '#0A2647' }}
+          />
+        ) : (
+          <ControlPointIcon
+            sx={{ marginLeft: '5px', fontSize: 40, color: '#0A2647' }}
+          />
+        )}
       </IconButton>
       <input
         type="file"
