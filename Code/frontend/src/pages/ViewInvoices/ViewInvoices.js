@@ -14,7 +14,9 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import ViewNote from "../../components/Popups/DonePopup/ViewNote";
 import { Link as Routerlink, useParams } from "react-router-dom";
 import { GetInvoiceIdsForVendor } from "../../services/Vendor/Vendorservices";
-
+import DownloadIcon from '@mui/icons-material/Download';
+import {user} from "../Usermanage"
+const vendorId=user?user.id:"";
 const columns = [
   { id: "InvoiceID", label: "InvoiceID", Width: 200, align: "center" },
   { id: "GRNID", label: "GRN ID", Width: 200, align: "center" },
@@ -54,7 +56,7 @@ export default function ViewInvoices() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-  const { vendorId } = useParams();
+  // const { vendorId } = useParams();
   const [data, setData] = useState(null);
 
   useEffect(() => {
@@ -123,7 +125,7 @@ export default function ViewInvoices() {
                           {row.paymentStatus}
                         </TableCell>
                         <TableCell align="center">
-                        DownloadButton
+                        <IconButton><DownloadIcon/></IconButton>
                         </TableCell>
                         <TableCell align="center">
                           {

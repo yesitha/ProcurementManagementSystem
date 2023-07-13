@@ -390,7 +390,6 @@ export const CreateGRN = async (poId,data) => {
       data
     );
     console.log(response);
-    sessionStorage.clear();
     return response.data;
   } catch (error) {
     console.log(error);
