@@ -40,6 +40,8 @@ namespace PWMSBackend.Controllers
                     mpp.MppId,
                     mpp.EstimatedGrandTotal,
                     mpp.CreationDate,
+                    isTecCommitteCreated = mpp.TecCommitteeId != null,
+                    isBidOpeningCommitteeCreated = mpp.BidOpeningCommitteeId != null,
                 })
                 .ToList();
 
