@@ -40,11 +40,13 @@ function AddNewItemtoSubProcurementPlan() {
     }
 
     const handleSearch = () => {
-        console.log(categoryList);
         const category = categoryList.find(
             (category) => category.categoryName === selectedCategoryName
         );
-        setCategoryId(category.categoryId);
+        if (category) {
+            console.log(category.categoryId);
+            setCategoryId(category.categoryId);
+        }
     };
     const handleCategoryIdChange = (event) => {
         setSelectedCategoryName(event.target.value);
@@ -78,6 +80,7 @@ function AddNewItemtoSubProcurementPlan() {
 
     const onSubmit = async () => {
         const data = getValues();
+
         await new Promise((resolve) => {
             handleSearch();
             resolve();
@@ -92,7 +95,7 @@ function AddNewItemtoSubProcurementPlan() {
     return (
         <div style={{display: 'flex', overflow: 'hidden'}}>
             <Container
-                sx={{ml: {xs: '20px', sm: '20px', md: '20px', lg: '21px', xl: '22px'},}}>
+                sx={{ml: {xs: '40px', sm: '40px', md: '40px', lg: '41px', xl: '42px'},}}>
                 <div>
                     <div className={Styles.headTitle}>
                         <RouterLink to={-1}>
@@ -117,11 +120,13 @@ function AddNewItemtoSubProcurementPlan() {
                             <div className={Styles.entireBody}>
                                 <div className={Styles.bodyContainer}>
                                     <Typography>Category</Typography>
-                                    <SelectDropDown
-                                        list={categoryList.map((category) => category.categoryName)}
-                                        value={selectedCategoryName}
-                                        onChange={handleCategoryIdChange}
-                                    />
+                                    {categoryList.length > 0 && (
+                                        <SelectDropDown
+                                            list={categoryList.map((category) => category.categoryName)}
+                                            value={selectedCategoryName}
+                                            onChange={handleCategoryIdChange}
+                                        />
+                                    )}
                                     <Typography>Item Type</Typography>
                                     <SelectDropDown
                                         list={itemType.map((itemType) => itemType)}

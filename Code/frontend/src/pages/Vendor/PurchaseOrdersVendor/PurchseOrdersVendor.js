@@ -14,6 +14,9 @@ import TableRow from "@mui/material/TableRow";
 import { Link as Routerlink, useParams } from "react-router-dom";
 import { GetPurchaseOrdersByVendorId } from "../../../services/Vendor/Vendorservices";
 import { DateFormat, MoneyFormat } from "../../../services/dataFormats";
+import { user } from "../../Usermanage";
+
+const vendorId = user ? user.id : "";
 
 const columns = [
   {
@@ -34,46 +37,27 @@ const columns = [
   { id: "Action", label: "Action", Width: 300, align: "center" },
 ];
 
-function createData(POID, Date, TotalValue, Action) {
-  return { POID, Date, TotalValue, Action };
+function DisplayDate({ date }) {
+  const formattedDate = date?.substring(0, 10); // Extract only the date portion
+  return (
+    <Stack component="form" noValidate spacing={3} alignItems="center">
+      <TextField
+        id="date"
+        label="Date"
+        type="date"
+        align="center"
+        value={formattedDate}
+        sx={{ width: 200, height: 50 }}
+        InputLabelProps={{
+          shrink: true,
+        }}
+      />
+    </Stack>
+  );
 }
 
-const rows = [
-  createData(
-    "MPPID1000",
-    "2021/01/01",
-    "50000",
-    <Routerlink to={"/PurchaseOrder-vendor-view"}>
-      <Button
-        variant="contained"
-        fontFamily={"Inter"}
-        sx={{ bgcolor: "#205295", borderRadius: 5, height: 50, width: 100 }}
-      >
-        View
-      </Button>
-    </Routerlink>
-  ),
-  createData(
-    "MPPID1001",
-
-    "2021/06/02",
-    "Rs.400000",
-    <Routerlink to={"/PurchaseOrder-vendor-view"}>
-      <Button
-        variant="contained"
-        fontFamily={"Inter"}
-        sx={{ bgcolor: "#205295", borderRadius: 5, height: 50, width: 100 }}
-      >
-        View
-      </Button>
-    </Routerlink>
-  ),
-];
 
 function PurchaseOrdersVendor() {
-  const list = ["MPPI10000", "MPPI10001", "MPPI10002", "MPPI10003"];
-
-  //========================================================
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -86,7 +70,7 @@ function PurchaseOrdersVendor() {
     setPage(0);
   };
 
-  const { vendorId } = useParams();
+  // const { vendorId } = useParams();
   const [data, setData] = useState(null);
 
   useEffect(() => {
@@ -138,7 +122,7 @@ function PurchaseOrdersVendor() {
                       <TableCell
                         key={column.id}
                         align={column.align}
-                        style={{ maxWidth: column.Width }}
+                        style={{ maxWidth: column.Width, fontWeight: "bold" }}
                       >
                         {column.label}
                       </TableCell>
@@ -158,16 +142,20 @@ function PurchaseOrdersVendor() {
                           role="checkbox"
                           tabIndex={-1}
                           key={index}
+                          style={{
+                            backgroundColor:
+                              index % 2 === 0 ? "#FFFFFF" : "#F2F2F2",
+                          }}
                         >
                           <TableCell align="center">{row.poId}</TableCell>
                           <TableCell align="center">
-                            {DateFormat(row.date)}
+                            <DisplayDate date={row.date} />
                           </TableCell>
                           <TableCell align="center">
                             {MoneyFormat(row.totalAmount)}
                           </TableCell>
                           <TableCell align="center">
-                            {row.procuementOfficerStatus}
+                            {row.procuementOfficerStatus ? row.procuementOfficerStatus : "Pending"}
                           </TableCell>
                           <TableCell align="center">
                             {
@@ -211,7 +199,7 @@ function PurchaseOrdersVendor() {
             <TablePagination
               rowsPerPageOptions={[10, 25, 50, 100]}
               component="div"
-              count={rows.length}
+              count={data ? data.length : 0}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}

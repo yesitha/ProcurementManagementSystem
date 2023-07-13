@@ -33,6 +33,8 @@ export default function BasicModal({ vendorId,vendorName}) {
       try {
         const response = await getVendorVerifyPdfs(vendorId);
         setData(response);
+        console.log(response);
+        console.log(vendorId);
       } catch (error) {
         console.log(error);
       }
@@ -122,13 +124,13 @@ export default function BasicModal({ vendorId,vendorName}) {
   <label>Business Registration</label>
 </div>
 <div>
-  <IconButton onClick={() => downloadFile(data[2].url,data[1].name)}>
+  <IconButton onClick={() => downloadFile(data[2].url,data[2].name)}>
     <img src={DocumentDownload} />
   </IconButton>
   <label>Tax Identification</label>
 </div>
 <div>
-  <IconButton onClick={() => downloadFile(data[1].url,data[2].name)}>
+  <IconButton onClick={() => downloadFile(data[1].url,data[1].name)}>
     <img src={DocumentDownload} />
   </IconButton>
   <label>Insurance Certificate</label>

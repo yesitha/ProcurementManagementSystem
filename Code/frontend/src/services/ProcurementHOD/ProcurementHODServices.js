@@ -7,7 +7,9 @@ export const fetchDataFromDb = async () => {
     const response = await axios.get(
       `${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/GetMasterProcurementPlans`
     );
+    console.log(response.data);
     return response.data;
+    
   } catch (error) {
     console.log(error);
     throw error;
@@ -159,7 +161,6 @@ export const fetchAlreadyMembersInTecCommittee = async (mppId) => {
     );
     console.log(response.data);
     return response.data;
-
   } catch (error) {
     console.log(error);
   }
@@ -181,8 +182,41 @@ export const submitTECCommitteeToDb = async (mppId,data) => {
     throw error;
   }
 };
+export const modifyTECCommitteeToDb = async (mppId,data) => {
+  console.log(data);
+  
+  try {
+    const response = await axios.post(
+      `${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/ModifyTECCommitteeMembers/${mppId}`,data
+    );
+   
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
 
-//Create/Modify BidOpeningCommittee
+export const fetchSppDataFromDb = async () => {
+  try {
+    const response = await axios.get(
+        `${process.env.REACT_APP_API_HOST}/api/PurchasingDivisionHOD/GetSubProcurementPlans`
+    );
+    console.log(response.data);
+    return response;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+
+export const fetchSubProcurementPlanDetails = async (id) => {
+  return await axios.get(
+      `${process.env.REACT_APP_API_HOST}/api/DivisionHOD/SubProcurementPlanItems/${id}`
+  );
+};
 
 export const fetchAlreadyMembersInBidOpCommittee = async (mppId) => {
   try{
@@ -227,6 +261,22 @@ export const submitBidOpCommitteeToDb = async (mppId,data) => {
   }
 };
 
+export const modifyBIDCommitteeToDb = async (mppId,data) => {
+  console.log(data);
+  
+  try {
+    const response = await axios.post(
+      `${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/ModifyBidOpeningCommitteeMembers/${mppId}`,data
+    );
+   
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 export const GetBidDetails = async () => {
   try {
     const response = await axios.get(
@@ -260,6 +310,19 @@ export const fetchPreviewFromDB = async (selectedMppId,vendorId) => {
    
     console.log(response.data);
     return response;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const specialComment = async (poId, comment) => {
+  try {
+    const response = await axios.put(
+      `${process.env.REACT_APP_API_HOST}/api/ProcurementOfficer/AddComment?poId=${poId}&comment=${comment}`
+    );
+    console.log(response);
+    return response;  
   } catch (error) {
     console.log(error);
     throw error;
@@ -327,7 +390,6 @@ export const CreateGRN = async (poId,data) => {
       data
     );
     console.log(response);
-    sessionStorage.clear();
     return response.data;
   } catch (error) {
     console.log(error);

@@ -6,7 +6,7 @@ import { Container } from "@mui/system";
 import { users } from "../../../users/SystemUsers";
 import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
 import DonePopup from "../../../components/Popups/DonePopup/DonePopup";
-import { submitBidOpCommitteeToDb } from "../../../services/ProcurementHOD/ProcurementHODServices";
+import { modifyBIDCommitteeToDb, submitBidOpCommitteeToDb } from "../../../services/ProcurementHOD/ProcurementHODServices";
 import { fetchAlreadyMembersInBidOpCommittee } from "../../../services/ProcurementHOD/ProcurementHODServices";
 import {
   IconButton,
@@ -75,11 +75,20 @@ function CreateModifyBidOpeningCommittee() {
   //const masterProcurementId = "MP0001";
 
   const handleSubmit = () => {
+    if(rightTableData.length>0){
+      modifyBIDCommitteeToDb(mppId,rightTableData.filter(item => item !== null).map((item) => {
+        return item.employeeId
+        
+      }));
+    }else{
+      submitBidOpCommitteeToDb(mppId,rightTableData.filter(item => item !== null).map((item) => {
+        return item.employeeId
+      }));
+    }
     // Handle form submission or any other logic here
-    submitBidOpCommitteeToDb(mppId,rightTableData.filter(item => item !== null).map((item) => {
-      return item.employeeId
+    
       
-    }));
+    
     setIsFormSubmitted(true);
   };
 

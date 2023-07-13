@@ -1,7 +1,7 @@
 import React, {useState,useEffect} from "react";
 import styles from "./PurchaseOrderPreview.module.css";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { Button, IconButton, Paper, TextField, Typography } from "@mui/material";
+import { Button, IconButton, Paper, TextField, Typography, Tooltip } from "@mui/material";
 import { Container } from "@mui/system";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -10,8 +10,11 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { Link as Routerlink, useParams } from "react-router-dom";
-import { GetPOItemDetailspoIdvendorId, GetPOVendorDetails } from "../../../services/Vendor/Vendorservices";
+import { GetPOItemDetails, GetPOVendorDetails } from "../../../services/Vendor/Vendorservices";
 import { DateFormat, MoneyFormat } from "../../../services/dataFormats";
+import { user } from "../../Usermanage";
+
+const vendorId = user ? user.id : "";
 
 const columns = [
   { id: "ItemID", label: "Item ID", Width: 300, align: "center" },
@@ -23,19 +26,20 @@ const columns = [
   { id: "Total", label: "Total", Width: 300, align: "center" },
   
 ];
-function createData(ItemID, ItemName,Desc, Qty, Uprice, Total) {
-  return { ItemID, ItemName,Desc, Qty, Uprice, Total };
-}
-const rows = [
-    createData("I0014", "A4 Papers", "GSm 80", "500", "400", 200000),
-    createData("I0023", "Pen Set", "Blue ink", "100", "10", 1000),
-    createData("I0031", "Notebooks", "Spiral bound", "200", "50", 10000),
-    createData("I0042", "Markers", "Assorted colors", "50", "5", 250),
-    createData("I0055", "Sticky Notes", "Yellow", "300", "2", 600),
-];
+const handlePrint = () => {
+  const printContent = document.getElementById("print-area");
+  if (printContent) {
+    const originalContent = document.body.innerHTML;
+    const printContentHTML = printContent.innerHTML;
+    document.body.innerHTML = printContentHTML;
+    window.print();
+    document.body.innerHTML = originalContent;
+  }
+  window.location.reload();
+};
 
 function PurchaseOrderPreview() {
-  const {poId ,vendorId } = useParams();
+  const { poId  } = useParams();
 
   const [data, setData] = useState(null);
 
@@ -58,7 +62,7 @@ function PurchaseOrderPreview() {
   useEffect(() => {
     const fetchdata = async () => {
       try {
-        const response = await GetPOItemDetailspoIdvendorId(poId,vendorId);
+        const response = await GetPOItemDetails(poId);
         const tabledata = response;
         settableData(tabledata);
         console.log(tabledata);
@@ -83,7 +87,7 @@ function PurchaseOrderPreview() {
           flexDirection: "column",
         }}
       >
-        <div className={styles.upperSection}>
+        <div id="print-area"><div className={styles.upperSection}>
           <div className={styles.uppercontainer}>
             <div className={styles.tag}>
               <div style={{ display: "flex", flexDirection: "row" }}>
@@ -96,7 +100,7 @@ function PurchaseOrderPreview() {
                 </Routerlink>
                 <h1 className={styles.Header}>Purchase Order</h1>
               </div>
-              <Typography style={{ marginLeft: "35px" }}>
+              <Typography style={{ marginLeft: "5px" }}>
                Date  : {DateFormat(data.date)}<br/>
                PO#   : {poId}
               </Typography>
@@ -110,7 +114,7 @@ function PurchaseOrderPreview() {
                 SRI LANKA
             </Typography>
           </div>
-          <div style={{ marginLeft: "35px" }}>
+          <div style={{ marginLeft: "5px" , marginBottom: "20px"}}>
             <Typography className={styles.tag}>
               <h1 className={styles.Header}>{data.vendorFullName}</h1>
               {data.companyName}<br></br>
@@ -145,7 +149,7 @@ function PurchaseOrderPreview() {
                       <TableCell
                         key={column.id}
                         align={column.align}
-                        style={{ maxWidth: column.Width }}
+                        style={{ maxWidth: column.Width, fontWeight: "bold" }}
                       >
                         {column.label}
                       </TableCell>
@@ -153,7 +157,7 @@ function PurchaseOrderPreview() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {tabledata.itemList &&
+                  {tabledata &&
                     tabledata.itemList
                       .map((row, index) => (
                         <TableRow
@@ -161,11 +165,27 @@ function PurchaseOrderPreview() {
                           role="checkbox"
                           tabIndex={-1}
                           key={index}
+                          style={{
+                            backgroundColor:
+                              index % 2 === 0 ? "#FFFFFF" : "#F2F2F2",
+                          }}
                         >
                           <TableCell align="center">{row.itemId}</TableCell>
                           <TableCell align="center">{row.itemName}</TableCell>
                           <TableCell align="center">
-                            {row.specifications}
+                            <Tooltip title={row.specifications}>
+                              <span
+                                style={{
+                                  display: "inline-block",
+                                  maxWidth: "150px",
+                                  overflow: "hidden",
+                                  textOverflow: "ellipsis",
+                                  whiteSpace: "nowrap",
+                                }}
+                              >
+                                {row.specifications}
+                              </span>
+                            </Tooltip>
                           </TableCell>
                           <TableCell align="center">
                             {row.totalQuantity}
@@ -201,10 +221,8 @@ function PurchaseOrderPreview() {
             </div>
             <Typography>   
               <h4>
-                Sub total<br></br>
-                Tax<br></br>
-                Shipping<br></br>
-                Other<br></br>
+                <br></br>
+                <br></br>
                 Total - {MoneyFormat(data.totalAmount)}
               </h4>
             </Typography>
@@ -215,15 +233,31 @@ function PurchaseOrderPreview() {
               {data.vendorFullName} Via {data.contact}<br></br>
             </Typography>
           </center>
+          </div>
+  </div>
           <div className={styles.btn}>
-            <Button variant="contained">PRINT</Button>
+            {/* <Button variant="contained">PRINT</Button> */}
+            <Button
+              onClick={handlePrint}
+              variant="contained"
+              fontFamily={"Inter"}
+              // sx={{
+              //   bgcolor: "#205295",
+              //   borderRadius: 5,
+              //   height: 50,
+              //   width: 200,
+              // }}
+            >
+              PRINT
+            </Button>
             <Routerlink to={`/po-verification-submit/${poId}`}>
             <Button variant="contained" style={{ marginLeft: 40 }}>
              NEXT
             </Button>
             </Routerlink>
           </div>
-        </div>
+        
+        
       </Container>
     </div>
   );

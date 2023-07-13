@@ -37,7 +37,7 @@ import {user} from "../../Usermanage";
 //     }, [selectedImage]);
 // }
 
-const venderId =user?user.id:"";
+const venderId = user ? user.id : "";
 
 const columns = [
   { id: "DOC", Width: 200, align: "center" },
@@ -62,6 +62,7 @@ function LetterofAcceptance() {
     fileInputRef.current.click();
   }
   const {itemId} = useParams();
+  console.log(itemId)
   const [data, setData] = useState(null);
   const [vendorDetails,setVendorDetails] = useState(null);
   
@@ -78,6 +79,7 @@ function LetterofAcceptance() {
       
         const response = await GetLetterAcceptenceData(itemId,venderId);
         const data = response;
+        console.log(data);
         setData(data.result2);
         setVendorDetails(data.vendorD) ;
         console.log(data.result2)
@@ -319,6 +321,8 @@ function LetterofAcceptance() {
             </div>
             <DonePopup
               notificationData={dataNotification[0]}
+              letterOfAcceptenceDetails={{itemId, venderId, selectedFile}}
+              letterOfAcceptence={true}
               text={"Successfully Submitted"}
               title={"Submit"}
               sx={{
@@ -331,7 +335,7 @@ function LetterofAcceptance() {
               }}
               onClick={(e) => {
                 e.stopPropagation();
-                updateLetterOfAcceptance(data.itemId, venderId, selectedFile);
+                
               }}
             />
           </div>

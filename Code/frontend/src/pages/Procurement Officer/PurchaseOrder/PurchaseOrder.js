@@ -21,6 +21,7 @@ import {
   Switch,
   TextField,
   Typography,
+  Tooltip,
 } from "@mui/material";
 import SelectDropDown from "../../../components/SelectDropDown/SelectDropDown";
 import Table from "@mui/material/Table";
@@ -44,6 +45,8 @@ import {
   getSelectedVendorDetailsForEachMppId,
 } from "../../../services/ProcurementHOD/ProcurementHODServices";
 import { MoneyFormat } from "../../../services/dataFormats";
+import { useNavigate } from "react-router-dom";
+
 
 const columns = [
   { id: "ItemID", label: "Item ID", Width: 200, align: "center" },
@@ -68,9 +71,11 @@ function PurchaseOrder() {
   const [vendorNameList, setVendorNameList] = useState([]);
   const [vendorDetailsList, setVendorDetailsList] = useState([]);
   const [itemDetailsList, setItemDetailsList] = useState([]);
-  const [poId, setpoId] = useState(null);
+  const [CreatepoId, setCreatepoId] = useState(null);
+  // const [poId, setpoId] = useState(null);
 
   const rows = itemDetailsList;
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -115,6 +120,7 @@ function PurchaseOrder() {
       );
       console.log(selectedVendor);
       setVendorId(selectedVendor.vendorId);
+      console.log(vendorId);
       setVendorAddress(selectedVendor.address);
 
       if (vendorId) {
@@ -130,7 +136,7 @@ function PurchaseOrder() {
         fetchData();
       }
     }
-  }, [selectedVendorName]);
+  }, [selectedVendorName,vendorId]);
 
   useEffect(() => {}, [selectedVendorName]);
 
@@ -153,12 +159,18 @@ function PurchaseOrder() {
     setSelectedVendorName(event.target.value);
   };
 
+  const handleCreatePO = () => {
+    setCreatepoId(10);
+    // navigate(`/send-purchase-order/${poId}`);
+  };
   useEffect(() => {
-    if (vendorId) {
+    console.log(CreatepoId);
+    if (CreatepoId) {
       const fetchData = async () => {
         try {
           const response = await fetchPreviewFromDB(selectedMppId, vendorId);
-          setpoId(response.data);
+          // setpoId(response.data);
+          navigate(`/send-purchase-order/${response.data}`);
         } catch (error) {
           // Handle any error that occurred during the API request
           console.error(error);
@@ -167,12 +179,8 @@ function PurchaseOrder() {
   
       fetchData();
     }
-  }, [vendorId]);
-  
-  
+  }, [CreatepoId]);
    
-
-    
   return (
     <div>
       <div className={styles.NotificationPageContainer__header}>
@@ -186,20 +194,18 @@ function PurchaseOrder() {
         <h1 className={styles.NotificationPageHeader}> Purchase Order</h1>
       </div>
       <div className={styles.divide}>
-       
-       
 
-        <div className={styles.dropdown1} style={{ marginTop: "60px" }}>
-          <label style={{ color: "white", marginLeft: "10px" }}>
-            MASTER PROCUREMENT PLAN ID
+        <div className={styles.dropdown1} style={{ marginTop: "30px" }}>
+          <label style={{ color: "white", marginLeft: "10px", fontFamily: "Mulish", fontSize: "16px" }}>
+            MASTER PROCUREMENT PLAN ID*
           </label>
           <SelectDropDown onChange={handleMppIdDropdown} list={mppIdList} />
         </div>
 
         <div>
           <div className={styles.dropdown1}>
-            <label style={{ color: "white", marginLeft: "10px" }}>
-              Vendor Name
+            <label style={{ color: "white", marginLeft: "10px",fontFamily: "Mulish", fontSize: "16px" }}>
+              VENDOR NAME*
             </label>
 
             <SelectDropDown
@@ -208,17 +214,17 @@ function PurchaseOrder() {
             />
           </div>
         </div>
-        <div className={styles.block}>
           {vendorId && vendorAddress && (
-            <Typography>
-              Vendor ID: {vendorId}
-              <br />
-              Vendor Address: {vendorAddress}
-              <br />
-            </Typography>
+            <div className={styles.block}>
+              <Typography>
+                Vendor ID: {vendorId}
+                <br />
+                Vendor Address: {vendorAddress}
+                <br />
+              </Typography>
+            </div>
           )}
         </div>
-      </div>
       <div className={styles.table}>
         <Paper
           className={styles.baseTableContainer}
@@ -244,7 +250,7 @@ function PurchaseOrder() {
                     <TableCell
                       key={column.id}
                       align={column.align}
-                      style={{ maxWidth: column.Width }}
+                      style={{ maxWidth: column.Width, fontWeight: "bold" }}
                     >
                       {column.label}
                     </TableCell>
@@ -264,12 +270,28 @@ function PurchaseOrder() {
                           role="checkbox"
                           tabIndex={-1}
                           key={index}
+                          style={{
+                            backgroundColor:
+                              index % 2 === 0 ? "#FFFFFF" : "#F2F2F2",
+                          }}
                         >
                           <TableCell align="center">{row.itemId}</TableCell>
                           <TableCell align="center">{row.itemName}</TableCell>
                           <TableCell align="center">{row.totalQuantity}</TableCell>
                           <TableCell align="center">
-                            {row.specifications}
+                            <Tooltip title={row.specifications}>
+                              <span
+                                style={{
+                                  display: "inline-block",
+                                  maxWidth: "150px",
+                                  overflow: "hidden",
+                                  textOverflow: "ellipsis",
+                                  whiteSpace: "nowrap",
+                                }}
+                              >
+                                {row.specifications}
+                              </span>
+                            </Tooltip>
                           </TableCell>
                             <TableCell align="center">{MoneyFormat(row.bidValue)}</TableCell>
                             <TableCell align="center">{MoneyFormat(row.bidValue*row.totalQuantity)}</TableCell>
@@ -291,25 +313,25 @@ function PurchaseOrder() {
           />
         </Paper>
       </div>
-      <Routerlink to={`/send-purchase-order/${poId}`} >
-        <Button
-          variant="contained"
-          fontFamily={"Inter"}
-          sx={{
-            bgcolor: "#205295",
-            borderRadius: 5,
-            height: 50,
-            width: 200,
-            marginLeft: "75px",
-            marginTop: "20px",
-          }}
-          
-        >
-          PRINT PREVIEW
-        </Button>
-      </Routerlink>
-     
-      
+      {/* <div onClick={handleCreatePO}> */}
+        {/* <Routerlink to={`/send-purchase-order/${poId}`} > */}
+          <Button
+            variant="contained"
+            fontFamily={"Inter"}
+            sx={{
+              bgcolor: "#205295",
+              borderRadius: 5,
+              height: 50,
+              width: 200,
+              marginLeft: "75px",
+              marginTop: "20px",
+            }}
+            onClick={handleCreatePO}
+          >
+            PRINT PREVIEW
+          </Button>
+        {/* </Routerlink> */}
+      {/* </div> */}
     </div>
   );
 }

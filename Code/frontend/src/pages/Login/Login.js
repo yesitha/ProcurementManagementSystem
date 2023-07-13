@@ -142,44 +142,42 @@ export default function Login() {
                 />
                 <p className="error">{errors.email?.message}</p>
 
-                <FormControl fullWidth margin="normal" variant="outlined">
-                  <InputLabel htmlFor="password">Password</InputLabel>
-                  <OutlinedInput
-                    {...register("password", {
-                      required: "Password Required",
-                      pattern: {
-                        value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[#@$])[A-Za-z\d#@$]{8,}$/,
-                        message:
-                          "Password must contain Minimum eight characters, at least one letter and one number",
-                      },
-                      minLength: {
-                        value: 8,
-                        message: "Password not long Enough!",
-                      },
-                    })}
-                    fullWidth
-                    name="password"
-                    id="password"
-                    type={showPassword ? "text" : "password"}
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleShowPassword}
-                          edge="end"
-                        >
-                          {showPassword ? (
-                            <VisibilityOff />
-                          ) : (
-                            <Visibility />
-                          )}
-                        </IconButton>
-                      </InputAdornment>
-                    }
-                    label="Password"
-                  />
-                </FormControl>
-                <p className="error">{errors.password?.message}</p>
+                                <TextField
+                                    {...register("password", {
+                                        required: "Password Required",
+                                        pattern: {
+                                            value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d#@$]{8,}$/,
+                                            message:
+                                                "Password must contain Minimum eight characters, at least one letter and one number",
+                                        },
+                                        minLength: {
+                                            value: 8,
+                                            message: "Password not long Enough!",
+                                        },
+                                    })}
+                                    margin="normal"
+                                    fullWidth
+                                    name="password"
+                                    label="Password"
+                                    id="password"
+                                    type={showPassword ? "text" : "password"}
+                                      endAdornment={
+                                        <InputAdornment position="end">
+                                          <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={handleShowPassword}
+                                            edge="end"
+                                          >
+                                            {showPassword ? (
+                                              <VisibilityOff />
+                                            ) : (
+                                              <Visibility />
+                                            )}
+                                          </IconButton>
+                                        </InputAdornment>
+                                      }
+                                />
+                                <p className="error">{errors.password?.message}</p>
 
                 <Button
                   disabled={!isValid}

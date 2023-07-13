@@ -335,9 +335,9 @@ namespace PWMSBackend.Controllers
                               Specification = input.Specification,
                               totalQuantity = input.totalQuantity,
                               expectedDeliveryDate = input.expectedDeliveryDate,
-                              bidValue = vendor.bidValues.bidValue,
-                              selectedVendorName = vendor.bidValues.vendorFullName,
-                              bidCount = vendor.bidCount
+                              bidValue = vendor?.bidValues?.bidValue,  // Add the null-conditional operator
+                              selectedVendorName = vendor?.bidValues?.vendorFullName,  // Add the null-conditional operator
+                              bidCount = vendor?.bidCount  // Add the null-conditional operator
                           };
 
             return Ok(result2);

@@ -24,7 +24,7 @@ import {getNotification} from "../../notification";
 
 function Dashboard() {
     const currentUser = user.userType;
-    const empId = "EMP00005"; // need to get from session storage
+    const empId = user ? user.id : "";
     const currentDate = dayjs();
     const shouldDisableDate = (date) => {
         return true;

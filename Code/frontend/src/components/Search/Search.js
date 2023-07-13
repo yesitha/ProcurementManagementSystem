@@ -37,48 +37,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 function SearchFilter({value, onChange, onSearch}) {
   return (
-    <Search
-      className={styles.search}
-      sx={{
-        borderRadius: 6,
-        flexDirection: "row",
-        mr: "40px",
-        height: { xs: "60px" },
-        alignSelf: "flex-end",
-      }}
-    >
-      <div className={styles.searchArea}>
-        <div className={styles.searchInput}>
-          <StyledInputBase
-            placeholder="Search…"
-            value={value}
-            onChange={onChange}
-            inputProps={{ 'aria-label': 'search' }}
-          />
-        </div>
-        <div className={styles.searchIcons}>
-          
-          <IconButton
-          onClick={onSearch}
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              borderRadius: 50,
-              backgroundColor: "#205295",
-              height: { xs: 45, md: 50, lg: 50 },
-              width: { xs: 45, md: 50, lg: 50 },
-              mt: { lg: 0.5, md: 0.5, sm: 1, xs: 1 },
-              mr: 1,
-              px: 2,
-              "&:hover": { backgroundColor: "#2C74B3" },
-            }}
-          >
-            <SearchIcon sx={{ color: "#ffffff" }} />
-             
-          </IconButton>
-        </div>
-      </div>
-    </Search>
+    <></>
   );
 }
 

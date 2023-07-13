@@ -53,7 +53,7 @@ function ViewMasterProcurementPlanProc() {
 
         const data = response;
         SetData(data);
-        console.log(data);
+        console.log(data); 
       } catch (error) {
         console.log(error);
       }
@@ -63,23 +63,23 @@ function ViewMasterProcurementPlanProc() {
     console.log(data);
   }, []);
 
-  useEffect(() => {
-    if (Array.isArray(data)) {
-      const fetchData = async () => {
-        const newData = await Promise.all(
-          data.map(async (object) => {
-            const isNew = await checkNeworNot(object.mppId);
-            return { ...object, status: isNew };
-          })
-        );
-        setDataWithStatus(newData.map((object) => object.status));
-        console.log(newData);
-        setDataWithStatus(newData);
-      };
+  // useEffect(() => {
+  //   if (Array.isArray(data)) {
+  //     const fetchData = async () => {
+  //       const newData = await Promise.all(
+  //         data.map(async (object) => {
+  //           const isNew = await checkNeworNot(object.mppId);
+  //           return { ...object, status: isNew };
+  //         })
+  //       );
+  //       setDataWithStatus(newData.map((object) => object.status));
+  //       console.log(newData);
+  //       setDataWithStatus(newData);
+  //     };
 
-      fetchData();
-    }
-  }, [data]);
+  //     fetchData();
+  //   }
+  // }, [data]);
 
   return (
     <div>
@@ -129,8 +129,8 @@ function ViewMasterProcurementPlanProc() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {dataWithStatus &&
-                  dataWithStatus
+                {data &&
+                  data
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) => (
                       <TableRow
@@ -173,7 +173,7 @@ function ViewMasterProcurementPlanProc() {
                           </Routerlink>
                         </TableCell>
                         <TableCell align="center">
-                          {!row.status ? (
+                          {row.isTecCommitteCreated ? (
                             <Routerlink
                               to={`/create-modify-teccommittee/${row.mppId}`}
                             >
@@ -211,7 +211,7 @@ function ViewMasterProcurementPlanProc() {
                           )}
                         </TableCell>
                         <TableCell align="center">
-                          {!row.status ? (
+                          {row.isBidOpeningCommitteeCreated ? (
                             <Routerlink
                               to={`/create-modify-bidopeningC/${row.mppId}`}
                             >

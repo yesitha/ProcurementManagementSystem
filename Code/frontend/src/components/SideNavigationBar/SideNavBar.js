@@ -20,6 +20,7 @@ import {Link as Routerlink, useParams} from "react-router-dom";
 
 const drawerWidth = 305;
 
+
 const openedMixin = (theme) => ({
     width: drawerWidth,
     transition: theme.transitions.create("width", {

@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useRef } from "react";
 import styles from "./uploadPaymentVoucher.module.css";
 import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import AttachFileIcon from "@mui/icons-material/AttachFile";
 import { Button, IconButton, Paper, Typography } from "@mui/material";
 import { Container } from "@mui/system";
 import Table from "@mui/material/Table";
@@ -32,6 +33,7 @@ function createData(ItemID, ItemName, DQty, Desc, Uprice, amt) {
   return { ItemID, ItemName, DQty, Desc, Uprice, amt };
 }
 
+
 function UploadPaymentVoucher() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -39,9 +41,35 @@ function UploadPaymentVoucher() {
     setPage(newPage);
   };
 
+  const handleBrowseClick = () => {
+    fileInputRef.current.click();
+  };
+  
+  const handleFileSelect = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+    console.log('Selected file:', file);
+  };
+  
+  const BrowseIcon = () => {
+    const fileInputRef = useRef(null);
+  }
+
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
+  };
+
+  const handlePrint = () => {
+    const printContent = document.getElementById("print-area");
+    if (printContent) {
+      const originalContent = document.body.innerHTML;
+      const printContentHTML = printContent.innerHTML;
+      document.body.innerHTML = printContentHTML;
+      window.print();
+      document.body.innerHTML = originalContent;
+    }
+    window.location.reload();
   };
 
   const [data, setData] = useState(null);
@@ -66,6 +94,7 @@ function UploadPaymentVoucher() {
   const itemName = result?.itemName;
   const specification = result?.specification;
   const received_Qty = result?.received_Qty;
+  const fileInputRef = useRef(null);
 
  
   
@@ -91,6 +120,7 @@ function UploadPaymentVoucher() {
 
     fetchData();
   }, [invoiceId]);
+  const [selectedFile, setSelectedFile] = useState(null);
 
   return (
     <div style={{ overflowX: "hidden" }}>
@@ -104,6 +134,7 @@ function UploadPaymentVoucher() {
           flexDirection: "column",
         }}
       >
+        <div id="print-area">
         <div className={styles.upperSection}>
           <div className={styles.uppercontainer}>
             <div className={styles.tag}>
@@ -160,11 +191,26 @@ function UploadPaymentVoucher() {
                 </Typography>
               </div>
               <div>
-                <IconButton sx={{ marginLeft: "60px", width: "60px" }}>
-                  <ControlPointIcon
-                    sx={{ marginLeft: "5px", fontSize: 40, color: "#0A2647" }}
-                  />
-                </IconButton>
+                <IconButton
+        sx={{ marginLeft: '60px', width: '60px' }}
+        onClick={handleBrowseClick}
+      >
+           {selectedFile ? (
+          <AttachFileIcon
+            sx={{ marginLeft: '5px', fontSize: 40, color: '#0A2647' }}
+          />
+        ) : (
+          <ControlPointIcon
+            sx={{ marginLeft: '5px', fontSize: 40, color: '#0A2647' }}
+          />
+        )}
+      </IconButton>
+      <input
+        type="file"
+        ref={fileInputRef}
+        style={{ display: 'none' }}
+        onChange={handleFileSelect}
+      />
               </div>
             </div>
           </div>
@@ -254,14 +300,12 @@ function UploadPaymentVoucher() {
             </Typography>
             <Typography sx={{marginLeft:"500px"}}>
               <h3 >
-              Sub total &nbsp;{totalAmount}
-                <br></br>
-               Tax Rate &nbsp;&nbsp;{(tax * 100) / totalAmount}%
+               Tax Rate &nbsp;&nbsp;{(tax * 100) / (totalAmount-tax)}%
                 <br></br>
               Tax Due &nbsp;&nbsp;&nbsp;{tax}
                 <br></br>
                Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                {totalAmount + tax}
+                {totalAmount}
               </h3>
             </Typography>
           </div>
@@ -272,6 +316,7 @@ function UploadPaymentVoucher() {
               <b>Thank you for your Bussiness!</b>
             </Typography>
           </center>
+        </div>
           <div className={styles.btn}>
           <div>
       {isPaymentStatus==false ? (
@@ -285,7 +330,7 @@ function UploadPaymentVoucher() {
         </Button>
       )}
     </div>
-            <Button variant="contained" style={{ marginLeft: 40 }}>
+            <Button variant="contained" style={{ marginLeft: 40 }} onClick={handlePrint}>
               Print
             </Button>
           </div>

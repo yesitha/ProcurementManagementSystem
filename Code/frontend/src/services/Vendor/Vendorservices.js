@@ -82,7 +82,7 @@ export const GetApprovedItemsDetailsvendorId = async (vendorId) => {
   export const GetPurchaseOrdersByVendorId = async (vendorId) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_HOST}/api/Vendor/GetPurchaseOrdersByVendorId/LAH23201`
+        `${process.env.REACT_APP_API_HOST}/api/Vendor/GetPurchaseOrdersByVendorId/${vendorId}`
       );
       return response.data;  
     } catch (error) {
@@ -117,6 +117,7 @@ export const GetApprovedItemsDetailsvendorId = async (vendorId) => {
         `${process.env.REACT_APP_API_HOST}/api/Vendor/GetLetterOfAcceptanceItemAndVendorDetails/${venderId}/${itemId}`
       );
       console.log(response);
+      return response.data;
   } catch (error) {
     console.log(error);
     throw error;
@@ -136,17 +137,22 @@ export const GetApprovedItemsDetailsvendorId = async (vendorId) => {
   }
 
 
-  export const updateLetterOfAcceptance = async (itemId, venderId, selectedFile) => {
+  export const updateLetterOfAcceptance = async (propsData) => {
+    console.log(propsData.selectedFile);
     try {
+      if(propsData.selectedFile != null){
       const data = new FormData();
-      data.append('letterOfAcceptance', selectedFile);
-      ;
+      data.append('letterOfAcceptance', propsData.selectedFile);
+
+     
+      console.log(data);
       
-      const response = await fetch(`${process.env.REACT_APP_API_HOST}api/Vendor/UpdateLetterOfAcceptance/${venderId}/${itemId}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_HOST}api/Vendor/UpdateLetterOfAcceptance/${propsData.venderId}/${propsData.itemId}`, {
         method: 'POST',
         body: data,
       });
       console.log(response);
+    }
     } catch (error) {
       console.log(error);
     }
@@ -154,10 +160,10 @@ export const GetApprovedItemsDetailsvendorId = async (vendorId) => {
   
 
 
-  export const GetPOItemDetailspoIdvendorId = async (poId,vendorId) => {
+  export const GetPOItemDetails = async (poId) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_HOST}/api/Vendor/GetPOItemDetails/${poId}/LAH23201`
+        `${process.env.REACT_APP_API_HOST}/api/Vendor/GetPOItemDetails/${poId}`
       );
       return response.data;  
     } catch (error) {
@@ -174,8 +180,6 @@ export const GetApprovedItemsDetailsvendorId = async (vendorId) => {
       data.append('taxIdentificationFile', taxIdentificationFile);
       data.append('insuranceCertificateFile', insuranceCertificateFile);
       data.append('otherDocumentsFile', otherDocumentsFile);
-      
-
       ;
       
       const response = await fetch(`${process.env.REACT_APP_API_HOST}/api/Vendor/RegisterVenderToSystem?address1=${Formdata.address1}&address2=${Formdata.address2}&address3=${Formdata.address3}&businessRegNo=${Formdata.businessRegNo}&city=${Formdata.city}&companyName=${Formdata.companyName}&email=${Formdata.email}&fName=${Formdata.fName}&jobTitle=${Formdata.jobTitle}&lName=${Formdata.lName}&noofEmployes=${Formdata.noofEmployes}&postalCode=${Formdata.postalCode}&registrationType=${Formdata.registrationType}&state=${Formdata.state}&telNo=${Formdata.telNo}&userName=${Formdata.userName}&password=${Formdata.password}&salutation=${Formdata.salutation}`, {
@@ -196,6 +200,7 @@ export const GetApprovedItemsDetailsvendorId = async (vendorId) => {
         `${process.env.REACT_APP_API_HOST}/api/Vendor/GetVendorVerifyPdf/${vendorId}`
       );
       console.log(response);
+      return response.data;
     } catch (error) {
       console.log(error);
       throw error;
@@ -206,7 +211,7 @@ export const GetApprovedItemsDetailsvendorId = async (vendorId) => {
   export const GetGRNIdListByVendorId = async (vendorId) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_HOST}/api/Vendor/GetGRNIdListByVendorId/HEL9863`
+        `${process.env.REACT_APP_API_HOST}/api/Vendor/GetGRNIdListByVendorId/${vendorId}`
       );
       return response.data;  
     } catch (error) {
@@ -347,7 +352,7 @@ export const CreatePurchaseOrderItemsToBeShippedRecords = async (poId,input) => 
   export const GetInvoiceIdsForVendor = async (vendorId) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_HOST}/api/Vendor/GetInvoiceIdsForVendor/HEL9863`
+        `${process.env.REACT_APP_API_HOST}/api/Vendor/GetInvoiceIdsForVendor/${vendorId}`
       );
       return response.data;  
     } catch (error) {
