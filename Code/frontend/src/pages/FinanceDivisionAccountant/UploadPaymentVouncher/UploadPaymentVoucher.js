@@ -60,6 +60,18 @@ function UploadPaymentVoucher() {
     setPage(0);
   };
 
+  const handlePrint = () => {
+    const printContent = document.getElementById("print-area");
+    if (printContent) {
+      const originalContent = document.body.innerHTML;
+      const printContentHTML = printContent.innerHTML;
+      document.body.innerHTML = printContentHTML;
+      window.print();
+      document.body.innerHTML = originalContent;
+    }
+    window.location.reload();
+  };
+
   const [data, setData] = useState(null);
   const { invoiceId } = useParams();
 
@@ -122,6 +134,7 @@ function UploadPaymentVoucher() {
           flexDirection: "column",
         }}
       >
+        <div id="print-area">
         <div className={styles.upperSection}>
           <div className={styles.uppercontainer}>
             <div className={styles.tag}>
@@ -287,14 +300,12 @@ function UploadPaymentVoucher() {
             </Typography>
             <Typography sx={{marginLeft:"500px"}}>
               <h3 >
-              Sub total &nbsp;{totalAmount}
-                <br></br>
-               Tax Rate &nbsp;&nbsp;{(tax * 100) / totalAmount}%
+               Tax Rate &nbsp;&nbsp;{(tax * 100) / (totalAmount-tax)}%
                 <br></br>
               Tax Due &nbsp;&nbsp;&nbsp;{tax}
                 <br></br>
                Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                {totalAmount + tax}
+                {totalAmount}
               </h3>
             </Typography>
           </div>
@@ -305,6 +316,7 @@ function UploadPaymentVoucher() {
               <b>Thank you for your Bussiness!</b>
             </Typography>
           </center>
+        </div>
           <div className={styles.btn}>
           <div>
       {isPaymentStatus==false ? (
@@ -318,7 +330,7 @@ function UploadPaymentVoucher() {
         </Button>
       )}
     </div>
-            <Button variant="contained" style={{ marginLeft: 40 }}>
+            <Button variant="contained" style={{ marginLeft: 40 }} onClick={handlePrint}>
               Print
             </Button>
           </div>
