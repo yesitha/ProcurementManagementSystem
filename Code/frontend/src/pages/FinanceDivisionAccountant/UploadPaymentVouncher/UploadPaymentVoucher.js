@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import styles from "./uploadPaymentVoucher.module.css";
 import SideNavBar from "../../../components/SideNavigationBar/SideNavBar";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -39,6 +39,20 @@ function UploadPaymentVoucher() {
     setPage(newPage);
   };
 
+  const handleBrowseClick = () => {
+    fileInputRef.current.click();
+  };
+  
+  const handleFileSelect = (event) => {
+    const file = event.target.files[0];
+    // Handle the selected file here
+    console.log('Selected file:', file);
+  };
+  
+  const BrowseIcon = () => {
+    const fileInputRef = useRef(null);
+  }
+
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
@@ -66,6 +80,7 @@ function UploadPaymentVoucher() {
   const itemName = result?.itemName;
   const specification = result?.specification;
   const received_Qty = result?.received_Qty;
+  const fileInputRef = useRef(null);
 
  
   
@@ -160,11 +175,20 @@ function UploadPaymentVoucher() {
                 </Typography>
               </div>
               <div>
-                <IconButton sx={{ marginLeft: "60px", width: "60px" }}>
-                  <ControlPointIcon
-                    sx={{ marginLeft: "5px", fontSize: 40, color: "#0A2647" }}
-                  />
-                </IconButton>
+                <IconButton
+        sx={{ marginLeft: '60px', width: '60px' }}
+        onClick={handleBrowseClick}
+      >
+        <ControlPointIcon
+          sx={{ marginLeft: '5px', fontSize: 40, color: '#0A2647' }}
+        />
+      </IconButton>
+      <input
+        type="file"
+        ref={fileInputRef}
+        style={{ display: 'none' }}
+        onChange={handleFileSelect}
+      />
               </div>
             </div>
           </div>

@@ -62,6 +62,7 @@ function LetterofAcceptance() {
     fileInputRef.current.click();
   }
   const {itemId} = useParams();
+  console.log(itemId)
   const [data, setData] = useState(null);
   const [vendorDetails,setVendorDetails] = useState(null);
   
@@ -320,6 +321,8 @@ function LetterofAcceptance() {
             </div>
             <DonePopup
               notificationData={dataNotification[0]}
+              letterOfAcceptenceDetails={{itemId, venderId, selectedFile}}
+              letterOfAcceptence={true}
               text={"Successfully Submitted"}
               title={"Submit"}
               sx={{
@@ -332,7 +335,7 @@ function LetterofAcceptance() {
               }}
               onClick={(e) => {
                 e.stopPropagation();
-                updateLetterOfAcceptance(data.itemId, venderId, selectedFile);
+                
               }}
             />
           </div>

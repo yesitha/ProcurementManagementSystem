@@ -117,6 +117,7 @@ export const GetApprovedItemsDetailsvendorId = async (vendorId) => {
         `${process.env.REACT_APP_API_HOST}/api/Vendor/GetLetterOfAcceptanceItemAndVendorDetails/${venderId}/${itemId}`
       );
       console.log(response);
+      return response.data;
   } catch (error) {
     console.log(error);
     throw error;
@@ -136,17 +137,22 @@ export const GetApprovedItemsDetailsvendorId = async (vendorId) => {
   }
 
 
-  export const updateLetterOfAcceptance = async (itemId, venderId, selectedFile) => {
+  export const updateLetterOfAcceptance = async (propsData) => {
+    console.log(propsData.selectedFile);
     try {
+      if(propsData.selectedFile != null){
       const data = new FormData();
-      data.append('letterOfAcceptance', selectedFile);
-      ;
+      data.append('letterOfAcceptance', propsData.selectedFile);
+
+     
+      console.log(data);
       
-      const response = await fetch(`${process.env.REACT_APP_API_HOST}api/Vendor/UpdateLetterOfAcceptance/${venderId}/${itemId}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_HOST}api/Vendor/UpdateLetterOfAcceptance/${propsData.venderId}/${propsData.itemId}`, {
         method: 'POST',
         body: data,
       });
       console.log(response);
+    }
     } catch (error) {
       console.log(error);
     }
