@@ -208,7 +208,7 @@ if(storedArray1 && storedArray2) {
                         onClick={() => handleClickRightToLeft(row)}
                       >
                         <TableCell component="th" scope="row">
-                          {row.id}
+                          {row.sppId}
                         </TableCell>
                         <TableCell>{row.divisionName}</TableCell>
                         <TableCell>
