@@ -9,6 +9,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { Button } from "@mui/material";
 import { Link as Routerlink } from "react-router-dom";
 import { addNotification, addNotificationCommittee, addNotificationEmpId, addNotificationVendorByID } from "../../../notification";
+import { updateLetterOfAcceptance } from "../../../services/Vendor/Vendorservices";
 
 const style = {
   position: "absolute",
@@ -26,6 +27,13 @@ const style = {
 export default function BasicModal(props) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
+    if(props.letterOfAcceptence){
+      console.log(props.letterOfAcceptenceDetails.itemId,props.letterOfAcceptenceDetails.venderId, props.letterOfAcceptenceDetails.selectedFile);
+       updateLetterOfAcceptance(props.letterOfAcceptenceDetails);
+       
+      
+
+    }
     setOpen(true);
   };
 
@@ -102,7 +110,10 @@ export default function BasicModal(props) {
               addNotification(props.notificationData);
               
             }
-          }else{
+          }
+          
+          
+          else{
             
             await addNotificationCommittee(props.notificationData2);
             await addNotification(props.notificationData)
@@ -112,7 +123,7 @@ export default function BasicModal(props) {
                 
                 
               
-                   handleClose();
+                  // handleClose();
                
                
               }}
