@@ -39,6 +39,7 @@ const theme = createTheme({
 
 export default function Signup() {
   const onSubmit = (data) => {
+    console.log(data);
     registerVenderToSystem(data, businessRegistrationFile, taxIdentificationFile, insuranceCertificateFile, otherDocumentsFile);
   };
 
@@ -278,8 +279,7 @@ export default function Signup() {
                         {...register("password", {
                           required: "Password Required",
                           pattern: {
-                            value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d#@$]{8,}$/
-                            ,
+                            value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d#@$]{8,}$/,
                             message:
                                 "Password must contain Minimum eight characters, at least one letter and one number",
                           },
