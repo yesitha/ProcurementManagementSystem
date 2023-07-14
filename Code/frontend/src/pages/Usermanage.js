@@ -39,7 +39,7 @@ const userTypes = {
       },
       { displayName: "Auctions Scheduled", path: "auctions-end" },
       { displayName: "Internal Auditor Report Available", path: "internal-auditor-report-availble" },
-      { displayName: "Approved Items from DG", path: "approved-items-from-dg", number: "10" },
+      { displayName: "DG Report Available", path: "create-purchase-order", number: "10" },
       { displayName: "Items Shipped By Vendors", path: "item-rejected-by-vendors", number: "10" },
       { displayName: "New Invoices Available", path: "new-invoices-available", number: "10" },
       {
@@ -82,7 +82,7 @@ const userTypes = {
       { displayName: "Evaluate Master Procurement Plan", path: "evaluate-master-procurement-plan" },
       { displayName: "Send Letters to Vendors", path: "send-lettes-to-vendors" },
       { displayName: "View TEC Report", path: "view-tec-report" },
-      { displayName: "View Minutes of Procurement Committee", path: "view-minutes-of-procurement-committee" },
+      { displayName: "View Minutes of Procurement Committee", path: "FinalizedMasterProcurementPlan" },
     ],
     actionButtons: [
       { displayName: "New TEC Report", path: "view-tec-report"},

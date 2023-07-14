@@ -53,7 +53,7 @@ function ViewMasterProcurementPlanProc() {
 
         const data = response;
         SetData(data);
-        console.log(data); 
+        console.log(data);
       } catch (error) {
         console.log(error);
       }
@@ -211,27 +211,43 @@ function ViewMasterProcurementPlanProc() {
                           )}
                         </TableCell>
                         <TableCell align="center">
-                          {row.isBidOpeningCommitteeCreated ? (
-                            <Routerlink
-                              to={`/create-modify-bidopeningC/${row.mppId}`}
-                            >
-                              <Button
-                                className={styles.ViewButton}
-                                variant="contained"
-                                sx={{
-                                  borderRadius: 8,
-                                  px: { xs: 2, md: 5 },
-                                  backgroundColor: "#227C70",
-                                  ":hover": {
-                                    backgroundColor: "#227C70",
-                                  },
-                                }}
+                          {row.isTecCommitteCreated ? (
+                            row.isBidOpeningCommitteeCreated ? (
+                              <Routerlink
+                                to={`/create-modify-bidopeningC/${row.mppId}`}
                               >
-                                Modify BidOpening
-                                <br />
-                                Committee
-                              </Button>
-                            </Routerlink>
+                                <Button
+                                  className={styles.ViewButton}
+                                  variant="contained"
+                                  sx={{
+                                    borderRadius: 8,
+                                    px: { xs: 2, md: 5 },
+                                    backgroundColor: "#227C70",
+                                    ":hover": {
+                                      backgroundColor: "#227C70",
+                                    },
+                                  }}
+                                >
+                                  Modify BidOpening
+                                  <br />
+                                  Committee
+                                </Button>
+                              </Routerlink>
+                            ) : (
+                              <Routerlink
+                                to={`/create-modify-bidopeningC/${row.mppId}`}
+                              >
+                                <Button
+                                  className={styles.ViewButton}
+                                  variant="contained"
+                                  sx={{ borderRadius: 8, px: { xs: 2, md: 5 } }}
+                                >
+                                  Appoint BidOpening
+                                  <br />
+                                  Committee
+                                </Button>
+                              </Routerlink>
+                            )
                           ) : (
                             <Button
                               className={styles.ViewButton}

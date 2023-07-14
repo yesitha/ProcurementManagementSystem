@@ -199,9 +199,9 @@ function CreateSubProcurementPlan() {
                           <TableCell align="center">{row.itemId}</TableCell>
                           <TableCell align="center">{row.itemName}</TableCell>
                           <TableCell align="center">
-                            {row.totalQuantity}
+                            {row.totalquantity}
                           </TableCell>
-                          <TableCell>
+                          <TableCell align="center">
                             {" "}
                             {
                               <Routerlink
@@ -226,7 +226,7 @@ function CreateSubProcurementPlan() {
             <TablePagination
               rowsPerPageOptions={[10, 25, 50, 100]}
               component="div"
-              count={rows.length}
+              count={data ? data.length : 0}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}

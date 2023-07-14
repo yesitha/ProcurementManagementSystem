@@ -329,7 +329,7 @@ namespace PWMSBackend.Controllers
                               Specification = input.Specification,
                               totalQuantity = input.totalQuantity,
                               expectedDeliveryDate = input.expectedDeliveryDate,
-                              bidinfo = vendor.bidInfo
+                              bidInfo = vendor != null ? vendor.bidInfo : null
                           };
 
             return Ok(result2);

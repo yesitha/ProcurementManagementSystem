@@ -210,7 +210,7 @@ function ReviseVendorSelection() {
                               <Button
                                 variant="contained"
                                 onClick={(event) => {
-                                  VendorSelectionVidIid(
+                                  handleSelect(
                                     vendor.vendorId,
                                     row.itemId
                                   );
