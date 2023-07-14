@@ -36,7 +36,7 @@ function ManageAuction() {
   const [data, setData] = useState(null);
   const[copyData,setCopyData]=useState(null);
 
-  const committeeMemberId=user.id
+  const committeeMemberId=user ? user.id : "";
   // console.log(employeeId)
 
   useEffect(() => {

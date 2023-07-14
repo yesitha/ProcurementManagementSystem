@@ -65,6 +65,8 @@ function VendorSelection() {
       try {
         const response = await GetVendorSelectionBidDetails();
         const data = response;
+        console.log(data);
+        console.log(data[0].itemId);
         setData(data);
       } catch (error) {
         console.log(error);
@@ -81,7 +83,7 @@ function VendorSelection() {
     await VendorSelectionVidIid(vendorId, itemId);
     window.location.reload(); // Refresh the page after updating the backend
   };
-
+  
   return (
     <div>
       <Container
@@ -143,7 +145,7 @@ function VendorSelection() {
                         page * rowsPerPage + rowsPerPage
                       )
                       .map((row, index) =>
-                        row.bidinfo.map((vendor, vendorIndex) => (
+                        row.bidInfo.map((vendor, vendorIndex) => (
                           <TableRow
                             hover
                             role="checkbox"
@@ -157,25 +159,25 @@ function VendorSelection() {
                             {vendorIndex === 0 && (
                               <>
                                 <TableCell
-                                  rowSpan={row.bidinfo.length}
+                                  rowSpan={row.bidInfo.length}
                                   align="center"
                                 >
                                   {row.itemId}
                                 </TableCell>
                                 <TableCell
-                                  rowSpan={row.bidinfo.length}
+                                  rowSpan={row.bidInfo.length}
                                   align="center"
                                 >
                                   {row.itemName}
                                 </TableCell>
                                 <TableCell
-                                  rowSpan={row.bidinfo.length}
+                                  rowSpan={row.bidInfo.length}
                                   align="center"
                                 >
                                   {row.totalQuantity}
                                 </TableCell>
                                 <TableCell
-                                  rowSpan={row.bidinfo.length}
+                                  rowSpan={row.bidInfo.length}
                                   align="center"
                                 >
                                   <Tooltip title={row.specification}>
@@ -193,7 +195,7 @@ function VendorSelection() {
                                   </Tooltip>
                                 </TableCell>
                                 <TableCell
-                                  rowSpan={row.bidinfo.length}
+                                  rowSpan={row.bidInfo.length}
                                   align="center"
                                 >
                                   {DateFormat(row.expectedDeliveryDate)}
@@ -219,7 +221,7 @@ function VendorSelection() {
                               <Button
                                 variant="contained"
                                 onClick={(event) => {
-                                  VendorSelectionVidIid(
+                                  handleSelect(
                                     vendor.vendorId,
                                     row.itemId
                                   );
@@ -228,7 +230,7 @@ function VendorSelection() {
                                 }}
                                 disabled={
                                   vendor.bidStatus === "Selected" ||
-                                  isAnyVendorSelected(row.bidinfo)
+                                  isAnyVendorSelected(row.bidInfo)
                                 }
                                 style={{
                                   backgroundColor:
@@ -238,12 +240,12 @@ function VendorSelection() {
                                   color: "#ffffff",
                                   pointerEvents:
                                     vendor.bidStatus === "Selected" ||
-                                    isAnyVendorSelected(row.bidinfo)
+                                    isAnyVendorSelected(row.bidInfo)
                                       ? "none"
                                       : "auto",
                                   opacity:
                                     vendor.bidStatus === "Selected" ||
-                                    isAnyVendorSelected(row.bidinfo)
+                                    isAnyVendorSelected(row.bidInfo)
                                       ? "0.5"
                                       : "1",
                                 }}

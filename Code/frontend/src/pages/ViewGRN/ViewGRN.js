@@ -24,8 +24,8 @@ const columns = [
   { id: "Action", label: "Action", Width: 200, align: "center" },
 ];
 
-// const vendorId = user ? user.id : "";
-const vendorId = "VEN00001";
+const vendorId = user ? user.id : "";
+// const vendorId = "VEN00001";
 
 export default function ViewGRN() {
   const [page, setPage] = React.useState(0);
